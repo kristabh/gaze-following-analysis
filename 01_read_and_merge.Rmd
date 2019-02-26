@@ -33,7 +33,7 @@ source("helper/preprocessing_helper.R")
 ```
     
 
-# Reading in all participant data.  Excluding problematic columns.  Coercing to character if any problems
+# Reading in all participant data.  Excluding problematic columns.  Coercing to character if any problems.
 
 ```{r}
 participant_files <- dir("processed_data/participants_cleaned/", pattern = ".xlsx", all.files = FALSE)
@@ -41,11 +41,8 @@ participant_files <- paste0("processed_data/participants_cleaned/", participant_
 
 
 for (file in participant_files){
-
-  myfile <- (file)
-  
   # if the merged dataset does exist, append to it
-  if (exists("dataset")){
+  if (exists("pd_raw")){
     temp_dataset <- read_excel(file, col_names=TRUE) %>%
       mutate_all(as.character) %>%
       mutate_all(nc_na) %>%
@@ -58,13 +55,13 @@ for (file in participant_files){
       select(-contains("MacArthur"))
   
     
-dataset <- full_join(dataset, temp_dataset)
+pd_raw <- full_join(pd_raw, temp_dataset)
     rm(temp_dataset)
   }
   
   # if the merged dataset doesn't exist, create it
-  if (!exists("dataset")){
-        dataset <- read_excel(file, col_names=TRUE) %>%
+  if (!exists("pd_raw")){
+        pd_raw <- read_excel(file, col_names=TRUE) %>%
       mutate_all(as.character) %>%
       mutate_all(nc_na) %>%
       select(-(starts_with("Optional"))) %>%
@@ -82,9 +79,153 @@ dataset <- full_join(dataset, temp_dataset)
 
 ```
 
-Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
 
-When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+```{r}
+pd_raw %>%
+  vis_dat() + 
+  coord_flip()
+```
 
-The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+```{r}
+n_participant_rows = nrow(pd_raw)
+n_unique_labs_from_participants = pd_raw %>%
+  summarize(labs = n_distinct(lab))
+unique_participants_by_lab = pd_raw %>%
+  group_by(lab) %>%
+  summarize(participants = n_distinct(subid))
+```
+
+Right after trial import, there are `r n_participant_rows` rows in the pd_raw dataframe; this includes data from `r n_unique_labs_from_participants$labs` labs. The number of participants coming from each lab is as follows:
+
+```{r}
+print(unique_participants_by_lab, n=1e4)
+```
+
+# Gazepath Data Import
+
+```{r}
+gazepath_files <- dir("processed_data/data_gazepath/", pattern = ".xlsx", all.files = FALSE)
+gazepath_files <- paste0("processed_data/data_gazepath/", gazepath_files) # Adds path to names
+
+
+for (file in gazepath_files){
+  
+  # if the merged dataset does exist, append to it
+  if (exists("gp_raw")){
+    temp_dataset <- read_excel(file, col_names=TRUE) %>%
+     mutate_all(as.character)
+    
+gp_raw <- full_join(gp_raw, temp_dataset)
+    rm(temp_dataset)
+  }
+  
+  # if the merged dataset doesn't exist, create it
+  if (!exists("gp_raw")){
+       gp_raw <- read_excel(file, col_names=TRUE) %>%
+       mutate_all(as.character)
+  
+  }
+  
+}
+
+```
+
+# Handcoded Data Import
+
+```{r}
+
+
+handcoded_files <- dir("processed_data/handcoded_cleaned/", pattern = ".xlsx", all.files = FALSE)
+handcoded_files <- paste0("processed_data/handcoded_cleaned/", handcoded_files) # Adds path to names
+
+
+for (file in handcoded_files){
+  
+  # if the merged dataset does exist, append to it
+  if (exists("hc_raw")){
+    temp_dataset <- read_excel(file, col_names=TRUE) %>%
+      mutate_all(as.character) %>%
+      mutate_all(nc_na) %>%
+      mutate(subid = as.character(subid)) %>%
+      select(-contains("Note"))
+    
+hc_raw <- full_join(hc_raw, temp_dataset)
+    rm(temp_dataset)
+  }
+  
+  # if the merged dataset doesn't exist, create it
+  if (!exists("hc_raw")){
+       hc_raw <- read_excel(file, col_names=TRUE) %>%
+      mutate_all(as.character) %>%
+      mutate_all(nc_na) %>%
+      mutate(subid = as.character(subid)) %>%
+      select(-contains("Note"))
+  
+  }
+  
+}
+
+
+```
+
+Join to get full set of data 
+```{r}
+
+# Check if there are any repeated participants across hand coded and eyetracked data.  There are none
+double_coded <- inner_join(gp_raw, hc_raw, by = c("lab", "subid"))
+
+# So join hand-coded and gazepath datasets  
+td_raw <- full_join(gp_raw, hc_raw)
+
+td <- td_raw %>%
+  mutate(lab = tolower(lab))
+
+
+pd <- pd_raw %>% 
+  mutate(lab = tolower(lab))
+
+
+```
+
+
+See if lab ids are consistent, and if not fix them
+
+```{r}
+setdiff(unique(pd_raw$lab), unique(td_raw$lab))
+setdiff(unique(td_raw$lab), unique(pd_raw$lab))
+
+# Trials dataframe
+td$lab[td$lab == "koku-hamburg_12-15mos"] <- "koku-hamburg"
+td$lab[td$lab == "koku-hamburg_6-9mos"] <- "koku-hamburg"
+td$lab[td$lab == "upf-barcelona"] <- "upf_barcelona"
+td$lab[td$lab == "nus"] <- "nusinfantlanguagecentre"
+td$lab[td$lab == "brookes-babylab"] <- "babylab-brookes"
+td$lab[td$lab == "lll"] <- "lll-liv"
+td$lab[td$lab == "zurich"] <- "weltentdecker-zurich"
+td$lab[td$lab == "princeton-babylab"] <- "babylab-princeton"
+td$lab[td$lab == "westernsydney-babylab"] <- "babylab-westernsydney"
+td$lab[td$lab == "babylab_westernsydney"] <- "babylab-westernsydney"
+td$lab[td$lab == "wsu: kw"] <- "babylab-westernsydney"
+
+# Participants dataframe
+pd$lab[pd$lab == "wsu: kw"] <- "babylab-westernsydney"
+pd$lab[pd$lab == "babylab_westernsydney"] <- "babylab-westernsydney"
+pd$lab[pd$lab == "koku_hamburg"] <- "koku-hamburg"
+
+
+
+setdiff(unique(pd$lab), unique(td$lab))
+setdiff(unique(td$lab), unique(pd$lab))
+         
+
+         
+```
+
+```{r}
+
+
+
+```
+
+
 
