@@ -274,8 +274,8 @@ pd$subid[pd$lab == "babylab-brookes"] <- sub("g0", "g", pd$subid[pd$lab == "baby
 
 #babylab-princeton
 #pd$subid[pd$lab == "babylab-princeton"] <- sub("bl", "", pd$subid[pd$lab == "babylab-princeton"])
-pd$subid[pd$lab == "babylab-princeton"] <- sub("manybabies00", "manybabies", pd$subid[pd$lab == "babylab-princeton"])
-pd$subid[pd$lab == "babylab-princeton"] <- sub("manybabies0", "manybabies", pd$subid[pd$lab == "babylab-princeton"])
+#pd$subid[pd$lab == "babylab-princeton"] <- sub("manybabies00", "manybabies", pd$subid[pd$lab == "babylab-princeton"])
+#pd$subid[pd$lab == "babylab-princeton"] <- sub("manybabies0", "manybabies", pd$subid[pd$lab == "babylab-princeton"])
 
   
 
