@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1551188867517.000,
+    "dirty" : true,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "80AD0579",
+    "lastKnownWriteTime" : 1543346591,
+    "last_content_update" : 1551190128769,
+    "path" : "~/Repos/mb1-analysis/01_read_and_merge.Rmd",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "83,0",
+        "last_setup_crc32" : "",
+        "scrollLine" : "58"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

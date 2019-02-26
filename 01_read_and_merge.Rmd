@@ -33,18 +33,51 @@ source("helper/preprocessing_helper.R")
 ```
     
 
-```{r}
+# Reading in all participant data.  Excluding problematic columns.  Coercing to character if any problems
 
-participant_files <- dir("data_participants/",pattern = "*")
-col_names <- map_df(participant_files, function(fname) {
-  pd <- read_multiformat_file(path = "data_participants/",
-                              fname = fname)
-  return(data_frame(column = names(pd), file = fname))
-  }) %>%
-  mutate(column = clean_names(column)) %>%
-  group_by(column) %>%
-  mutate(file = ifelse(n() > 1, "many", file)) %>%
-  distinct()
+```{r}
+participant_files <- dir("processed_data/participants_cleaned/", pattern = ".xlsx", all.files = FALSE)
+participant_files <- paste0("processed_data/participants_cleaned/", participant_files) # Adds path to names
+
+
+for (file in participant_files){
+
+  myfile <- (file)
+  
+  # if the merged dataset does exist, append to it
+  if (exists("dataset")){
+    temp_dataset <- read_excel(file, col_names=TRUE) %>%
+      mutate_all(as.character) %>%
+      mutate_all(nc_na) %>%
+      select(-(starts_with("Optional"))) %>%
+      select(-(starts_with("parent")))%>%
+      select(-contains("NAE")) %>%
+      select(-starts_with("Bilingual")) %>%
+      select(-contains("days_preterm")) %>%
+      select(-contains("prev_earinfection")) %>%
+      select(-contains("MacArthur"))
+  
+    
+dataset <- full_join(dataset, temp_dataset)
+    rm(temp_dataset)
+  }
+  
+  # if the merged dataset doesn't exist, create it
+  if (!exists("dataset")){
+        dataset <- read_excel(file, col_names=TRUE) %>%
+      mutate_all(as.character) %>%
+      mutate_all(nc_na) %>%
+      select(-(starts_with("Optional"))) %>%
+      select(-(starts_with("parent")))%>%
+      select(-contains("NAE")) %>%
+      select(-starts_with("Bilingual")) %>%
+      select(-contains("days_preterm")) %>%
+      select(-contains("prev_earinfection")) %>%
+      select(-contains("MacArthur"))
+  
+  }
+  
+}
 
 
 ```
