@@ -147,7 +147,8 @@ for (file in handcoded_files){
       mutate_all(as.character) %>%
       mutate_all(nc_na) %>%
       mutate(subid = as.character(subid)) %>%
-      select(-contains("Note"))
+      select(-contains("Note")) %>%
+      {if("fixation_incongrent" %in% names(.)) rename(., fixation_incongruent=fixation_incongrent) else .} #https://stackoverflow.com/questions/34275576/avoiding-error-when-using-rename-in-dplyr-and-column-doesnt-exist
     
 hc_raw <- full_join(hc_raw, temp_dataset)
     rm(temp_dataset)
@@ -159,11 +160,13 @@ hc_raw <- full_join(hc_raw, temp_dataset)
       mutate_all(as.character) %>%
       mutate_all(nc_na) %>%
       mutate(subid = as.character(subid)) %>%
-      select(-contains("Note"))
+      select(-contains("Note")) %>%
+      {if("fixation_incongrent" %in% names(.)) rename(., fixation_incongruent=fixation_incongrent) else .}
   
   }
   
 }
+
 
 
 ```
@@ -174,11 +177,35 @@ Join to get full set of data
 # Check if there are any repeated participants across hand coded and eyetracked data.  There are none
 double_coded <- inner_join(gp_raw, hc_raw, by = c("lab", "subid"))
 
+# Coding type
+
+gp_raw$coding <- "gazepath"
+hc_raw$coding <- "handcoding"
+
+# Assume gazepath trials do not have an error
+
+gp_raw$trial_error[is.na(gp_raw$trial_error)] <- "noerror"
+
 # So join hand-coded and gazepath datasets  
 td_raw <- full_join(gp_raw, hc_raw)
 
+```
+
+```{r}
+
+
 td <- td_raw %>%
-  mutate(lab = tolower(lab))
+  # Change variables to correct types
+  mutate(lab = tolower(lab)) %>%
+  mutate_at(vars(study_order, trial_num, latency, n_shift_congruent, n_shift_incongruent, fixation_congruent, fixation_incongruent), as.numeric) %>%
+  mutate_at(vars(lab, subid, first_shift, trial_error, trial_error_type, coding), as.factor)
+  
+
+# Fix video names
+    td$stimulus = gsub("\\..*","", td$stimulus)
+    td$stimulus = gsub("X", "", td$stimulus)
+
+
 
 
 pd <- pd_raw %>% 
@@ -186,7 +213,6 @@ pd <- pd_raw %>%
 
 
 ```
-
 
 See if lab ids are consistent, and if not fix them
 
