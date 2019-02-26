@@ -1,0 +1,57 @@
+---
+title: "Gaze Following Data Reading and Merge"
+author: "Gaze following Analysis Team"
+date: '`r format(Sys.time(), "%a %b %d %X %Y")`'
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: yes
+---
+
+
+# Intro
+
+This script reads and merges data from the multi-lab gaze-following project.  This script takes data from eye-trackers that were pre-processed by gazepath scripts written by Daan van Renswoude, and hand-coded data in the same format. Credit to the much code borrowed from mb1/mb1b scripts.
+
+* `01_read_and_merge` reads and merges the data. The goal of this file is to create a single inclusive file that has all data from all labs. 
+* `02_variable_validation` corrects errors in variables and ensures that formats are correcvt. 
+* `03_exclusion` reports exclusions and creates diff files. 
+* `04_confirmatory_analysis` is the set of confirmatory analyses that were preregisted
+
+# Participant Import 
+
+
+```{r setup, echo=FALSE, message=FALSE}
+source("helper/common.R")
+```
+
+Data import functions are factored into a helper functions file. 
+
+```{r}
+source("helper/preprocessing_helper.R")
+```
+    
+
+```{r}
+
+participant_files <- dir("data_participants/",pattern = "*")
+col_names <- map_df(participant_files, function(fname) {
+  pd <- read_multiformat_file(path = "data_participants/",
+                              fname = fname)
+  return(data_frame(column = names(pd), file = fname))
+  }) %>%
+  mutate(column = clean_names(column)) %>%
+  group_by(column) %>%
+  mutate(file = ifelse(n() > 1, "many", file)) %>%
+  distinct()
+
+
+```
+
+Add a new chunk by clicking the *Insert Chunk* button on the toolbar or by pressing *Cmd+Option+I*.
+
+When you save the notebook, an HTML file containing the code and output will be saved alongside it (click the *Preview* button or press *Cmd+Shift+K* to preview the HTML file). 
+
+The preview shows you a rendered HTML copy of the contents of the editor. Consequently, unlike *Knit*, *Preview* does not run any R code chunks. Instead, the output of the chunk when it was last run in the editor is displayed.
+
