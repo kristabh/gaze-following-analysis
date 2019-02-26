@@ -171,7 +171,7 @@ hc_raw <- full_join(hc_raw, temp_dataset)
 
 ```
 
-Join to get full set of data 
+Join to get full dataset
 ```{r}
 
 # Check if there are any repeated participants across hand coded and eyetracked data.  There are none
@@ -196,29 +196,25 @@ td_raw <- full_join(gp_raw, hc_raw)
 
 td <- td_raw %>%
   # Change variables to correct types
-  mutate(lab = tolower(lab)) %>%
-  mutate_at(vars(study_order, trial_num, latency, n_shift_congruent, n_shift_incongruent, fixation_congruent, fixation_incongruent), as.numeric) %>%
-  mutate_at(vars(lab, subid, first_shift, trial_error, trial_error_type, coding), as.factor)
+  mutate_if(is.character, tolower) %>%
+  mutate_at(vars(study_order, trial_num, latency, n_shift_congruent, n_shift_incongruent, fixation_congruent, fixation_incongruent), as.numeric)
+#  mutate_at(vars(lab, subid, first_shift, trial_error, trial_error_type, coding), as.factor)
   
 
 # Fix video names
     td$stimulus = gsub("\\..*","", td$stimulus)
     td$stimulus = gsub("X", "", td$stimulus)
 
-
-
-
-pd <- pd_raw %>% 
-  mutate(lab = tolower(lab))
-
+pd <- pd_raw %>%
+  mutate_if(is.character, tolower)
+ # mutate_at(vars(lab, subid, trial_order, session_error), as.factor)
+        
 
 ```
 
 See if lab ids are consistent, and if not fix them
 
 ```{r}
-setdiff(unique(pd_raw$lab), unique(td_raw$lab))
-setdiff(unique(td_raw$lab), unique(pd_raw$lab))
 
 # Trials dataframe
 td$lab[td$lab == "koku-hamburg_12-15mos"] <- "koku-hamburg"
@@ -239,7 +235,6 @@ pd$lab[pd$lab == "babylab_westernsydney"] <- "babylab-westernsydney"
 pd$lab[pd$lab == "koku_hamburg"] <- "koku-hamburg"
 
 
-
 setdiff(unique(pd$lab), unique(td$lab))
 setdiff(unique(td$lab), unique(pd$lab))
          
@@ -247,10 +242,45 @@ setdiff(unique(td$lab), unique(pd$lab))
          
 ```
 
+Correcting lab-specific subid issues
+
 ```{r}
 
+td <- td %>% 
+  #irl-concordia
+    mutate(subid, ifelse(lab == "irl-concordia", gsub("*_", "", .), subid)) %>%
+    mutate(subid, ifelse(lab == "irl-concordia", gsub("_*", "", .), subid)) %>%
+  #babylab-princeton
+    mutate(subid, ifelse(lab == "babylab-princeton", gsub("bl", "", .), subid))
+  
+  
+pd <- pd %>%
+
+#westernsydney-babylab
+    mutate(subid, ifelse(lab == "westernsydney-babylab", gsub("mb", "", .), subid))
 
 
+
+```
+
+# Pre-merge Checking
+
+
+```{r}
+
+participants_premerge_td <- td %>%
+  group_by(lab, subid) %>%
+  summarize(trialcount = n_distinct(trial_num), 
+            rowcount = length(trial_num), trial_error = last(trial_error_type),present_td=TRUE)
+
+participants_premerge_pd <- pd %>%
+  group_by(lab, subid) %>%
+  summarize(lines_in_pd = n(), age_days = first(age_days), notes = first(notes), session_error_type = first(session_error_type), present_pd=TRUE)
+
+all_participants_premerge <- merge(participants_premerge_td, participants_premerge_pd, all.x=TRUE, all.y=TRUE) %>%
+  replace_na(list(present_pd = FALSE, present_td=FALSE))
+
+unmatched_participants_premerge = filter(all_participants_premerge, !(present_td & present_pd))
 ```
 
 
