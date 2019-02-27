@@ -233,6 +233,7 @@ td$lab[td$lab == "wsu: kw"] <- "babylab-westernsydney"
 pd$lab[pd$lab == "wsu: kw"] <- "babylab-westernsydney"
 pd$lab[pd$lab == "babylab_westernsydney"] <- "babylab-westernsydney"
 pd$lab[pd$lab == "koku_hamburg"] <- "koku-hamburg"
+pd$lab[pd$lab == "princeton-babylab"] <- "babylab-princeton"
 
 
 setdiff(unique(pd$lab), unique(td$lab))
@@ -250,11 +251,6 @@ Correcting lab-specific subid issues
 
 td$subid[td$lab == "irl-concordia"] <- str_extract(td$subid[td$lab == "irl-concordia"], "s[[:digit:]]+")
 
-#babylab-princeton
-td$subid[td$lab == "babylab-princeton"] <- sub("bl", "", td$subid[td$lab == "babylab-princeton"])
-td$subid[td$lab == "babylab-princeton"] <- sub("manybabies00", "manybabies", td$subid[td$lab == "babylab-princeton"])
-td$subid[td$lab == "babylab-princeton"] <- sub("manybabies0", "manybabies", td$subid[td$lab == "babylab-princeton"])
-
 #babylab-brookes
 td$subid[td$lab == "babylab-brookes"] <- sub("g0", "g", td$subid[td$lab == "babylab-brookes"]) # Not all data zero-padded
 
@@ -262,7 +258,6 @@ td$subid[td$lab == "babylab-brookes"] <- sub("g0", "g", td$subid[td$lab == "baby
 #td$subid[td$lab == "babylab-westernsydney"] <- sub("mb00", "", "babylab-westernsydney")
 #td$subid[td$lab == "babylab-westernsydney"] <- sub("mb0", "", "babylab-westernsydney")
 #td$subid[td$lab == "babylab-westernsydney"] <- sub("mb", "", "babylab-westernsydney")
-
 
 #babylab-westernsydney
 #pd$subid[pd$lab == "babylab-westernsydney"] <- sub("mb00", "", pd$subid[pd$lab == "babylab-westernsydney"])
@@ -272,10 +267,6 @@ pd$subid[pd$lab == "babylab-westernsydney"] <- sub("mb", "", pd$subid[pd$lab == 
 #babylab-brookes
 pd$subid[pd$lab == "babylab-brookes"] <- sub("g0", "g", pd$subid[pd$lab == "babylab-brookes"]) # Not all data zero-padded
 
-#babylab-princeton
-#pd$subid[pd$lab == "babylab-princeton"] <- sub("bl", "", pd$subid[pd$lab == "babylab-princeton"])
-#pd$subid[pd$lab == "babylab-princeton"] <- sub("manybabies00", "manybabies", pd$subid[pd$lab == "babylab-princeton"])
-#pd$subid[pd$lab == "babylab-princeton"] <- sub("manybabies0", "manybabies", pd$subid[pd$lab == "babylab-princeton"])
 
   
 
@@ -294,7 +285,7 @@ participants_premerge_td <- td %>%
 
 participants_premerge_pd <- pd %>%
   group_by(lab, subid) %>%
-  summarize(lines_in_pd = n(), age_days = first(age_days), notes = first(notes), session_error = first(session_error), session_error_type = first(session_error_type), present_pd=TRUE)
+  summarize(lines_in_pd = n(), age_days = first(age_days), notes = first(notes), session_error = first(session_error), session_error_type = first(session_error_type), notes = first(notes), present_pd=TRUE)
 
 all_participants_premerge <- merge(participants_premerge_td, participants_premerge_pd, all.x=TRUE, all.y=TRUE) %>%
   replace_na(list(present_pd = FALSE, present_td=FALSE))
