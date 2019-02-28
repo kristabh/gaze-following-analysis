@@ -29,8 +29,8 @@ This script is organized around variable types being processed.
 
 **moderators/exclusion variables**
 
-* age_days
 * lang_group
+* age_days
 * gender
 * trial error
 * participant error
@@ -103,7 +103,12 @@ trial_row_checker %>%
   filter(trialcount != rowcount)
 ```
 
-All participants have the correct number of trials (6)
+```{r}
+unfinished_trials <- trial_row_checker %>%
+  filter(trialcount != 6)
+```
+
+There are ` r length(unfinished_trials)` children who did not complete all of the trials and do not have NAs for those trials.  We won't worry about this.
 
 # Exclusion variables
 
@@ -127,13 +132,207 @@ d$pilot <- grepl("pilot", tolower(d$subid)) |
   grepl("pilot", tolower(d$notes))
 ```
 
+## cognitive_developmental
+  
+  > No diagnosed developmental disorders. We excluded infants with parent-reported developmental disorders (e.g., chromosomal abnormalities, etc.) or diagnosed hearing impairments. XYZ (%XYZ) infants were tested but did not meet this criterion. Due to concerns about the accuracy of parent reports, we did not plan exclusions based on self-reported ear infections unless parents reported medically-confirmed hearing loss. 
+
+
+```{r}
+unique(d$cognitive_developmental)
+
+d$td <- !(tolower(d$cognitive_developmental) %in% 
+                 c("yes","y", "TRUE"))
+
+see_if(all(d$td %in% c(TRUE, FALSE)))
+
+```
+
+<!-- Some issues reported as having cognitive/developmental/hearing issues that don't seem to be grounds for exclusion. We are resolving this issue by reviewing lab notes for these participants and re-classifying them. -->
+
+<!-- ```{r} -->
+
+<!-- participants_td_to_keep <- read_csv("metadata/participants_cog_hearing_exclusions.csv") -->
+
+<!-- # elements not in participants_td_to_keep removed -->
+<!-- participants_td_to_keep <- subset(participants_td_to_keep, participants_td_to_keep$lab %in% d$lab) -->
+
+<!-- #validate lab names again -->
+<!-- see_if(all(participants_td_to_keep$lab %in% d$lab)) -->
+
+<!-- d <- d %>%  -->
+<!--   left_join(participants_td_to_keep) -->
+
+<!-- d$Exclude <- ifelse(is.na(d$Exclude),FALSE,d$Exclude) -->
+
+<!-- d$td <- !(d$Exclude) -->
+
+<!-- d <- select(d, -Exclude) -->
+
+<!-- see_if(all(d$td %in% c(TRUE, FALSE))) -->
+
+<!-- ``` -->
+
+<!-- We reviewed lab notes and re-classified infants as td based on these notes. See metadata-README.md regarding `participants_cog_hearing_exclusions.csv` for details about td classifications. -->
+
+<!-- Currently, `r length(unique(d[!d$td,]$subid))` children are marked as not TD. -->
+
+
+## fullterm and days_preterm
+
+> Full-term. We defined full term as gestation times greater than or equal to 37 weeks.
+
+```{r}
+unique(d$preterm)
+
+d$full_term <- !(tolower(d$preterm) %in% c("preterm", "y", "TRUE"))
+
+see_if(all(d$full_term %in% c(TRUE, FALSE)))
+
+```
+
+Currently, `r sum(!d$full_term)` trials (`r signif(mean(!d$full_term),2)*100`%) from `r length(unique(d[!d$full_term,]$subid))` children are marked as preterm and excluded from primary analyses. 
+
+<!-- Classifying infants by number of days preterm (prior to 37 weeks). First, correct for labs that reported days before 40 (and in one case 41) weeks, then classify infants less than 37 weeks as preterm. -->
+
+
+<!-- ```{r} -->
+<!-- preterm_fix <- read_csv("metadata/preterm_fix.csv") %>% -->
+<!--   rename(lab = labid) %>% -->
+<!--   select(-filename) -->
+
+<!-- #validate lab names -->
+<!-- see_if(all(d$lab %in% preterm_fix$lab)) -->
+
+<!-- d <- d %>% -->
+<!--   left_join(preterm_fix) -->
+
+<!-- d <- d %>% -->
+<!--   mutate(days_preterm_fixed = case_when( -->
+<!--     preterm_fix == "all_full_term" ~ NA_integer_, -->
+<!--     preterm_fix == "40" ~ as.integer(days_preterm - 21), -->
+<!--     preterm_fix == "41" ~ as.integer(days_preterm - 28), -->
+<!--     preterm_fix == "37" ~ as.integer(days_preterm), -->
+<!--     TRUE ~ as.integer(days_preterm))) -->
+
+<!-- # remove unnecessary column -->
+<!-- d <- select(d, -preterm_fix) -->
+
+<!-- # classify infants as preterm based on days -->
+<!-- # includes one fix for lab: ileap, subid: e48s006 who doesn't have anything in the `days_preterm` column but should be classified as preterm. -->
+<!-- d <- d %>%  -->
+<!--   mutate(full_term_by_days = case_when( -->
+<!--     days_preterm_fixed <= 0 ~ TRUE, -->
+<!--     is.na(days_preterm_fixed) ~ TRUE, -->
+<!--     days_preterm_fixed > 0 ~ FALSE, -->
+<!--     TRUE ~ NA -->
+<!--   )) -->
+
+<!-- # How many infants are classified as preterm by this method -->
+<!-- table(d[!duplicated(d$subid),]$full_term_by_days) -->
+
+<!-- ``` -->
+<!-- Find mismatches with lab-reported status. -->
+
+<!-- ```{r} -->
+<!-- d %>% -->
+<!--   group_by(lab, subid) %>% -->
+<!--   select(full_term, full_term_by_days) %>% -->
+<!--   distinct %>% -->
+<!--   filter(full_term != full_term_by_days) %>% -->
+<!--   group_by(lab) %>% -->
+<!--   count %>% -->
+<!--   datatable() -->
+<!-- ``` -->
+
+
+<!-- Approaching preterm status this way, `r length(unique(d[!d$full_term_by_days,]$subid))` children (`r signif(mean(!d$full_term_by_days),2)*100`% of trials) are marked as preterm and excluded from primary analyses. Adopt `full_term_by_days` approach. -->
+<!-- Temporarily assign status based on lab-determined column -->
+
+<!-- ```{r} -->
+
+<!-- d$full_term <- d$full_term_by_days -->
+<!-- d <- select(d,-full_term_by_days)  -->
+
+<!-- #d <- d %>% -->
+<!-- #  mutate(full_term = case_when( -->
+<!-- #  preterm == "term" ~ TRUE, -->
+<!-- #  preterm == "Term" ~ TRUE, -->
+<!-- #  preterm == "N" ~ FALSE, -->
+<!-- #  preterm == "Y" ~ FALSE, -->
+<!-- #  is.na(preterm) ~ TRUE -->
+<!-- #  )) -->
+
+
+
+<!-- ``` -->
+
+## session_error 
+
+> Participants could also be excluded for analysis based on session-level errors, including: equipment error (e.g., no sound or visuals on the first pair of trials), experimenter error (e.g., an experimenter was unblinded in setups where infant looking was measured by live button press), or evidence of parent/outside interference noted by participating labs (e.g., talking or pointing by parents, construction noise, sibling pounding on door). XYZ (XYZ%) infants were dropped from analysis due to session-level errors (XYZ for equipment error, XYZ for experimenter error, XYZ for parental interference).
+
+Note that some errors are trial-level and the trials will be dropped, others are participant-level and the participant will be dropped. 
+
+```{r}
+d$session_error <- tolower(d$session_error)
+unique(d$session_error)
+noerror_entries <- c("noerror", "noerro")
+```
+
+<!-- Many participants may be marked as having a session error, despite having usable trials. Before excluding session error participants, we make sure we keep those participants we have identified as being incorrectly classified as a session error. This includes subjects marked as a session error by the lab for not completing all trials, for what we consider to be trial-level errors, or for not meeting a non-procedural criterion (excluded based on age, preterm, language, pilot testing, etc.). These subjects are in the metadata file `participants_session_error_keep.csv`. The column 'session_error_change_reason' also includes a short explanation of why we are reversing the session error code for each subject. In addition, we are adding a unified coding of the (remaining) session error types into three categories: equipment failure, outside interference, experimenter error. The recoded session error types are in the metadata file `participants_session_error_type.csv` and the column containing the updated session error code is named `session_error_type_recoded`. -->
+
+<!-- ```{r} -->
+<!-- participants_error_to_keep <- read_csv("metadata/participants_session_error_keep.csv") -->
+
+<!-- #validate lab names -->
+<!-- see_if(all(participants_error_to_keep$lab %in% d$lab)) -->
+
+<!-- #validate subids -->
+<!-- see_if(all(participants_error_to_keep$subid %in% d$subid)) -->
+
+<!-- d <- d %>%  -->
+<!--   left_join(participants_error_to_keep) -->
+
+<!-- d$session_error_recoded <- ifelse(is.na(d$session_error_recoded),0,d$session_error_recoded) -->
+
+<!-- d$session_error <- !(is.na(d$session_error)| -->
+<!--                        tolower(d$session_error) %in% noerror_entries |  -->
+<!--                          d$session_error_recoded == 1) -->
+
+<!-- see_if(all(d$session_error %in% c(TRUE, FALSE))) -->
+
+<!-- #add column for unified coding of session error -->
+<!-- participants_error_type <- read_csv("metadata/participants_session_error_type.csv") -->
+
+<!-- #validate lab names -->
+<!-- see_if(all(!(is.na(participants_error_type$lab_mb1b)) %in% d$lab)) -->
+
+<!-- d <- d %>%  -->
+<!--   left_join(participants_error_type) -->
+<!-- ``` -->
+
+## trial_error
+
+Now move on to trial errors. 
+
+```{r}
+prop_error <- d %>%
+  group_by(lab) %>%
+  summarise(prop_error = mean(trial_error == "error")) 
+
+prop_error
+```
+
+Currently, we have no information for trial errors in eyetracking data.  Rates for trial errors in hand-coded data are relatively small, and so we will not look into them further.
+
+# Moderators
+
 ## Language group
 
 Fix some typos etc.
 ```{r}
 d <- d %>%
   mutate_at(vars(matches("exposure")), as.numeric) %>%
-  mutate(lang_group, case_when(
+  mutate(lang_group = case_when(
     lang_group == "monilingual" ~ "monolingual",
     lang_group == "monolinugal" ~ "monolingual",
     lang_group == "trilingual" ~ "bilingual",
@@ -195,4 +394,205 @@ d %>%
    filter(lang_group != language_group) %>% 
   select(lab, subid, lang1_exposure, lang2_exposure, lang3_exposure, lang4_exposure, lang_group, language_group) %>%
   unique()
+```
+Replace lang_grou with recalculated language_group
+```{r}
+
+d <- d %>%
+  mutate(lang_group = language_group)
+
+
+```
+
+
+## Gender
+
+```{r}
+unique(d$partcipant_gender)
+
+```
+# ```{r}
+# unique(d$gender)
+# d$gender <- toupper(d$gender)
+# 
+# d <- d %>%
+#   mutate(gender2 = case_when(
+#     gender == "FEMALE" ~ "F", # change 'female' to F
+#     gender == "MALE" ~ "M", # change 'male' to M
+#     gender == 0 ~ NA_character_, # change 0 to NA
+#     TRUE ~ gender))
+#     
+# d %>%
+#   group_by(lab, subid) %>%
+#   select(gender) %>%
+#   distinct %>%
+#   group_by(lab) %>%
+#   filter(!(gender %in% c("M","F"))) %>%
+#   count %>%
+#   datatable
+# 
+# see_if(all(d$gender %in% c("M", "F", NA)))
+# 
+# ```
+
+* Some issues with participant gender.  Need to be checked *
+
+## age_days and age_group
+
+Add age groups back in. 
+
+```{r}
+month <- 365.25 / 12
+
+d$age_mo <- d$age_days / month
+ggplot(d, aes(x = age_mo)) + 
+  geom_histogram(binwidth = 1)
+
+d$age_group <- cut(d$age_mo, c(3,6,9,12,15), 
+                   labels = c("3-6 mo","6-9 mo","9-12 mo","12-15 mo"), 
+                   include.lowest = TRUE)
+max(d$age_mo, na.rm=TRUE)
+
+d %>%
+  filter(is.na(age_group)) %>%
+  select(lab, subid, age_mo, age_group) %>%
+  unique()
+
+# Some labs contributed data from babies outside the target age group
+
+participants_by_lab_and_age_group = d %>%
+  group_by(lab, age_group) %>%
+  summarize(participants = n_distinct(subid))
+
+print(participants_by_lab_and_age_group, n=1e4)
+
+```
+
+# Dependent Variables
+
+## first_shift
+
+Visualize some counts for first_shift
+```{r}
+
+d <- d %>%
+  mutate(first_shift = as.factor(first_shift)) %>%
+  replace_with_na(replace = list(first_shift = "na")) 
+  
+d %>% 
+ # group_by(subid, first_shift, age_group, lang_group) %>%
+  #summarize(n = n()) %>%
+ # mutate(prop = n / sum(n)) %>%
+  ggplot(aes(x = first_shift)) +
+  geom_bar(aes(y = ..prop.., group = 1)) +
+    facet_grid(lang_group ~ age_group)
+
+```
+
+# latency
+
+
+Some labs used miliseconds, others seconds *Need to fix*
+```{r}
+
+
+#bll-manitoba has one trial with huge latency.  E-mailed lab to check
+
+d %>%
+  filter(lab == "bll-umanitoba") %>%
+  ggplot(aes(x = latency)) +
+  geom_histogram()
+
+d %>%
+  group_by(lab) %>%
+  summarise(min = min(latency, na.rm = TRUE), max = max(latency, na.rm = TRUE), mean = mean(latency, na.rm=TRUE))
+
+
+```
+
+# n_shift_congruent
+
+```{r}
+
+d <- d %>%
+   mutate(n_shift_congruent = as.integer(n_shift_congruent))
+
+d %>%
+  group_by(lab) %>%
+  summarise(min = min(n_shift_congruent, na.rm = TRUE), max = max(n_shift_congruent, na.rm = TRUE), mean = mean(n_shift_congruent, na.rm=TRUE))
+
+d %>%
+  ggplot(aes(x = n_shift_congruent)) +
+  geom_histogram() +
+  facet_grid(age_group ~ lang_group)
+
+```
+Everything looks as expected. Values between 0 and 5
+
+# n_shift_incongruent
+
+```{r}
+
+d <- d %>%
+    mutate(n_shift_incongruent = as.integer(n_shift_incongruent)) 
+
+d %>%
+  group_by(lab) %>%
+  summarise(min = min(n_shift_congruent, na.rm = TRUE), max = max(n_shift_congruent, na.rm = TRUE), mean = mean(n_shift_congruent, na.rm=TRUE))
+
+d %>%
+  ggplot(aes(x = n_shift_incongruent)) +
+  geom_histogram() +
+  facet_grid(age_group ~ lang_group)
+
+```
+
+Everything looks as expected. Values between 0 and 5
+
+# fixation_congruent
+
+```{r}
+
+d <- d %>%
+  mutate(fixation_congruent = as.numeric(fixation_congruent))
+
+
+d %>%
+  group_by(lab) %>%
+  summarise(min = min(fixation_congruent, na.rm = TRUE), max = max(fixation_congruent, na.rm = TRUE), mean = mean(fixation_congruent, na.rm=TRUE))
+
+d %>%
+  ggplot(aes(x = fixation_congruent)) +
+  geom_histogram() +
+  facet_grid(age_group ~ lang_group)
+
+```
+
+Congruent fixation data appear to be highly left-skewed, but values are as expected
+
+```{r}
+
+d <- d %>%
+  mutate(fixation_incongruent = as.numeric(fixation_incongruent))
+
+
+d %>%
+  group_by(lab) %>%
+  summarise(min = min(fixation_incongruent, na.rm = TRUE), max = max(fixation_incongruent, na.rm = TRUE), mean = mean(fixation_congruent, na.rm=TRUE))
+
+d %>%
+  ggplot(aes(x = fixation_incongruent)) +
+  geom_histogram() +
+  facet_grid(age_group ~ lang_group)
+
+```
+
+Inongruent fixation data appear to be highly left-skewed, but values are as expected
+
+# Output
+
+Output intermediate file. 
+
+```{r}
+write_csv(d, "processed_data/02_validated_output.csv")
 ```
