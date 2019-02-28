@@ -9,6 +9,7 @@ library(knitr)
 library(DT)
 library(assertthat)
 library(lme4)
+library(naniar)
 library(tidyverse)
 library(langcog) # devtools::install_github("langcog/langcog")
                  # NOTE: Following install you may see errors, restarting R resolved for me
