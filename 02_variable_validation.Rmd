@@ -1,0 +1,30 @@
+---
+title: "Gaze Following Variable Validation"
+author: "Gaze following Analysis Team"
+date: '`r format(Sys.time(), "%a %b %d %X %Y")`'
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: yes
+---
+
+# Intro
+
+This is the second Gaze Following preprocessing script. The goal of this file is to ensure that all variables have the values assumed by further analysis. Credit to the much code borrowed from mb1/mb1b scripts.
+
+This script is organized around variable types being processed. 
+
+**identifiers** 
+[should not be modified after reading and merging in 01_read_and_merge.RMD]
+
+* lab
+* subid
+
+**trial variables**
+
+* trial_order
+* trial_num
+* stimulus
+* trial_type
+* stimulus_num
