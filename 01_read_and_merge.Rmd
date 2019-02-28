@@ -76,13 +76,6 @@ pd_raw <- full_join(pd_raw, temp_dataset)
   
 }
 
-#Fix misnamed column from one lab
-
-pd_raw <- pd_raw %>%
-  unite(participant_gender, partcipant_gender) %>%
-  mutate(participant_gender = str_replace(participant_gender, pattern = "NA", replacement = ""))
-  
-
 
 
 
@@ -203,7 +196,6 @@ td_raw <- full_join(gp_raw, hc_raw)
 
 ```{r}
 
-
 td <- td_raw %>%
   # Change variables to correct types
   mutate_if(is.character, tolower) %>%
@@ -257,36 +249,33 @@ Correcting lab-specific subid issues
 
 ```{r}
 
-#irl-concordia
-
+#irl-concordia trials
 td$subid[td$lab == "irl-concordia"] <- str_extract(td$subid[td$lab == "irl-concordia"], "GF[[:digit:]]+_s[[:digit:]]+")
+
+#irl-concordia participants
+pd$subid[pd$lab == "irl-concordia" && pd$age_days <= 300] <- paste0("GF6_", toupper(pd$subid[pd$lab == "irl-concordia" && pd$age_days <= 300]))
+pd$subid[pd$lab == "irl-concordia" && pd$age_days <= 300] <- paste0("GF12_", toupper(pd$subid[pd$lab == "irl-concordia" && pd$age_days >= 300]))
 
 #babylab-brookes
 td$subid[td$lab == "babylab-brookes"] <- sub("g0", "g", td$subid[td$lab == "babylab-brookes"]) # Not all data zero-padded
 
-#babylab-westernsydney
+#babylab-westernsydney trials
+td$subid[td$lab == "babylab-westernsydney"] <- sub("mb00", "", "babylab-westernsydney")
+td$subid[td$lab == "babylab-westernsydney"] <- sub("mb0", "", "babylab-westernsydney")
+td$subid[td$lab == "babylab-westernsydney"] <- sub("mb", "", "babylab-westernsydney")
 
-
-#td$subid[td$lab == "babylab-westernsydney"] <- sub("mb00", "", "babylab-westernsydney")
-#td$subid[td$lab == "babylab-westernsydney"] <- sub("mb0", "", "babylab-westernsydney")
-#td$subid[td$lab == "babylab-westernsydney"] <- sub("mb", "", "babylab-westernsydney")
-
-#babylab-westernsydney
-#pd$subid[pd$lab == "babylab-westernsydney"] <- sub("mb00", "", pd$subid[pd$lab == "babylab-westernsydney"])
-#pd$subid[pd$lab == "babylab-westernsydney"] <- sub("mb0", "", pd$subid[pd$lab == "babylab-westernsydney"])
-#pd$subid[pd$lab == "babylab-westernsydney"] <- sub("mb", "", pd$subid[pd$lab == "babylab-westernsydney"])
+#babylab-westernsydney participants
+pd$subid[pd$lab == "babylab-westernsydney"] <- sub("mb00", "", pd$subid[pd$lab == "babylab-westernsydney"])
+pd$subid[pd$lab == "babylab-westernsydney"] <- sub("mb0", "", pd$subid[pd$lab == "babylab-westernsydney"])
+pd$subid[pd$lab == "babylab-westernsydney"] <- sub("mb", "", pd$subid[pd$lab == "babylab-westernsydney"])
 
 #babylab-brookes
 pd$subid[pd$lab == "babylab-brookes"] <- sub("g0", "g", pd$subid[pd$lab == "babylab-brookes"]) # Not all data zero-padded
 
 
-  
-
-
 ```
 
 # Pre-merge Checking
-
 
 ```{r}
 
