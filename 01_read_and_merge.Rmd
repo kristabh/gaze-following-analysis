@@ -43,7 +43,7 @@ for (file in participant_files){
   # if the merged dataset does exist, append to it
 
   if (exists("pd_raw")){
-    temp_dataset <- read_excel(file, col_names=TRUE) %>%
+    temp_dataset <- read_excel(file, col_names=TRUE, .name_repair = "universal") %>%
       mutate_all(as.character) %>%
       mutate_all(nc_na) %>%
       select(-(starts_with("Optional"))) %>%
@@ -61,7 +61,7 @@ pd_raw <- full_join(pd_raw, temp_dataset)
   
   # if the merged dataset doesn't exist, create it
   if (!exists("pd_raw")){
-        pd_raw <- read_excel(file, col_names=TRUE) %>%
+        pd_raw <- read_excel(file, col_names=TRUE, .name_repair = "universal") %>%
       mutate_all(as.character) %>%
       mutate_all(nc_na) %>%
       select(-(starts_with("Optional"))) %>%
@@ -249,12 +249,14 @@ Correcting lab-specific subid issues
 
 #irl-concordia
 
-td$subid[td$lab == "irl-concordia"] <- str_extract(td$subid[td$lab == "irl-concordia"], "s[[:digit:]]+")
+td$subid[td$lab == "irl-concordia"] <- str_extract(td$subid[td$lab == "irl-concordia"], "GF[[:digit:]]+_s[[:digit:]]+")
 
 #babylab-brookes
 td$subid[td$lab == "babylab-brookes"] <- sub("g0", "g", td$subid[td$lab == "babylab-brookes"]) # Not all data zero-padded
 
 #babylab-westernsydney
+
+
 #td$subid[td$lab == "babylab-westernsydney"] <- sub("mb00", "", "babylab-westernsydney")
 #td$subid[td$lab == "babylab-westernsydney"] <- sub("mb0", "", "babylab-westernsydney")
 #td$subid[td$lab == "babylab-westernsydney"] <- sub("mb", "", "babylab-westernsydney")
@@ -262,7 +264,7 @@ td$subid[td$lab == "babylab-brookes"] <- sub("g0", "g", td$subid[td$lab == "baby
 #babylab-westernsydney
 #pd$subid[pd$lab == "babylab-westernsydney"] <- sub("mb00", "", pd$subid[pd$lab == "babylab-westernsydney"])
 #pd$subid[pd$lab == "babylab-westernsydney"] <- sub("mb0", "", pd$subid[pd$lab == "babylab-westernsydney"])
-pd$subid[pd$lab == "babylab-westernsydney"] <- sub("mb", "", pd$subid[pd$lab == "babylab-westernsydney"])
+#pd$subid[pd$lab == "babylab-westernsydney"] <- sub("mb", "", pd$subid[pd$lab == "babylab-westernsydney"])
 
 #babylab-brookes
 pd$subid[pd$lab == "babylab-brookes"] <- sub("g0", "g", pd$subid[pd$lab == "babylab-brookes"]) # Not all data zero-padded
@@ -304,7 +306,7 @@ unmatched_participants_premerge
 Use `inner_join` to get matching participants. Our process is then to use testing to identify where we are missing participants in this join. 
 
 ```{r}
-d <- inner_join(td %>% select(-file), pd %>% select(-file)) 
+d <- inner_join(td, pd) 
 ```
 
 
@@ -328,8 +330,8 @@ lost_participants_pd <- anti_join(participants_premerge_pd, participants_postmer
 
 validate_that(nrow(lost_participants_td) + nrow(lost_participants_pd) == nrow(unmatched_participants_premerge))
 
-datatable(lost_participants_td)
-datatable(lost_participants_pd)
+lost_participants_td
+lost_participants_pd
 
 ```
 
