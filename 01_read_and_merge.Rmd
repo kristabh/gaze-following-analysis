@@ -76,6 +76,11 @@ pd_raw <- full_join(pd_raw, temp_dataset)
   
 }
 
+#Fix misnamed file
+
+pd_raw <- pd_raw %>%
+  unite(participant_gender, c("participant_gender", "partcipant_gender"), sep = "")
+
 
 ```
 
