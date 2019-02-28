@@ -23,8 +23,176 @@ This script is organized around variable types being processed.
 
 **trial variables**
 
-* trial_order
+* study_order
 * trial_num
 * stimulus
-* trial_type
-* stimulus_num
+
+**moderators/exclusion variables**
+
+* age_days
+* lang_group
+* gender
+* trial error
+* participant error
+* preterm
+* pilot
+
+**DVs**
+
+* first_shift
+* latency
+* n_shift_congruent
+* n_shift_incongruent
+* fixation_congruent
+* fixation_incongruent
+
+NOTE: No exclusions are performed in this script. These are all performed in `03_exclusion.Rmd`.
+
+```{r setup, echo=FALSE, message=FALSE}
+source("helper/common.R")
+```
+
+```{r}
+d <- read_csv("processed_data/01_merged_ouput.csv", guess_max = 3000)
+```
+
+Data import functions are factored into a helper functions file. 
+
+```{r}
+source("helper/preprocessing_helper.R")
+```
+
+# Trial variables
+
+The goal of this subsection is to ensure that we have the following variables. 
+
+* study_order - which counterbalance? [1:4]
+* trial_num - 
+
+## trial_order
+
+What trial orders do we have?
+
+```{r}
+unique(d$study_order)
+
+```
+We have the expected 4 study orders
+
+# trial_number
+
+What trial numbers do we have
+
+```{r}
+unique(d$trial_num)
+
+```
+We have the expected 6 trial numbers in the dataset
+
+Next, if there aren't exactly 6 trials for a participant, we want to make it so there are! (IE by defining a row for an 'error' at trial 1, 2, etc. of each baby.) First, check how many rows exist for each participant (which may not be the same as the number of trials!)
+
+These are cases where the number of trial numbers doesn't match the number of rows. 
+
+```{r}
+trial_row_checker <- d %>%
+  group_by(lab, subid) %>%
+  summarize(trialcount = n_distinct(trial_num), 
+            rowcount = length(trial_num)) 
+
+trial_row_checker %>%
+  filter(trialcount != rowcount)
+```
+
+All participants have the correct number of trials (6)
+
+# Exclusion variables
+
+* pilot
+* developmental disorders
+* preterm
+
+and, perhaps most problematically:
+
+* trial error
+* participant error
+
+
+## Pilot
+
+Identifying participants as pilots. If `pilot == T` it indicates that there was the word "pilot" in their subid, session_error_type, or notes.
+
+```{r}
+d$pilot <- grepl("pilot", tolower(d$subid)) | 
+  grepl("pilot", tolower(d$session_error_type)) | 
+  grepl("pilot", tolower(d$notes))
+```
+
+## Language group
+
+Fix some typos etc.
+```{r}
+d <- d %>%
+  mutate_at(vars(matches("exposure")), as.numeric) %>%
+  mutate(lang_group, case_when(
+    lang_group == "monilingual" ~ "monolingual",
+    lang_group == "monolinugal" ~ "monolingual",
+    lang_group == "trilingual" ~ "bilingual",
+    lang_group == "others" ~ "other"
+  ))
+
+```
+
+Make sure that labs used percentages rather than proportions for language exposure.  Fix when proportions were used
+```{r}
+# Fix for elp-georgetown
+
+d$lang1_exposure[d$lab == "elp-georgetown"] <- d$lang1_exposure[d$lab == "elp-georgetown"] * 100
+d$lang2_exposure[d$lab == "elp-georgetown"] <- d$lang2_exposure[d$lab == "elp-georgetown"] * 100
+d$lang3_exposure[d$lab == "elp-georgetown"] <- d$lang3_exposure[d$lab == "elp-georgetown"] * 100
+d$lang4_exposure[d$lab == "elp-georgetown"] <- d$lang4_exposure[d$lab == "elp-georgetown"] * 100
+
+
+d %>%
+  group_by(lab) %>%
+  summarize(min_exp = min(lang1_exposure), max_exp = max(lang1_exposure))
+
+```
+
+Test if language percentages add up to 100
+
+```{r}
+
+d %>%
+  select(lab, subid, lang1_exposure, lang2_exposure, lang3_exposure, lang4_exposure) %>%
+  unique() %>%
+  group_by(lab, subid) %>%
+  summarize(total_exposure = lang1_exposure + lang2_exposure + lang3_exposure + lang4_exposure) %>%
+  filter(total_exposure != 100)
+
+
+```
+
+
+
+There was some inconsistency in how labs applied language group criteria.  Our definition was that monolinguals hear >=90% one language, bilinguals hear >=25% of each of two languages (third langauge exposure okay).  Let's re-compute language groups based on reported exposure
+
+```{r}
+d <- d %>%
+  mutate(language_group = case_when(
+     lang1_exposure >= 90 ~ "monolingual",
+     lang2_exposure >= 90 ~ "monolingual",
+     lang3_exposure >= 90 ~ "monolingual",
+     lang4_exposure >= 90 ~ "monolingual",
+     lang1_exposure >= 25 & lang1_exposure <= 75 & lang2_exposure >= 25 & lang2_exposure <= 75 ~ "bilingual",
+     lang2_exposure >= 25 & lang2_exposure <= 75 & lang3_exposure >= 25 & lang3_exposure <= 75 ~ "bilingual",
+     lang3_exposure >= 25 & lang3_exposure <= 75 & lang4_exposure >= 25 & lang4_exposure <= 75 ~ "bilingual",
+     lang1_exposure >= 25 & lang1_exposure <= 75 & lang3_exposure >= 25 & lang3_exposure <= 75 ~ "bilingual",
+     lang1_exposure >= 25 & lang1_exposure <= 75 & lang4_exposure >= 25 & lang4_exposure <= 75 ~ "bilingual",
+     lang2_exposure >= 25 & lang2_exposure <= 75 & lang4_exposure >= 25 & lang4_exposure <= 75 ~ "bilingual",
+    TRUE ~ "other"))
+
+d %>%
+   filter(lang_group != language_group) %>% 
+  select(lab, subid, lang1_exposure, lang2_exposure, lang3_exposure, lang4_exposure, lang_group, language_group) %>%
+  unique()
+```
