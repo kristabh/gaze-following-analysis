@@ -39,9 +39,9 @@ source("helper/preprocessing_helper.R")
 participant_files <- dir("processed_data/participants_cleaned/", pattern = ".xlsx", all.files = FALSE)
 participant_files <- paste0("processed_data/participants_cleaned/", participant_files) # Adds path to names
 
-
 for (file in participant_files){
   # if the merged dataset does exist, append to it
+
   if (exists("pd_raw")){
     temp_dataset <- read_excel(file, col_names=TRUE) %>%
       mutate_all(as.character) %>%
@@ -299,3 +299,45 @@ unmatched_participants_premerge
 
 **Still some problems here that need to be fixed**
 
+# Merge
+
+Use `inner_join` to get matching participants. Our process is then to use testing to identify where we are missing participants in this join. 
+
+```{r}
+d <- inner_join(td %>% select(-file), pd %>% select(-file)) 
+```
+
+
+# Test Merge
+
+```{r}
+participants_postmerge <- d %>%
+  group_by(lab, subid) %>%
+  summarize(trialcount = n_distinct(trial_num), 
+            rowcount = length(trial_num))
+```
+
+Compare the number of rows and trials to pre-merge values! In the resulting dataframe, we have `r nrow(setdiff(select(participants_premerge_td, lab, subid, trialcount, rowcount), participants_postmerge))` participants missing from TD and `r nrow(setdiff(select(participants_premerge_pd, lab, subid), select(participants_postmerge, lab, subid)))` from PD.  Where did they go, and why did they drop?
+
+Here's a full list of participants (and labs) who get lost during merge. Use `anti_join` to detect lost participants. (For sanity, this should be the same as the pre-merged list of 'problem' subids)
+
+```{r}
+lost_participants_td <- anti_join(participants_premerge_td, participants_postmerge)
+lost_participants_pd <- anti_join(participants_premerge_pd, participants_postmerge)
+
+
+validate_that(nrow(lost_participants_td) + nrow(lost_participants_pd) == nrow(unmatched_participants_premerge))
+
+datatable(lost_participants_td)
+datatable(lost_participants_pd)
+
+```
+
+
+# Output
+
+Output intermediate files. 
+
+```{r}
+write_csv(d, "processed_data/01_merged_ouput.csv")
+```
