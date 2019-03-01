@@ -77,35 +77,14 @@ d <- trial_err$data
 ```
 
 
-```{r usable_pairs}
-usable_pairs <- d %>%
-  filter(trial_type != "TRAIN") %>%
-  group_by(lab, subid, stimulus_num) %>%
-  summarise(n_usable = sum(!is.na(looking_time))) %>%
-  summarise(usable_pair = any(n_usable == 2))
-```
-
-
-```{r usable_pairs2}
-d <- d %>% 
-  left_join(usable_pairs) 
-
-usablepair <- exclude_by(d, quo(usable_pair), action = "include", 
-                         return_pcts = TRUE, 
-                         quiet = TRUE)
-
-d <- usablepair$data
-```
-
-* *Contributed usable data*. A child must have contributed non-zero looking time on a pair of test trials (i.e., one trial each of IDS and ADS from a particular stimulus pair), after trial-level exclusions were applied, to be included in the study. `r usablepair$percents$any_sum` (`r round(usablepair$percents$any_mean*100, 2)`%)  infants were tested but did not meet these criteria. We adopted this relatively liberal inclusion criterion even though it is at variance with the more stringent standards that are typically used in infancy research. We were interested in maximizing the amount of data from each lab we were able to include in the initial analysis, and our paradigm was by design less customized for any particular age group (and hence likely to produce greater data loss, especially for older children). In the exploratory analyses below, we consider how exclusion decisions affected our effect size estimates.
-
-
 ```{r}
 #store an additional dataframe containing information on session error types
 session_error_type <- d %>%
   filter(session_error) %>%
-  distinct(lab, subid,session_error_type_recoded) %>%
-  count(session_error_type_recoded)
+  distinct(lab, subid,session_error_type) %>%
+  count(session_error_type)
+ # distinct(lab, subid,session_error_type_recoded) %>%
+#  count(session_error_type_recoded)
 
 sessionerr <- exclude_by(d, quo(session_error), 
                          action = "exclude", 
