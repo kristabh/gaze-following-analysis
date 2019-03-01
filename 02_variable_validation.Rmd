@@ -345,20 +345,20 @@ Before excluding trial errors, we make sure we keep those trials we have identif
 #see_if(all(participants_trial_error_update$lab %in% d$lab))
 
 #d <- d %>% 
-  left_join(participants_trial_error_update)
+#  left_join(participants_trial_error_update)
 
 #d$trial_error_new <- ifelse(is.na(d$trial_error_new),d$trial_error,d$trial_error_new)
 
-d$trial_error_new <- tolower(d$trial_error_new)
-unique(d$trial_error_new)
-noerror_trial_entries <- c("noerror", "no error", "no", "no_error", "noerror'")
-
-d$trial_error <- !(is.na(d$trial_error_new) |
-                     d$trial_error_new %in% noerror_trial_entries)
-
-d <- select(d, -trial_error_new)
-
-see_if(all(d$trial_error %in% c(TRUE, FALSE)))
+# d$trial_error_new <- tolower(d$trial_error_new)
+# unique(d$trial_error_new)
+# noerror_trial_entries <- c("noerror", "no error", "no", "no_error", "noerror'")
+# 
+# d$trial_error <- !(is.na(d$trial_error_new) |
+#                      d$trial_error_new %in% noerror_trial_entries)
+# 
+# d <- select(d, -trial_error_new)
+# 
+# see_if(all(d$trial_error %in% c(TRUE, FALSE)))
 
 ```
 
