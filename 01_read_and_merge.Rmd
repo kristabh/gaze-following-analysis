@@ -131,7 +131,11 @@ gp_raw <- full_join(gp_raw, temp_dataset)
   
 }
 
+length(unique(gp_raw$lab))
+
 ```
+
+There are `r length(unique(gp_raw$lab))` lab ids that contributed eyetracking data. Note that here, koku-hamburg has two different ids.  Will be handled in a later section
 
 # Handcoded Data Import
 
@@ -170,9 +174,12 @@ hc_raw <- full_join(hc_raw, temp_dataset)
   
 }
 
+length(unique(hc_raw$lab))
 
 
 ```
+
+There are `r length(unique(hc_raw$lab))` labs that contributed hand-coded data.  This includes on lab that also contributed eye-tracked data.
 
 Join to get full dataset
 ```{r}
@@ -250,19 +257,22 @@ Correcting lab-specific subid issues
 ```{r}
 
 #irl-concordia trials
-td$subid[td$lab == "irl-concordia"] <- str_extract(td$subid[td$lab == "irl-concordia"], "GF[[:digit:]]+_s[[:digit:]]+")
+td$subid[td$lab == "irl-concordia" & td$subid == "gf_s30_47622"] <- "gf12_s30_47622" # correcting typo
+td$subid[td$lab == "irl-concordia" & td$subid == "gf16_s19_46048"] <- "gf12_s19_46048" # correcting typo
+td$subid[td$lab == "irl-concordia"] <- str_extract(td$subid[td$lab == "irl-concordia"], "gf[[:digit:]]+_s[[:digit:]]+")
+
 
 #irl-concordia participants
-pd$subid[pd$lab == "irl-concordia" && pd$age_days <= 300] <- paste0("GF6_", toupper(pd$subid[pd$lab == "irl-concordia" && pd$age_days <= 300]))
-pd$subid[pd$lab == "irl-concordia" && pd$age_days <= 300] <- paste0("GF12_", toupper(pd$subid[pd$lab == "irl-concordia" && pd$age_days >= 300]))
+pd$subid[pd$lab == "irl-concordia" & pd$age_days <= 300] <- paste0("gf6_", pd$subid[pd$lab == "irl-concordia" & pd$age_days <= 300])
+pd$subid[pd$lab == "irl-concordia" & pd$age_days >= 300] <- paste0("gf12_", pd$subid[pd$lab == "irl-concordia" & pd$age_days >= 300])
 
 #babylab-brookes
 td$subid[td$lab == "babylab-brookes"] <- sub("g0", "g", td$subid[td$lab == "babylab-brookes"]) # Not all data zero-padded
 
 #babylab-westernsydney trials
-td$subid[td$lab == "babylab-westernsydney"] <- sub("mb00", "", "babylab-westernsydney")
-td$subid[td$lab == "babylab-westernsydney"] <- sub("mb0", "", "babylab-westernsydney")
-td$subid[td$lab == "babylab-westernsydney"] <- sub("mb", "", "babylab-westernsydney")
+td$subid[td$lab == "babylab-westernsydney"] <- sub("mb00", "", td$subid[td$lab == "babylab-westernsydney"])
+td$subid[td$lab == "babylab-westernsydney"] <- sub("mb0", "", td$subid[td$lab == "babylab-westernsydney"])
+td$subid[td$lab == "babylab-westernsydney"] <- sub("mb", "", td$subid[td$lab == "babylab-westernsydney"])
 
 #babylab-westernsydney participants
 pd$subid[pd$lab == "babylab-westernsydney"] <- sub("mb00", "", pd$subid[pd$lab == "babylab-westernsydney"])
@@ -294,11 +304,24 @@ all_participants_premerge <- merge(participants_premerge_td, participants_premer
 unmatched_participants_premerge <- filter(all_participants_premerge, !(present_td & present_pd)) %>%
   filter(session_error == "noerror")
 
+# Check if we have resolved any of these issues
+
+conf <- read_csv('metadata/true_unmatched_participants.csv') %>%
+  filter(confirmed == 'X')%>%
+  select(subid, lab, confirmed)
+
+unmatched_participants_premerge <- merge(unmatched_participants_premerge, conf, all.x=TRUE) %>%
+  replace_na(list(Confirmed = FALSE))%>%
+  filter(Confirmed != 'X')
+
+write_csv(unmatched_participants_premerge, 'metadata/unconfirmed_unmatched_participants.csv')
+
 unmatched_participants_premerge
 
 ```
 
-**Still some problems here that need to be fixed**
+We still have a `r length(unmatched_participants_premerge)` that need to be checked on.
+
 
 # Merge
 
