@@ -324,6 +324,44 @@ prop_error
 
 Currently, we have no information for trial errors in eyetracking data.  Rates for trial errors in hand-coded data are relatively small, and so we will not look into them further.
 
+Note that there were a large number of trial numbers reported and there was no compliance at all in using our trial error categorization. 
+
+```{r}
+d %>%
+  group_by(trial_error_type) %>%
+  summarise(n = n()) %>%
+  filter(!is.na(trial_error_type), 
+         trial_error_type != "",
+         trial_error_type != "NA",) %>%
+  arrange(desc(n))
+
+```
+Before excluding trial errors, we make sure we keep those trials we have identified as being incorrectly classified as a trial error and remove trials not marked as an error. These subjects are in the metadata file `participants_trial_error_keep.csv` (see metadata-README for details).
+
+```{r}
+#participants_trial_error_update <- read_csv("metadata/participants_trial_error_update.csv")
+
+#validate lab names
+#see_if(all(participants_trial_error_update$lab %in% d$lab))
+
+#d <- d %>% 
+  left_join(participants_trial_error_update)
+
+#d$trial_error_new <- ifelse(is.na(d$trial_error_new),d$trial_error,d$trial_error_new)
+
+d$trial_error_new <- tolower(d$trial_error_new)
+unique(d$trial_error_new)
+noerror_trial_entries <- c("noerror", "no error", "no", "no_error", "noerror'")
+
+d$trial_error <- !(is.na(d$trial_error_new) |
+                     d$trial_error_new %in% noerror_trial_entries)
+
+d <- select(d, -trial_error_new)
+
+see_if(all(d$trial_error %in% c(TRUE, FALSE)))
+
+```
+
 # Moderators
 
 ## Language group
@@ -401,6 +439,16 @@ Replace lang_grou with recalculated language_group
 d <- d %>%
   mutate(lang_group = language_group)
 
+
+```
+
+Create variable to exclude those who don't meet language criteria
+
+```{r}
+d <- d %>%
+  mutate(lang_incl = case_when(
+         language_group == "other" ~ FALSE,
+         TRUE ~ TRUE))
 
 ```
 
