@@ -358,7 +358,15 @@ Before excluding trial errors, we make sure we keep those trials we have identif
 # 
 # d <- select(d, -trial_error_new)
 # 
-# see_if(all(d$trial_error %in% c(TRUE, FALSE)))
+
+
+d <- d %>%
+  mutate(trial_error = case_when(
+    trial_error == "error" ~ TRUE,
+    trial_error == "noerror" ~ FALSE
+  ))
+
+see_if(all(d$trial_error %in% c(TRUE, FALSE)))
 
 ```
 
