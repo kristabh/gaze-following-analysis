@@ -280,6 +280,45 @@ noerror_entries <- c("noerror", "noerro")
 
 <!-- Many participants may be marked as having a session error, despite having usable trials. Before excluding session error participants, we make sure we keep those participants we have identified as being incorrectly classified as a session error. This includes subjects marked as a session error by the lab for not completing all trials, for what we consider to be trial-level errors, or for not meeting a non-procedural criterion (excluded based on age, preterm, language, pilot testing, etc.). These subjects are in the metadata file `participants_session_error_keep.csv`. The column 'session_error_change_reason' also includes a short explanation of why we are reversing the session error code for each subject. In addition, we are adding a unified coding of the (remaining) session error types into three categories: equipment failure, outside interference, experimenter error. The recoded session error types are in the metadata file `participants_session_error_type.csv` and the column containing the updated session error code is named `session_error_type_recoded`. -->
 
+```{r}
+#participants_error_to_keep <- read_csv("metadata/participants_session_error_keep.csv")
+
+#validate lab names
+#see_if(all(participants_error_to_keep$lab %in% d$lab))
+
+#d <- d %>% 
+#  left_join(participants_error_to_keep)
+
+#d$session_error_recoded <- ifelse(is.na(d$session_error_recoded),0,d$session_error_recoded)
+
+# d$session_error <- !(is.na(d$session_error)|
+#                        tolower(d$session_error) %in% noerror_entries | 
+#                          d$session_error_recoded == 1)
+
+
+# see_if(all(d$session_error %in% c(TRUE, FALSE)))
+# 
+# #add column for unified coding of session error
+# participants_error_type <- read_csv("metadata/participants_session_error_type.csv")
+# 
+# #validate lab names
+# see_if(all(participants_error_type$lab %in% d$lab))
+# 
+# d <- d %>% 
+#   left_join(participants_error_type)
+# 
+
+d <- d %>%
+  mutate(session_error = case_when(
+    session_error == "error" ~ TRUE,
+    session_error == "noerror" ~ FALSE,
+    session_error == "na" ~ FALSE
+  ))
+
+```
+
+<!-- Many participants may be marked as having a session error, despite having usable trials. Before excluding session error participants, we make sure we keep those participants we have identified as being incorrectly classified as a session error. This includes subjects marked as a session error by the lab for not completing all trials, for what we consider to be trial-level errors, or for not meeting a non-procedural criterion (excluded based on age, preterm, language, pilot testing, etc.). These subjects are in the metadata file `participants_session_error_keep.csv`. The column 'session_error_change_reason' also includes a short explanation of why we are reversing the session error code for each subject. In addition, we are adding a unified coding of the (remaining) session error types into three categories: equipment failure, outside interference, experimenter error. The recoded session error types are in the metadata file `participants_session_error_type.csv` and the column containing the updated session error code is named `session_error_type_recoded`. -->
+
 <!-- ```{r} -->
 <!-- participants_error_to_keep <- read_csv("metadata/participants_session_error_keep.csv") -->
 
@@ -548,21 +587,32 @@ d %>%
 # latency
 
 
-Some labs used miliseconds, others seconds *Need to fix*
+Get rid of a couple of out-of-range trials, and reset some latencies to start at 4000ms (when actor starts to turn head)
 ```{r}
 
+# Convert from seconds to miliseconds
+d$latency[d$lab == "babylab-westernsydney"] <- 1000*d$latency[d$lab == "babylab-westernsydney"]
 
-#bll-manitoba has one trial with huge latency.  E-mailed lab to check
+d <- d %>%
+  filter(latency <= 10000) %>%
+  group_by(lab, coding) %>%
+  mutate(lab_min = min(latency, na.rm = TRUE)) %>%
+  mutate(latency = case_when(
+    lab_min >= 4000 ~ latency - 4000,
+    lab_min <= 4000 ~ latency
+  ))
 
-d %>%
-  filter(lab == "bll-umanitoba") %>%
-  ggplot(aes(x = latency)) +
-  geom_histogram()
 
-d %>%
-  group_by(lab) %>%
-  summarise(min = min(latency, na.rm = TRUE), max = max(latency, na.rm = TRUE), mean = mean(latency, na.rm=TRUE))
+latencies <- d %>%
+  group_by(lab, coding) %>%
+  summarise(min = min(latency, na.rm = TRUE), max = max(latency, na.rm = TRUE), mean = mean(latency, na.rm=TRUE), range = max-min)
 
+
+write_csv(latencies, "metadata/to_check_latencies.csv")
+
+d %>% ggplot(aes(x = latency, color = coding)) +
+  geom_histogram() +
+  facet_wrap(.~lab)
 
 ```
 
