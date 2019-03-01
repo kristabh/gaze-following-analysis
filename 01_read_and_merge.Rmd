@@ -311,8 +311,8 @@ conf <- read_csv('metadata/true_unmatched_participants.csv') %>%
   select(subid, lab, confirmed)
 
 unmatched_participants_premerge <- merge(unmatched_participants_premerge, conf, all.x=TRUE) %>%
-  replace_na(list(Confirmed = FALSE))%>%
-  filter(Confirmed != 'X')
+  replace_na(list(confirmed = FALSE))%>%
+  filter(confirmed != 'X')
 
 write_csv(unmatched_participants_premerge, 'metadata/unconfirmed_unmatched_participants.csv')
 
