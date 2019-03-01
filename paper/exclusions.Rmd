@@ -25,8 +25,13 @@ d <- exclude_by(d, quo(pilot), quiet = TRUE)
 
 ```{r age}
 # We exclude kids who are outside of the 3-6 or 9-15 month age range. 
-d$out_of_age <- d$age_mo < 6 | d$age_mo > 15
-d$out_of_age <- d$age_mo > 9 & d$age_mo < 12
+d <- d %>%
+  mutate(out_of_age = case_when(
+    age_mo < 6 ~ TRUE,
+    age_mo > 15 ~ TRUE,
+    age_mo > 9 & age_mo< 12 ~ TRUE,
+    TRUE ~ FALSE
+  ))
 
 d <- exclude_by(d, quo(out_of_age), quiet=TRUE)
 ```
