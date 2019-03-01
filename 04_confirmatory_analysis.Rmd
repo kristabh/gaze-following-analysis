@@ -1,0 +1,89 @@
+---
+title: "Gaze Following confirmatory Analysis"
+author: "The Gaze Following Analysis Team"
+date: '`r format(Sys.time(), "%a %b %d %X %Y")`'
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: yes
+editor_options: 
+  chunk_output_type: inline
+---
+
+# Intro
+
+This RMarkdown file reports analyses of the primary Gaze Following dataset. It relies on data cached in `03_exclusions.Rmd`.
+
+There are four datasets 
+
+* d_first: direction of first look (congruent/incongruent) and latency of first shifts
+* d_freq: frequency of looks to congruent vs. incongruent
+* d_duration: fixation duration to congruent vs. incongruent 
+* d_latency: infants' reaction time
+
+```{r setup, echo=FALSE, message=FALSE}
+source("helper/common.R")
+export_figs <- FALSE
+```
+
+```{r}
+
+analysis_columns <- c("lab", "subid", "trial_num", "age_group", "age_days", "participant_gender", "lang_group", "first_shift", "latency", "n_shift_congruent", "n_shift_incongruent", "fixation_congruent", "fixation_incongruent")
+
+d <- read_csv("processed_data/03_data_trial_main.csv") %>%
+  select(analysis_columns) %>%
+  mutate_at(vars(lab,subid,age_group, participant_gender, lang_group, first_shift), as.factor)
+
+d_first <- d %>%
+  select(-latency, -n_shift_congruent, -n_shift_incongruent, -fixation_congruent, - fixation_incongruent)
+
+d_freq <- d %>%
+  select(-first_shift, -latency, -fixation_congruent, - fixation_incongruent)
+
+d_duration <- d %>%
+  select(-first_shift, -latency, -n_shift_congruent, -n_shift_incongruent)
+
+d_latency <- d %>%
+  select(-first_shift, -n_shift_congruent, -n_shift_incongruent, -fixation_congruent, - fixation_incongruent)
+
+
+```
+
+# Dataset Descriptives
+
+Plot of participants across age.
+
+```{r}
+participants <- d %>%
+  group_by(lab, subid, lang_group) %>%
+  summarise(age_days = age_days[1]) 
+
+ggplot(participants, 
+       aes(x = age_days/(365.25/12), fill = lab)) + 
+  geom_histogram(binwidth = 1) + 
+  facet_grid(.~lang_group) +
+  ylab("Number of babies") + 
+  xlab("Age (months)") + 
+  xlim(3, 16) + 
+  scale_fill_discrete(guide = FALSE)
+```
+Number of included babies from each lab. 
+
+```{r}
+d %>%
+  group_by(lab, lang_group, age_group, subid) %>%
+  summarise(n=n()) %>%
+  summarise(n=n())
+```
+
+Total babies: `r d %>% group_by(lab, subid) %>% summarise(n = n()) %>% nrow()`.
+
+
+# Meta-analytic framework
+
+## First-look
+```{r}
+
+```
+
