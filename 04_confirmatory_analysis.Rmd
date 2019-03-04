@@ -15,12 +15,19 @@ editor_options:
 
 This RMarkdown file reports analyses of the primary Gaze Following dataset. It relies on data cached in `03_exclusions.Rmd`.
 
-There are four datasets 
+There are four datasets for MLM models
 
 * d_first: direction of first look (congruent/incongruent) and latency of first shifts
 * d_freq: frequency of looks to congruent vs. incongruent
 * d_duration: fixation duration to congruent vs. incongruent 
 * d_latency: infants' reaction time
+
+And their associated datasets for meta-analysis
+
+* d_first_meta: direction of first look (congruent/incongruent) and latency of first shifts
+* d_freq_meta: frequency of looks to congruent vs. incongruent
+* d_duration_meta: fixation duration to congruent vs. incongruent 
+* d_latency_meta: infants' reaction time
 
 ```{r setup, echo=FALSE, message=FALSE}
 source("helper/common.R")
@@ -48,22 +55,16 @@ d_first_meta <- d_first %>%
   mutate(prop = n / sum(n)) %>%
   filter(first_shift == "congruent") %>%
   select(-first_shift) 
-  
 
 d_freq <- d %>%
   select(-first_shift, -latency, -fixation_congruent, - fixation_incongruent) %>%
-  gather(key = "object", value = "n_shifts", -iv_columns) %>%
-  mutate(object = case_when(
-    object == "n_shift_congruent" ~ "congruent",
-    object == "n_shift_incongruent" ~ "incongruent"
-  ))
+  filter((n_shift_congruent + n_shift_incongruent) > 0) %>% # Select only trials that had a shift
+  mutate(prop = (n_shift_congruent -  n_shift_incongruent)/(n_shift_congruent + n_shift_incongruent))
 
 # Find difference per trial, then calculate sub means
-d_freq_meta <- d %>%
-  select(-first_shift, -latency, -fixation_congruent, - fixation_incongruent) %>%
-  mutate(diff_fixation = n_shift_congruent - n_shift_incongruent) %>%
-  group_by_at(vars(-trial_num, -diff_fixation, -n_shift_congruent, -n_shift_incongruent)) %>%
-  summarize(diff_fixation = mean(diff_fixation, na.rm = TRUE)) # Deal with NAs at an earlier step
+d_freq_meta <- d_freq  %>%
+  filter((n_shift_congruent + n_shift_incongruent) > 0) %>% # Select only trials that had a shift
+  mutate(prop = (n_shift_congruent -  n_shift_incongruent)/(n_shift_congruent + n_shift_incongruent))
 
 d_duration <- d %>%
   select(-first_shift, -latency, -n_shift_congruent, -n_shift_incongruent)
@@ -138,12 +139,14 @@ d %>%
 
 d_first_meta %>%
   group_by(subid, age_group, lang_group) %>%
-  summarise(prop = mean(prop)) %>%
+  summarise(prop = mean(prop, na.rm = TRUE)) %>%
   group_by(age_group, lang_group) %>%
-  summarise(prop = mean(prop))
+  summarise(prop = mean(prop, na.rm = TRUE), sd = sd(prop, na.rm = TRUE))
   
 
 ```
+
+At first glance, the 
 
 ## First-look visualization
 ```{r}
@@ -155,7 +158,6 @@ ggplot(d_first_meta, aes(x = lang_group, y = prop, color = lang_group), alpha = 
 ```{r}
 
 d_z_first <- d_first_meta %>%
-  mutate(prop = prop - .5) %>% # Get difference from 50%
   group_by(subid, lab, age_group, lang_group) %>%
   summarise(mean_prop = mean(prop, na.rm = TRUE)) %>%
   group_by(lab, age_group, lang_group) %>%
@@ -167,15 +169,47 @@ d_z_first <- d_first_meta %>%
 
 ```
 
-Model with language and age
+## First look model with language and age
 
 ```{r}
-age_lang_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
+first_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
                     slab = lab, data = d_z_first, method = "REML") 
-summary(age_lang_meta)
+summary(first_meta)
 ```
 
+
+## Frequency means
+
+```{r}
+
+d_freq_meta %>%
+  group_by(subid, age_group, lang_group) %>%
+  summarise(prop = mean(prop, na.rm = TRUE)) %>%
+  group_by(age_group, lang_group) %>%
+  summarise(prop = mean(prop, na.rm = TRUE), sd = sd(prop, na.rm = TRUE))
+
 ```
+
+```{r}
+
+d_z_freq <- d_freq_meta %>%
+  group_by(subid, lab, age_group, lang_group) %>%
+  summarise(mean_prop = mean(prop, na.rm = TRUE)) %>%
+  group_by(lab, age_group, lang_group) %>%
+  summarise(d = mean(mean_prop, na.rm = TRUE) / sd(mean_prop, na.rm = TRUE), 
+            n = length(unique(subid)), 
+            d_var = d_var_calc(n, d)) %>%
+  filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
+
+
+```
+
+```{r}
+freq_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
+                    slab = lab, data = d_z_freq, method = "REML") 
+summary(freq_meta)
+```
+
 
 #MLM framework
 
@@ -222,4 +256,36 @@ first_glmer <- d_first %>%
 summary(first_glmer)
 
 ```
+
+## Freq_look
+
+```{r}
+
+freq_glmer <- d_freq %>% 
+  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+  filter(!is.na(prop)) %>%
+  glmer(prop ~ lang_group*age_days+ (1|subid) + (1|lab) + (1|trial_num),
+  data = .,
+  family = binomial
+)
+
+summary(freq_glmer)
+
+
+
+```
+
+## Freq_look visualization
+```{r}
+d_freq %>% 
+  group_by(age_group, lang_group) %>%
+ # summarize(prop = mean(prop, na.rm = TRUE), sd = sd(prop, na.rm = TRUE)) %>%
+  ggplot(aes(x = lang_group, y = prop, color = lang_group)) +
+  geom_boxplot() +
+  facet_grid(.~age_group)  
+
+
+
+```
+
 
