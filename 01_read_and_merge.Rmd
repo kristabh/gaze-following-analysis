@@ -43,7 +43,7 @@ for (file in participant_files){
   # if the merged dataset does exist, append to it
 
   if (exists("pd_raw")){
-    temp_dataset <- read_excel(file, col_names=TRUE, .name_repair = "universal") %>%
+    temp_dataset <- read_excel(file, col_names=TRUE) %>%
       mutate_all(as.character) %>%
       mutate_all(nc_na) %>%
       select(-(starts_with("Optional"))) %>%
@@ -61,7 +61,7 @@ pd_raw <- full_join(pd_raw, temp_dataset)
   
   # if the merged dataset doesn't exist, create it
   if (!exists("pd_raw")){
-        pd_raw <- read_excel(file, col_names=TRUE, .name_repair = "universal") %>%
+        pd_raw <- read_excel(file, col_names=TRUE) %>%
       mutate_all(as.character) %>%
       mutate_all(nc_na) %>%
       select(-(starts_with("Optional"))) %>%
