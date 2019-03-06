@@ -435,6 +435,8 @@ d$lang2_exposure[d$lab == "elp-georgetown"] <- d$lang2_exposure[d$lab == "elp-ge
 d$lang3_exposure[d$lab == "elp-georgetown"] <- d$lang3_exposure[d$lab == "elp-georgetown"] * 100
 d$lang4_exposure[d$lab == "elp-georgetown"] <- d$lang4_exposure[d$lab == "elp-georgetown"] * 100
 
+#One baby in princeton with typo
+d$lang1_exposure[d$subid == "manybabiesbl001"] <- d$lang1_exposure[d$subid == "manybabiesbl001"] * 100
 
 d %>%
   group_by(lab) %>%
@@ -480,7 +482,7 @@ d %>%
   select(lab, subid, lang1_exposure, lang2_exposure, lang3_exposure, lang4_exposure, lang_group, language_group) %>%
   unique()
 ```
-Replace lang_grou with recalculated language_group
+Replace lang_group with recalculated language_group
 ```{r}
 
 d <- d %>%
@@ -592,15 +594,16 @@ Get rid of a couple of out-of-range trials, and reset some latencies to start at
 
 # Convert from seconds to miliseconds
 d$latency[d$lab == "babylab-westernsydney"] <- 1000*d$latency[d$lab == "babylab-westernsydney"]
+# Correct the single error in westernsydney data
+d$latency[d$subid == "2344"] <- d$latency[d$subid == "2344"]/1000
 
 d <- d %>%
-  filter(latency <= 10000) %>%
   group_by(lab, coding) %>%
   mutate(lab_min = min(latency, na.rm = TRUE)) %>%
   mutate(latency = case_when(
     lab_min >= 4000 ~ latency - 4000,
-    lab_min <= 4000 ~ latency
-  ))
+    lab_min <= 4000 ~ latency)) %>% 
+  filter(latency <= 10000 | is.na(latency)) 
 
 
 latencies <- d %>%
@@ -662,19 +665,24 @@ Everything looks as expected. Values between 0 and 5
 d <- d %>%
   mutate(fixation_congruent = as.numeric(fixation_congruent))
 
+#convert babylab-westernsydney to milliseconds
+d <- d %>% mutate(fixation_congruent = ifelse(lab == "babylab-westernsydney", fixation_congruent*1000, fixation_congruent))
+#one trial was already in milliseconds
+d$fixation_congruent = ifelse(d$fixation_congruent == 919000, 919, d$fixation_congruent)
 
 d %>%
   group_by(lab) %>%
   summarise(min = min(fixation_congruent, na.rm = TRUE), max = max(fixation_congruent, na.rm = TRUE), mean = mean(fixation_congruent, na.rm=TRUE))
 
 d %>%
+  filter(lab != "babylab-westernsydney") %>% 
   ggplot(aes(x = fixation_congruent)) +
   geom_histogram() +
   facet_grid(age_group ~ lang_group)
 
 ```
 
-Congruent fixation data appear to be highly left-skewed, but values are as expected
+Congruent fixation data appear to be highly left-skewed, but values are as expected. 
 
 ```{r}
 
@@ -693,7 +701,7 @@ d %>%
 
 ```
 
-Inongruent fixation data appear to be highly left-skewed, but values are as expected
+Incongruent fixation data appear to be highly left-skewed, but values are as expected
 
 # Output
 
