@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1551715920419.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2608511118",
+    "id" : "C870D786",
+    "lastKnownWriteTime" : 1551805761,
+    "last_content_update" : 1551805761626,
+    "path" : "~/Documents/GitHub/gaze-following-analysis/helper/common.R",
+    "project_path" : "helper/common.R",
+    "properties" : {
+        "cursorPosition" : "14,1",
+        "scrollLine" : "5"
+    },
+    "relative_order" : 2,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

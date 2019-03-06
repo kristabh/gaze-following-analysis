@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1551805808716.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1158506935",
+    "id" : "9F019CCC",
+    "lastKnownWriteTime" : 1551715464,
+    "last_content_update" : 1551715464,
+    "path" : "~/Documents/GitHub/gaze-following-analysis/helper/preprocessing_helper.R",
+    "project_path" : "helper/preprocessing_helper.R",
+    "properties" : {
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

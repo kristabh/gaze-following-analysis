@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1551715513069.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "6AB1F2ED",
+    "lastKnownWriteTime" : 1551715464,
+    "last_content_update" : 1551805753975,
+    "path" : "~/Documents/GitHub/gaze-following-analysis/01_read_and_merge.Rmd",
+    "project_path" : "01_read_and_merge.Rmd",
+    "properties" : {
+        "cursorPosition" : "181,38",
+        "last_setup_crc32" : "493C2BA26a909fa",
+        "scrollLine" : "176"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

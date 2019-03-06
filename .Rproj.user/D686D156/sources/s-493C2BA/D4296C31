@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1551806726167.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2191016831",
+    "id" : "D4296C31",
+    "lastKnownWriteTime" : 1551715464,
+    "last_content_update" : 1551715464,
+    "path" : "~/Documents/GitHub/gaze-following-analysis/03_exclusion.Rmd",
+    "project_path" : "03_exclusion.Rmd",
+    "properties" : {
+    },
+    "relative_order" : 5,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
