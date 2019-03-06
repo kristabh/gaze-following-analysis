@@ -682,7 +682,7 @@ d %>%
 
 ```
 
-Congruent fixation data appear to be highly left-skewed, but values are as expected. 
+Congruent fixation data appear to be highly left-skewed, but values are as expected.
 
 ```{r}
 

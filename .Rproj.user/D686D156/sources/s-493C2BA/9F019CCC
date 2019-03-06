@@ -5,13 +5,15 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "1158506935",
+    "hash" : "0",
     "id" : "9F019CCC",
     "lastKnownWriteTime" : 1551715464,
     "last_content_update" : 1551715464,
     "path" : "~/Documents/GitHub/gaze-following-analysis/helper/preprocessing_helper.R",
     "project_path" : "helper/preprocessing_helper.R",
     "properties" : {
+        "cursorPosition" : "54,4",
+        "scrollLine" : "48"
     },
     "relative_order" : 3,
     "source_on_save" : false,

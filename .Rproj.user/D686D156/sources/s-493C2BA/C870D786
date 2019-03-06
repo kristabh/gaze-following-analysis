@@ -5,14 +5,14 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "2608511118",
+    "hash" : "0",
     "id" : "C870D786",
     "lastKnownWriteTime" : 1551805761,
     "last_content_update" : 1551805761626,
     "path" : "~/Documents/GitHub/gaze-following-analysis/helper/common.R",
     "project_path" : "helper/common.R",
     "properties" : {
-        "cursorPosition" : "14,1",
+        "cursorPosition" : "14,12",
         "scrollLine" : "5"
     },
     "relative_order" : 2,
