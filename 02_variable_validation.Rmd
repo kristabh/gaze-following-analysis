@@ -689,6 +689,8 @@ Congruent fixation data appear to be highly left-skewed, but values are as expec
 d <- d %>%
   mutate(fixation_incongruent = as.numeric(fixation_incongruent))
 
+#convert babylab-westernsydney to milliseconds
+d <- d %>% mutate(fixation_incongruent = ifelse(lab == "babylab-westernsydney", fixation_incongruent*1000, fixation_congruent))
 
 d %>%
   group_by(lab) %>%
