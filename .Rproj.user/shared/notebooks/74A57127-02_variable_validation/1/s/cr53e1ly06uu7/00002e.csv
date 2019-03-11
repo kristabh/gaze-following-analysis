@@ -1,0 +1,5 @@
+"0","# Some labs contributed data from babies outside the target age group"
+"0","participants_by_lab_and_age_group = d %>%"
+"0","  group_by(lab, age_group) %>%"
+"0","  summarize(participants = n_distinct(subid))"
+"0","print(participants_by_lab_and_age_group, n=1e4)"
