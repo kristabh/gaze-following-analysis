@@ -69,6 +69,10 @@ d_freq_meta <- d_freq  %>%
 d_duration <- d %>%
   select(-first_shift, -latency, -n_shift_congruent, -n_shift_incongruent)
 
+d_duration_meta <- d_duration %>% 
+  filter((fixation_congruent + fixation_incongruent) > 0) %>% # Select only trials that had fixations
+  mutate(prop = ())
+
 d_latency <- d %>%
   select(-first_shift, -n_shift_congruent, -n_shift_incongruent, -fixation_congruent, - fixation_incongruent)
 
@@ -164,7 +168,7 @@ d_z_first <- d_first_meta %>%
   summarise(d = mean(mean_prop, na.rm = TRUE) / sd(mean_prop, na.rm = TRUE), 
             n = length(unique(subid)), 
             d_var = d_var_calc(n, d)) %>%
-  filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
+ filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
 
 
 ```

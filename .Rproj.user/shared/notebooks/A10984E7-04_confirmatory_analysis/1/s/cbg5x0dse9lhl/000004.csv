@@ -5,7 +5,9 @@
   summarise(d = mean(mean_prop, na.rm = TRUE) / sd(mean_prop, na.rm = TRUE), 
             n = length(unique(subid)), 
             d_var = d_var_calc(n, d)) %>%
-  filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
+  filter(lang_group != ""other"",
+         age_group %in% c(""6-9 mo"", ""12-15 mo"")) %>% 
+  droplevels()
 "
-"2","Error in mean(prop, na.rm = TRUE) : object 'prop' not found
-"
+"2","Factor `age_group` contains implicit NA, consider using `forcats::fct_explicit_na`"
+"2","Factor `age_group` contains implicit NA, consider using `forcats::fct_explicit_na`"
