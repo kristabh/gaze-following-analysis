@@ -1,0 +1,5 @@
+"0","d_duration <- d %>%
+  select(-first_shift, -latency, -n_shift_congruent, -n_shift_incongruent)
+"
+"2","Error in is_character(x) : object 'first_shift' not found
+"

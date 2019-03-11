@@ -1,0 +1,11 @@
+"0","d_z_first <- d_first_meta %>%
+  group_by(subid, lab, age_group, lang_group) %>%
+  summarise(mean_prop = mean(prop, na.rm = TRUE)) %>%
+  group_by(lab, age_group, lang_group) %>%
+  summarise(d = mean(mean_prop, na.rm = TRUE) / sd(mean_prop, na.rm = TRUE), 
+            n = length(unique(subid)), 
+            d_var = d_var_calc(n, d)) %>%
+  filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
+"
+"2","Error in mean(prop, na.rm = TRUE) : object 'prop' not found
+"
