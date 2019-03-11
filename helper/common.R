@@ -12,6 +12,7 @@ library(lme4)
 library(naniar)
 library(tidyverse)
 library(ggridges)
+library(lmerTest)
 #library(langcog) # devtools::install_github("langcog/langcog")
                  # NOTE: Following install you may see errors, restarting R resolved for me
 library(here)
