@@ -665,6 +665,8 @@ Everything looks as expected. Values between 0 and 5
 d <- d %>%
   mutate(fixation_congruent = as.numeric(fixation_congruent))
 
+d$fixation_congruent <- replace_nas(d$fixation_congruent, 0) #Replace NAs with zeros
+
 #convert babylab-westernsydney to milliseconds
 d <- d %>% mutate(fixation_congruent = ifelse(lab == "babylab-westernsydney", fixation_congruent*1000, fixation_congruent))
 #one trial was already in milliseconds
@@ -680,6 +682,8 @@ d %>%
   geom_histogram() +
   facet_grid(age_group ~ lang_group)
 
+#replace NAs with zeros
+
 ```
 
 Congruent fixation data appear to be highly left-skewed, but values are as expected.
@@ -688,6 +692,8 @@ Congruent fixation data appear to be highly left-skewed, but values are as expec
 
 d <- d %>%
   mutate(fixation_incongruent = as.numeric(fixation_incongruent))
+
+d$fixation_incongruent <- replace_nas(d$fixation_incongruent, 0) #Replace NAs with zeros
 
 #convert babylab-westernsydney to milliseconds
 d <- d %>% mutate(fixation_incongruent = ifelse(lab == "babylab-westernsydney", fixation_incongruent*1000, fixation_congruent))
