@@ -1,0 +1,23 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1552328765626.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2191016831",
+    "id" : "A770DC15",
+    "lastKnownWriteTime" : 1551715464,
+    "last_content_update" : 1552330990150,
+    "path" : "~/Documents/GitHub/gaze-following-analysis/03_exclusion.Rmd",
+    "project_path" : "03_exclusion.Rmd",
+    "properties" : {
+        "cursorPosition" : "46,0",
+        "last_setup_crc32" : "EC7F124F8d620071",
+        "scrollLine" : "28"
+    },
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
