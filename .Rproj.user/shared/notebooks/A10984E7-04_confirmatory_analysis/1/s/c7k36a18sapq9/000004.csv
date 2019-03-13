@@ -1,7 +1,0 @@
-"0","d <- read_csv(""processed_data/03_data_trial_main.csv"") %>%
-  select(iv_columns, dv_columns) %>%
-  mutate_at(vars(lab,subid,age_group, participant_gender, lang_group, first_shift), as.factor) %>%
-  mutate_at(vars(age_group, lang_group), fct_rev)
-"
-"2","Error in .f(.x[[i]], ...) : object 'iv_columns' not found
-"
