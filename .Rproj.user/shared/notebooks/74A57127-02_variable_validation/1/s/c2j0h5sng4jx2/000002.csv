@@ -1,0 +1,5 @@
+"0","d <- d %>%"
+"0","    mutate(n_shift_incongruent = as.integer(n_shift_incongruent)) "
+"0","d %>%"
+"0","  group_by(lab) %>%"
+"0","  summarise(min = min(n_shift_congruent, na.rm = TRUE), max = max(n_shift_congruent, na.rm = TRUE), mean = mean(n_shift_congruent, na.rm=TRUE))"

@@ -1,0 +1,3 @@
+"0","#d <- d %>%"
+"0","#   group_by(lab, subid, stimulus_num) %>%"
+"0","#   mutate(trial_type = base::sample(trial_type))"
