@@ -1,4 +1,0 @@
-"0","d <- read_csv(""processed_data/01_merged_ouput.csv"", guess_max = 3000)
-"
-"2","Error: 'processed_data/01_merged_ouput.csv' does not exist in current working directory ('/Users/alexis/Desktop').
-"

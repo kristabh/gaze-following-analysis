@@ -1,5 +1,0 @@
-"0","d <- d %>%"
-"0","  mutate(fixation_incongruent = as.numeric(fixation_incongruent))"
-"0","d %>%"
-"0","  group_by(lab) %>%"
-"0","  summarise(min = min(fixation_incongruent, na.rm = TRUE), max = max(fixation_incongruent, na.rm = TRUE), mean = mean(fixation_congruent, na.rm=TRUE))"

@@ -1,7 +1,0 @@
-"0","d %>%"
-"0","  group_by(trial_error_type) %>%"
-"0","  summarise(n = n()) %>%"
-"0","  filter(!is.na(trial_error_type), "
-"0","         trial_error_type != """","
-"0","         trial_error_type != ""NA"",) %>%"
-"0","  arrange(desc(n))"

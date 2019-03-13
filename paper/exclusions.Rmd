@@ -33,11 +33,17 @@ d <- d %>%
     TRUE ~ FALSE
   ))
 
-d <- exclude_by(d, quo(out_of_age), quiet=TRUE)
+out_of_age <- exclude_by(d, quo(out_of_age),
+                   return_pcts = TRUE, 
+                   quiet = TRUE)
+
+d <- out_of_age$data
 ```
 
+* *Age*. There were `r out_of_age$percents$any_sum` (`r round(out_of_age$percents$any_mean*100, 1)`%) infants who were tested but were out of our target age groups (6-9 months and 12-15 months).
 
 ```{r}
+
 lang_incl <- exclude_by(d, quo(lang_incl), action = "include", 
                    return_pcts = TRUE, 
                    quiet = TRUE)

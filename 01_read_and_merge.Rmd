@@ -252,15 +252,19 @@ setdiff(unique(td$lab), unique(pd$lab))
          
 ```
 
-Correcting lab-specific subid issues
+Correcting lab-specific subid issues and row issues
 
 ```{r}
+
+# remove weird row with zero latency but no other info
+td <- td %>%
+  filter(!is.na(lab) & !is.na(subid) & !is.na(trial_num))
+
 
 #irl-concordia trials
 td$subid[td$lab == "irl-concordia" & td$subid == "gf_s30_47622"] <- "gf12_s30_47622" # correcting typo
 td$subid[td$lab == "irl-concordia" & td$subid == "gf16_s19_46048"] <- "gf12_s19_46048" # correcting typo
 td$subid[td$lab == "irl-concordia"] <- str_extract(td$subid[td$lab == "irl-concordia"], "gf[[:digit:]]+_s[[:digit:]]+")
-
 
 #irl-concordia participants
 pd$subid[pd$lab == "irl-concordia" & pd$age_days <= 300] <- paste0("gf6_", pd$subid[pd$lab == "irl-concordia" & pd$age_days <= 300])

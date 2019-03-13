@@ -1,9 +1,0 @@
-"0","d_first_meta %>%
-  group_by(subid, age_group, lang_group) %>%
-  summarise(prop = mean(prop, na.rm = TRUE)) %>%
-  group_by(age_group, lang_group) %>%
-  summarise(prop = mean(prop, na.rm = TRUE), sd = sd(prop, na.rm = TRUE))
-"
-"2","Factor `age_group` contains implicit NA, consider using `forcats::fct_explicit_na`"
-"2","Factor `age_group` contains implicit NA, consider using `forcats::fct_explicit_na`"
-"2","Factor `age_group` contains implicit NA, consider using `forcats::fct_explicit_na`"

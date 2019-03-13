@@ -1,4 +1,0 @@
-"0","prop_error <- d %>%"
-"0","  group_by(lab) %>%"
-"0","  summarise(prop_error = mean(trial_error == ""error"")) "
-"0","prop_error"
