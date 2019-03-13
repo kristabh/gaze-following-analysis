@@ -35,6 +35,7 @@ source("helper/ma_helper.R")
 export_figs <- FALSE
 ```
 
+
 ```{r}
 
 iv_columns <- c("lab", "subid", "trial_num", "age_group", "age_days", "participant_gender", "lang_group")
@@ -44,6 +45,13 @@ d <- read_csv("processed_data/03_data_trial_main.csv") %>%
   select(iv_columns, dv_columns) %>%
   mutate_at(vars(lab,subid,age_group, participant_gender, lang_group, first_shift), as.factor) %>%
   mutate_at(vars(age_group, lang_group), fct_rev)
+
+```
+
+
+Create datasets for analysis
+
+```{r}
 
 d_first <- d %>%
   filter(!is.na(first_shift)) %>% # Select only trials that had a shift
@@ -90,17 +98,13 @@ ggplot(d_duration, aes(x = duration)) +
   geom_histogram() +
   scale_x_continuous(trans='log')
 
-
 d_duration_meta <- d %>%
   select(-first_shift, -latency, -n_shift_congruent, -n_shift_incongruent) %>%
   filter(fixation_congruent + fixation_incongruent > 0) %>%
-  mutate(prop = (fixation_congruent - fixation_incongruent)/(fixation_congruent-fixation_incongruent)) %>% # Calculate proportion difference score
+  mutate(prop = (fixation_congruent - fixation_incongruent)/(fixation_congruent + fixation_incongruent)) %>% # Calculate proportion difference score
   group_by_at(vars(-trial_num, - prop)) %>%
   mutate(prop = mean(prop)) # Average proportion difference score by baby
 
-d_duration_meta <- d_duration %>% 
-  filter((fixation_congruent + fixation_incongruent) > 0) %>% # Select only trials that had fixations
-  mutate(prop = ())
 
 d_latency <- d %>%
   select(-n_shift_congruent, -n_shift_incongruent, -fixation_congruent, - fixation_incongruent) %>%
@@ -138,9 +142,10 @@ Number of included babies from each lab.
 
 ```{r}
 d %>%
-  group_by(lab, lang_group, age_group, subid) %>%
-  summarise(n=n()) %>%
-  summarise(n=n())
+  group_by(lab, age_group, lang_group) %>%
+  summarize(n = n_distinct(subid)) %>%
+  spread(key = lang_group, value = n) %>%
+  kable()
 ```
 
 Total babies: `r d %>% group_by(lab, subid) %>% summarise(n = n()) %>% nrow()`.
@@ -186,6 +191,30 @@ d_first_meta %>%
 
 
 ```
+
+
+# Pirate plots
+
+## First look
+```{r}
+pirateplot(formula = prop ~ lang_group + age_group, data = d_first_meta, main = "First look proportion") + geom_hline(y = 0)
+```
+
+## Frequency
+```{r}
+
+pirateplot(formula = prop ~ lang_group + age_group, data = d_freq_meta, main = "Frequency proportion") + geom_hline(y = 0)
+
+```
+
+## Duration
+```{r}
+
+pirateplot(formula = duration ~ lang_group + age_group, data = d_duration_meta, main = "Duration proportion") + geom_hline(y = 0)
+
+```
+
+
 
 # Meta-analytic framework
 
@@ -290,16 +319,7 @@ Some visualization
 
 ```{r}
 
-d_first %>%
-  filter(!is.na(first_shift)) %>%
-  group_by(subid, age_group, lang_group, first_shift) %>%
-  summarize(n = n()) %>%
-  mutate(prop = n / sum(n)) %>%
-  filter(first_shift == "congruent") %>%
-  ggplot(aes(x = lang_group, y = prop, color = lang_group)) +
-  geom_boxplot() +
-    facet_grid(. ~ age_group)
-
+pirateplot(formula = prop ~ lang_group + age_group, data = d_first_meta, main = "First look proportion") + geom_hline(y = 0)
 
 ```
 
