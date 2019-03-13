@@ -5,17 +5,17 @@
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "1384838527",
+    "hash" : "10639014",
     "id" : "405C524D",
-    "lastKnownWriteTime" : 1552337962,
-    "last_content_update" : 1552337962343,
+    "lastKnownWriteTime" : 1552337976,
+    "last_content_update" : 1552511943314,
     "path" : "~/Documents/GitHub/gaze-following-analysis/04_confirmatory_analysis.Rmd",
     "project_path" : "04_confirmatory_analysis.Rmd",
     "properties" : {
         "chunk_output_type" : "inline",
-        "cursorPosition" : "169,41",
-        "last_setup_crc32" : "EC7F124F2ff876e0",
-        "scrollLine" : "160"
+        "cursorPosition" : "212,0",
+        "last_setup_crc32" : "",
+        "scrollLine" : "231"
     },
     "relative_order" : 1,
     "source_on_save" : false,
