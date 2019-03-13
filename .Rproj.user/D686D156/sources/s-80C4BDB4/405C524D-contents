@@ -35,6 +35,7 @@ source("helper/ma_helper.R")
 export_figs <- FALSE
 ```
 
+
 ```{r}
 
 iv_columns <- c("lab", "subid", "trial_num", "age_group", "age_days", "participant_gender", "lang_group")
@@ -45,6 +46,13 @@ d <- read_csv("processed_data/03_data_trial_main.csv") %>%
   mutate_at(vars(lab,subid,age_group, participant_gender, lang_group, first_shift), as.factor) %>%
   mutate_at(vars(age_group, lang_group), fct_rev)
 
+```
+
+
+Create datasets for analysis. Meta-analytic sets have mean by infant
+
+```{r}
+
 d_first <- d %>%
   filter(!is.na(first_shift)) %>% # Select only trials that had a shift
   select(-latency, -n_shift_congruent, -n_shift_incongruent, -fixation_congruent, - fixation_incongruent)
@@ -54,7 +62,10 @@ d_first_meta <- d_first %>%
   summarise(n = n()) %>%
   spread(key = first_shift, value = n, fill = 0) %>%
   mutate(prop = (congruent-incongruent)/(congruent+incongruent)) %>% # Calculate proportion difference score
-  select(-congruent, -incongruent)
+  select(-congruent, -incongruent) %>%
+  filter(!is.na(prop)) %>%
+  group_by(subid, age_group, lang_group, lab) %>%
+  summarise(prop = mean(prop, na.rm = TRUE))
 
 d_freq <- d %>%
   select(-first_shift, -latency, -fixation_congruent, - fixation_incongruent) %>%
@@ -72,7 +83,9 @@ d_freq_meta <- d  %>%
   filter((n_shift_congruent + n_shift_incongruent) > 0) %>% # Select only trials that had a shift
   mutate(prop = (n_shift_congruent -  n_shift_incongruent)/(n_shift_congruent + n_shift_incongruent)) %>% # Calculate proportion difference score on each trial
   group_by_at(vars(-trial_num, - prop)) %>%
-  mutate(prop = mean(prop)) # Average proportion difference score by baby
+  mutate(prop = mean(prop)) %>% # Average proportion difference score by baby
+  group_by(subid, age_group, lang_group, lab) %>%
+  summarise(prop = mean(prop, na.rm = TRUE))
   
 d_duration <- d %>%
   select(-first_shift, -latency, -n_shift_congruent, -n_shift_incongruent) %>%
@@ -85,22 +98,14 @@ d_duration <- d %>%
   mutate(object = as.factor(object)) %>%
   mutate(duration = log(duration + 1)) # Log-transform duration scores, adding one to deal with zeros
 
-# Show now scores are normal
-ggplot(d_duration, aes(x = duration)) +
-  geom_histogram() +
-  scale_x_continuous(trans='log')
-
 
 d_duration_meta <- d %>%
   select(-first_shift, -latency, -n_shift_congruent, -n_shift_incongruent) %>%
   filter(fixation_congruent + fixation_incongruent > 0) %>%
-  mutate(prop = (fixation_congruent - fixation_incongruent)/(fixation_congruent-fixation_incongruent)) %>% # Calculate proportion difference score
+  mutate(prop = (fixation_congruent - fixation_incongruent)/(fixation_congruent + fixation_incongruent)) %>% # Calculate proportion difference score
   group_by_at(vars(-trial_num, - prop)) %>%
   mutate(prop = mean(prop)) # Average proportion difference score by baby
 
-d_duration_meta <- d_duration %>% 
-  filter((fixation_congruent + fixation_incongruent) > 0) %>% # Select only trials that had fixations
-  mutate(prop = ())
 
 d_latency <- d %>%
   select(-n_shift_congruent, -n_shift_incongruent, -fixation_congruent, - fixation_incongruent) %>%
@@ -109,9 +114,15 @@ d_latency <- d %>%
   mutate(latency = log(latency + 1)) # Log transform latency scores, adding one to deal with zeros
   
 
-ggplot(d_duration, aes(x = duration)) +
-  geom_histogram() +
-  scale_x_continuous(trans='log')
+d_latency_meta <- d %>%
+  select(-n_shift_congruent, -n_shift_incongruent, -fixation_congruent, - fixation_incongruent) %>%
+  rename("object" = "first_shift") %>%
+  filter(!is.na(object)) %>%
+  mutate(object = as.factor(object)) %>%
+  group_by_at(vars(-trial_num, - latency)) %>%
+  mutate(latency = mean(latency)) # Average proportion difference score by baby
+  
+
 
 
 ```
@@ -138,9 +149,10 @@ Number of included babies from each lab.
 
 ```{r}
 d %>%
-  group_by(lab, lang_group, age_group, subid) %>%
-  summarise(n=n()) %>%
-  summarise(n=n())
+  group_by(lab, age_group, lang_group) %>%
+  summarize(n = n_distinct(subid)) %>%
+  spread(key = lang_group, value = n) %>%
+  kable()
 ```
 
 Total babies: `r d %>% group_by(lab, subid) %>% summarise(n = n()) %>% nrow()`.
@@ -187,15 +199,47 @@ d_first_meta %>%
 
 ```
 
+
+# Pirate plots
+
+## First look
+```{r}
+
+d_first_meta %>%
+  group_by(subid, age_group, lang_group) %>%
+  summarise(prop = mean(prop, na.rm = TRUE)) %>%
+  pirateplot(formula = prop ~ lang_group + age_group, data = ., main = "First look proportion", theme = 1, bar.f.o = .5, bean.f.o = 0, bar.b.col = 1, bar.lwd = .5, bean.b.col = 1, inf.f.o = 0, inf.method = "se")
+
+```
+
+## Frequency
+```{r}
+
+pirateplot(formula = prop ~ lang_group + age_group, data = d_freq_meta, main = "Frequency proportion", theme = 1, bar.f.o = .5, bean.f.o = 0, bar.b.col = 1, bar.lwd = .5, bean.b.col = 1, inf.f.o = 0, inf.method = "se")
+
+```
+
+## Duration
+```{r}
+
+pirateplot(formula = prop ~ lang_group + age_group, data = d_duration_meta, main = "Fixation duration proportion", theme = 1, bar.f.o = .5, bean.f.o = 0, bar.b.col = 1, bar.lwd = .5, bean.b.col = 1, inf.f.o = 0, inf.method = "se")
+
+```
+
+## Latency
+```{r}
+
+pirateplot(formula = latency ~ object + lang_group + age_group, data = d_latency_meta, main = "Latency", theme = 6, pal = "southpark", cex.names = .5)
+
+```
+
+
 # Meta-analytic framework
 
 ## First-look means
 ```{r}
 
 d_first_meta %>%
-  filter(!is.na(prop)) %>%
-  group_by(subid, age_group, lang_group) %>%
-  summarise(prop = mean(prop, na.rm = TRUE)) %>%
   group_by(age_group, lang_group) %>%
   summarise(sd_norm = sd(prop), prop = mean(prop), sd_prop = sqrt(prop*(1-prop))) %>% #
   select(age_group, lang_group, prop, sd_prop, sd_norm)
@@ -203,14 +247,6 @@ d_first_meta %>%
 
 ```
 
-At first glance, the 
-
-## First-look visualization
-```{r}
-ggplot(d_first_meta, aes(x = lang_group, y = prop, color = lang_group), alpha = .5) +
-  facet_grid(.~age_group) +
-  geom_boxplot()
-```
 
 ```{r}
 
@@ -240,8 +276,6 @@ summary(first_meta)
 ```{r}
 
 d_freq_meta %>%
-  group_by(subid, age_group, lang_group) %>%
-  summarise(prop = mean(prop, na.rm = TRUE)) %>%
   group_by(age_group, lang_group) %>%
   summarise(sd = sd(prop, na.rm = TRUE), prop = mean(prop, na.rm = TRUE)) %>%
   select(age_group, lang_group, prop, sd)
@@ -253,8 +287,6 @@ What is the distribution of infants' first-look proportions?
 ```{r}
 
 d_freq_meta %>%
-  group_by(subid, age_group, lang_group) %>%
-  summarise(prop = mean(prop, na.rm = TRUE)) %>%
   ggplot(aes(x = prop, color = lang_group)) +
   facet_grid(lang_group~age_group) +
   geom_histogram()
@@ -266,10 +298,8 @@ d_freq_meta %>%
 ```{r}
 
 d_z_freq <- d_freq_meta %>%
-  group_by(subid, lab, age_group, lang_group) %>%
-  summarise(mean_prop = mean(prop, na.rm = TRUE)) %>%
   group_by(lab, age_group, lang_group) %>%
-  summarise(d = mean(mean_prop, na.rm = TRUE) / sd(mean_prop, na.rm = TRUE), 
+  summarise(d = mean(prop, na.rm = TRUE) / sd(prop, na.rm = TRUE), 
             n = length(unique(subid)), 
             d_var = d_var_calc(n, d)) %>%
   filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
@@ -285,25 +315,6 @@ summary(freq_meta)
 
 
 #MLM framework
-
-Some visualization
-
-```{r}
-
-d_first %>%
-  filter(!is.na(first_shift)) %>%
-  group_by(subid, age_group, lang_group, first_shift) %>%
-  summarize(n = n()) %>%
-  mutate(prop = n / sum(n)) %>%
-  filter(first_shift == "congruent") %>%
-  ggplot(aes(x = lang_group, y = prop, color = lang_group)) +
-  geom_boxplot() +
-    facet_grid(. ~ age_group)
-
-
-```
-
-
 
 ## First_look MLM
 
