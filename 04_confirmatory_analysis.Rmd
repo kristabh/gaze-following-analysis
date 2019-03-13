@@ -208,28 +208,28 @@ d_first_meta %>%
 d_first_meta %>%
   group_by(subid, age_group, lang_group) %>%
   summarise(prop = mean(prop, na.rm = TRUE)) %>%
-  pirateplot(formula = prop ~ lang_group + age_group, data = ., main = "First look proportion", inf.f.o = 0, inf.b.o = 1, theme = 4)
+  pirateplot(formula = prop ~ lang_group + age_group, data = ., main = "First look proportion", theme = 1, bar.f.o = .5, bean.f.o = 0, bar.b.col = 1, bar.lwd = .5, bean.b.col = 1, inf.f.o = 0, inf.method = "se")
 
 ```
 
 ## Frequency
 ```{r}
 
-pirateplot(formula = prop ~ lang_group + age_group, data = d_freq_meta, main = "Frequency proportion") + geom_hline(y = 0)
+pirateplot(formula = prop ~ lang_group + age_group, data = d_freq_meta, main = "Frequency proportion", theme = 1, bar.f.o = .5, bean.f.o = 0, bar.b.col = 1, bar.lwd = .5, bean.b.col = 1, inf.f.o = 0, inf.method = "se")
 
 ```
 
 ## Duration
 ```{r}
 
-pirateplot(formula = prop ~ lang_group + age_group, data = d_duration_meta, main = "Fixation duration proportion") + geom_hline(y = 0)
+pirateplot(formula = prop ~ lang_group + age_group, data = d_duration_meta, main = "Fixation duration proportion", theme = 1, bar.f.o = .5, bean.f.o = 0, bar.b.col = 1, bar.lwd = .5, bean.b.col = 1, inf.f.o = 0, inf.method = "se")
 
 ```
 
 ## Latency
 ```{r}
 
-pirateplot(formula = latency ~ object + lang_group + age_group, data = d_latency_meta, main = "Latency", theme = 6) + geom_hline(y = 0)
+pirateplot(formula = latency ~ object + lang_group + age_group, data = d_latency_meta, main = "Latency", theme = 6, pal = "southpark", cex.names = .5)
 
 ```
 
