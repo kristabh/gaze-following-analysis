@@ -64,7 +64,7 @@ d_first_meta <- d_first %>%
   mutate(prop = (congruent-incongruent)/(congruent+incongruent)) %>% # Calculate proportion difference score
   select(-congruent, -incongruent) %>%
   filter(!is.na(prop)) %>%
-  group_by(subid, age_group, lang_group) %>%
+  group_by(subid, age_group, lang_group, lab) %>%
   summarise(prop = mean(prop, na.rm = TRUE))
 
 d_freq <- d %>%
@@ -84,7 +84,7 @@ d_freq_meta <- d  %>%
   mutate(prop = (n_shift_congruent -  n_shift_incongruent)/(n_shift_congruent + n_shift_incongruent)) %>% # Calculate proportion difference score on each trial
   group_by_at(vars(-trial_num, - prop)) %>%
   mutate(prop = mean(prop)) %>% # Average proportion difference score by baby
-  group_by(subid, age_group, lang_group) %>%
+  group_by(subid, age_group, lang_group, lab) %>%
   summarise(prop = mean(prop, na.rm = TRUE))
   
 d_duration <- d %>%
@@ -210,7 +210,6 @@ d_first_meta %>%
   summarise(prop = mean(prop, na.rm = TRUE)) %>%
   pirateplot(formula = prop ~ lang_group + age_group, data = ., main = "First look proportion", inf.f.o = 0, inf.b.o = 1, theme = 4)
 
-bar.f.o = .5, bean.f.o = 0, avg.line.fun = mean, inf.method = "se", inf.disp = "rect") + geom_hline(y = 0)
 ```
 
 ## Frequency
@@ -248,14 +247,6 @@ d_first_meta %>%
 
 ```
 
-At first glance, the 
-
-## First-look visualization
-```{r}
-ggplot(d_first_meta, aes(x = lang_group, y = prop, color = lang_group), alpha = .5) +
-  facet_grid(.~age_group) +
-  geom_boxplot()
-```
 
 ```{r}
 
@@ -308,7 +299,7 @@ d_freq_meta %>%
 
 d_z_freq <- d_freq_meta %>%
   group_by(lab, age_group, lang_group) %>%
-  summarise(d = mean(mean_prop, na.rm = TRUE) / sd(mean_prop, na.rm = TRUE), 
+  summarise(d = mean(prop, na.rm = TRUE) / sd(prop, na.rm = TRUE), 
             n = length(unique(subid)), 
             d_var = d_var_calc(n, d)) %>%
   filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
@@ -324,16 +315,6 @@ summary(freq_meta)
 
 
 #MLM framework
-
-Some visualization
-
-```{r}
-
-pirateplot(formula = prop ~ lang_group + age_group, data = d_first_meta, main = "First look proportion") + geom_hline(y = 0)
-
-```
-
-
 
 ## First_look MLM
 
