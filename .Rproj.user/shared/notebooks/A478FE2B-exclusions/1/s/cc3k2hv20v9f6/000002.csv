@@ -1,0 +1,4 @@
+"0","# Cache lab stats pre-exclusion for lab-based exclusions. "
+"0","lab_contribs_pre_exclusion <- d %>%"
+"0","  group_by(lab) %>%"
+"0","  summarise(n = length(unique(subid)))"

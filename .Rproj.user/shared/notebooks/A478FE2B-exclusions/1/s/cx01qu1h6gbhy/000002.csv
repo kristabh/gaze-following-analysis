@@ -1,0 +1,40 @@
+"0","d <- read_csv(here(""processed_data"",""02_validated_output.csv""))"
+"2","Parsed with column specification:
+cols(
+  .default = col_character(),
+  study_order = [32mcol_double()[39m,
+  trial_num = [32mcol_double()[39m,
+  latency = [32mcol_double()[39m,
+  n_shift_congruent = [32mcol_double()[39m,
+  n_shift_incongruent = [32mcol_double()[39m,
+  fixation_congruent = [32mcol_double()[39m,
+  fixation_incongruent = [32mcol_double()[39m,
+  trial_error = [33mcol_logical()[39m,
+  trial_error_type = [33mcol_logical()[39m,
+  age_days = [32mcol_double()[39m,
+  trial_order = [32mcol_double()[39m,
+  session_error = [33mcol_logical()[39m,
+  lang1_exposure = [32mcol_double()[39m,
+  lang2_exposure = [32mcol_double()[39m,
+  lang3_exposure = [32mcol_double()[39m,
+  lang4_exposure = [32mcol_double()[39m,
+  Notes = [33mcol_logical()[39m,
+  sib5_age = [33mcol_logical()[39m,
+  sib5_gender = [33mcol_logical()[39m,
+  sib6_age = [33mcol_logical()[39m
+  # ... with 17 more columns
+)
+"
+"2","See spec(...) for full column specifications.
+"
+"2","2741 parsing failures.
+ row                  col           expected              actual                                                                                            file
+1257 race_ethnicity       1/0/T/F/TRUE/FALSE european; caucasian '/Users/alexis/Documents/GitHub/gaze-following-analysis/processed_data/02_validated_output.csv'
+1257 current_earinfection 1/0/T/F/TRUE/FALSE n                   '/Users/alexis/Documents/GitHub/gaze-following-analysis/processed_data/02_validated_output.csv'
+1258 race_ethnicity       1/0/T/F/TRUE/FALSE european; caucasian '/Users/alexis/Documents/GitHub/gaze-following-analysis/processed_data/02_validated_output.csv'
+1258 current_earinfection 1/0/T/F/TRUE/FALSE n                   '/Users/alexis/Documents/GitHub/gaze-following-analysis/processed_data/02_validated_output.csv'
+1259 race_ethnicity       1/0/T/F/TRUE/FALSE european; caucasian '/Users/alexis/Documents/GitHub/gaze-following-analysis/processed_data/02_validated_output.csv'
+.... .................... .................. ................... ...............................................................................................
+See problems(...) for more details.
+"
+"0","source(here(""helper/preprocessing_helper.R""))"

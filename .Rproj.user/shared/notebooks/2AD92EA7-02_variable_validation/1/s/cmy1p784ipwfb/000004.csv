@@ -1,0 +1,2 @@
+"0","d %>% "
+"0","  group_by(subid) %>% summarise(n = length(trial_num)) %>% filter(n > 6)"

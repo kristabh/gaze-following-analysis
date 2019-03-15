@@ -1,0 +1,6 @@
+"0","trial_row_checker <- d %>%"
+"0","  group_by(lab, subid) %>%"
+"0","  summarize(trialcount = n_distinct(trial_num), "
+"0","            rowcount = length(trial_num)) "
+"0","trial_row_checker %>%"
+"0","  filter(trialcount != rowcount)"

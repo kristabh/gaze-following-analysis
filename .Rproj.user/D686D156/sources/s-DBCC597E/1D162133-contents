@@ -44,3 +44,85 @@ d <- read_csv("processed_data/03_data_trial_main.csv") %>%
 
 ```
 
+#Filter dataset
+The SRCD analysis will include only eye-tracking data, as hand-coded data is still being processed and verified.
+
+```{r}
+d <- d %>% filter(coding == "gazepath")
+```
+
+
+Create datasets for analysis. Meta-analytic sets have mean by infant
+
+```{r}
+
+d_first <- d %>%
+  filter(!is.na(first_shift)) %>% # Select only trials that had a shift
+  select(-latency, -n_shift_congruent, -n_shift_incongruent, -fixation_congruent, - fixation_incongruent)
+
+d_first_meta <- d_first %>%
+  group_by_at(vars(-trial_num)) %>%
+  summarise(n = n()) %>%
+  spread(key = first_shift, value = n, fill = 0) %>%
+  mutate(prop = (congruent-incongruent)/(congruent+incongruent)) %>% # Calculate proportion difference score
+  select(-congruent, -incongruent) %>%
+  filter(!is.na(prop)) %>%
+  group_by(subid, age_group, lang_group, lab) %>%
+  summarise(prop = mean(prop, na.rm = TRUE))
+
+d_freq <- d %>%
+  select(-first_shift, -latency, -fixation_congruent, - fixation_incongruent) %>%
+  filter((n_shift_congruent + n_shift_incongruent) > 0) %>% # Select only trials that had a shift
+  gather(key = "object", value = "n_shift", n_shift_congruent, n_shift_incongruent) %>%
+  mutate(object = case_when(
+    object == "n_shift_congruent" ~ "congruent",
+    object == "n_shift_incongruent" ~ "incongruent"
+  )) %>%
+  mutate(object = as.factor(object))
+
+d_freq_meta <- d  %>%
+  #group_by_at(vars(-trial_num)) %>%
+  select(-first_shift, -latency, -fixation_congruent, - fixation_incongruent) %>%
+  filter((n_shift_congruent + n_shift_incongruent) > 0) %>% # Select only trials that had a shift
+  mutate(prop = (n_shift_congruent -  n_shift_incongruent)/(n_shift_congruent + n_shift_incongruent)) %>% # Calculate proportion difference score on each trial
+  group_by_at(vars(-trial_num, - prop)) %>%
+  mutate(prop = mean(prop)) %>% # Average proportion difference score by baby
+  group_by(subid, age_group, lang_group, lab) %>%
+  summarise(prop = mean(prop, na.rm = TRUE))
+  
+d_duration <- d %>%
+  select(-first_shift, -latency, -n_shift_congruent, -n_shift_incongruent) %>%
+  filter(fixation_congruent + fixation_incongruent > 0) %>% # Select only trials that had any looking
+  gather(key = "object", value = "duration", fixation_congruent, fixation_incongruent) %>%
+  mutate(object = case_when(
+    object == "fixation_congruent" ~ "congruent",
+    object == "fixation_incongruent" ~ "incongruent"
+  )) %>%
+  mutate(object = as.factor(object)) %>%
+  mutate(duration = log(duration + 1)) # Log-transform duration scores, adding one to deal with zeros
+
+
+d_duration_meta <- d %>%
+  select(-first_shift, -latency, -n_shift_congruent, -n_shift_incongruent) %>%
+  filter(fixation_congruent + fixation_incongruent > 0) %>%
+  mutate(prop = (fixation_congruent - fixation_incongruent)/(fixation_congruent + fixation_incongruent)) %>% # Calculate proportion difference score
+  group_by_at(vars(-trial_num, - prop)) %>%
+  mutate(prop = mean(prop)) # Average proportion difference score by baby
+
+
+d_latency <- d %>%
+  select(-n_shift_congruent, -n_shift_incongruent, -fixation_congruent, - fixation_incongruent) %>%
+  rename("object" = "first_shift") %>%
+  filter(!is.na(object)) %>% # only trials with first shifts
+  mutate(latency = log(latency + 1)) # Log transform latency scores, adding one to deal with zeros
+  
+
+d_latency_meta <- d %>%
+  select(-n_shift_congruent, -n_shift_incongruent, -fixation_congruent, - fixation_incongruent) %>%
+  rename("object" = "first_shift") %>%
+  filter(!is.na(object)) %>%
+  mutate(object = as.factor(object)) %>%
+  group_by_at(vars(-trial_num, - latency)) %>%
+  mutate(latency = mean(latency)) # Average proportion difference score by baby
+  
+```
