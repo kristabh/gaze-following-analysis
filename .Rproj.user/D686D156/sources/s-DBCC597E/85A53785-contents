@@ -62,6 +62,32 @@ Data import functions are factored into a helper functions file.
 source("helper/preprocessing_helper.R")
 ```
 
+# Participant IDs
+
+Make sure that each participant has a unique ID
+```{r}
+d %>% 
+  group_by(subid) %>% summarise(n = length(trial_num)) %>% filter(n > 6)
+```
+
+4 participants were asigned the same ID. This can be fixed by appending lab to the subid:
+
+```{r}
+d <- d %>% mutate(subid = paste0(lab, subid))
+```
+
+There is still one participant who has been double-coded:
+```{r}
+d %>% 
+  group_by(subid) %>% summarise(n = length(trial_num)) %>% filter(n > 6)
+```
+
+We will remove the eye-tracking data, as this lab hand-coded infants whose eye-tracking data was unreliable
+```{r}
+d <- d %>% filter(subid != "nusinfantlanguagecentreybg038")
+```
+
+
 # Trial variables
 
 The goal of this subsection is to ensure that we have the following variables. 

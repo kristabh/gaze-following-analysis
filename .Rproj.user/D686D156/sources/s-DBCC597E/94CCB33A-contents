@@ -1,0 +1,131 @@
+#Plot of participants across age.
+
+
+participants <- d %>%
+  group_by(lab, subid, lang_group) %>%
+  summarise(age_days = age_days[1]) 
+
+d %>% 
+  group_by(lab, subid, lang_group, coding) %>%
+  summarise(age_days = age_days[1]) %>% 
+  ggplot(aes(x = age_days/(365.25/12), fill = lab)) + 
+  geom_histogram(binwidth = 1) + 
+  facet_grid(coding~lang_group) +
+  ylab("Number of babies") + 
+  xlab("Age (months)") + 
+  xlim(3, 16) + 
+  scale_fill_discrete(guide = FALSE)
+
+#On how many trials do infants make a face-to-object saccade?
+d2 <- d %>% mutate(subid = paste0(lab, subid))
+d2 <- d2 %>% filter(subid != "nusinfantlanguagecentreybg038")
+
+d2 %>%
+  group_by(subid, lang_group, coding) %>%
+  filter(!is.na(latency)) %>%
+  summarize(n_trials = length(trial_num)) %>%
+  ggplot(aes(x = n_trials)) +
+  geom_histogram() + 
+  facet_grid(lang_group~coding)
+
+d2 %>%
+  group_by(subid, age_group) %>%
+  filter(!is.na(fixation_congruent)) %>%
+  summarize(n_trials = length(trial_num)) %>%
+  ggplot(aes(x = n_trials)) +
+  geom_histogram()
+
+
+##
+d_first2 <- d2 %>%
+  filter(!is.na(first_shift)) %>% # Select only trials that had a shift
+  select(-latency, -n_shift_congruent, -n_shift_incongruent, -fixation_congruent, - fixation_incongruent)
+
+d_first_meta2 <- d_first2 %>%
+  group_by_at(vars(-trial_num)) %>%
+  summarise(n = n()) %>%
+  spread(key = first_shift, value = n, fill = 0) %>%
+  mutate(prop = (congruent-incongruent)/(congruent+incongruent)) %>% # Calculate proportion difference score
+  select(-congruent, -incongruent) %>%
+  filter(!is.na(prop)) %>%
+  group_by(subid, age_group, lang_group, lab, coding) %>%
+  summarise(prop = mean(prop, na.rm = TRUE))
+
+d_first_meta2 %>%
+  group_by(subid, age_group, lang_group, coding) %>%
+  summarise(prop = mean(prop, na.rm = TRUE)) %>%
+  ggplot(aes(x = prop, color = lang_group)) +
+  facet_grid(age_group~coding) +
+  geom_histogram()
+
+#Firstlook
+d_first_meta2 %>%
+  group_by(subid, coding) %>%
+  summarise(prop = mean(prop, na.rm = TRUE)) %>%
+  pirateplot(formula = prop ~ coding, 
+             data = ., main = "First look proportion", 
+             theme = 1, bar.f.o = .5, bean.f.o = 0, bar.b.col = 1, bar.lwd = .5, bean.b.col = 1, 
+             inf.f.o = 0, inf.method = "se") 
+
+##Frequency
+d_freq2 <- d2 %>%
+  select(-first_shift, -latency, -fixation_congruent, - fixation_incongruent) %>%
+  filter((n_shift_congruent + n_shift_incongruent) > 0) %>% # Select only trials that had a shift
+  gather(key = "object", value = "n_shift", n_shift_congruent, n_shift_incongruent) %>%
+  mutate(object = case_when(
+    object == "n_shift_congruent" ~ "congruent",
+    object == "n_shift_incongruent" ~ "incongruent"
+  )) %>%
+  mutate(object = as.factor(object))
+
+d_freq_meta2 <- d2  %>%
+  #group_by_at(vars(-trial_num)) %>%
+  select(-first_shift, -latency, -fixation_congruent, - fixation_incongruent) %>%
+  filter((n_shift_congruent + n_shift_incongruent) > 0) %>% # Select only trials that had a shift
+  mutate(prop = (n_shift_congruent -  n_shift_incongruent)/(n_shift_congruent + n_shift_incongruent)) %>% # Calculate proportion difference score on each trial
+  group_by_at(vars(-trial_num, - prop)) %>%
+  mutate(prop = mean(prop)) %>% # Average proportion difference score by baby
+  group_by(subid, age_group, lang_group, lab, coding) %>%
+  summarise(prop = mean(prop, na.rm = TRUE))
+
+
+pirateplot(formula = prop ~ coding, 
+           data = d_freq_meta2, main = "Frequency proportion", 
+           theme = 1, bar.f.o = .5, bean.f.o = 0, bar.b.col = 1, bar.lwd = .5, 
+           bean.b.col = 1, inf.f.o = 0, inf.method = "se")
+
+
+##Analyses
+
+d_z_first2 <- d_first_meta2 %>%
+  filter(coding == "gazepath") %>% 
+  group_by(subid, lab, age_group, lang_group) %>%
+  summarise(mean_prop = mean(prop, na.rm = TRUE)) %>%
+  group_by(lab, age_group, lang_group) %>%
+  summarise(d = mean(mean_prop, na.rm = TRUE) / sd(mean_prop, na.rm = TRUE), 
+            n = length(unique(subid)), 
+            d_var = d_var_calc(n, d)) %>%
+  filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
+
+
+first_meta2 <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
+                           slab = lab, data = d_z_first2, method = "REML") 
+summary(first_meta2)
+
+first_meta2b <- metafor::rma(d ~ age_group, vi = d_var, 
+                            slab = lab, data = d_z_first2, method = "REML") 
+summary(first_meta2b)
+
+
+##Freq
+d_z_freq2 <- d_freq_meta2 %>%
+  filter(coding == "gazepath") %>% 
+  group_by(lab, age_group, lang_group) %>%
+  summarise(d = mean(prop, na.rm = TRUE) / sd(prop, na.rm = TRUE), 
+            n = length(unique(subid)), 
+            d_var = d_var_calc(n, d)) %>%
+  filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
+
+freq_meta2 <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
+                          slab = lab, data = d_z_freq2, method = "REML") 
+summary(freq_meta2)
