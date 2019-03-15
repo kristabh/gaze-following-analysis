@@ -1,4 +1,0 @@
-"0","month <- 365.25 / 12"
-"0","d$age_mo <- d$age_days / month"
-"0","ggplot(d, aes(x = age_mo)) + "
-"0","  geom_histogram(binwidth = 1)"

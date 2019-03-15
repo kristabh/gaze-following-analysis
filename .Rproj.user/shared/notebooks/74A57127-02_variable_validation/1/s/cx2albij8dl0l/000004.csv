@@ -1,4 +1,0 @@
-"0","d %>%"
-"0","  ggplot(aes(x = fixation_incongruent)) +"
-"0","  geom_histogram() +"
-"0","  facet_grid(age_group ~ lang_group)"
