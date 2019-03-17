@@ -78,7 +78,7 @@ d_freq <- d %>%
   mutate(object = as.factor(object))
 
 d_freq_meta <- d  %>%
-  #group_by_at(vars(-trial_num)) %>%
+  group_by_at(vars(-trial_num)) %>%
   select(-first_shift, -latency, -fixation_congruent, - fixation_incongruent) %>%
   filter((n_shift_congruent + n_shift_incongruent) > 0) %>% # Select only trials that had a shift
   mutate(prop = (n_shift_congruent -  n_shift_incongruent)/(n_shift_congruent + n_shift_incongruent)) %>% # Calculate proportion difference score on each trial

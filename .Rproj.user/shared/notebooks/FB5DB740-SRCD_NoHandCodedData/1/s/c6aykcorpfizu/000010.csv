@@ -1,0 +1,9 @@
+"0","freq_lmer <- d_freq %>% 
+  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+  mutate(object_bin = (as.integer(fct_rev(object)) - 1)) %>% # Recode to binary: congruent = 1, incongruent = 0
+  lmer(n_shift ~ object + (1|trial_number),
+  data = .
+)
+"
+"2","Error in eval(predvars, data, env) : object 'trial_number' not found
+"

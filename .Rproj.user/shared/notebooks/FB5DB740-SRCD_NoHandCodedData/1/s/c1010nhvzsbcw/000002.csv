@@ -1,0 +1,6 @@
+"0","pirateplot(formula = latency ~ object + lang_group + age_group, data = d_latency_meta, main = ""Latency"", theme = 6, pal = ""southpark"", cex.names = .5)
+"
+"1","[1]"
+"1"," ""theme must be an integer between 0 and 4. I'll set it to 1 for now."""
+"1","
+"

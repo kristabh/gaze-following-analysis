@@ -1,0 +1,11 @@
+"0","first_glmer <- d_first %>% 
+  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+  filter(!is.na(first_shift)) %>%
+  mutate(first_shift = fct_rev(first_shift)) %>% # So higher numbers mean more looks to congruent
+  glmer(first_shift ~ lang_group + age_days + (1|subid) + (1|lab) + (1|trial_num),
+  data = .,
+  family = binomial
+)
+"
+"2","singular fit
+"

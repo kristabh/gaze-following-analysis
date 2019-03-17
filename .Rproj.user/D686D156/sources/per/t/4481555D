@@ -1,0 +1,24 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1552512160166.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "2594691547",
+    "id" : "4481555D",
+    "lastKnownWriteTime" : 1552783629,
+    "last_content_update" : 1552783629348,
+    "path" : "~/Documents/GitHub/gaze-following-analysis/04_confirmatory_analysis.Rmd",
+    "project_path" : "04_confirmatory_analysis.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "419,3",
+        "last_setup_crc32" : "DBCC597E2ff876e0",
+        "scrollLine" : "403"
+    },
+    "relative_order" : 4,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}
