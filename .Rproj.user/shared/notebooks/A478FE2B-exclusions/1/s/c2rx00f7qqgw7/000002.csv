@@ -1,12 +1,12 @@
-"0","# We exclude kids who are outside of the 6-9 or 12-15 month age range. "
-"0","d <- d %>%"
-"0","  mutate(out_of_age = case_when("
-"0","    age_mo < 6 ~ TRUE,"
-"0","    age_mo > 15 ~ TRUE,"
-"0","    age_mo > 9 & age_mo < 12 ~ TRUE,"
-"0","    TRUE ~ FALSE"
-"0","  ))"
-"0","out_of_age <- exclude_by(d, quo(out_of_age),"
-"0","                   return_pcts = TRUE, "
-"0","                   quiet = TRUE)"
-"0","d <- out_of_age$data"
+"0","# We exclude kids who are outside of the 6-9 or 12-15 month age range. 
+d <- d %>%
+  mutate(out_of_age = case_when(
+    age_mo < 6 ~ TRUE,
+    age_mo > 15 ~ TRUE,
+    age_mo > 9 & age_mo < 12 ~ TRUE,
+    TRUE ~ FALSE
+  ))
+"
+"2","Error in eval_tidy(pair$lhs, env = default_env) : 
+  object 'age_mo' not found
+"

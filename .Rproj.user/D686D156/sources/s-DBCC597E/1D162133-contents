@@ -42,6 +42,8 @@ d <- read_csv("processed_data/03_data_trial_main.csv") %>%
   mutate_at(vars(lab,subid,age_group, participant_gender, lang_group, first_shift, coding), as.factor) %>%
   mutate_at(vars(age_group, lang_group), fct_rev)
 
+#clean-up
+rm(iv_columns, dv_columns)
 ```
 
 #Filter dataset
@@ -54,11 +56,13 @@ d <- d %>% filter(coding == "gazepath")
 
 Create datasets for analysis. Meta-analytic sets have mean by infant
 
-```{r}
-
+*The proportion of first-shifts to congruent versus incongruent trials by infant*
+For this data we look only at the infants first gaze shifts, and examine the proportion of congruent first gaze-shifts across infants.
+```{r first-shift_datasets}
 d_first <- d %>%
   filter(!is.na(first_shift)) %>% # Select only trials that had a shift
-  select(-latency, -n_shift_congruent, -n_shift_incongruent, -fixation_congruent, - fixation_incongruent)
+  select(-latency, -n_shift_congruent, -n_shift_incongruent, -fixation_congruent,
+         -fixation_incongruent)
 
 d_first_meta <- d_first %>%
   group_by_at(vars(-trial_num)) %>%
@@ -69,7 +73,11 @@ d_first_meta <- d_first %>%
   filter(!is.na(prop)) %>%
   group_by(subid, age_group, lang_group, lab) %>%
   summarise(prop = mean(prop, na.rm = TRUE))
+```
 
+*The proportion of total shifts to congruent versus incongruent objects*
+
+```{r frequency-shifts_datasets}
 d_freq <- d %>%
   select(-first_shift, -latency, -fixation_congruent, - fixation_incongruent) %>%
   filter((n_shift_congruent + n_shift_incongruent) > 0) %>% # Select only trials that had a shift
@@ -81,7 +89,7 @@ d_freq <- d %>%
   mutate(object = as.factor(object))
 
 d_freq_meta <- d  %>%
-  #group_by_at(vars(-trial_num)) %>%
+  group_by_at(vars(-trial_num)) %>%
   select(-first_shift, -latency, -fixation_congruent, - fixation_incongruent) %>%
   filter((n_shift_congruent + n_shift_incongruent) > 0) %>% # Select only trials that had a shift
   mutate(prop = (n_shift_congruent -  n_shift_incongruent)/(n_shift_congruent + n_shift_incongruent)) %>% # Calculate proportion difference score on each trial
@@ -89,7 +97,10 @@ d_freq_meta <- d  %>%
   mutate(prop = mean(prop)) %>% # Average proportion difference score by baby
   group_by(subid, age_group, lang_group, lab) %>%
   summarise(prop = mean(prop, na.rm = TRUE))
-  
+```
+
+*Proportion of total looking time to congruent objects*
+```{r duration_dataset}
 d_duration <- d %>%
   select(-first_shift, -latency, -n_shift_congruent, -n_shift_incongruent) %>%
   filter(fixation_congruent + fixation_incongruent > 0) %>% # Select only trials that had any looking
@@ -101,7 +112,6 @@ d_duration <- d %>%
   mutate(object = as.factor(object)) %>%
   mutate(duration = log(duration + 1)) # Log-transform duration scores, adding one to deal with zeros
 
-
 d_duration_meta <- d %>%
   select(-first_shift, -latency, -n_shift_congruent, -n_shift_incongruent) %>%
   filter(fixation_congruent + fixation_incongruent > 0) %>%
@@ -109,7 +119,10 @@ d_duration_meta <- d %>%
   group_by_at(vars(-trial_num, - prop)) %>%
   mutate(prop = mean(prop)) # Average proportion difference score by baby
 
+```
 
+*Latency to congruent first-shifts*
+```{r latency_to_congruent_first_shifts_datasets}
 d_latency <- d %>%
   select(-n_shift_congruent, -n_shift_incongruent, -fixation_congruent, - fixation_incongruent) %>%
   rename("object" = "first_shift") %>%
@@ -126,3 +139,35 @@ d_latency_meta <- d %>%
   mutate(latency = mean(latency)) # Average proportion difference score by baby
   
 ```
+
+
+##Let's start with First-looks
+
+# Pirate plot
+
+```{r}
+
+d_first_meta %>%
+  group_by(subid, age_group, lang_group) %>%
+  summarise(prop = mean(prop, na.rm = TRUE)) %>%
+  pirateplot(formula = prop ~ lang_group + age_group, data = ., main = "First look proportion", theme = 1, bar.f.o = .5, bean.f.o = 0, bar.b.col = 1, bar.lwd = .5, bean.b.col = 1, inf.f.o = 0, inf.method = "se")
+
+```
+## First_look MLM
+
+```{r}
+
+first_glmer <- d_first %>% 
+  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+  filter(!is.na(first_shift)) %>%
+  mutate(first_shift = fct_rev(first_shift)) %>% # So higher numbers mean more looks to congruent
+  glmer(first_shift ~ lang_group + age_days + (1|subid) + (1|lab) + (1|trial_num),
+  data = .,
+  family = binomial
+)
+
+
+summary(first_glmer)
+
+```
+

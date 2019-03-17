@@ -1,0 +1,9 @@
+"0","d_duration_meta <- d %>%
+  select(-first_shift, -latency, -n_shift_congruent, -n_shift_incongruent) %>%
+  filter(fixation_congruent + fixation_incongruent > 0) %>%
+  mutate(prop = (fixation_congruent - fixation_incongruent)/(fixation_congruent + fixation_incongruent)) %>% # Calculate proportion difference score
+  group_by_at(vars(-trial_num, - prop)) %>%
+  mutate(prop = mean(prop)) # Average proportion difference score by baby
+"
+"2","Factor `participant_gender` contains implicit NA, consider using `forcats::fct_explicit_na`"
+"2","Factor `participant_gender` contains implicit NA, consider using `forcats::fct_explicit_na`"

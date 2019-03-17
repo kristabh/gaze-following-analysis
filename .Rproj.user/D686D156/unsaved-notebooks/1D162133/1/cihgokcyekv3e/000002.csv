@@ -1,0 +1,16 @@
+"0","d_first_meta <- d_first %>%
+  group_by_at(vars(-trial_num)) %>%
+  summarise(n = n()) %>%
+  spread(key = first_shift, value = n, fill = 0) %>%
+  mutate(prop = (congruent-incongruent)/(congruent+incongruent)) %>% # Calculate proportion difference score
+  select(-congruent, -incongruent) %>%
+  filter(!is.na(prop)) %>%
+  group_by(subid, age_group, lang_group, lab) %>%
+  summarise(prop = mean(prop, na.rm = TRUE))
+"
+"2","Factor `participant_gender` contains implicit NA, consider using `forcats::fct_explicit_na`"
+"2","Factor `participant_gender` contains implicit NA, consider using `forcats::fct_explicit_na`"
+"2","Factor `participant_gender` contains implicit NA, consider using `forcats::fct_explicit_na`"
+"2","Factor `participant_gender` contains implicit NA, consider using `forcats::fct_explicit_na`"
+"2","Factor `participant_gender` contains implicit NA, consider using `forcats::fct_explicit_na`"
+"2","Factor `participant_gender` contains implicit NA, consider using `forcats::fct_explicit_na`"

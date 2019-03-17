@@ -97,8 +97,8 @@ pirateplot(formula = prop ~ coding,
 
 ##Analyses
 
-d_z_first2 <- d_first_meta2 %>%
-  filter(coding == "gazepath") %>% 
+d_z_first <- d_first_meta %>%
+#  filter(coding == "gazepath") %>% 
   group_by(subid, lab, age_group, lang_group) %>%
   summarise(mean_prop = mean(prop, na.rm = TRUE)) %>%
   group_by(lab, age_group, lang_group) %>%
@@ -129,3 +129,31 @@ d_z_freq2 <- d_freq_meta2 %>%
 freq_meta2 <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
                           slab = lab, data = d_z_freq2, method = "REML") 
 summary(freq_meta2)
+
+
+#Visualization
+d_first_meta %>%
+  group_by(subid, age_group, lang_group) %>%
+  summarise(prop = mean(prop, na.rm = TRUE)) %>%
+  pirateplot(formula = prop ~ lang_group + age_group, data = ., 
+             main = "First look proportion", theme = 1, bar.f.o = .5, bean.f.o = 0, 
+             bar.b.col = 1, bar.lwd = .5, bean.b.col = 1, inf.f.o = 0, inf.method = "se")
+
+d_first_meta %>% 
+  group_by(subid, age_group, lang_group) %>% 
+  summarise(prop = mean(prop, na.rm = TRUE)) %>% 
+  ggplot(aes(x = age_group, y = prop)) + 
+  geom_violin(aes(colour = lang_group)) +
+ # geom_boxplot(position = position_dodge(width = 0.9)) +
+ # geom_point(position = position_dodge(width = 0.9)) +
+  geom_dotplot(binaxis = "y", stackdir = "center", position = position_dodge(width = 0.9), 
+               dotsize = .7, alpha = 0.4, aes(fill = lang_group)) +
+  stat_summary(fun.y = "mean", geom = "bar", aes(fill = lang_group), 
+               alpha = .4, position = position_dodge(width = 0.9)) + 
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = .5, aes(group = lang_group), 
+               position = position_dodge(width = 0.9)) +
+  ylab("Difference score") +
+  xlab("Age Group") +
+  guides(colour = guide_legend(title = "Language group"),
+         fill = guide_legend(title = "Language group"))
+
