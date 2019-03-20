@@ -99,18 +99,20 @@ d_first_meta %>%
   group_by(subid, age_group, lang_group) %>% 
   summarise(prop = mean(prop, na.rm = TRUE)) %>% 
   ggplot(aes(x = age_group, y = prop)) + 
-  geom_violin(aes(colour = lang_group)) +
-  geom_dotplot(binaxis = "y", stackdir = "center", position = position_dodge(width = 0.9), 
-               dotsize = .6, alpha = 0.4, aes(fill = lang_group)) +
-  stat_summary(fun.y = "mean", geom = "bar", aes(fill = lang_group), 
+  geom_violin(aes(colour = lang_group), alpha = .5) +
+  # geom_dotplot(binaxis = "y", stackdir = "center", position = position_dodge(width = 0.9), 
+  #              dotsize = .6, alpha = 0.4, aes(fill = lang_group)) +
+  geom_point(aes(x = age_group, color= lang_group), line = "black", alpha = .3, position = position_jitterdodge()) +
+  stat_summary(fun.y = "mean", geom = "bar", color = "black", aes(fill = lang_group), 
                alpha = .4, position = position_dodge(width = 0.9)) + 
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .5, aes(group = lang_group), 
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = .5,  aes(group = lang_group), 
                position = position_dodge(width = 0.9)) +
   geom_abline(intercept = 0, lty = 3, slope = 0) +
   ylab("Difference score") +
   xlab("Age Group") +
-  guides(colour = guide_legend(title = "Language group"),
-         fill = guide_legend(title = "Language group"))
+  scale_colour_manual(name = "Language group", values = c("darkcyan", "darkred")) +
+  scale_fill_manual(name = "Language group", values = c("darkcyan", "darkred")) + 
+  theme(text = element_text(size = 20), legend.position = "bottom")
 ```
 
 These plots tell us that across the entire sample, infants first looks were more likely to be to the congruent as opposed to the incongruent. It also looks as though older infants have a greater proportion first-congruent-look. Little obvious evidence for a difference between language groups.
@@ -184,6 +186,27 @@ d_freq_meta <- d  %>%
 pirateplot(formula = prop ~ lang_group + age_group, data = d_freq_meta, main = "Frequency proportion", theme = 1, bar.f.o = .5, bean.f.o = 0, bar.b.col = 1, bar.lwd = .5, bean.b.col = 1, inf.f.o = 0, inf.method = "se")
 ```
 
+Same-ish thing but with ggplot:
+```{r frequency ggplot}
+d_freq_meta %>% 
+  group_by(subid, age_group, lang_group) %>% 
+  summarise(prop = mean(prop, na.rm = TRUE)) %>% 
+  ggplot(aes(x = age_group, y = prop)) + 
+  geom_violin(aes(colour = lang_group), alpha = .5) +
+  # geom_dotplot(binaxis = "y", stackdir = "center", position = position_dodge(width = 0.9), 
+  #              dotsize = .6, alpha = 0.4, aes(fill = lang_group)) +
+  geom_point(aes(x = age_group, color= lang_group), line = "black", alpha = .3, position = position_jitterdodge()) +
+  stat_summary(fun.y = "mean", geom = "bar", color = "black", aes(fill = lang_group), 
+               alpha = .4, position = position_dodge(width = 0.9)) + 
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = .5,  aes(group = lang_group), 
+               position = position_dodge(width = 0.9)) +
+  geom_abline(intercept = 0, lty = 3, slope = 0) +
+  ylab("Difference score") +
+  xlab("Age Group") +
+  scale_colour_manual(name = "Language group", values = c("darkcyan", "darkred")) +
+  scale_fill_manual(name = "Language group", values = c("darkcyan", "darkred")) + 
+  theme(text = element_text(size = 20), legend.position = "bottom")
+```
 
 ## Frequency LMEM
 
@@ -252,6 +275,28 @@ d_duration_meta <- d %>%
 pirateplot(formula = prop ~ lang_group + age_group, data = d_duration_meta, main = "Fixation duration proportion", theme = 1, bar.f.o = .5, bean.f.o = 0, bar.b.col = 1, bar.lwd = .5, bean.b.col = 1, inf.f.o = 0, inf.method = "se")
 ```
 
+Same-ish thing but with ggplot:
+```{r duration ggplot}
+d_duration_meta %>% 
+  group_by(subid, age_group, lang_group) %>% 
+  summarise(prop = mean(prop, na.rm = TRUE)) %>% 
+  ggplot(aes(x = age_group, y = prop)) + 
+  geom_violin(aes(colour = lang_group), alpha = .5) +
+  # geom_dotplot(binaxis = "y", stackdir = "center", position = position_dodge(width = 0.9), 
+  #              dotsize = .6, alpha = 0.4, aes(fill = lang_group)) +
+  geom_point(aes(x = age_group, color= lang_group), line = "black", alpha = .3, position = position_jitterdodge()) +
+  stat_summary(fun.y = "mean", geom = "bar", color = "black", aes(fill = lang_group), 
+               alpha = .4, position = position_dodge(width = 0.9)) + 
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = .5,  aes(group = lang_group), 
+               position = position_dodge(width = 0.9)) +
+  geom_abline(intercept = 0, lty = 3, slope = 0) +
+  ylab("Difference score") +
+  xlab("Age Group") +
+  scale_colour_manual(name = "Language group", values = c("darkcyan", "darkred")) +
+  scale_fill_manual(name = "Language group", values = c("darkcyan", "darkred")) + 
+  theme(text = element_text(size = 20), legend.position = "bottom")
+```
+
 ##Duration LMEM
 ```{r duration lmem}
 duration_lmer <- d_duration %>% 
@@ -306,6 +351,31 @@ d_latency_meta <- d %>%
 ```{r latency pirate}
 pirateplot(formula = latency ~ object + lang_group + age_group, data = d_latency_meta, main = "Latency", theme = 6, pal = "southpark", cex.names = .5)
 ```
+
+Same-ish thing but with ggplot (but only congruent:
+```{r latency ggplot}
+d_latency_meta %>% 
+  filter(object == "congruent") %>%
+  group_by(subid, age_group, lang_group) %>% 
+  summarise(latency = mean(latency, na.rm = TRUE)) %>% 
+    group_by(subid, age_group, lang_group) %>% 
+  ggplot(aes(x = age_group, y = latency)) + 
+  geom_violin(aes(colour = lang_group), alpha = .5) +
+  # geom_dotplot(binaxis = "y", stackdir = "center", position = position_dodge(width = 0.9), 
+  #              dotsize = .6, alpha = 0.4, aes(fill = lang_group)) +
+  geom_point(aes(x = age_group, color= lang_group), line = "black", alpha = .3, position = position_jitterdodge()) +
+  stat_summary(fun.y = "mean", geom = "bar", color = "black", aes(fill = lang_group), 
+               alpha = .4, position = position_dodge(width = 0.9)) + 
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = .5,  aes(group = lang_group), 
+               position = position_dodge(width = 0.9)) +
+  geom_abline(intercept = 0, lty = 3, slope = 0) +
+  ylab("Latency (ms)") +
+  xlab("Age Group") +
+  scale_colour_manual(name = "Language group", values = c("darkcyan", "darkred")) +
+  scale_fill_manual(name = "Language group", values = c("darkcyan", "darkred")) + 
+  theme(text = element_text(size = 20), legend.position = "bottom")
+```
+
 First graph where we see something that looks like a potential language-group difference - bilingual (younger) infants may be slower to look at incongruent objects.  However - I just realized that the RR says we will only look at congruent first-looks. 
 
 ## Latency LMEM
