@@ -1,8 +1,0 @@
-"0","d <- d %>%"
-"0","  mutate_at(vars(matches(""exposure"")), as.numeric) %>%"
-"0","  mutate(lang_group = case_when("
-"0","    lang_group == ""monilingual"" ~ ""monolingual"","
-"0","    lang_group == ""monolinugal"" ~ ""monolingual"","
-"0","    lang_group == ""trilingual"" ~ ""bilingual"","
-"0","    lang_group == ""others"" ~ ""other"""
-"0","  ))"
