@@ -1,3 +1,0 @@
-"0","d$pilot <- grepl(""pilot"", tolower(d$subid)) | "
-"0","  grepl(""pilot"", tolower(d$session_error_type)) | "
-"0","  grepl(""pilot"", tolower(d$notes))"

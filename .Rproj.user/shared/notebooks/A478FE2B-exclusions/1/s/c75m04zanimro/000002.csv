@@ -1,5 +1,0 @@
-"0","trial_err <- exclude_by(d, quo(trial_error), "
-"0","                  setting = ""any"", "
-"0","                  return_pcts = TRUE, "
-"0","                  quiet = TRUE)"
-"0","d <- trial_err$data"

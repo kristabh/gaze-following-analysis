@@ -1,2 +1,0 @@
-"0","# We exclude kids who are explicitly marked as pilot."
-"0","d <- exclude_by(d, quo(pilot), quiet = TRUE)"

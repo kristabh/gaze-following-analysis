@@ -1,4 +1,0 @@
-"0","lang_incl <- exclude_by(d, quo(lang_incl), action = ""include"", "
-"0","                   return_pcts = TRUE, "
-"0","                   quiet = TRUE)"
-"0","d <- lang_incl$data"

@@ -1,6 +1,0 @@
-"0","d %>%"
-"0","  select(lab, subid, lang1_exposure, lang2_exposure, lang3_exposure, lang4_exposure) %>%"
-"0","  unique() %>%"
-"0","  group_by(lab, subid) %>%"
-"0","  summarize(total_exposure = lang1_exposure + lang2_exposure + lang3_exposure + lang4_exposure) %>%"
-"0","  filter(total_exposure != 100)"

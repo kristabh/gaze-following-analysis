@@ -1,4 +1,0 @@
-"0","full_term <- exclude_by(d, quo(full_term), action = ""include"", "
-"0","                return_pcts = TRUE, "
-"0","                quiet = TRUE)"
-"0","d <- full_term$data"
