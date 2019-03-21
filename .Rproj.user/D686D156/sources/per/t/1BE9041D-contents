@@ -302,7 +302,7 @@ d_duration_meta %>%
 duration_lmer <- d_duration %>% 
   mutate(age_days = scale(age_days, scale = FALSE)) %>%
   mutate(object_bin = (as.integer(fct_rev(object)) - 1)) %>% # Recode to binary: congruent = 1, incongruent = 0
-  lmer(duration ~ lang_group*age_days*object+ (1|subid),
+  lmer(duration ~ lang_group*age_days*object+ (1|subid) + (1|trial_num),
   data = .
 )
 
@@ -384,7 +384,7 @@ First graph where we see something that looks like a potential language-group di
 latency_lmer <- d_latency %>% 
   mutate(age_days = scale(age_days, scale = FALSE)) %>%
   filter(object == "congruent") %>% 
-  lmer(latency ~ lang_group * age_days + (1|subid) + (1 | lab) + (1 | trial_num),
+  lmer(latency ~ lang_group * age_days + (1|subid) + (1|lab) + (1|trial_num),
   data = .
 )
 
