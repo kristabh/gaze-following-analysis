@@ -23,6 +23,18 @@ lab_contribs_pre_exclusion <- d %>%
 d <- exclude_by(d, quo(pilot), quiet = TRUE)
 ```
 
+```{r lab }
+# Exclude labs from bll-umanitbo, after discussion with lab that they could not reliably code their data
+
+d <- d %>%
+  filter(lab != "bll-umanitoba")
+
+
+```
+* *Lab reliability*. Data from one laboratory were excluded as the lab could not achieve an acceptable level of inter-rater reliability, due to difficulty coding infant eye movements from the available videos.
+
+
+
 ```{r age}
 # We exclude kids who are outside of the 6-9 or 12-15 month age range. 
 d <- d %>%
