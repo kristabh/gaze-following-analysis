@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1553082220261.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "650559122",
+    "id" : "1BE9041D",
+    "lastKnownWriteTime" : 1553133513,
+    "last_content_update" : 1553133513420,
+    "path" : "~/Documents/GitHub/gaze-following-analysis/SRCD_NoHandCodedData.Rmd",
+    "project_path" : "SRCD_NoHandCodedData.Rmd",
+    "properties" : {
+        "chunk_output_type" : "inline",
+        "cursorPosition" : "303,24",
+        "last_setup_crc32" : "E6546C492ff876e0",
+        "scrollLine" : "301",
+        "tempName" : "Untitled2"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

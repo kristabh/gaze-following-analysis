@@ -1,6 +1,0 @@
-"0","n_participant_rows = nrow(pd_raw)"
-"0","n_unique_labs_from_participants = pd_raw %>%"
-"0","  summarize(labs = n_distinct(lab))"
-"0","unique_participants_by_lab = pd_raw %>%"
-"0","  group_by(lab) %>%"
-"0","  summarize(participants = n_distinct(subid))"

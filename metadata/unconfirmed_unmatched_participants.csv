@@ -1,11 +1,11 @@
 lab,subid,trialcount,rowcount,trial_error,present_td,lines_in_pd,age_days,notes,session_error,session_error_type,present_pd,confirmed
 infantlanglab-utk,eg12_4m_s8,NA,NA,NA,FALSE,1,387,NA,noerror,noerror,TRUE,FALSE
 infantlanglab-utk,eg8_3m_s3,NA,NA,NA,FALSE,1,273,NA,noerror,all orders were randomized,TRUE,FALSE
-lll-liv,gf015,NA,NA,NA,FALSE,1,219,NA,noerror,na,TRUE,FALSE
-lll-liv,gf045,NA,NA,NA,FALSE,1,421,"did not complete, sat on mothers lap and cried",noerror,na,TRUE,FALSE
-lll-liv,gfp1,NA,NA,NA,FALSE,1,574,child ate food throughout the session,noerror,na,TRUE,FALSE
-lll-liv,gfp2,NA,NA,NA,FALSE,1,401,child had dummy in mouth,noerror,na,TRUE,FALSE
-lll-liv,gfp3,NA,NA,NA,FALSE,1,653,"turning to mother sat behind, looking down triyng to undo the belt",noerror,na,TRUE,FALSE
+lll-liv,gf015,NA,NA,NA,FALSE,2,219,NA,noerror,na,TRUE,FALSE
+lll-liv,gf045,NA,NA,NA,FALSE,2,421,"did not complete, sat on mothers lap and cried",noerror,na,TRUE,FALSE
+lll-liv,gfp1,NA,NA,NA,FALSE,2,574,child ate food throughout the session,noerror,na,TRUE,FALSE
+lll-liv,gfp2,NA,NA,NA,FALSE,2,401,child had dummy in mouth,noerror,na,TRUE,FALSE
+lll-liv,gfp3,NA,NA,NA,FALSE,2,653,"turning to mother sat behind, looking down triyng to undo the belt",noerror,na,TRUE,FALSE
 nusinfantlanguagecentre,mbg002,NA,NA,NA,FALSE,1,392,premature baby,noerror,na,TRUE,FALSE
 nusinfantlanguagecentre,mbg003,NA,NA,NA,FALSE,1,424,premature baby,noerror,na,TRUE,FALSE
 nusinfantlanguagecentre,mbg004,NA,NA,NA,FALSE,1,424,premature baby,noerror,na,TRUE,FALSE
