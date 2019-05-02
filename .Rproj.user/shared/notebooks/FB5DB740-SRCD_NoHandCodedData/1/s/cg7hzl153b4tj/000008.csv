@@ -1,9 +1,0 @@
-"0","latency_lmer <- d_latency %>% 
-  mutate(age_days = scale(age_days, scale = FALSE)) %>%
-  filter(object == ""congruent"") %>% 
-  lmer(latency ~ lang_group * age_days + (1|subid) + (1|lab) + (0 + lang_group|trial_num),
-  data = .
-)
-"
-"2","singular fit
-"

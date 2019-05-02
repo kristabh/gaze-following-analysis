@@ -1,0 +1,8 @@
+"0","lost_participants_td <- anti_join(participants_premerge_td, participants_postmerge)"
+"0","lost_participants_pd <- anti_join(participants_premerge_pd, participants_postmerge)"
+"0","validate_that(nrow(lost_participants_td) + nrow(lost_participants_pd) == nrow(unmatched_participants_premerge))"
+"1","[1]"
+"1"," ""nrow(lost_participants_td) + nrow(lost_participants_pd) not equal to nrow(unmatched_participants_premerge)"""
+"1","
+"
+"0","lost_participants_td"
