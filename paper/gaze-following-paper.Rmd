@@ -446,7 +446,155 @@ We report how we determined our sample size, all data exclusions, all manipulati
 
 # References
 
+ Antovich, D. M., & Graf Estes, K. (2017). Learning across languages: Bilingual experience supports dual language statistical word segmentation. *Developmental Science*, e12548. doi: 10.1111/desc.12548
+ 
+Baldwin, D. A. (1995). Understanding the link between joint attention and language. In C. Moore & P.J. Dunham (Eds.), Joint attention: Its origins and role in development (pp. 131–58). Hillsdale, NJ: Erlbaum.
 
+Barr, D. J., Levy, R., Scheepers, C., & Tily, H. J. (2013). Random effects structure for confirmatory hypothesis testing: Keep it maximal. Journal of Memory and Language, 68, 255-278. doi: 10.1016/j.jml.2012.11.001
+
+Bedford, R., Elsabbagh, M., Gliga, T., Pickles, A., Senju, A., Charman, T.,..., & the BASIS team. (2012). Precursors to social and communication difficulties in infants at-risk for autism: Gaze-following and attentional engagement. Journal of Autism and Developmental Disorders, 42, 2208–2218. doi: 10.1007/s10803-012-1450-y
+
+Bergelson, E., & Swingley, D. (2012). At 6–9 months, human infants know the meanings of many common nouns. Proceedings of the National Academy of Sciences, 109, 3253–3258. doi: 0.1073/pnas.1113380109
+
+Bilson, S., Yoshida, H., Tran, C. D., Woods, E. A., & Hills, T. T. (2015). Semantic facilitation in bilingual first language acquisition. Cognition, 140(C), 122–134. doi: 10.1016/j.cognition.2015.03.013
+
+Bloom, P. (2000). How Children Learn the Meanings of Words. Cambridge, MA:The MIT Press.
+
+Bosch, L., & Sebastián-Gallés, N. (2001). Evidence of early language discrimination abilities in infants from bilingual environments. Infancy, 2, 29–49. doi: 10.1207/S15327078IN0201_3
+
+Brito, N., & Barr, R. (2014). Flexible memory retrieval in bilingual 6-month-old infants. Developmental Psychobiology, 56, 1156-1163. Doi: 10.1002/dev.21188
+
+Brojde, C. L., Ahmed, S., & Colunga, E. (2012). Bilingual and monolingual children attend to different cues when learning new words. Frontiers in Psychology, 3. Doi: 10.3389/fpsyg.2012.00155
+
+Brooks, R., & Meltzoff, A. N. (2002). The importance of eyes: How infants interpret adult looking behavior. Developmental Psychology, 38, 958–66. doi: 10.1037/0012-1649.38.6.958
+
+Brooks, R., & Meltzoff, A. N. (2005). The development of gaze-following and its relation to language. Developmental Science, 8, 535–43. doi: 10.1111/j.1467-7687.2005.00445.x
+
+Brooks, R., & Meltzoff, A. N. (2008). Infant gaze following and pointing predict accelerated vocabulary growth through two years of age: A longitudinal, growth curve modeling study. Journal of child language, 35, 207-220. doi: 10.1017/S030500090700829 
+
+Brooks, R., & Meltzoff, A. N. (2014). Gaze-following: A mechanism for building social connections between infants and adults. In M. Mikulincer & P. R. Shaver (Eds.), Mechanisms of social connection: From brain to group (pp. 167–183). Washington, DC: American Psychological Association.
+
+Byers-Heinlein, K. (2015). Methods for studying infant bilingualism. In J. W. Schwieter, (Ed.). Cambridge Handbook of Bilingual Processing (pp. 133–154). Cambridge, UK: Cambridge University Press.
+
+Byers-Heinlein, K. (2016). Bilingualism affects 9-month-old infants’ expectations about how words refer to kinds. Developmental Science, 20, e12486. doi: 10.1111/desc.12486
+
+Byers-Heinlein, K., & Fennell, C. T. (2014). Perceptual narrowing in the context of increased variation: Insights from bilingual infants. Developmental Psychobiology, 56, 274–291. doi: 10.1002/dev.21167
+
+Byers-Heinlein, K., & Werker, J. F. (2009). Monolingual, bilingual, trilingual: Infants’ language experience influences the development of a word learning heuristic. Developmental Science, 12, 815-823. doi: 10.1111/j.1467-7687.2009.00902.x
+
+Byers-Heinlein, K., & Werker, J. F. (2013). Lexicon structure and the disambiguation of novel words: Evidence from bilingual infants. Cognition, 128, 407–416. doi: 10.1016/j.cognition.2013.05.010
+
+Carpenter, M., Nagell, K., & Tomasello, M. (1998). Social cognition, joint attention, and communicative competence from 9 to 15 months of age. Monographs of the Society for Research in Child Development, 63, i-174. doi: 10.2307/1166214 
+
+Core, C., Hoff, E., Rumiche, R., & Señor, M. (2013). Total and conceptual vocabulary in Spanish-English bilinguals from 22 to 30 months: Implications for assessment. Journal of Speech, Language and Hearing Research, 56, 1637–1649. doi: 10.1044/1092-4388(2013/11-0044)
+
+Corkum, V., & Moore, C. (1995). Development of joint visual attention in infants. In C. Moore & P. J. Dunham (Eds.), Joint attention: Its origins and role in development (pp. 61– 83). Hillsdale, NJ: Erlbaum.
+
+Csibra, G., Hernik, M., Mascaro, O., & Tatone, D. (2016). Statistical treatment of looking-time data. Developmental Psychology, 52, 521-536. doi: 10.1037/dev0000083.supp
+
+de Bruin, A., Treccani, B., & Della Sala, S. (2015). Cognitive advantage in bilingualism: An example of publication bias? Psychological Science, 26, 99–107. doi: 10.1177/0956797614557866
+
+De Houwer, A., Bornstein, M. H., & De Coster, S. (2006). Early understanding of two words for the same thing: A CDI study of lexical comprehension in infant bilinguals. International Journal of Bilingualism, 10, 331–347. doi: 10.1177/13670069060100030401
+
+Duñabeitia, J. A., & Carreiras, M. (2015). The bilingual advantage: Acta est fabula. Cortex, 73, 371–372. doi: 10.1016/j.cortex.2015.06.009
+
+Farroni, T., Massaccesi, S., Pividori, D., & Johnson, M. H. (2004). Gaze-following in newborns. Infancy, 5, 39–60. doi: 10.1207/s15327078in0501_2 
+
+Fennell, C. T., Byers-Heinlein, K., & Werker, J. F. (2007). Using speech sounds to guide word learning: The case of bilingual infants. Child Development, 78, 1510–1525. doi: 10.1111/j.1467-8624.2007.01080.x
+
+Fenson, L., Marchman, V. A., Thal, D. J., Dale, P. S., Reznick, J. S., & Bates, E. (2007). MacArthur-Bates Communicative Development Inventories (2nd ed.). Baltimore, MD: Brookes.
+
+Frank, M. C., Bergelson, E., Bergmann, C., Cristia, A., Floccia, C., Gervain, J., ... & Yurovsky, D. (2017). A Collaborative approach to infant research: Promoting reproducibility, best practices, and theory‐building. Infancy, 1-15 doi: 10.1111/infa.12182 
+
+Frischen, A., Bayliss, A. P., & Tipper, S. P. (2007). Gaze-cueing of attention: Visual attention, social cognition and individual differences. Psychological Bulletin, 133, 694-724. doi:10.1037/0033-2909.133.4.694
+
+Graf Estes, K., & Hay, J. F. (2015). Flexibility in bilingual infants’ word learning. Child Development, 86, 1371– 1385. doi: 10.1111/cdev.12392
+
+Henrich, J., Heine, S. J., & Norenzayan, A. (2010). Most people are not WEIRD. Nature, 466, 29–29. doi: 10.1038/466029a
+
+Hessels, R. S., Andersson, R., Hooge, I. T., Nyström, M., & Kemner, C. (2015). Consequences of eye Color, positioning, and head movement for eye‐tracking data Quality in Infant Research. Infancy, 20(6), 601-633.
+
+Hollich, G. J., Hirsh-Pasek, K., Golinkoff, R. M., Brand, R. J., Brown, E., Chung, H. L., ... & Bloom, L. (2000). Breaking the language barrier: An emergentist coalition model for the origins of word learning. Monographs of the Society for Research in Child Development, 65, i-35. doi: 10.1111/1540-5834.00090.
+
+Houston-Price, C., Caloghiris, Z., & Raviglione, E. (2010). Language experience shapes the development of the mutual exclusivity bias. Infancy, 15, 125–150. doi:10.1111/j.1532-7078.2009.00009.x
+
+Ioannidis, J. P. (2012). Why science is not necessarily self-correcting. Perspectives on Psychological Science, 7, 645–654. doi: 10.1177/1745691612464056
+
+Kandhadai, P., Danielson, D.K., & Werker, J.F. (2014). Culture as a binder for bilingual acquisition. Trends in Neuroscience and Education, 3, 24-7. doi: 10.1016/j.tine.2014.02.001
+
+Klein, R. M. (2015). Is there a benefit of bilingualism for executive functioning? Bilingualism: Language and Cognition, 18, 29–31. doi: 10.1017/S1366728914000613
+
+Kovács, Á. M., & Mehler, J (2009a). Flexible learning of multiple speech structures in bilingual infants. Science, 325, 611–612. doi: 10.1126/science.1173947)
+
+Kovács, Á. M., & Mehler, J. (2009b). Cognitive gains in 7-month-old bilingual infants. Proceedings of the National Academy of Sciences, 106, 6556–6560. doi: 10.1073/pnas.0811323106
+
+Liu, L., & Kager, R. (2016). Perception of a native vowel contrast by Dutch monolingual and bilingual infants: A bilingual perceptual lead. International Journal of Bilingualism, 20(3), 335-345. doi: 10.1177/1367006914566082
+
+ManyBabies Consortium. (2017a; Registered Report accepted pending data collection). Quantifying sources of variability in infancy research using the infant-directed speech preference. Advances in Methods and Practices in Psychological Science.
+
+ManyBabies Consortium. (2017b; Registered Report under review.). A multi-lab study of bilingual infants: Exploring the preference for infant-directed speech. Advances in Methods and Practices in Psychological Science.
+
+Markman, E. M. (1990). Constraints children place on word meanings. Cognitive Science, 14, 57-77. doi: 10.1207/s15516709cog1401_4
+
+Markman, E. M., & Wachtel, G. F. (1988). Children's use of mutual exclusivity to constrain the meanings of words. Cognitive Psychology, 20, 121–57. doi: 10.1016/0010-0285(88)90017-5
+
+Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., & Bates, D. (2017). Balancing Type I error and power in linear mixed models. Journal of Memory and Language, 94, 305–315. doi: 10.1016/j.jml.2017.01.001
+
+Meltzoff, A. N., & Brooks, R. (2007). Eyes wide shut: The importance of eyes in infant gaze-following and understanding other minds. In R. Flom, K. Lee & D. Muir (Eds.), Gaze-following: Its development and significance, 217–41. Mahwah, NJ: Erlbaum.
+
+Moore, C. (2008). The development of gaze-following. Child Development Perspectives, 82, 661–673. doi: 10.1111/j.1750-8606.2008.00052.x
+
+Moore, C., & Corkum, V. (1998). Infant gaze-following based on eye direction. British Journal of Developmental Psychology, 16, 495–503. doi: 10.1111/j.2044-835x.1998.tb00767.x
+
+Morales, M., Mundy, P., Delgado, C. E. F., Yale, M., Neal, R. & Schwartz, H. K. (2000). Gaze-following, temperament, and language development in 6-month-olds: A replication and extension. Infant Behavior & Development, 23, 231–6. doi: 10.1016/s0163-6383(01)00038-8
+
+Mundy, P., Block, J., Delgado, C., Pomares, Y., Van Hecke, A.V., & Parlade, M.V. (2007). Individual differences and the development of joint attention in infancy. Child Development, 78, 938–954. doi: 10.1111/j.1467-8624.2007.01042.x
+
+Mundy, P., Sullivan, L., & Mastergeorge, A. M. (2009). A parallel and distributed processing model of joint attention, social-cognition and autism. Autism Research, 2, 2–21. doi:10.1002/aur.61
+
+Paap, K. R., Johnson, H. A., & Sawi, O. (2015). Bilingual advantages in executive functioning either do not exist or are restricted to very specific and undetermined circumstances. Cortex, 69, 265–278. doi: 10.1016/j.cortex.2015.04.014
+
+Paulus, M., & Fikkert, P. (2014). Conflicting social cues: 14- and 24-month-old infants’ reliance on gaze and pointing cues in word learning. Journal of Cognition and Development, 15, 43–59. doi: 10.1080/15248372.2012.698435
+
+Pearson, B. Z., Fernández, S. C., & Oller, D. K. (1993). Lexical development in bilingual infants and toddlers: Comparison to monolingual norms. Language Learning, 43, 93–120. doi: 10.1111/j.1467-1770.1993.tb00174.x
+
+Petitto, L. A., Katerelos, M., Levy, B. G., Gauna, K., Tetreault, K., & Ferraro, V. (2001). Bilingual signed and spoken language acquisition from birth: Implications for the mechanisms underlying early bilingual language acquisition. Journal of Child Language, 28, 453–496. doi: 10.1017/S0305000901004718
+
+Pons, F., Bosch, L., Lewkowicz, D. J. (2015). Bilingualism modulates infants’ selective attention to the mouth of a talking face. Psychological Science, 26, 490–498. doi: 10.1177/0956797614568320.
+
+Reid, V. M., Striano, T., Kaufman, J., & Johnson, M. H. (2004). Eye gaze cueing facilitates neural processing of objects in 4-month-old infants. NeuroReport, 15, 2553–2555. doi:10.1097/00001756-200411150-00025
+
+van Renswoude, D. R., Raijmakers, M. E., Koornneef, A., Johnson, S. P., Hunnius, S., & Visser, I. (2017). Gazepath: An eye-tracking analysis tool that accounts for individual differences and data quality. Behavior Research Methods, 1-19.
+
+Sebastián-Gallés, N., Albareda-Castellot, B., Weikum, W. M., & Werker, J. F. (2012). A bilingual advantage in visual language discrimination in infancy. Psychological Science, 23, 994–999.
+
+Senju, A., & Csibra, G. (2008). Gaze-following in human infants depends on communicative signals. Current Biology, 18, 668–671. doi: 10.1016/j.cub.2008.03.059
+
+Senju, A., Tucker, L., Pasco, G., Hudry, K., Elsabbagh, M., Charman, T., & Johnson, M. H. (2013). The importance of the eyes: communication skills in infants of blind parents. Proceedings of the Royal Society B: Biological Sciences, 280, 1-7. doi: 10.1098/rspb.2013.0436
+
+Singh, L., Fu, C. S. L., Tay, Z.W., & Golinkoff, R. M. (2017) Novel word learning in bilingual and monolingual infants: Evidence for a bilingual advantage. Child Development. doi: 10.1111/cdev.12747
+
+Singh, L., Fu, C. S., Rahman, S. A., Hameed, W., Sanmugam, S., Agarwal, P.,..& Rifkin-Graboi, A. (2015). Back to Basics: A bilingual advantage in infant visual habituation. Child Development, 86, 294–302. doi: 10.1111/cdev.12271
+
+Szufnarowska, J., Rohlfing, K. J., Fawcett, C., & Gredebäck, G. (2014). Is ostension any more than attention? Nature Publishing Group, 4, 1–4. doi: 10.1038/srep05304
+
+Tenenbaum, E. J., Sobel, D. M., Sheinkopf, S. J., Shah, R. J., Malle, B. F. & Morgan, J. L. (2015). Attention to the mouth and gaze-following in infancy predict language development. Journal of Child Language, 42, 1173–1190.doi: 10.1017/s0305000915000501
+
+Tomasello, M. (2003). Constructing a language: A usage-based theory of language acquisition. Cambridge, MA: Harvard University Press.
+
+Viechtbauer, W. (2010). Conducting meta-analyses in R with the metafor package. Journal of Statistical Software, 36, 1-48. doi: 10.18637/jss.v036.i03
+
+Wass, S. V., Smith, T. J., & Johnson, M. H. (2013). Parsing eye-tracking data of variable quality to provide accurate fixation duration estimates in infants and adults. Behavior Research Methods, 45(1), 229-250.
+
+Weikum, W. M., Vouloumanos, A., Navarra, J., Soto-Faraco, S., Sebastián-Gallés, N., & Werker, J. F. (2007). Visual language discrimination in infancy. Science, 316, 1159. doi: 10.1177/0956797612436817
+
+Werker, J. F., & Byers-Heinlein, K. (2008). Bilingualism in infancy: First steps in perception and comprehension, 12, 144–151. doi: 10.1016/j.tics.2008.01.008
+
+Woodward, A. L. (2003). Infants’ developing understanding of the link between looker and object. Developmental Science, 6, 297–311. doi: 10.1111/1467-7687.00286
+
+Yow, W. Q., & Markman, E. M. (2011). Young bilingual children’s heightened sensitivity to referential cues. Journal of Cognition and Development, 12, 12–31. doi:10.1080/15248372.2011.539524
+
+Yow, W. Q., Li, X., Lam, S., Gliga, T., Chong, Y. S., Kwek, K., & Broekman, B. F. P. (2017). A bilingual advantage in 54-month-olds’ use of referential cues in fast mapping. Developmental Science, 20. doi:10.1111/desc.12482
 
 
 \begingroup
