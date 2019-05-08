@@ -52,9 +52,7 @@ for (file in participant_files){
       select(-starts_with("Bilingual")) %>%
       select(-contains("days_preterm")) %>%
       select(-contains("prev_earinfection")) %>%
-      select(-contains("MacArthur")) %>%
-      select(-contains("method")) %>% # This is from MB1
-      rename_all(recode, race_ethinicty = "race_ethnicity", Notes = "notes")
+      select(-contains("MacArthur"))
   
     
 pd_raw <- full_join(pd_raw, temp_dataset)
@@ -72,9 +70,7 @@ pd_raw <- full_join(pd_raw, temp_dataset)
       select(-starts_with("Bilingual")) %>%
       select(-contains("days_preterm")) %>%
       select(-contains("prev_earinfection")) %>%
-      select(-contains("MacArthur")) %>%
-      select(-contains("method")) %>% # This is from MB1
-      rename_all(recode, race_ethinicty = "race_ethnicity", Notes = "notes")
+      select(-contains("MacArthur"))
   
   }
   

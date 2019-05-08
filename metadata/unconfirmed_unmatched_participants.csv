@@ -1,6 +1,6 @@
 lab,subid,trialcount,rowcount,trial_error,present_td,lines_in_pd,age_days,notes,session_error,session_error_type,present_pd,confirmed
-infantlanglab-utk,eg12_4m_s8,NA,NA,NA,FALSE,1,387,NA,noerror,noerror,TRUE,FALSE
-infantlanglab-utk,eg8_3m_s3,NA,NA,NA,FALSE,1,273,NA,noerror,all orders were randomized,TRUE,FALSE
+infantlanglab-utk,eg12_4m_s8,NA,NA,NA,FALSE,1,387,did great.,noerror,noerror,TRUE,FALSE
+infantlanglab-utk,eg8_3m_s3,NA,NA,NA,FALSE,1,273,did great.,noerror,all orders were randomized,TRUE,FALSE
 lll-liv,gf015,NA,NA,NA,FALSE,1,219,NA,noerror,na,TRUE,FALSE
 lll-liv,gf045,NA,NA,NA,FALSE,1,421,"did not complete, sat on mothers lap and cried",noerror,na,TRUE,FALSE
 lll-liv,gfp1,NA,NA,NA,FALSE,1,574,child ate food throughout the session,noerror,na,TRUE,FALSE

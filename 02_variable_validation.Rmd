@@ -171,6 +171,9 @@ d$td <- !(tolower(d$cognitive_developmental) %in%
 
 see_if(all(d$td %in% c(TRUE, FALSE)))
 
+
+
+
 ```
 
 <!-- Some issues reported as having cognitive/developmental/hearing issues that don't seem to be grounds for exclusion. We are resolving this issue by reviewing lab notes for these participants and re-classifying them. -->
@@ -531,12 +534,14 @@ d <- d %>%
 ## Gender
 
 ```{r}
-unique(d$partcipant_gender)
+unique(d$participant_gender)
 
 ```
-# ```{r}
-# unique(d$gender)
-# d$gender <- toupper(d$gender)
+
+
+ ```{r}
+ unique(d$gender)
+ d$gender <- toupper(d$gender)
 # 
 # d <- d %>%
 #   mutate(gender2 = case_when(
@@ -556,9 +561,8 @@ unique(d$partcipant_gender)
 # 
 # see_if(all(d$gender %in% c("M", "F", NA)))
 # 
-# ```
+ ```
 
-* Some issues with participant gender.  Need to be checked *
 
 ## age_days and age_group
 
