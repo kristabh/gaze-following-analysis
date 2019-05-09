@@ -293,6 +293,22 @@ pd$subid[pd$lab == "babylab-brookes"] <- sub("g0", "g", pd$subid[pd$lab == "baby
 
 ```
 
+Correcting issue where noerror was coded as na for some lab's session error
+
+
+```{r}
+
+d <- d %>%
+pd <- pd %>%
+  mutate(session_error = case_when(
+    session_error == "na" ~ "noerror",
+    TRUE
+  ))
+
+```
+
+
+
 # Pre-merge Checking
 
 ```{r}
@@ -326,9 +342,21 @@ write_csv(unmatched_participants_premerge, 'metadata/unconfirmed_unmatched_parti
 
 unmatched_participants_premerge
 
+participants_session_errors_all <- pd %>% filter(session_error!= "noerror") %>%
+  select(lab, subid, session_error, session_error_type, notes)
+
+write.csv(participants_session_error_type, 'metadata/participants_session_errors_all.csv')
+
 ```
 
 We still have a `r length(unmatched_participants_premerge)` that need to be checked on.
+
+
+
+```{r}
+
+```
+
 
 
 # Merge
