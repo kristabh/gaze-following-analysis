@@ -136,6 +136,35 @@ unfinished_trials <- trial_row_checker %>%
 
 There are ` r length(unfinished_trials)` children who did not complete all of the trials and do not have NAs for those trials.  We won't worry about this.
 
+# stimulus
+We want to make sure that the trial number and trial order correspond to the expected stimulus
+
+```{r}
+
+unique(d$stimulus)
+
+stimuli <- read_csv("metadata/study_orders.csv") %>%
+#  rename(stimulus = stimulus_check) %>%
+  mutate(stimulus_check = tolower(stimulus_check))
+
+d <- left_join(d, stimuli)
+
+
+unmatched_stimuli <- as.data.frame(setdiff(d$stimulus, d$stimulus_check))
+
+#Everything in order.  Will replace stimulus with stimulus_check
+  
+d <- d %>%
+  select(-stimulus) %>%
+  rename(stimulus = stimulus_check)
+
+unique(d$stimulus)
+
+
+```
+
+
+
 # Exclusion variables
 
 * pilot
@@ -310,31 +339,33 @@ noerror_entries <- c("noerror", "noerro")
 <!-- Many participants may be marked as having a session error, despite having usable trials. Before excluding session error participants, we make sure we keep those participants we have identified as being incorrectly classified as a session error. This includes subjects marked as a session error by the lab for not completing all trials, for what we consider to be trial-level errors, or for not meeting a non-procedural criterion (excluded based on age, preterm, language, pilot testing, etc.). These subjects are in the metadata file `participants_session_error_keep.csv`. The column 'session_error_change_reason' also includes a short explanation of why we are reversing the session error code for each subject. In addition, we are adding a unified coding of the (remaining) session error types into three categories: equipment failure, outside interference, experimenter error, fussiness. The recoded session error types are in the metadata file `participants_session_error_type.csv` and the column containing the updated session error code is named `session_error_type_recoded`. -->
 
 ```{r}
-participants_error_to_keep <- read_csv("metadata/participants_session_error_keep.csv")
 
-#validate lab names
-see_if(all(participants_error_to_keep$lab %in% d$lab))
-
-d <- d %>% 
-  left_join(participants_error_to_keep)
-
-d$session_error_recoded <- ifelse(is.na(d$session_error_recoded),0,d$session_error_recoded)
-
- d$session_error <- !(is.na(d$session_error)|
-                        tolower(d$session_error) %in% noerror_entries | 
-                          d$session_error_recoded == 1)
+# Not actual errors
+participants_error_keep <-read_csv("metadata/participants_session_error_keep.csv") %>%
+  mutate(subid = paste0(lab,subid))
 
 
- see_if(all(d$session_error %in% c(TRUE, FALSE)))
+# True errors
+participants_error_type <- read_csv("metadata/participants_session_error_type.csv") %>%
+ mutate(subid = paste0(lab,subid))
+
+
  
- #add column for unified coding of session error
- participants_error_type <- read_csv("metadata/participants_session_error_type.csv")
- 
- #validate lab names
+# validate lab names
  see_if(all(participants_error_type$lab %in% d$lab))
  
+# validate participants
+#see_if(all(participants_error_type$subid %in% d$subid)) # Could be some participants do not have any data
+ 
+ 
  d <- d %>% 
-   left_join(participants_error_type)
+   left_join(participants_error_type) %>%
+   mutate(session_error = as.logical(case_when(
+     is.na(session_error_type_recoded) ~ "FALSE",
+     TRUE ~ "TRUE"
+   ))) %>%
+   select(-session_error_type)
+ 
 
 ```
 
@@ -364,7 +395,7 @@ d %>%
   arrange(desc(n))
 
 ```
-Before excluding trial errors, we make sure we keep those trials we have identified as being incorrectly classified as a trial error and remove trials not marked as an error. These subjects are in the metadata file `participants_trial_error_keep.csv` (see metadata-README for details).
+Before excluding trial errors, we make sure we keep those trials we have identified as being incorrectly classified as a trial error and remove trials not marked as an error. All trials look okay, so no need to refer to metadata.
 
 ```{r}
 #participants_trial_error_update <- read_csv("metadata/participants_trial_error_update.csv")
