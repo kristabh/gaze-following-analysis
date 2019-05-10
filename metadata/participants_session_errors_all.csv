@@ -1,0 +1,195 @@
+lab,subid,session_error,session_error_type,notes
+babylab-princeton,manybabiesbl005,error,language exclusion,ra is a postdoc
+babylab-princeton,manybabiesbl010,error,language exclusion,"ra is a full time lab manager, post-undergrad"
+babylab-princeton,manybabiesbl016,error,language exclusion,ra is a postdoc
+babylab-brookes,g140,na,na,very good
+babylab-brookes,g15,na,na,NA
+babylab-brookes,g21,error,fussy,a little fussy
+babylab-brookes,g64,na,na,NA
+babylab-brookes,g56,na,na,ok
+babylab-brookes,g25,error,software problem,ok
+babylab-brookes,g14,na,na,calibration problems
+babylab-brookes,g22,error,fussy,ok
+babylab-brookes,g41,na,na,very good
+babylab-brookes,g63,na,na,NA
+babylab-brookes,g38,na,na,good
+babylab-brookes,g97,na,na,leaning forwards
+babylab-brookes,g101,na,na,very good
+babylab-brookes,g89,na,na,ok
+babylab-brookes,g19,na,na,ok
+babylab-brookes,g39,na,na,ok
+babylab-brookes,g33,error,calibration problems,calibration problems
+babylab-brookes,g40,na,na,ok
+babylab-brookes,g95,na,na,ok
+babylab-brookes,g77,na,na,ok
+babylab-brookes,g54,na,na,some calibration problems
+babylab-brookes,g129,na,na,very good
+babylab-brookes,g118,error,calibration problems,calibration problems
+babylab-brookes,g45,na,na,ok
+babylab-brookes,g24,na,na,ok
+babylab-brookes,g5,na,na,ok
+babylab-brookes,g36,na,na,very good
+babylab-brookes,g79,na,na,ok
+babylab-brookes,g42,na,na,NA
+babylab-brookes,g81,na,na,ok
+babylab-brookes,g47,na,na,ok
+babylab-brookes,g78,na,na,ok
+babylab-brookes,g115,na,na,ok some calibration problems
+babylab-brookes,g61,na,na,ok
+babylab-brookes,g62,na,na,ok
+babylab-brookes,g143,na,na,ok
+babylab-brookes,g145,na,na,ok
+babylab-brookes,g59,na,na,ok
+babylab-brookes,g50,na,na,good
+babylab-brookes,g142,na,na,very good
+babylab-brookes,g148,na,na,very good
+babylab-brookes,g85,na,na,ok
+babylab-brookes,g128,na,na,very good
+babylab-brookes,g88,na,na,ok
+babylab-brookes,g90,na,na,ok
+babylab-brookes,g136,na,na,very good
+babylab-brookes,g44,error,"calibration problem, wiggly","calibration problem, wiggly"
+babylab-brookes,g122,error,too fussy,too fussy
+babylab-brookes,g144,na,na,ok
+babylab-brookes,g48,error,moved position,NA
+babylab-brookes,g80,na,na,ok
+babylab-brookes,g4,na,na,good
+babylab-brookes,g151,na,na,"ok, but leaning forwards"
+babylab-brookes,g72,na,na,ok but moving
+babylab-brookes,g114,na,na,ok
+babylab-brookes,g137,na,na,very good
+babylab-brookes,g147,error,calibration problems,calibration problems
+babylab-brookes,g131,na,na,very good
+babylab-brookes,g133,error,experimenter error,experimenter error
+babylab-brookes,g119,na,na,quite good
+babylab-brookes,g123,na,na,very good
+babylab-brookes,g98,na,na,very good
+babylab-brookes,g150,na,na,good
+babylab-brookes,g127,error,uninterested,"uninterested, playing with the curtains"
+babylab-brookes,g132,error,too fussy,too fussy
+babylab-brookes,g126,na,na,ok
+babylab-brookes,g130,na,na,good
+babylab-brookes,g82,na,na,ok
+babylab-brookes,g152,na,na,"ok, but uninterested"
+babylab-brookes,g7,na,na,ok
+babylab-brookes,g149,na,na,ok but calibration problems
+babylab-brookes,g112,na,na,ok
+babylab-brookes,g65,na,na,"small eyes, calibration problems"
+babylab-brookes,g49,na,na,good
+babylab-brookes,g20,na,na,uninterested
+babylab-brookes,g102,na,na,ok
+babylab-brookes,g109,na,na,ok
+babylab-brookes,g68,na,na,ok
+babylab-brookes,g69,na,na,ok
+babylab-brookes,g60,na,na,very good
+babylab-brookes,g70,na,na,ok
+babylab-brookes,g67,na,na,ok
+babylab-brookes,g135,na,na,good
+babylab-brookes,g139,na,na,ok but wiggly towards the end
+babylab-brookes,g96,na,na,fussy
+babylab-brookes,g51,na,na,ok
+babylab-brookes,g108,na,na,ok
+babylab-brookes,g138,na,na,good
+babylab-brookes,g113,na,na,good
+babylab-brookes,g8,na,na,ok
+babylab-brookes,g16,na,na,NA
+babylab-brookes,g26,na,na,NA
+babylab-brookes,g86,na,na,ok
+babylab-brookes,g27,na,na,ok
+babylab-brookes,g103,na,na,ok
+babylab-brookes,g141,error,uninterested,uninterested
+babylab-brookes,g12,na,na,calibration problems
+babylab-brookes,g73,na,na,ok
+babylab-brookes,g66,na,na,NA
+babylab-brookes,g121,na,na,ok
+babylab-brookes,g32,na,na,ok
+babylab-brookes,g100,na,na,very good
+babylab-brookes,g84,na,na,a bit fussy; uninterested
+babylab-brookes,g18,na,na,very good
+babylab-brookes,g55,na,na,good
+babylab-brookes,g116,na,na,ok
+babylab-brookes,g117,error,very wiggly,very wiggly
+babylab-brookes,g146,na,na,good
+babylab-brookes,g71,na,na,ok
+babylab-brookes,g134,na,na,good
+babylab-brookes,g52,na,na,ok
+babylab-brookes,g23,na,software problem,a little fussy
+babylab-brookes,g58,na,na,ok
+babylab-brookes,g125,na,na,very good
+babylab-brookes,g87,na,na,ok
+babylab-brookes,g43,na,na,ok
+babylab-brookes,g13,na,na,good
+babylab-brookes,g46,na,na,some calibration problems
+babylab-brookes,g74,na,na,ok
+babylab-brookes,g120,na,na,very good
+babylab-brookes,g124,na,na,ok
+babylab-brookes,g53,na,na,ok
+babylab-brookes,g11,na,na,ok
+babylab-brookes,g17,na,na,ok
+babylab-brookes,g75,na,na,ok
+babylab-brookes,g9,na,na,very good
+babylab-brookes,g91,error,too fussy,fussy; calibration problems
+babylab-brookes,g35,error,parent interference,wandering around; check parent interference; veru fussy
+babylab-brookes,g6,na,na,good
+babylab-brookes,g10,na,na,ok
+cdc-ceu,mb39,error,crying,"mikolaj without beard. zsu is a full-time employed ra, mikolaj run the experiment. zsu talked to the mum, gathered questionnaire data."
+elp-georgetown,8531,error,age exclusion,family re schedule a couple times and had the test after age range (25 days after)
+elp-georgetown,8719,error,age exclusion,child over age range (by 1day)
+elp-georgetown,8767,error,age exclusion,child over age range (by 3 days)
+elp-georgetown,8966,error,age exclusion,child over age range (by 7 days)
+elp-georgetown,8855,error,exclusion,child was born with a chromosomal mutation.tone deficiency and some cof delay.
+elp-georgetown,8909,error,age exclusion,child over age range (by 11 days)
+elp-georgetown,8711,error,age exclusion,child over age range (by 8days)
+elp-georgetown,8869,error,age exclusion,child over age range (by 10 days)
+elp-georgetown,8971,error,age exclusion,child over age range (by 1day)
+elp-georgetown,8552,error,age exclusion,family re schedule a couple times and had the test after age range (25 days after)
+nusinfantlanguagecentre,mbg024,error,language exclusion,NA
+nusinfantlanguagecentre,mbg023,error,language exclusion,good and sat through halfway and then the child started turning back towards the mum and no longer wanted to sit facing the screen (got more interested in playing)
+nusinfantlanguagecentre,ybg002,error,na,child fussed out and fell asleep; test was not administered
+irl-concordia,gf12_s04,error,language exclusion,na
+irl-concordia,gf12_s09,error,language exclusion,na
+irl-concordia,gf12_s17,error,language exclusion,na
+irl-concordia,gf12_s20,error,baby inattention,na
+irl-concordia,gf6_s18,error,language exclusion,na
+irl-concordia,gf6_s20,error,language exclusion,na
+irl-concordia,gf6_s21,error,language exclusion,na
+irl-concordia,gf6_s29,error,language exclusion; preterm,na
+koku-hamburg,mb_01_gf,error,language exclusion,NA
+koku-hamburg,mb_07_gf,error,too fuzzy,NA
+koku-hamburg,mb_15_gf,error,"program crashed, no data collected",NA
+koku-hamburg,mb_16_gf,error,"program crashed, no data collected",NA
+koku-hamburg,mb_18_gf,error,too fuzzy,NA
+koku-hamburg,mb_23_gf,error,too fuzzy,NA
+koku-hamburg,mb_25_gf,error,"child could not be calibrated, no data collected",NA
+koku-hamburg,mb_26_gf,error,too fuzzy,NA
+koku-hamburg,mb_33_gf,error,"software issues, no data collected",NA
+lll-liv,gf005,error,technical error,incomplete due to technical error
+lll-liv,gf008,error,technical error,incomplete due to technical error
+lll-liv,gf009,error,technical error,"child only completed on third attempt of experiment, 1st attempt saw two trials, 2nd attempt saw 0 trials, 3rd attempts saw all trials (no headphones worn)"
+lll-liv,gf011,error,technical error,incomplete due to technical error
+lll-liv,gf012,error,technical error,incomplete due to technical error
+lll-liv,gf013,error,technical error,incomplete due to technical error
+lll-liv,gfp4,error,sibling interference,"sister attended session and spoke all the way through, ate a breadstick, eye tracker wasn’t tracking eye but nostril sometimes"
+lll-liv,gf021,error,no headphones used,parents didn’t wear masking headphones
+lll-liv,gf024,error,language exclusion,NA
+lll-liv,gf025,error,language exclusion,NA
+lll-liv,gf028,error,language exclusion,NA
+weltentdecker-zurich,gf_12588,error,"child, parent","calibration took very long, had to be repeated. child moved a lot. mother pointed and talked once"
+weltentdecker-zurich,gf_12911,error,child,child leaned forward and moved a lot. tracking not possible because child cried too much. no eye-tracking file.
+weltentdecker-zurich,gf_12989,error,child,"cried a lot, mother intervened directly and experiment not started. no eye-tracking file."
+weltentdecker-zurich,gf_13721,error,child,"child was fuzzy and cried, didn't look much at screen"
+weltentdecker-zurich,mb_13730,error,child,cried and moved a lot during experiment. child sat on the mother's lap (changing distance to eyetracker).
+weltentdecker-zurich,gf_13782,error,child,child cried a lot. calibration not possible. no eye-tracking file.
+weltentdecker-zurich,gf_13787,error,technical,experiment sound did not work.
+weltentdecker-zurich,gf_13968,error,child,"child fuzzed out, calibration difficult and tracking was not possible. eye-tracking file ends after trial 2."
+weltentdecker-zurich,gf_14207,error,child,child kicked the eyetracker and display with his feet. eyetracker lost eye in trial 1 an trial 6.
+upf_barcelona,subj02,error,language exclusion,did great
+upf_barcelona,subj10,error,language exclusion,okay
+upf_barcelona,subj18,error,child is too old for the study,okay (took very long to calibrate - 5 times)
+upf_barcelona,subj23,error,language exclusion,did great
+upf_barcelona,subj24,error,child is too old for the study,did great
+upf_barcelona,subj26,error,child is too old for the study,cried. did not finish study (4 trials)
+upf_barcelona,subj28,error,child is too old for the study,okay
+upf_barcelona,subj32,error,language exclusion,did great
+upf_barcelona,subj33,error,language exclusion,okay
+upf_barcelona,subj46,error,language exclusion,moving a lot
