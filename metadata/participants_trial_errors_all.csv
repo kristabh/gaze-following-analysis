@@ -1,0 +1,78 @@
+lab,subid,study_order,stimulus,trial_num,first_shift,latency,n_shift_congruent,n_shift_incongruent,fixation_congruent,fixation_incongruent,trial_error,trial_error_type,coding
+babylab-princeton,manybabies025,3,ord3_t1_l,1,na,NA,0,0,0,0,error,equipment malfunction,handcoding
+babylab-princeton,manybabies025,3,ord3_t2_r,2,na,NA,0,0,0,0,error,equipment malfunction,handcoding
+babylab-princeton,manybabies025,3,ord3_t3_r,3,na,NA,0,0,0,0,error,equipment malfunction,handcoding
+babylab-princeton,manybabies025,3,ord3_t4_l,4,na,NA,0,0,0,0,error,equipment malfunction,handcoding
+babylab-princeton,manybabies025,3,ord3_t5_r,5,na,NA,0,0,0,0,error,equipment malfunction,handcoding
+babylab-princeton,manybabies025,3,ord3_t6_l,6,na,NA,0,0,0,0,error,equipment malfunction,handcoding
+babylab-princeton,manybabies031,2,ord2_t4_l,4,congruent,7500,1,0,833,0,error,child fussing out,handcoding
+babylab-princeton,manybabies031,2,ord2_t5_r,5,na,NA,0,0,0,0,error,child fussed out,handcoding
+babylab-princeton,manybabies031,2,ord2_t6_l,6,na,NA,0,0,0,0,error,child fussed out,handcoding
+babylab-princeton,manybabiesbl003,3,ord3_t3_r,3,na,NA,0,0,0,0,error,child fussed out,handcoding
+babylab-princeton,manybabiesbl003,3,ord3_t4_l,4,na,NA,0,0,0,0,error,child fussed out,handcoding
+babylab-princeton,manybabiesbl003,3,ord3_t5_r,5,na,NA,0,0,0,0,error,child fussed out,handcoding
+babylab-princeton,manybabiesbl003,3,ord3_t6_l,6,na,NA,0,0,0,0,error,child fussed out,handcoding
+babylab-westernsydney,8399,4,ord4_t4_r,4,NA,NA,NA,NA,NA,NA,error,parent interference,handcoding
+babylab-westernsydney,8721,1,ord1_t4_r,4,NA,NA,NA,NA,NA,NA,error,parent interference,handcoding
+bll-umanitoba,4982,2,ecl4,4,na,NA,0,0,0,0,error,fussy baby,handcoding
+bll-umanitoba,4854,4,ecr4,4,na,NA,0,0,0,0,error,fussy baby,handcoding
+bll-umanitoba,4854,4,ecl5,5,na,NA,0,0,0,0,error,fussy baby,handcoding
+bll-umanitoba,4854,4,ecr6,6,na,NA,0,0,0,0,error,fussy baby,handcoding
+bll-umanitoba,3852,3,ecr2,2,na,NA,0,0,0,0,error,fussy baby,handcoding
+bll-umanitoba,1953,2,ecl1,1,congruent,132,1,0,1485,0,error,fussy baby,handcoding
+bll-umanitoba,1953,2,ecr2,2,congruent,957,1,0,957,0,error,fussy baby,handcoding
+bll-umanitoba,1953,2,ecr3,3,na,NA,0,0,0,0,error,fussy baby,handcoding
+bll-umanitoba,1953,2,ecl4,4,incongruent,3531,0,1,0,1617,error,fussy baby,handcoding
+bll-umanitoba,1953,2,ecr5,5,congruent,1485,1,0,363,0,error,fussy baby,handcoding
+bll-umanitoba,1953,2,ecl6,6,incongruent,4983,0,1,0,957,error,fussy baby,handcoding
+bll-umanitoba,4620,3,ecr3,3,na,NA,0,0,0,0,error,fussy baby,handcoding
+bll-umanitoba,4620,3,ecl4,4,na,NA,0,0,0,0,error,fussy baby,handcoding
+bll-umanitoba,4620,3,ecr5,5,na,NA,0,0,0,0,error,fussy baby,handcoding
+bll-umanitoba,4620,3,ecl6,6,na,NA,0,0,0,0,error,fussy baby,handcoding
+bll-umanitoba,4625,1,ecr6,6,na,NA,0,0,0,0,error,fussy baby,handcoding
+bll-umanitoba,3949,3,ecl1,1,na,NA,0,0,0,0,error,baby moving too much,handcoding
+bll-umanitoba,3949,3,ecr2,2,na,NA,0,0,0,0,error,baby moving too much,handcoding
+bll-umanitoba,3949,3,ecr3,3,na,NA,0,0,0,0,error,baby moving too much,handcoding
+bll-umanitoba,3949,3,ecl4,4,na,NA,0,0,0,0,error,baby moving too much,handcoding
+bll-umanitoba,3949,3,ecl6,6,na,NA,0,0,0,0,error,baby moving too much,handcoding
+bll-umanitoba,2531,2,ecr2,2,na,NA,0,0,0,0,error,distracted by moms bracelet,handcoding
+bll-umanitoba,2531,2,ecr3,3,na,NA,0,0,0,0,error,distracted by moms bracelet,handcoding
+bll-umanitoba,2531,2,ecl4,4,na,NA,0,0,0,0,error,distracted by moms bracelet,handcoding
+bll-umanitoba,4552,4,ecr1,1,na,NA,0,0,0,0,error,trying to look back at mom,handcoding
+bll-umanitoba,4552,4,ecl2,2,na,NA,0,0,0,0,error,trying to look back at mom,handcoding
+bll-umanitoba,3901,3,ecr2,2,na,NA,0,0,0,0,error,parent interference,handcoding
+bll-umanitoba,3901,3,ecr5,5,na,NA,0,0,0,0,error,fussy baby,handcoding
+bll-umanitoba,3901,3,ecl6,6,na,NA,0,0,0,0,error,fussy baby,handcoding
+bll-umanitoba,4697,2,ecr2,2,na,NA,0,0,0,0,error,trying to look back at mom,handcoding
+bll-umanitoba,1374,4,ecl2,2,na,NA,0,0,0,0,error,distracted by pacifier,handcoding
+bll-umanitoba,1374,4,ecl3,3,na,NA,0,0,0,0,error,distracted by pacifier,handcoding
+bll-umanitoba,1374,4,ecr4,4,na,NA,0,0,0,0,error,distracted by pacifier,handcoding
+bll-umanitoba,1374,4,ecl5,5,na,NA,0,0,0,0,error,distracted by pacifier,handcoding
+bll-umanitoba,1374,4,ecr6,6,na,NA,0,0,0,0,error,distracted by pacifier,handcoding
+bll-umanitoba,3249,4,ecl2,2,na,NA,0,0,0,0,error,distracted by moms legs,handcoding
+bll-umanitoba,3249,4,ecl5,5,na,NA,0,0,0,0,error,distracted by moms hands,handcoding
+bll-umanitoba,4051,4,ecr4,4,na,NA,0,0,0,0,error,trying to look back at mom,handcoding
+bll-umanitoba,4051,4,ecl5,5,na,NA,0,0,0,0,error,trying to look back at mom,handcoding
+bll-umanitoba,4051,4,ecr6,6,na,NA,0,0,0,0,error,trying to look back at mom,handcoding
+bll-umanitoba,1529,4,ecr1,1,na,NA,0,0,0,0,error,trying to look back at dad,handcoding
+bll-umanitoba,1529,4,ecl3,3,na,NA,0,0,0,0,error,trying to look back at dad,handcoding
+bll-umanitoba,3185,4,ecl3,3,na,NA,0,0,0,0,error,trying to look back at mom,handcoding
+bll-umanitoba,4692,4,ecr4,4,na,NA,0,0,0,0,error,trying to look back at mom,handcoding
+bll-umanitoba,4692,4,ecr6,6,na,NA,0,0,0,0,error,trying to look back at mom,handcoding
+bll-umanitoba,3178,1,ecr1,1,na,NA,0,0,0,0,error,trying to look back at mom,handcoding
+infantlanglab-utk,eg14_4f_s8,4,ord4_t1_r,1,na,NA,0,0,0,0,error,matlab was jittery,handcoding
+infantlanglab-utk,eg14_4f_s8,4,ord4_t2_l,2,na,NA,0,0,0,0,error,matlab was jittery,handcoding
+infantlanglab-utk,eg14_4f_s8,4,ord4_t3_l,3,na,NA,0,0,0,0,error,matlab was jittery,handcoding
+infantlanglab-utk,eg14_4f_s8,4,ord4_t4_r,4,na,NA,0,0,0,0,error,matlab was jittery,handcoding
+infantlanglab-utk,eg14_4f_s8,4,ord4_t5_l,5,na,NA,0,0,0,0,error,matlab was jittery,handcoding
+infantlanglab-utk,eg14_4f_s8,4,ord4_t6_r,6,na,NA,0,0,0,0,error,matlab was jittery,handcoding
+nusinfantlanguagecentre,mbg006,2,ecl6,6,congruent,1033,1,0,5086,0,error,child got off the parent's lap around 4000msec and the latency period till first point of first saccade to the object was caught as the child got back to the parent's lap (the child seem to have looked at the right side as he was being picked up by the parent).,handcoding
+nusinfantlanguagecentre,mbg007,3,ecr4f,4,incongruent,2967,0,1,0,933,error,child was holding onto a puzzle piece and did not look at the screen at the 4000ms mark when head turn cue was given,handcoding
+nusinfantlanguagecentre,ybg033,4,ecl1f,1,NA,NA,NA,NA,NA,NA,error,child fussed and cried (only calibration was repeated several times and test trials did not start),handcoding
+nusinfantlanguagecentre,ybg033,4,ecr2f,2,NA,NA,NA,NA,NA,NA,error,child fussed and cried (only calibration was repeated several times and test trials did not start),handcoding
+nusinfantlanguagecentre,ybg033,4,ecr3f,3,NA,NA,NA,NA,NA,NA,error,child fussed and cried (only calibration was repeated several times and test trials did not start),handcoding
+nusinfantlanguagecentre,ybg033,4,ecl4f,4,NA,NA,NA,NA,NA,NA,error,child fussed and cried (only calibration was repeated several times and test trials did not start),handcoding
+nusinfantlanguagecentre,ybg033,4,ecr5f,5,NA,NA,NA,NA,NA,NA,error,child fussed and cried (only calibration was repeated several times and test trials did not start),handcoding
+nusinfantlanguagecentre,ybg033,4,ecl6f,6,NA,NA,NA,NA,NA,NA,error,child fussed and cried (only calibration was repeated several times and test trials did not start),handcoding
+nusinfantlanguagecentre,ybg038,3,ecl5f,5,na,NA,NA,NA,NA,NA,error,mum's phone rang again and child turned to look at it,handcoding
+nusinfantlanguagecentre,ybg039,4,ecr5f,5,na,NA,NA,NA,NA,NA,error,child gazed only at the centre and no shifts to either of the objects,handcoding

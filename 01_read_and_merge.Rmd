@@ -327,11 +327,18 @@ unmatched_participants_premerge <- merge(unmatched_participants_premerge, conf, 
 write_csv(unmatched_participants_premerge, 'metadata/unconfirmed_unmatched_participants.csv')
 
 unmatched_participants_premerge
+ # 
+ # participants_session_errors_all <- pd %>% filter(session_error!= "noerror") %>%
+ #   select(lab, subid, session_error, session_error_type, notes) %>%
+ #   filter(session_error != "na") %>%
+ #   unique()
+ # 
+ # write_csv(participants_session_errors_all, 'metadata/participants_session_errors_all.csv')
 
-participants_session_errors_all <- pd %>% filter(session_error!= "noerror") %>%
-  select(lab, subid, session_error, session_error_type, notes)
 
-write_csv(participants_session_errors_all, 'metadata/participants_session_errors_all.csv')
+# participants_trial_errors_all <- td %>% filter(trial_error == "error")
+# 
+# write_csv(participants_trial_errors_all, 'metadata/participants_trial_errors_all.csv')
 
 ```
 
