@@ -462,6 +462,14 @@ d %>%
   group_by(lab) %>%
   summarize(min_exp = min(lang1_exposure), max_exp = max(lang1_exposure))
 
+# Replace NAs with zeros
+
+d <- d %>%
+  mutate(lang1_exposure = replace_na(lang1_exposure, 0)) %>%
+  mutate(lang2_exposure = replace_na(lang2_exposure, 0)) %>%
+  mutate(lang3_exposure = replace_na(lang3_exposure, 0)) %>%
+  mutate(lang4_exposure = replace_na(lang4_exposure, 0))
+
 ```
 
 Test if language percentages add up to 100
@@ -472,8 +480,9 @@ d %>%
   select(lab, subid, lang1_exposure, lang2_exposure, lang3_exposure, lang4_exposure) %>%
   unique() %>%
   group_by(lab, subid) %>%
-  summarize(total_exposure = lang1_exposure + lang2_exposure + lang3_exposure + lang4_exposure) %>%
-  filter(total_exposure != 100)
+  summarize(total_exposure = sum(lang1_exposure, lang2_exposure, lang3_exposure,lang4_exposure)) %>%
+  filter(total_exposure > 101 | total_exposure < 99)
+
 
 
 ```

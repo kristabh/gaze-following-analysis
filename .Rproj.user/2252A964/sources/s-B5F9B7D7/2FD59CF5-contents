@@ -1,6 +1,0 @@
-library(readbulk)
-
-participant_files <- dir("processed_data/participants_cleaned/", pattern = ".xlsx", all.files = FALSE)
-participant_files <- paste0("processed_data/participants_cleaned/", participant_files) # Adds path to names
-
-try <- read_bulk("processed_data/participants_cleaned/")
