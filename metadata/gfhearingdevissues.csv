@@ -1,0 +1,17 @@
+﻿Exclusion,lab,subid,session_error,session_error_type,notes,prev_earinfection,curr_earinfection,hearing_vision,hearing_vision_info,cognitive_developmental,cognitive_developmental_info
+NOX,babylab-princeton,ManyBabiesBL001,noerror,equipment malfunction,"exclude block 2 trial 3 for equipment malfunction, no video media express crashed",N,N,Y,ear tubes,N,N
+NOX,babylab-princeton,ManyBabies018,noerror,NA,"RA is a full time lab manager, post-undergrad",N,N,Y,slightly nearsighted,N,NA
+NOX,babylab-brookes,G145,NA,NA,ok,No,No,N,Y,Aunt has hearing problems,NA
+NOX,babylab-brookes,G142,NA,NA,very good,No,No,N,NA,Y,father might have dislexia
+NOX,babylab-brookes,G122,error,too fussy,too fussy,No,No,N,NA,Y,Mother Dyslexic
+NOX,babylab-brookes,G133,error,experimenter error,experimenter error,No,No,Y,grand father part deaf,N,NA
+NOX,babylab-brookes,G127,error,uninterested,"uninterested, playing with the curtains",No,No,N,NA,Y,"mother dyslexic, sepsis during labour"
+NOX,babylab-brookes,G141,error,uninterested,uninterested,No,No,Y,meniere's disease in the family,Y,dyslexia mum + dad
+NOX,babylab-brookes,G125,NA,NA,very good,No,No,N,NA,Y,Father Dyslexia
+NOX,babylab-brookes,G124,NA,NA,ok,No,No,N,NA,Y,childbirth problems
+EXCLUDE,cdc-ceu,mb37,noerror,NA,"Mikolaj without beard. Zsu is a full-time employed RA, Mikolaj run the experiment. Zsu talked to the mum, gathered questionnaire data.",N,N,Y,"Baby receiving physiotherapy, at the moment can look up only by moving his head up.",N,NA
+EXCLUDE,elp-georgetown,8855,error,exclusion,child was born with a chromosomal mutation.Tone deficiency and some cof delay.,NC,no,N,NA,Y,child was born with a chromosomal mutation.Tone deficiency and some cog delay.
+EXCLUDE,infantlanglab-utk,EG8_3M_S3,noerror,All orders were randomized,Did great.,0,N,N,NA,Y,He has NAS
+NOX,infantlanglab-utk,EG14_1F_S1,noerror,All orders were randomized,Did great.,0,N,N,NA,Y,She is not crawling or walking
+NOX,irl-concordia,S08,noerror,NA,NA,N,N,Y,bilateral ptosis (said vision was still normal and pupils were caught on the eyetracker),N,NA
+NOX,weltentdecker-zurich,gf_13740,noerror,NA,NA,N,N,N,NA,Y,Mother considers her very small
