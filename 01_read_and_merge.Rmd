@@ -392,5 +392,5 @@ lost_participants_pd
 Output intermediate files. 
 
 ```{r}
-write_csv(d, "processed_data/01_merged_ouput.csv")
+write_csv(d, "processed_data/01_merged_output.csv")
 ```
