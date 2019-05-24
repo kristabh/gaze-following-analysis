@@ -433,6 +433,8 @@ see_if(all(d$trial_error %in% c(TRUE, FALSE)))
 
 ## Language group
 
+>  Bilingual infants learning the community language plus another language were included in the bilingual sample.  Bilingual was defined by parent-report language input, with exposure to at least two languages 25-75% of the time from birth  (Byers-Heinlein, 2015).
+
 Fix some typos etc.
 ```{r}
 d <- d %>%
@@ -487,6 +489,19 @@ d %>%
 
 ```
 
+Cleaning up some of the language names
+```{r}
+
+d <- d %>%
+  mutate(lang1 = case_when(
+         lang1 == "english (usa & uk)" ~ "english",
+         lang1 == "canadian english" ~ "english",
+         lang2 == "newfoundland english" ~ "english", 
+         lang1 == "british english" ~ "english",
+         lang1 == "english " ~ "english",
+         TRUE ~ lang1))
+
+```
 
 
 There was some inconsistency in how labs applied language group criteria.  Our definition was that monolinguals hear >=90% one language, bilinguals hear >=25% of each of two languages (third langauge exposure okay).  Let's re-compute language groups based on reported exposure
@@ -511,6 +526,37 @@ d %>%
   select(lab, subid, lang1_exposure, lang2_exposure, lang3_exposure, lang4_exposure, lang_group, language_group) %>%
   unique()
 ```
+
+Using lab_community_language.csv to check whether infants in sample are learning community language as one of their language (must have at least 25% exposure). 
+```{r}
+lab_community_language <- read.csv("metadata/lab_community_language.csv", stringsAsFactors = FALSE)
+
+# Determine if baby is hearing at least 25% of the community language
+
+d <- d %>%
+  left_join(lab_community_language) %>%
+  mutate(comm_lang_learn = case_when(
+         lang1 == comm_lang & lang1_exposure >= 25 ~ TRUE,
+         lang2 == comm_lang & lang2_exposure >= 25 ~ TRUE,
+         lang3 == comm_lang & lang3_exposure >= 25 ~ TRUE,
+         lang4 == comm_lang & lang4_exposure >= 25 ~ TRUE,
+         lang1 == comm_lang_2 & lang1_exposure >= 25 ~ TRUE,
+         lang2 == comm_lang_2 & lang2_exposure >= 25 ~ TRUE,
+         lang3 == comm_lang_2 & lang3_exposure >= 25 ~ TRUE,
+         lang4 == comm_lang_2 & lang4_exposure >= 25 ~ TRUE,
+         TRUE ~ FALSE
+         ))
+
+#determine which babies are bilingual but not learning community language
+not_community_language <- d %>%
+  filter(!comm_lang_learn) %>%
+ # filter(language_group!= "other") %>%
+  select(lab, subid, language_group, comm_lang, comm_lang_2, lang1, lang2, lang3, lang4, lang1_exposure, lang2_exposure, lang3_exposure, lang4_exposure) %>%
+  arrange(language_group) %>%
+  unique()
+
+```
+
 Replace lang_group with recalculated language_group
 ```{r}
 
@@ -526,6 +572,7 @@ Create variable to exclude those who don't meet language criteria
 d <- d %>%
   mutate(lang_incl = case_when(
          language_group == "other" ~ FALSE,
+         comm_lang_learn == FALSE ~ FALSE,
          TRUE ~ TRUE))
 
 ```
