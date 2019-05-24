@@ -135,7 +135,7 @@ A number of recent studies have highlighted the situations that most reliably el
 
 Several studies have used the paradigm developed by Senju and Csibra (2008) to explore how infants’ individual experiences with gaze affect their gaze-following abilities. For example, one study investigated gaze following in sighted infants of blind parents (Senju et al., 2013). These infants showed a similar ability to follow the gaze of a sighted social partner as infants of sighted parents, despite having less experience with gaze behaviors. Another study looked at gaze following in infants at risk for communicative impairments (Bedford et al., 2012). Although both at-risk and low-risk infants were equally likely to follow an adult’s gaze, at-risk 13-month-olds spent less total time looking at objects to which an adult’s gaze was directed. This suggested that they might have been less able to make use of gaze as a socially relevant cue than typically developing infants. Together, these two studies suggest that gaze following is an ability that develops across varied developmental circumstances, although the results from at-risk infants shows that the use of gaze information can differ across populations. Importantly, these studies provide support for the use of Senju and Csibra's (2008) task, which has elicited gaze following across studies and populations.
 
-##Gaze following in bilinguals
+## Gaze following in bilinguals
 
 One group of infants that might differ in the development of gaze-following abilities is bilingual infants, although no study to date has specifically tested this group. There are several reasons to posit that bilinguals may demonstrate increased attention to gaze patterns of social partners. One reason is that gaze following is not only an important social skill, but it also contributes to early language learning. Language is a highly social system of communication. Speakers often look towards their intended referent. Thus the ability to follow a conversational partner’s gaze can guide children in correctly mapping words to objects, and help to resolve the problem of referential ambiguity (Baldwin, 1995; Brooks & Meltzoff, 2002; Tomasello, 2003; Woodward, 2003). Many theories of language acquisition emphasize the influence of social cues in the search for meaning, proposing that infants’ sensitivity to social cues scaffolds accurate and efficient vocabulary development (Baldwin, 1995; Bloom, 2000; Hollich, Hirsh-Pasek, & Golinkoff, 2000; Mundy, Sullivan, & Mastergeorge, 2009; Tomasello, 2003). There is substantial empirical support for this theoretical stance: infant gaze following is both concurrently and predictively related to word learning (e.g. Brooks & Meltzoff, 2005; 2008; Carpenter, Nagell, & Tomasello, 1998; Morales et al., 2000; Mundy et al., 2007; Paulus & Fikkert, 2014; Tenenbaum et al., 2015).
 
@@ -184,7 +184,7 @@ XX of the participating labs were also participating in two prior multi-lab coll
 
 ### Power analysis 
 
-In their paper, Senju and Csibra (2008) report a comparison against chance of t(18) = 2.74 in our target condition (the eye gaze condition of Experiment 2), yielding a calculated effect size of Cohen’s d = 1.29 for infants of this age for the first look measure. This would necessitate a sample size of only 6 infants to have an 80% chance of detecting a significant difference in a single-sample t-test. With our planned sample size of 16 infants/group per lab, power within each lab to detect this effect will be .94. 
+In their paper, Senju and Csibra (2008) report a comparison against chance of *t*(18) = 2.74 in our target condition (the eye gaze condition of Experiment 2), yielding a calculated effect size of Cohen’s *d* = 1.29 for infants of this age for the first look measure. This would necessitate a sample size of only 6 infants to have an 80% chance of detecting a significant difference in a single-sample t-test. With our planned sample size of 16 infants/group per lab, power within each lab to detect this effect will be .94. 
 
 However, our primary hypothesis concerned the comparison of monolingual and bilingual infants. Because this is the first study to investigate this question, it is difficult to know what effect size might be expected in this comparison. We thus conducted a sensitivity analysis, setting target power at .8 and alpha at .05. For individual labs to detect a statistically significant difference between monolinguals and bilinguals (n = 16 infants per group) in an independent samples t-test, we would need to observe a large effect size of Cohen’s d = 1.0. However, collapsing across the labs (projected to be approximately 100 monolinguals and bilinguals per age group for a total sample of 400), we would be able to detect a small to medium effect size of Cohen’s d = .28 at either age. Conducting multiple regression models with 3–6 predictors (see analytic plan) with the data from all labs across both age groups, we would be able to detect statistically significant contribution from between one (e.g. bilingualism) and three (e.g., bilingualism, age, and their interaction) predictors with a small effect size in the range of Cohen’s ƒ2 = .019–.028. Thus, we felt confident that our design would have sufficient statistical power to detect a difference between monolinguals and bilinguals that was small to medium in magnitude.
 
@@ -240,29 +240,25 @@ age_bins <- d_participants %>%
 
 
 ```{r results="asis"}
-langs <- read_csv(here("metadata","languages_per_lab.csv"))
 
-# lab_stats <- d_participants %>%
-#   mutate(method = case_when(
-#     method == "singlescreen" ~ "central fixation",
-#     method == "eyetracking" ~ "eye tracking",
-#     method == "hpp" ~ "HPP",
-#     TRUE ~ method))  %>% 
-#   group_by(lab, subid) %>%
-#   summarise(age_days = age_days[1], 
-#             method = method[1]) %>%
-#   group_by(lab) %>%
-#   summarise(`Mean age (days)` = signif(mean(age_days, na.rm = TRUE), 3),
-#             N = n(), 
-#             Method = paste(unique(method[!is.na(method)]), collapse = ", ")) %>%
-#   arrange(Method, lab) %>%
-#   left_join(select(langs, lab, language_harmonized)) %>%
-#   rename(Language = language_harmonized)
-# 
-# kable(lab_stats, digits = 2, 
-#       format = "latex", booktabs = TRUE,
-#       longtable = TRUE, 
-#       caption = "Statistics of the included labs. N refers to the number of infants included in the final analysis. English (US) and English (CAN) are both treated as North American English.")
+lab_stats <- d_participants %>%
+  mutate(method = case_when(
+   coding == "gazepath" ~ "eye tracking",
+    coding == "handcoding" ~ "human coder",
+    TRUE ~ coding))  %>%
+  group_by(lab, subid, age_group, lang_group) %>%
+  summarise(age_days = age_days[1],
+            coding = coding[1]) %>%
+  group_by(lab, age_group, lang_group) %>%
+  summarise(`Mean age (days)` = signif(mean(age_days, na.rm = TRUE), 3),
+            N = n(),
+            Method = paste(unique(coding[!is.na(coding)]), collapse = ", ")) %>%
+  arrange(lab, age_group, lang_group)
+
+kable(lab_stats, digits = 2,
+      format = "latex", booktabs = TRUE,
+      longtable = TRUE,
+      caption = "Statistics of the included labs. N refers to the number of infants included in the final analysis.")
 ```
 
 
@@ -284,13 +280,16 @@ All data collected for the study (i.e., every infant for whom a data file was ge
 
 ## Data exclusion
 
-Labs were asked to submit all data collected as part of the study to the analysis team. Data were first screened to determine whether infants met our inclusion criteria. Data were excluded from the confirmatory analyses when participants were not full term (less than 37 weeks gestation: N = XX), had a reported developmental disorder according to parental report (N = XX), had a diagnosed hearing impairment (N= XX), were outside the target age groups (N= XX), did not meet language inclusion criteria (e.g., did not meet our criteria for being either monolingual or bilingual; N = XX), or had a session-level testing error (e.g., parent talking during study, technical problems; N = XX). Following Senju and Csibra (2008), we also excluded any infant who did not make at least one face-to-object saccade during the window of analysis in at least three of the six trials (XX infants).
 
-We also excluded any trials in which infants did not gaze at the congruent or incongruent object during the window of analysis. This meant that different infants contributed different numbers of trials. One lab mistakenly used preliminary rather than the final version of the experiment. The version used contained the same experimental stimuli and events as the final version with two exceptions: the attention getter to recruit the infant’s attention to the screen differed and the aspect ratio of the on-screen stimuli differed slightly. As this version of the experiment was only very slightly different from the final version, these data were retained for analysis.
+
+
 
 
 ```{r exclusions, child = "exclusions.Rmd"}
 ```
+
+We also excluded any trials in which infants did not gaze at the congruent or incongruent object during the window of analysis. This meant that different infants contributed different numbers of trials. One lab mistakenly used preliminary rather than the final version of the experiment. The version used contained the same experimental stimuli and events as the final version with two exceptions: the attention getter to recruit the infant’s attention to the screen differed and the aspect ratio of the on-screen stimuli differed slightly. As this version of the experiment was only very slightly different from the final version, these data were retained for analysis.
+
 
 ## Post-Data Collection Methods Addendum
 

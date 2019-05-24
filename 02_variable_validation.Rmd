@@ -43,8 +43,10 @@ This script is organized around variable types being processed.
 * latency
 * n_shift_congruent
 * n_shift_incongruent
+* n_shift_total
 * fixation_congruent
 * fixation_incongruent
+
 
 NOTE: No exclusions are performed in this script. These are all performed in `03_exclusion.Rmd`.
 
@@ -734,6 +736,31 @@ d %>%
 ```
 
 Everything looks as expected. Values between 0 and 5
+
+As per pre-reg, we will exclude babies who did not make a face-to-object saccade in at least 3 trials
+```{r}
+
+d <- d %>%
+  mutate(has_shift = case_when(
+    is.na(first_shift) ~ FALSE,
+    first_shift == "congruent" ~ TRUE,
+    first_shift == "incongruent" ~ TRUE)) %>%
+  group_by(lab, subid) %>%
+  summarize(n_has_shift = sum(has_shift)) %>%
+  mutate(shifts_incl = case_when(
+         n_has_shift >= 3 ~ TRUE,
+         n_has_shift < 3 ~ FALSE)) %>%
+  select(-n_has_shift) %>%
+  right_join(d) %>%
+  select(everything(), shifts_incl)
+  
+babies_shifts_ok <- length(unique(d$subid[d$shifts_incl == TRUE]))
+babies_shifts_not_ok <- length(unique(d$subid[d$shifts_incl == FALSE]))
+
+```
+
+There are `r babies_shifts_ok ` infants who meet the criteria for shifts on at least 3 trials, and `r babies_shifts_not_ok` who do not.  This criterion excludes `r babies_shifts_not_ok/(babies_shifts_ok+ babies_shifts_not_ok)*100`% of infants.
+
 
 # fixation_congruent
 
