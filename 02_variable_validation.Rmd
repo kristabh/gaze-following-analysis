@@ -571,7 +571,7 @@ Create variable to exclude those who don't meet language criteria
 ```{r}
 d <- d %>%
   mutate(lang_incl = case_when(
-         language_group == "other" ~ FALSE,
+         lang_group == "other" ~ FALSE,
          comm_lang_learn == FALSE ~ FALSE,
          TRUE ~ TRUE))
 
