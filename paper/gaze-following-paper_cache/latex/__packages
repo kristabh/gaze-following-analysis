@@ -1,0 +1,17 @@
+base
+papaja
+ggthemes
+Matrix
+lme4
+tidyverse
+ggplot2
+tibble
+tidyr
+readr
+purrr
+dplyr
+stringr
+forcats
+here
+knitr
+kableExtra

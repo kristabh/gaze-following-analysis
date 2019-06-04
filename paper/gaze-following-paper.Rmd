@@ -67,7 +67,7 @@ theme_set(theme_bw() +
 ```{r load_authors}
 # downloaded from https://docs.google.com/spreadsheets/d/1ZI-vEoMoZkqPWMoA7wCegWfecydg3wNifbpM9OYHsXU/edit?usp=drive_web&ouid=115164816411219099530 on DATE
 
-# author_data <- read_csv(here("metadata/ManyBabies1 Author List and Contributions - Sheet1.csv"), 
+# author_data <- read_csv(here("metadata/Gaze Following Author List and Contributions - Sheet1.csv"), 
 #                     skip = 5) %>% 
 #   rename(first = `Author First Name`, 
 #          last = `Author Last Name`,
