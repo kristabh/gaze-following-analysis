@@ -104,25 +104,6 @@ theme_set(theme_bw() +
 ```
 
 
-```{r load_labs}
-d_participants <- read_csv(here("processed_data/03_data_trial_main.csv"))
-
-# labs <- d_participants %>%
-#   group_by(lab) %>%
-#   summarise(n = length(unique(subid)), 
-#             method = paste(unique(method), collapse = ", "))
-
- labs <- d_participants %>%
-   group_by(lab) %>%
-   summarise(n = length(unique(subid)))
-              
- n <- labs %>%
-   pull(n) %>%
-   sum
-
-n_labs <- length(unique(labs$lab))
-```
-
 Bilingual infants face the remarkable task of acquiring two languages simultaneously. Bilinguals show developmental adaptations to their unique environments, which might support their observed success in learning their two languages (Werker & Byers-Heinlein, 2008). In comparison to monolinguals, bilingual infants show differences in early speech perception (Byers-Heinlein & Fennell, 2014), in word learning (Fennell, Byers-Heinlein, & Werker, 2007; Graf Estes & Hay, 2015; Singh, Fu, Tay, & Golinkoff, 2017), and in acquisition of grammatical structures (Kovács & Mehler, 2009a; Antovich & Graf-Estes, 2017). They show different patterns of looking towards talking faces (Pons, Bosch, & Lewkowicz, 2015), and are more sensitive to facial cues that discriminate speakers of different languages (Weikum et al., 2007; Sebastián-Gallés, Albareda-Castellot, Weikum, & Werker, 2012). These differences have been attributed to specific features of bilingual environments that may influence developing cognitive processes. Specifically, the notion that bilingual infants attend to and learn two languages is thought to sharpen their capacity to flexibly switch between their languages (Antovich & Graf-Estes, 2017; Kandahai, Danielson & Werker, 2014; Kovács & Mehler, 2009b) and to acquire the individual properties of two language systems (Kovács & Mehler, 2009a). Moreover, as bilingual infants typically encounter less single-language input than their monolingual peers, new information may be encoded with increased the efficiency and detail (Brito & Barr, 2014; Liu & Kager, 2016; Singh et al., 2015). These findings suggest that, before infants begin to produce words in their native language(s), immersion in a bilingual environment modifies the development of some aspects of infants’ perception and learning.
   
 More intriguingly, bilingualism also appears to impact abilities that do not directly involve language. For example, relative to monolinguals, bilingual infants are more likely to inhibit recently learned information (Kovács & Mehler, 2009b), generalize across visual features when categorizing objects (Brito & Barr, 2014), and encode and retrieve visual information (Singh et al. 2015). Here, we ask whether bilingual infants also show enhanced sensitivity to non-linguistic social information, a question that has thus far received very little attention. In an international, multi-site study, we investigated whether the ability to follow a social partner's eye gaze follows the same developmental trajectory in monolingual and bilingual infants. REPORT MAIN RESULT HERE.
@@ -164,6 +145,51 @@ Finally, bilingualism cannot be randomly assigned. Thus, even when recruited fro
 The current study used a multi-lab approach to ask whether monolingual and bilingual infants differ in their basic gaze-following abilities. Data were collected from `r n_labs` labs in XX countries. We tested the hypothesis that the challenging nature of bilingual language-learning environments enhances bilingual infants’ attention to the eye gaze of a social partner, even in non-linguistic situations. Our study compared monolingual and bilingual infants aged 6–9 and 12–15 months using the eye gaze stimuli from Senju and Csibra’s (2008) study. Note that our study did not include the no eye gaze condition reported in Senju and Csibra’s paper, as our interest was in comparing gaze-following behavior in typical situations, across infants of different and from different language backgrounds. On six test trials, infants saw a model look towards the camera, and then direct her head and eyes towards one of two objects located to her left and right. We measured the latency and accuracy of infants’ gaze following.
 
 Previous studies have found that infants follow the actor’s gaze in this condition at above-chance level by 6 months, but their performance is not always reliable (Senju & Csibra, 2008; Szufnarowska et al., 2014). Moreover, there is evidence for improvement of infants’ gaze following in this paradigm from 7 to 13 months (Bedford et al., 2012). We thus expected to see improvement in all infants’ gaze following from the younger age to the older age. We also expected that both groups would demonstrate successful gaze following as demonstrated by Senji and Csibra (2008), but that bilingual infants would show faster and more accurate gaze following than monolingual infants. We also suggest that the effects of bilingualism might interact with age. On the one hand, we might observe a stronger effect of bilingualism at 6-9 months if gaze following emerges earlier for bilinguals; on the other hand we might observe a stronger effect of bilingualism at 12-15 months if this skill emerges at the same age, but is more relied upon by bilingual infants as the demands of language acquisition increase. Both of these findings would reflect interesting and meaningful differences between monolingual and bilingual infants.
+
+
+```{r load_labs}
+d_participants <- read_csv(here("processed_data/03_data_trial_main.csv"))
+
+# labs <- d_participants %>%
+#   group_by(lab) %>%
+#   summarise(n = length(unique(subid)), 
+#             method = paste(unique(method), collapse = ", "))
+
+ labs <- d_participants %>%
+   group_by(lab, lang_group) %>%
+   summarise(n = length(unique(subid)))
+              
+ n <- labs %>%
+   pull(n) %>%
+   sum
+
+n_labs <- length(unique(labs$lab))
+
+n_bi <- labs %>%
+  filter(lang_group == "bilingual") %>% 
+  pull(n) %>% 
+  sum
+
+n_mono <- labs %>%
+  filter(lang_group == "monolingual") %>% 
+  pull(n) %>% 
+  sum
+
+age <- d_participants %>% 
+  group_by(lang_group, age_group) %>% 
+  summarise(n = length(unique(subid)))
+
+n_6mos_bi <- age %>% filter(lang_group == "bilingual",
+                            age_group == "6-9 mo") %>% pull(n)
+n_6mos_mono <- age %>% filter(lang_group == "monolingual",
+                              age_group == "6-9 mo") %>% pull(n)
+
+n_12mos_bi <- age %>% filter(lang_group == "bilingual",
+                             age_group == "12-15 mo") %>% pull(n)
+n_12mos_mono <- age %>% filter(lang_group == "monolingual",
+                               age_group == "12-15 mo") %>% pull(n)
+
+```
 
 # Methods
 
@@ -216,7 +242,7 @@ excluded_labs <- read_csv(here("processed_data","02_validated_output.csv")) %>%
 
 ### Final sample
 
-Our final sample of bilinguals included XYZ infants tested in `r n_labs` labs. XYZ were 6–9 months, and XYZ were 12–15 months old. XYZ of these labs also collected data from monolingual infants (N = XYZ), of whom XYZ were 6–9 months, and XYZ were 12–15 months. Data from monolingual infants were available from XYZ additional labs (N = XYZ), who did not contribute bilingual data. A list of monolingual and bilingual populations in each lab are reported in Table 1. In addition, `r excluded_labs` labs registered to participate but failed to collect data from at least 10 included infants, and so their data were not included. Information about all included labs is given in Table XX.
+Our final sample of bilinguals included `r n_bi` infants tested in XX labs. `r n_6mos_bi` were 6–9 months, and `r n_12mos_bi` were 12–15 months old. XYZ of these labs also collected data from monolingual infants (N = XYZ), of whom XYZ were 6–9 months, and XYZ were 12–15 months. Data from monolingual infants were available from XYZ additional labs (N = XYZ), who did not contribute bilingual data. A list of monolingual and bilingual populations in each lab are reported in Table 1. In addition, `r excluded_labs` labs registered to participate but failed to collect data from at least 10 included infants, and so their data were not included. Information about all included labs is given in Table XX.
 
 ```{r bin_stats}
 age_stat <- d_participants %>%
