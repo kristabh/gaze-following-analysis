@@ -1,0 +1,46 @@
+﻿lab,subid,Exclude,cog_hearing_reason
+babylabbrookes,babylabbrookes_mb125,FALSE,family history
+babylableiden,babylableiden_mb10b,FALSE,minor vision / eye issue
+babylabpotsdam,babylabpotsdam_b6893,FALSE,physical delay
+babylabprinceton,babylabprinceton_manybabies018,FALSE,minor vision / eye issue
+babylabprinceton,babylabprinceton_manybabiesbl001,FALSE,Ear tubes
+babylabvuw,babylabvuw_p02,FALSE,minor vision / eye issue
+baldwinlabuoregon,baldwinlabuoregon_mb03,FALSE,parental concerns
+callab,callab_callab4,FALSE,physical delay
+cdcceu,cdcceu_mb12,FALSE,minor vision / eye issue
+cdcceu,cdcceu_mb37,TRUE,true exclusion
+cdcceu,cdcceu_mb9,FALSE,minor vision / eye issue
+cfnuofn,cfnuofn_cfn0126m,FALSE,parental concerns
+cfnuofn,cfnuofn_cfn03212,TRUE,true exclusion
+cfnuofn,cfnuofn_cfnuex,FALSE,minor vision / eye issue
+cfnuofn,cfnuofn_cfnzkb,FALSE,minor vision / eye issue
+cogdevlabbyu,cogdevlabbyu_p08,FALSE,physical delay
+earlysocogfm,earlysocogfm_s07,FALSE,physical delay
+infantcoglablouisville,infantcoglablouisville_235535,FALSE,family history
+infantcogubc,infantcogubc_a13,TRUE,true exclusion
+infantllmadison,infantllmadison_mb007,TRUE,true exclusion
+infantllmadison,infantllmadison_mb074,FALSE,minor vision / eye issue
+irlconcordia,irlconcordia_mb6s09,FALSE,minor vision / eye issue
+islnotredame,islnotredame_p45mb28,FALSE,parental concerns
+isplabmcgill,isplabmcgill_m14,FALSE,minor vision / eye issue
+isplabmcgill,isplabmcgill_m22,FALSE,parental concerns
+isplabmcgill,isplabmcgill_m26,FALSE,family history
+isplabmcgill,isplabmcgill_b09,TRUE,true exclusion
+kyotobabylab,kyotobabylab_kbl019,FALSE,parental concerns
+lancaster,lancaster_14mb14,FALSE,family history
+lancaster,lancaster_14mb22,FALSE,family history
+lancaster,lancaster_8mb04,FALSE,family history
+lancaster,lancaster_8mb22,FALSE,family history
+lcdfsu,lcdfsu_lcd003,FALSE,minor vision / eye issue
+ldlottawa,ldlottawa_mbms21,TRUE,true exclusion
+bchdosu,bchdosu_mb0002,FALSE,family history
+bchdosu,bchdosu_mb0008,FALSE,family history
+bchdosu,bchdosu_mb0013,FALSE,family history
+bchdosu,bchdosu_mb0019,FALSE,family history
+bchdosu,bchdosu_mb0020,FALSE,family history
+bchdosu,bchdosu_mb0023,FALSE,family history
+bchdosu,bchdosu_mb0037,FALSE,family history
+bchdosu,bchdosu_mb0040,FALSE,family history
+bchdosu,bchdosu_mb0046,FALSE,family history
+bchdosu,bchdosu_mb0063,FALSE,family history
+weltentdeckerzurich,weltentdeckerzurich_mb13740,FALSE,parental concerns
