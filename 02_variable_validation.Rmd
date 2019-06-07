@@ -450,7 +450,7 @@ d <- d %>%
 
 ```
 
-Make sure that labs used percentages rather than proportions for language exposure.  Fix when proportions were used
+Make sure that labs used percentages rather than proportions for language exposure.  Fix when proportions were used or when there was missing data for language variables.
 ```{r}
 # Fix for elp-georgetown
 
@@ -458,6 +458,41 @@ d$lang1_exposure[d$lab == "elp-georgetown"] <- d$lang1_exposure[d$lab == "elp-ge
 d$lang2_exposure[d$lab == "elp-georgetown"] <- d$lang2_exposure[d$lab == "elp-georgetown"] * 100
 d$lang3_exposure[d$lab == "elp-georgetown"] <- d$lang3_exposure[d$lab == "elp-georgetown"] * 100
 d$lang4_exposure[d$lab == "elp-georgetown"] <- d$lang4_exposure[d$lab == "elp-georgetown"] * 100
+
+# missing language information for elp-georgetown
+d$lang4_exposure[d$subid == "elp-georgetown8531"] <- 6
+d$lang4[d$subid == "elp-georgetown8531"] <- "spanish"
+
+d$lang4_exposure[d$subid == "elp-georgetown9022"] <- 8
+d$lang4[d$subid == "elp-georgetown9022"] <- "bengali"
+
+
+#missing language information for babylab-brookes
+d$lang1_exposure[d$subid == "babylab-brookesg108"] <- 70
+d$lang2_exposure[d$subid == "babylab-brookesg108"] <- 30
+d$lang3_exposure[d$subid == "babylab-brookesg108"] <- NA
+d$lang4_exposure[d$subid == "babylab-brookesg108"] <- NA
+
+d$lang1[d$subid == "babylab-brookesg108"] <- "english"
+d$lang2[d$subid == "babylab-brookesg108"] <- "polish"
+d$lang3[d$subid == "babylab-brookesg108"] <- "na"
+d$lang4[d$subid == "babylab-brookesg108"] <- "na"
+
+d$lang1_exposure[d$subid == "babylab-brookesg113"] <- 100
+
+d$lang1_exposure[d$subid == "babylab-brookesg150"] <- 100
+d$lang1[d$subid == "babylab-brookesg150"] <- "english"
+
+d$lang1_exposure[d$subid == "babylab-brookesg151"] <- 100
+d$lang1[d$subid == "babylab-brookesg151"] <- "english"
+
+d$lang1_exposure[d$subid == "babylab-brookesg152"] <- 100
+d$lang1[d$subid == "babylab-brookesg152"] <- "english"
+
+#fixing language information for upf_barcelona (percentages were not adding up to 100%)
+d$lang2_exposure[d$subid == "upf_barcelonasubj02"] <- 17
+
+d$lang1_exposure[d$subid == "upf_barcelonasubj04"] <- 56
 
 #One baby in princeton with typo
 d$lang1_exposure[d$subid == "manybabiesbl001"] <- d$lang1_exposure[d$subid == "manybabiesbl001"] * 100
@@ -579,6 +614,29 @@ d <- d %>%
 
 ```
 
+##Prematurity
+```{r}
+unique(d$preterm)
+
+##fix N and Ys with term and preterm
+d <- d %>%
+  mutate(preterm = case_when(
+         preterm == "n" ~ "term",
+         preterm == "y" ~ "preterm",
+         TRUE ~ preterm))
+
+## fix elp-georgetown: used 40weeks as a reference to categorize premature kids instead of 37 as stablished
+d$preterm[d$subid == "elp-georgetown8731"] <- "term"
+d$preterm[d$subid == "elp-georgetown9035"] <- "term"
+d$preterm[d$subid == "elp-georgetown9029"] <- "term"
+d$preterm[d$subid == "elp-georgetown8545"] <- "term"
+d$preterm[d$subid == "elp-georgetown8998"] <- "term"
+d$preterm[d$subid == "elp-georgetown8955"] <- "term"
+d$preterm[d$subid == "elp-georgetown8888"] <- "term"
+d$preterm[d$subid == "elp-georgetown8374"] <- "term"
+d$preterm[d$subid == "elp-georgetown8725"] <- "term"
+
+```
 
 ## Gender
 
