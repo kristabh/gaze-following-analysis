@@ -245,13 +245,13 @@ kable(lab_stats, digits = 2,
 
 ## Stimuli
 
-Stimuli consisted of videos of a female actor sitting at a table, directing her gaze to one of two colorful toys. Each video had the following sequence: the video began with the actor looking straight ahead for 1 second. She looked down for two seconds, after which a beep sounded to attract infants' attention prior to the actor directing her gaze to a toy. Upon presentation of the beep, the actor looked up at the camera and, maintaining a neutral expression, she raised her eyebrows. Four seconds into the video, she began to turn her head towards the left or right and gazed towards the toy in her line of sight until the end of the video. There were a total of 24 different videos in this style, using six different pairs of colourful objects, counterbalancing the side of presentation of the objects and the object at which the actor gazed. Original movies were in .avi format, exported at a framerate of 25 frames/second. Each movie lasted a total of 10 seconds (250 frames).
+Stimuli consisted of videos of a female actor sitting at a table, directing her gaze to one of two colorful toys. Each video had the following sequence: the video began with the actor looking straight ahead for 1 second. She looked down for two seconds, after which a beep sounded to attract infants' attention prior to the actor directing her gaze to a toy. Upon presentation of the beep, the actor looked up at the camera and, maintaining a neutral expression, she raised her eyebrows. Four seconds into the video, she began to turn her head towards the left or right and gazed towards the toy in her line of sight until the end of the video. There were a total of 24 different videos in this style, using six different pairs of colourful objects. Video presentations were counterbalanced for the side of presentation of the objects and the object at which the actor gazed, and arranged such that there were six test trials per infant. Original movies were in .avi format, exported at a framerate of 25 frames/second. Each movie lasted a total of 10 seconds (250 frames).
 
 ## Procedure
 
 We replicated the eye gaze condition of Experiment 1 from Senju and Csibra (2008), using the original stimuli provided by the authors. Infants were seated on their parents’ laps in a quiet, dimly lit testing booth. Caregivers and infants were seated facing a monitor. The caregiver wore an occluder (e.g. sleep mask or opaque sunglasses) to prevent him/her from viewing events on the monitor. An experimenter controlled the study from an area located out of view of the infant, either in the same or a different room. Infants’ eye gaze data were collected automatically via a corneal reflection eye-tracker, or on a digital videotape for later offline coding.
 
-Each infant saw a series of 6 test videos. Infants were assigned to one of four possible trial orders that counterbalanced the direction of the actor’s gaze (either LRRLRL or RLLRLR, where L denotes gaze to the toy on the left and R denotes fixation to the toy on the right), as well as which particular toy was located on the actor’s left and right. Due to a programming error, one lab presented the the same trials in a randomized order instead. Videos were separated by an unrelated attention-grabbing cartoon, which was played between trials until the infant had looked towards it for approximately 1–2 seconds. The experiment lasted approximately XX minutes.
+Each infant saw a series of 6 test videos. Infants were assigned to one of four possible trial orders that counterbalanced the direction of the actor’s gaze (either LRRLRL or RLLRLR, where L denotes gaze to the toy on the left and R denotes fixation to the toy on the right), as well as which particular toy was located on the actor’s left and right. Due to a programming error, one lab presented the the same trials in a randomized order instead. Videos were separated by an unrelated attention-grabbing cartoon, which was played between trials until the infant had looked towards it for approximately 1–2 seconds. The experiment lasted approximately 1.5 minutes.
 
 ## Exclusion Criteria
 
@@ -260,11 +260,6 @@ All data collected for the study (i.e., every infant for whom a data file was ge
 # Analysis overview
 
 ## Data exclusion
-
-
-
-
-
 
 ```{r exclusions, child = "exclusions.Rmd"}
 ```
