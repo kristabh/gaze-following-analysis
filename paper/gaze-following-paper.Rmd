@@ -154,42 +154,6 @@ d_participants <- read_csv(here("processed_data/03_data_trial_main.csv"),
                              trial_error_type = col_character()))
 
 #creates 216 parsing errors - all because "na" in original file while column interpreted #logical. Have made issue to change to NA in upstream script
-
- labs <- d_participants %>%
-   group_by(lab, lang_group) %>%
-   summarise(n = length(unique(subid))) %>% 
-   spread(lang_group, n)
-              
- n <- labs %>%
-   pull(n) %>%
-   sum
-
-n_labs <- length(unique(labs$lab))
-
-n_bi <- labs %>%
-  filter(lang_group == "bilingual") %>% 
-  pull(n) %>% 
-  sum
-
-n_mono <- labs %>%
-  filter(lang_group == "monolingual") %>% 
-  pull(n) %>% 
-  sum
-
-age <- d_participants %>% 
-  group_by(lang_group, age_group) %>% 
-  summarise(n = length(unique(subid)))
-
-n_6mos_bi <- age %>% filter(lang_group == "bilingual",
-                            age_group == "6-9 mo") %>% pull(n)
-n_6mos_mono <- age %>% filter(lang_group == "monolingual",
-                              age_group == "6-9 mo") %>% pull(n)
-
-n_12mos_bi <- age %>% filter(lang_group == "bilingual",
-                             age_group == "12-15 mo") %>% pull(n)
-n_12mos_mono <- age %>% filter(lang_group == "monolingual",
-                               age_group == "12-15 mo") %>% pull(n)
-
 ```
 
 # Methods
@@ -263,7 +227,7 @@ Our final sample of bilinguals included `r `sum(labs$bilingual, na.rm = TRUE)` i
 #  ungroup %>%
 #  summarise(mean = mean(age_days), 
 #            min = min(age_days), 
-            max = max(age_days))
+#            max = max(age_days))
 
 age_bins <- d_participants %>%
   group_by(lab, age_group) %>%
