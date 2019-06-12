@@ -49,7 +49,7 @@ output            : papaja::apa6_pdf
 ---
 
 ```{r load_packages_settings, include = FALSE}
-library("papaja")
+library(papaja)
 library(ggthemes)
 library(lme4)
 library(tidyverse)
@@ -67,8 +67,8 @@ theme_set(theme_bw() +
 ```{r load_authors}
 # downloaded from https://docs.google.com/spreadsheets/d/1ZI-vEoMoZkqPWMoA7wCegWfecydg3wNifbpM9OYHsXU/edit?usp=drive_web&ouid=115164816411219099530 on DATE
 
-# author_data <- read_csv(here("metadata/Gaze Following Author List and Contributions - Sheet1.csv"), 
-#                     skip = 5) %>% 
+#author_data <- read_csv(here("metadata/Gaze Following Author List and Contributions - #Sheet1.csv"), 
+#                     skip = 4) %>% 
 #   rename(first = `Author First Name`, 
 #          last = `Author Last Name`,
 #          affil = Affiliation, 
@@ -87,14 +87,14 @@ theme_set(theme_bw() +
 #          status = case_when(last == "Byers-Heinlein" ~ 1, 
 #                             last == "Singh" ~ 3, 
 #                             TRUE ~ 2), 
-#          initials = paste0(gsub("[:a-zé\\öøł:\\.\\ \\-]","",first), gsub("[:a-zé\\öøł:\\.\\ \\-]","",last))) %>%
+#          initials = paste0(gsub("[:a-zé\\öøł:\\.\\ \\-]","",first), gsub("[:a-zé\\öøł:\\.\\ #\\-]","",last))) %>%
 #   group_by(status) %>% 
 #   arrange(last, .by_group = TRUE) 
-# 
-# authors <- author_data %>% 
+ 
+#authors <- author_data %>% 
 #   pull(full) %>% 
 #   paste(collapse = ", ")
-# 
+ 
 # grants <- author_data  %>% 
 #   filter(!is.na(grant)) %>%
 #   filter(!duplicated(grant)) %>%
@@ -148,16 +148,17 @@ Previous studies have found that infants follow the actor’s gaze in this condi
 
 
 ```{r load_labs}
-d_participants <- read_csv(here("processed_data/03_data_trial_main.csv"))
+d_participants <- read_csv(here("processed_data/03_data_trial_main.csv"),
+                           col_types = cols(
+                             comm_lang_2 = col_character(),
+                             trial_error_type = col_character()))
 
-# labs <- d_participants %>%
-#   group_by(lab) %>%
-#   summarise(n = length(unique(subid)), 
-#             method = paste(unique(method), collapse = ", "))
+#creates 216 parsing errors - all because "na" in original file while column interpreted #logical. Have made issue to change to NA in upstream script
 
  labs <- d_participants %>%
    group_by(lab, lang_group) %>%
-   summarise(n = length(unique(subid)))
+   summarise(n = length(unique(subid))) %>% 
+   spread(lang_group, n)
               
  n <- labs %>%
    pull(n) %>%
@@ -196,7 +197,7 @@ n_12mos_mono <- age %>% filter(lang_group == "monolingual",
 ## Participation Details
 
 ### Time frame
-An open call for labs to participate was issued on March 14, 2017. Participant testing began on July 1, 2017 and ended on DATE.
+An open call for labs to participate was issued on March 14, 2017. Participant testing began on July 1, 2017 and ended on August 31, 2018.
 
 ### Age and language groups
 
@@ -206,7 +207,7 @@ Labs contributed samples from one or both of two possible age bins: 6–9 months
 
 Considering the challenges associated with recruiting bilingual infants and the importance of counterbalancing in our experimental design, we asked labs to contribute a minimum of 16 healthy, full-term infants per age (6–9, 12–15) and language group (monolingual, bilingual). However, labs were encouraged to contribute data even if they were only able to provide a bin of data for a single age or for a single language group. Further, labs were invited to contribute additional data provided that decisions about when to stop data collection were made without looking at the data, to avoid biasing effect sizes. Labs were asked to screen ahead of time that infants met inclusion criteria. However, it was acknowledged that most labs would end up recruiting infants who did not necessarily meet our pre-defined criteria for bilingualism (detailed below) upon more detailed in-lab language background assessment. In such cases, the decision whether to test the infant was left up to individual laboratories’ policies, but we asked that data from any babies who entered the testing room be submitted for data processing (even though some such data might be excluded from the main analyses). `r n_labs` labs contributed a sample.
 
-XX of the participating labs were also participating in two prior multi-lab collaborative studies (ManyBabies 1 study and/or ManyBabies 1 Bilingual study) investigating infants’ preference for infant-directed speech (ManyBabies Consortium, 2017a; 2017b). The current study emerged out of the unique opportunity afforded by a significant number of labs with a bilingual population coming together to run the Manybabies 1 Bilingual study, and the desire to make optimal use of these resources. As such, prior to completing the current study, XX% of the infants completed the ManyBabies 1 study on the same visit in the lab. Testing infants in two different studies on the same visit is a common practice in many, although not all, infant labs. We note that these two studies adopted different designs (listening preference vs. gaze following), and tracked sensitivity to different sorts of cues (auditory vs. visual). Moreover, the current study (gaze following) presented infants with engaging social stimuli and was short in duration. These features mitigated possible carryover effects.
+Nine of the twelve participating labs were also participating in two prior multi-lab collaborative studies (ManyBabies 1 study and/or ManyBabies 1 Bilingual study) investigating infants’ preference for infant-directed speech (ManyBabies Consortium, 2017a; 2017b). The current study emerged out of the unique opportunity afforded by a significant number of labs with a bilingual population coming together to run the Manybabies 1 Bilingual study, and the desire to make optimal use of these resources. As such, prior to completing the current study, XX% of the infants completed the ManyBabies 1 study on the same visit in the lab. Testing infants in two different studies on the same visit is a common practice in many, although not all, infant labs. We note that these two studies adopted different designs (listening preference vs. gaze following), and tracked sensitivity to different sorts of cues (auditory vs. visual). Moreover, the current study (gaze following) presented infants with engaging social stimuli and was short in duration. These features mitigated possible carryover effects.
 
 ### Power analysis 
 
@@ -233,6 +234,16 @@ Although adapted for their language environment by each lab, there is consistenc
 Each lab administered a questionnaire that gathered basic demographic data about infants, including age, health history, gestation, etc.
 
 ```{r}
+ labs <- d_participants %>%
+   group_by(lab, lang_group, age_group) %>%
+   summarise(n = length(unique(subid))) %>% 
+   spread(lang_group, n)
+              
+```
+
+
+
+```{r}
 excluded_labs <- read_csv(here("processed_data","02_validated_output.csv")) %>%
   pull(lab) %>%
   unique %>%
@@ -242,15 +253,16 @@ excluded_labs <- read_csv(here("processed_data","02_validated_output.csv")) %>%
 
 ### Final sample
 
-Our final sample of bilinguals included `r n_bi` infants tested in XX labs. `r n_6mos_bi` were 6–9 months, and `r n_12mos_bi` were 12–15 months old. XYZ of these labs also collected data from monolingual infants (N = XYZ), of whom XYZ were 6–9 months, and XYZ were 12–15 months. Data from monolingual infants were available from XYZ additional labs (N = XYZ), who did not contribute bilingual data. A list of monolingual and bilingual populations in each lab are reported in Table 1. In addition, `r excluded_labs` labs registered to participate but failed to collect data from at least 10 included infants, and so their data were not included. Information about all included labs is given in Table XX.
+Our final sample of bilinguals included `r `sum(labs$bilingual, na.rm = TRUE)` infants tested in `r length(unique(labs$lab[!is.na(labs$bilingual)]))` labs. `r sum(labs$bilingual[labs$age_group == "6-9 mo"], na.rm = TRUE)` were 6–9 months, and `r sum(labs$bilingual[labs$age_group == "12-15 mo"], na.rm = TRUE)` were 12–15 months old. Each of these labs also collected data from monolingual infants (N = `r sum(labs$monolingual[!is.na(labs$bilingual)], na.rm = TRUE)`), of whom `r sum(labs$monolingual[labs$age_group == "6-9 mo"& !is.na(labs$bilingual)], na.rm = TRUE)` were 6–9 months, and `r sum(labs$monolingual[labs$age_group == "12-15 mo"& !is.na(labs$bilingual)], na.rm = TRUE)` were 12–15 months. Data from monolingual infants were available from two additional labs (N = `r sum(labs$monolingual[is.na(unique(labs$bilingual))], na.rm = TRUE)`), who did not contribute bilingual data. A list of monolingual and bilingual populations in each lab are reported in Table 1. In addition, `r excluded_labs` labs registered to participate but failed to collect data from at least 10 included infants, and so their data were not included. Information about all included labs is given in Table XX.
 
 ```{r bin_stats}
-age_stat <- d_participants %>%
-  group_by(lab, subid) %>%
-  summarise(age_days = age_days[1]) %>%
-  ungroup %>%
-  summarise(mean = mean(age_days), 
-            min = min(age_days), 
+#is this being used for anything?
+#age_stat <- d_participants %>%
+#  group_by(lab, subid) %>%
+#  summarise(age_days = age_days[1]) %>%
+#  ungroup %>%
+#  summarise(mean = mean(age_days), 
+#            min = min(age_days), 
             max = max(age_days))
 
 age_bins <- d_participants %>%
