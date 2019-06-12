@@ -524,12 +524,65 @@ Cleaning up some of the language names
 d <- d %>%
   mutate(lang1 = case_when(
          lang1 == "english (usa & uk)" ~ "english",
+         lang1 == "english (new zealand)" ~ "english",
+         lang1 == "portuguese (brasil)" ~ "portuguese",
+         lang1 == "spanish (spain)" ~ "spanish",
+         lang1 == "portugese" ~ "portuguese",
+         lang1 == "arab" ~ "arabic",
+         lang1 == "spanish (colombia)" ~ "spanish",
+         lang2 == "newfoundland english" ~ "english",
+         lang1 == "italian (italy)" ~ "italian",
+         lang1 == "mandarin chinese" ~ "mandarin",
+         lang1 == "french (switzerland)" ~ "french",
+         lang1 == "spanish (cuba)" ~ "spanish",
          lang1 == "canadian english" ~ "english",
-         lang2 == "newfoundland english" ~ "english", 
          lang1 == "british english" ~ "english",
          lang1 == "english " ~ "english",
          TRUE ~ lang1))
 
+d <- d %>%
+  mutate(lang2 = case_when(
+         lang2 == "canadian english" ~ "english",
+         lang2 == "swhahili" ~ "swahili",
+         lang2 == "english (india)" ~ "english",
+         lang2 == "english (england)" ~ "english",
+         lang2 == "spanish (colombia)" ~ "spanish",
+         lang2 == "french (belgium, but french language as in france)" ~ "french",
+         lang2 == "highgerman" ~ "german",
+         lang2 == "italian (italy)" ~ "italian",
+         lang2 == "spanish (peru)" ~ "spanish",
+         lang2 == "french (switzerland)" ~ "french",
+         lang2 == "french (switzerland/france)" ~ "french",
+         lang2 == "english (new zealand)" ~ "english",
+         lang2 == "english (canada)" ~ "english",
+         lang2 == "italian (switzerland)" ~ "italian",
+         lang2 == "spanish (cuba)" ~ "spanish",
+         lang2 == "english (simbabwe)" ~ "english",
+         lang2 == "newfoundland english" ~ "english",
+         TRUE ~ lang2))
+d$lang2 <- na_if(d$lang2, "na")
+
+d <- d %>%
+  mutate(lang3 = case_when(
+         lang3 == "haitian creole" ~ "creole",
+         lang3 == "highgerman" ~ "german",
+         lang3 == "british english" ~ "english",
+         lang3 == "bahasa indonesian"  ~ "indonesian",
+         lang3 == "portuguesse" ~ "portuguese",
+         lang3 == "bahasa"  ~ "indonesian",
+         lang3 == "english (south africa)" ~ "english",
+         lang3 == "french arabic" ~ "arabic",
+         TRUE ~ lang3))
+d$lang3 <- na_if(d$lang3, "na")
+
+d <- d %>%
+  mutate(lang4 = case_when(
+         lang4 == "portuguese (portugal)" ~ "portuguese",
+         lang4 == "scottish english"  ~ "english",
+         TRUE ~ lang4))
+d$lang4 <- na_if(d$lang4, "na")
+
+unique(d$lang4)
 ```
 
 
