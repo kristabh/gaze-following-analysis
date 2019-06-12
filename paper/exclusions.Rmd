@@ -47,7 +47,7 @@ d <- lab_excluded$data
 
 ```
 
-* *Lab reliability*. Data from two of the labs using the handcoding method were excluded after extensive discussions with the participating labroatories. One lab could not achieve an acceptable level of inter-rater reliability, due to difficulty coding infant eye movements from the available videos. A second lab initially coded the data incorrectly (i.e., coded face-to-object saccades differently than had been specififed), but then insufficient resources to re-code the data. There were `r lab_exclusion$percents$any_sum` (`r round(lab_exclusion$percents$any_mean*100, 1)`%) infants who were tested in these labs.
+* *Lab reliability*. Data from two of the labs using the handcoding method were excluded after extensive discussions with the participating labroatories. One lab could not achieve an acceptable level of inter-rater reliability, due to difficulty coding infant eye movements from the available videos. A second lab initially coded the data incorrectly (i.e., coded face-to-object saccades differently than had been specififed), but then insufficient resources to re-code the data. There were `r lab_excluded$percents$any_sum` (`r round(lab_excluded$percents$any_mean*100, 1)`%) infants who were tested in these labs.
 
 ```{r age}
 # We exclude kids who are outside of the 6-9 or 12-15 month age range. 
@@ -110,20 +110,20 @@ d <- trial_err$data
 
 
 ```{r}
-# #store an additional dataframe containing information on session error types
-# session_error_type <- d %>%
-#   filter(session_error) %>%
-#   distinct(lab, subid, session_error_type) %>%
-#   count(session_error_type)
-#  # distinct(lab, subid,session_error_type_recoded) %>%
-# #  count(session_error_type_recoded)
-# 
-# sessionerr <- exclude_by(d, quo(session_error), 
-#                          action = "exclude", 
-#                          return_pcts = TRUE, 
-#                          quiet = TRUE)
-# 
-# d <- sessionerr$data
+#store an additional dataframe containing information on session error types
+session_error_type <- d %>%
+  filter(session_error) %>%
+#  distinct(lab, subid, session_error_type) %>%
+ # count(session_error_type)
+  distinct(lab, subid,session_error_type_recoded) %>%
+  count(session_error_type_recoded)
+
+sessionerr <- exclude_by(d, quo(session_error),
+                         action = "exclude",
+                         return_pcts = TRUE,
+                         quiet = TRUE)
+
+d <- sessionerr$data
 ```
 
 * *Session errors* There were  `r sessionerr$percents$any_sum` (`r round(sessionerr$percents$any_mean*100, 2)`%) infants excluded from the analysis due to issues such including equipment (`r session_error_type$n[session_error_type$session_error_type_recoded=="equipment failure"]` experimenter error, `r session_error_type$n[session_error_type$session_error_type_recoded=="experimenter error"]` infants for or parental/outside interference `r session_error_type$n[session_error_type$session_error_type_recoded=="outside interference"]`.
