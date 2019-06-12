@@ -250,3 +250,22 @@ exclude_by <- function(d, col, setting = "all", action = "exclude",
     return(d)
   }
 }
+
+################################ source_rmd ################################
+## issues reading in exclusion.Rmd. Code from https://gist.github.com/noamross/a549ee50e8a4fd68b8b1
+
+source_rmd = function(file, skip_plots = TRUE) {
+  temp = tempfile(fileext=".R")
+  knitr::purl(file, output=temp)
+  
+  if(skip_plots) {
+    old_dev = getOption('device')
+    options(device = function(...) {
+      .Call("R_GD_nullDevice", PACKAGE = "grDevices")
+    })
+  }
+  source(temp)
+  if(skip_plots) {
+    options(device = old_dev)
+  }
+}

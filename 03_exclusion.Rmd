@@ -25,6 +25,8 @@ Note that all exclusions are written in paper format and sourced here so as to a
 
 ```{r child="paper/exclusions.Rmd"}
 
+source_rmd("paper/exclusions.Rmd")
+
 ```
 
 
