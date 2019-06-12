@@ -191,8 +191,7 @@ d$pilot <- grepl("pilot", tolower(d$subid)) |
 
 ## cognitive_developmental
   
-  > No diagnosed developmental disorders. We excluded infants with parent-reported developmental disorders (e.g., chromosomal abnormalities, etc.) or diagnosed hearing impairments. XYZ (%XYZ) infants were tested but did not meet this criterion. Due to concerns about the accuracy of parent reports, we did not plan exclusions based on self-reported ear infections unless parents reported medically-confirmed hearing loss. 
-
+> No diagnosed developmental disorders. We excluded infants with parent-reported developmental disorders (e.g., chromosomal abnormalities, etc.) or diagnosed hearing/visual impairments. medically-confirmed hearing loss. 
 
 ```{r}
 unique(d$cognitive_developmental)
@@ -203,38 +202,36 @@ d$td <- !(tolower(d$cognitive_developmental) %in%
 see_if(all(d$td %in% c(TRUE, FALSE)))
 
 
-
-
 ```
 
-<!-- Some issues reported as having cognitive/developmental/hearing issues that don't seem to be grounds for exclusion. We are resolving this issue by reviewing lab notes for these participants and re-classifying them. -->
+ Some issues reported as having cognitive/developmental/hearing issues that don't seem to be grounds for exclusion. We resolved this issue by reviewing lab notes for these participants and re-classifying them.We reviewed lab notes and re-classified infants as td based on these notes. See metadata-README.md regarding `participants_cog_hearing_exclusions.csv` for details about td classifications.  
+<!-- we need to create a README file specifying this -->
+```{r} 
 
-<!-- ```{r} -->
+participants_td_to_keep <- read_csv("metadata/participants_cog_hearing_exclusions.csv")
 
-<!-- participants_td_to_keep <- read_csv("metadata/participants_cog_hearing_exclusions.csv") -->
+# elements not in participants_td_to_keep removed
+participants_td_to_keep <- subset(participants_td_to_keep, participants_td_to_keep$lab %in% d$lab)
 
-<!-- # elements not in participants_td_to_keep removed -->
-<!-- participants_td_to_keep <- subset(participants_td_to_keep, participants_td_to_keep$lab %in% d$lab) -->
+#validate lab names again
+see_if(all(participants_td_to_keep$lab %in% d$lab))
 
-<!-- #validate lab names again -->
-<!-- see_if(all(participants_td_to_keep$lab %in% d$lab)) -->
+d <- d %>%
+  left_join(participants_td_to_keep)
 
-<!-- d <- d %>%  -->
-<!--   left_join(participants_td_to_keep) -->
+d$Exclusion <- ifelse(is.na(d$Exclusion),FALSE,d$Exclusion)
 
-<!-- d$Exclude <- ifelse(is.na(d$Exclude),FALSE,d$Exclude) -->
+d$td <- (d$Exclusion)
 
-<!-- d$td <- !(d$Exclude) -->
+d <- select(d, -Exclusion)
 
-<!-- d <- select(d, -Exclude) -->
+see_if(all(d$td %in% c(TRUE, FALSE)))
 
-<!-- see_if(all(d$td %in% c(TRUE, FALSE))) -->
+#currently this number of kids were marked as TD
+length(unique(d[!d$td,]$subid))
+```
 
-<!-- ``` -->
-
-<!-- We reviewed lab notes and re-classified infants as td based on these notes. See metadata-README.md regarding `participants_cog_hearing_exclusions.csv` for details about td classifications. -->
-
-<!-- Currently, `r length(unique(d[!d$td,]$subid))` children are marked as not TD. -->
+Currently `r length(unique(d[d$td,]$subid))` infants were tested but did not meet this criterion. Due to concerns about the accuracy of parent reports, we did not plan exclusions based on self-reported ear infections unless parents reported
 
 
 ## fullterm and days_preterm
@@ -248,83 +245,78 @@ d$full_term <- !(tolower(d$preterm) %in% c("preterm", "y", "TRUE"))
 
 see_if(all(d$full_term %in% c(TRUE, FALSE)))
 
+
 ```
 
 Currently, `r sum(!d$full_term)` trials (`r signif(mean(!d$full_term),2)*100`%) from `r length(unique(d[!d$full_term,]$subid))` children are marked as preterm and excluded from primary analyses. 
 
-<!-- Classifying infants by number of days preterm (prior to 37 weeks). First, correct for labs that reported days before 40 (and in one case 41) weeks, then classify infants less than 37 weeks as preterm. -->
+Classifying infants by number of days preterm (prior to 37 weeks). First, correct for labs that reported days before 40 (and in one case 41) weeks, then classify infants less than 37 weeks as preterm. 
+
+```{r}
+preterm_fix <- read_csv("metadata/preterm_fix.csv")
+#names(preterm_fix)[1]<-"labid"
+
+#validate lab names
+see_if(all(d$lab %in% preterm_fix$lab))
+
+d <- d %>%
+  left_join(preterm_fix)
 
 
-<!-- ```{r} -->
-<!-- preterm_fix <- read_csv("metadata/preterm_fix.csv") %>% -->
-<!--   rename(lab = labid) %>% -->
-<!--   select(-filename) -->
+#fix typo with Georgetown lab whose parents fill out the form wrong
+d$days_preterm[d$subid == "elp-georgetown8994"] <- 14
+d$days_preterm[d$subid == "elp-georgetown9029"] <- 14
 
-<!-- #validate lab names -->
-<!-- see_if(all(d$lab %in% preterm_fix$lab)) -->
+d$days_preterm <- as.integer(d$days_preterm)
 
-<!-- d <- d %>% -->
-<!--   left_join(preterm_fix) -->
+d <- d %>% 
+  mutate(days_preterm_fixed = case_when( 
+    preterm_fix == "all_full_term" ~ NA_integer_, 
+    preterm_fix == "40" ~ as.integer(days_preterm - 21), 
+    preterm_fix == "41" ~ as.integer(days_preterm - 28), 
+    preterm_fix == "37" ~ as.integer(days_preterm), 
+    TRUE ~ as.integer(days_preterm)))
 
-<!-- d <- d %>% -->
-<!--   mutate(days_preterm_fixed = case_when( -->
-<!--     preterm_fix == "all_full_term" ~ NA_integer_, -->
-<!--     preterm_fix == "40" ~ as.integer(days_preterm - 21), -->
-<!--     preterm_fix == "41" ~ as.integer(days_preterm - 28), -->
-<!--     preterm_fix == "37" ~ as.integer(days_preterm), -->
-<!--     TRUE ~ as.integer(days_preterm))) -->
+# remove unnecessary columns
+d <- select(d, -preterm_fix)
+d <- select(d, -n_preterm)
 
-<!-- # remove unnecessary column -->
-<!-- d <- select(d, -preterm_fix) -->
+# classify infants as preterm based on days
 
-<!-- # classify infants as preterm based on days -->
-<!-- # includes one fix for lab: ileap, subid: e48s006 who doesn't have anything in the `days_preterm` column but should be classified as preterm. -->
-<!-- d <- d %>%  -->
-<!--   mutate(full_term_by_days = case_when( -->
-<!--     days_preterm_fixed <= 0 ~ TRUE, -->
-<!--     is.na(days_preterm_fixed) ~ TRUE, -->
-<!--     days_preterm_fixed > 0 ~ FALSE, -->
-<!--     TRUE ~ NA -->
-<!--   )) -->
+ d <- d %>%
+   mutate(full_term_by_days = case_when( 
+     days_preterm_fixed <= 0 ~ TRUE,
+     is.na(days_preterm_fixed) ~ TRUE,
+     days_preterm_fixed > 0 ~ FALSE,
+     TRUE ~ NA))
 
-<!-- # How many infants are classified as preterm by this method -->
-<!-- table(d[!duplicated(d$subid),]$full_term_by_days) -->
+# How many infants are classified as preterm by this method
+table(d[!duplicated(d$subid),]$full_term_by_days)
 
-<!-- ``` -->
-<!-- Find mismatches with lab-reported status. -->
+``` 
+Find mismatches with lab-reported status.
+```{r} 
+d %>%
+  group_by(lab, subid) %>%
+  select(full_term, full_term_by_days) %>%
+  distinct %>% 
+  filter(full_term != full_term_by_days)
 
-<!-- ```{r} -->
-<!-- d %>% -->
-<!--   group_by(lab, subid) %>% -->
-<!--   select(full_term, full_term_by_days) %>% -->
-<!--   distinct %>% -->
-<!--   filter(full_term != full_term_by_days) %>% -->
-<!--   group_by(lab) %>% -->
-<!--   count %>% -->
-<!--   datatable() -->
-<!-- ``` -->
+d%>%
+group_by(lab) %>%
+  count %>% 
+  datatable()
+```
 
 
-<!-- Approaching preterm status this way, `r length(unique(d[!d$full_term_by_days,]$subid))` children (`r signif(mean(!d$full_term_by_days),2)*100`% of trials) are marked as preterm and excluded from primary analyses. Adopt `full_term_by_days` approach. -->
-<!-- Temporarily assign status based on lab-determined column -->
+Approaching preterm status this way, `r length(unique(d[!d$full_term_by_days,]$subid))` children (`r signif(mean(!d$full_term_by_days),2)*100`% of trials) are marked as preterm and excluded from primary analyses. Adopt `full_term_by_days` approach. 
 
-<!-- ```{r} -->
+```{r} 
 
-<!-- d$full_term <- d$full_term_by_days -->
-<!-- d <- select(d,-full_term_by_days)  -->
+d$full_term <- d$full_term_by_days
+d <- select(d,-full_term_by_days) 
 
-<!-- #d <- d %>% -->
-<!-- #  mutate(full_term = case_when( -->
-<!-- #  preterm == "term" ~ TRUE, -->
-<!-- #  preterm == "Term" ~ TRUE, -->
-<!-- #  preterm == "N" ~ FALSE, -->
-<!-- #  preterm == "Y" ~ FALSE, -->
-<!-- #  is.na(preterm) ~ TRUE -->
-<!-- #  )) -->
-
-
-
-<!-- ``` -->
+```
 
 ## session_error 
 
@@ -614,30 +606,6 @@ d <- d %>%
 
 ```
 
-##Prematurity
-```{r}
-unique(d$preterm)
-
-##fix N and Ys with term and preterm
-d <- d %>%
-  mutate(preterm = case_when(
-         preterm == "n" ~ "term",
-         preterm == "y" ~ "preterm",
-         TRUE ~ preterm))
-
-## fix elp-georgetown: used 40weeks as a reference to categorize premature kids instead of 37 as stablished
-d$preterm[d$subid == "elp-georgetown8731"] <- "term"
-d$preterm[d$subid == "elp-georgetown9035"] <- "term"
-d$preterm[d$subid == "elp-georgetown9029"] <- "term"
-d$preterm[d$subid == "elp-georgetown8545"] <- "term"
-d$preterm[d$subid == "elp-georgetown8998"] <- "term"
-d$preterm[d$subid == "elp-georgetown8955"] <- "term"
-d$preterm[d$subid == "elp-georgetown8888"] <- "term"
-d$preterm[d$subid == "elp-georgetown8374"] <- "term"
-d$preterm[d$subid == "elp-georgetown8725"] <- "term"
-
-```
-
 ## Gender
 
 ```{r}
@@ -646,9 +614,9 @@ unique(d$participant_gender)
 ```
 
 
- ```{r}
- unique(d$gender)
- d$gender <- toupper(d$gender)
+```{r}
+unique(d$participant_gender)
+d$participant_gender <- toupper(d$participant_gender)
 # 
 # d <- d %>%
 #   mutate(gender2 = case_when(
