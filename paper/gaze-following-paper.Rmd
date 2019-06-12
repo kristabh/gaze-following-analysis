@@ -202,10 +202,7 @@ Each lab administered a questionnaire that gathered basic demographic data about
    group_by(lab, lang_group, age_group) %>%
    summarise(n = length(unique(subid))) %>% 
    spread(lang_group, n)
-              
 ```
-
-
 
 ```{r}
 excluded_labs <- read_csv(here("processed_data","02_validated_output.csv")) %>%
@@ -218,27 +215,6 @@ excluded_labs <- read_csv(here("processed_data","02_validated_output.csv")) %>%
 ### Final sample
 
 Our final sample of bilinguals included `r `sum(labs$bilingual, na.rm = TRUE)` infants tested in `r length(unique(labs$lab[!is.na(labs$bilingual)]))` labs. `r sum(labs$bilingual[labs$age_group == "6-9 mo"], na.rm = TRUE)` were 6–9 months, and `r sum(labs$bilingual[labs$age_group == "12-15 mo"], na.rm = TRUE)` were 12–15 months old. Each of these labs also collected data from monolingual infants (N = `r sum(labs$monolingual[!is.na(labs$bilingual)], na.rm = TRUE)`), of whom `r sum(labs$monolingual[labs$age_group == "6-9 mo"& !is.na(labs$bilingual)], na.rm = TRUE)` were 6–9 months, and `r sum(labs$monolingual[labs$age_group == "12-15 mo"& !is.na(labs$bilingual)], na.rm = TRUE)` were 12–15 months. Data from monolingual infants were available from two additional labs (N = `r sum(labs$monolingual[is.na(unique(labs$bilingual))], na.rm = TRUE)`), who did not contribute bilingual data. A list of monolingual and bilingual populations in each lab are reported in Table 1. In addition, `r excluded_labs` labs registered to participate but failed to collect data from at least 10 included infants, and so their data were not included. Information about all included labs is given in Table XX.
-
-```{r bin_stats}
-#is this being used for anything?
-#age_stat <- d_participants %>%
-#  group_by(lab, subid) %>%
-#  summarise(age_days = age_days[1]) %>%
-#  ungroup %>%
-#  summarise(mean = mean(age_days), 
-#            min = min(age_days), 
-#            max = max(age_days))
-
-age_bins <- d_participants %>%
-  group_by(lab, age_group) %>%
-  summarise(n_babies = length(unique(subid))) %>%
-  group_by(age_group) %>%
-  summarise(n_babies = sum(n_babies), 
-            n_labs = length(unique(lab))) %>%
-  arrange(age_group)
-
-```
-
 
 
 ```{r results="asis"}
@@ -255,7 +231,10 @@ lab_stats <- d_participants %>%
   summarise(`Mean age (days)` = signif(mean(age_days, na.rm = TRUE), 3),
             N = n(),
             Method = paste(unique(coding[!is.na(coding)]), collapse = ", ")) %>%
-  arrange(lab, age_group, lang_group)
+  rename(`Age group` = age_group,
+         `Lang group` = lang_group,
+         Lab = lab) %>% 
+  arrange(Lab, `Age group`, `Lang group`)
 
 kable(lab_stats, digits = 2,
       format = "latex", booktabs = TRUE,
