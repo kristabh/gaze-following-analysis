@@ -14,7 +14,7 @@ source(here("helper/preprocessing_helper.R"))
 # Cache lab stats pre-exclusion for lab-based exclusions. 
 
 lab_contribs_pre_exclusion <- d %>%
-  group_by(lab) %>%
+  group_by(age_group, lab) %>%
   summarise(n = length(unique(subid)))
 ```
 
@@ -23,20 +23,31 @@ lab_contribs_pre_exclusion <- d %>%
 d <- exclude_by(d, quo(pilot), quiet = TRUE)
 ```
 
+
+Labs were asked to submit all data collected as part of the study to the analysis team. Data were first screened to determine whether labs contributed useable data, and whether infants met our inclusion criteria. Note that some infants had more than one reason for exclusion, and exclusion criteria were applied sequentially.
+
 ```{r lab }
-# Exclude labs from bll-umanitbo, after discussion with lab that they could not reliably code their data
+# Exclude labs from bll-umanitoba, after discussion with lab that they could not reliably code their data
+# For now, exclude
 
 d <- d %>%
-  filter(lab != "bll-umanitoba")
+  mutate(lab_excluded = case_when(
+    lab == "bll-umanitoba" ~ TRUE,
+    lab == "babylab-westernsydney" ~ TRUE,
+    TRUE ~ FALSE
+  ))
+
+
+lab_excluded <- exclude_by(d, quo(lab_excluded),
+                   return_pcts = TRUE, 
+                   quiet = TRUE)
+
+d <- lab_excluded$data
 
 
 ```
-Labs were asked to submit all data collected as part of the study to the analysis team. Data were first screened to determine whether infants met our inclusion criteria. Note that some infants had more than one reason for exclusion.
 
-
-* *Lab reliability*. Data from one laboratory were excluded as the lab could not achieve an acceptable level of inter-rater reliability, due to difficulty coding infant eye movements from the available videos.
-
-
+* *Lab reliability*. Data from two of the labs using the handcoding method were excluded after extensive discussions with the participating labroatories. One lab could not achieve an acceptable level of inter-rater reliability, due to difficulty coding infant eye movements from the available videos. A second lab initially coded the data incorrectly (i.e., coded face-to-object saccades differently than had been specififed), but then insufficient resources to re-code the data. There were `r lab_exclusion$percents$any_sum` (`r round(lab_exclusion$percents$any_mean*100, 1)`%) infants who were tested in these labs.
 
 ```{r age}
 # We exclude kids who are outside of the 6-9 or 12-15 month age range. 
