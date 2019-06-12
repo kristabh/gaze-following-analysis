@@ -325,7 +325,7 @@ unmatched_participants_premerge <- merge(unmatched_participants_premerge, conf, 
 write_csv(unmatched_participants_premerge, 'metadata/unconfirmed_unmatched_participants.csv')
 
 unmatched_participants_premerge
- # 
+ 
  # participants_session_errors_all <- pd %>% filter(session_error!= "noerror") %>%
  #   select(lab, subid, session_error, session_error_type, notes) %>%
  #   filter(session_error != "na") %>%
