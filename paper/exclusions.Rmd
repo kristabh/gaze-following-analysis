@@ -87,7 +87,7 @@ full_term <- exclude_by(d, quo(full_term), action = "include",
 d <- full_term$data
 ```
 
-* *Full-term*. We defined full term as gestation times greater than or equal to 37 weeks. `r full_term$percents$any_sum` (`r round(full_term$percents$any_mean*100, 1)`%) infants were tested but did not meet this criterion.
+* *Full-term*. We defined full term as gestation times greater than or equal to 37 weeks. There were `r full_term$percents$any_sum` (`r round(full_term$percents$any_mean*100, 1)`%) infants who were tested but did not meet this criterion.
 
 ```{r}
 ndd <- exclude_by(d, quo(td), action = "include", 
@@ -126,9 +126,7 @@ sessionerr <- exclude_by(d, quo(session_error),
 d <- sessionerr$data
 ```
 
-* *Session errors* There were  `r sessionerr$percents$any_sum` (`r round(sessionerr$percents$any_mean*100, 2)`%) infants excluded from the analysis due to issues such including equipment (`r session_error_type$n[session_error_type$session_error_type_recoded=="equipment failure"]` experimenter error, `r session_error_type$n[session_error_type$session_error_type_recoded=="experimenter error"]` infants for or parental/outside interference `r session_error_type$n[session_error_type$session_error_type_recoded=="outside interference"]`.
-
-
+* *Session errors* There were `r sessionerr$percents$any_sum` (`r round(sessionerr$percents$any_mean*100, 2)`%) infants excluded from the analysis due to issues such including: (`r session_error_type$n[session_error_type$session_error_type_recoded=="equipment failure"]` for equipment failure,  experimenter error, `r session_error_type$n[session_error_type$session_error_type_recoded=="experimenter error"]` for experimenter error, and `r session_error_type$n[session_error_type$session_error_type_recoded=="outside interference"]` for parental/outside interference.
 
 ```{r}
 n_shifts <- exclude_by(d, quo(shifts_incl), action = "include", 
@@ -138,4 +136,4 @@ n_shifts <- exclude_by(d, quo(shifts_incl), action = "include",
 d <- n_shifts$data
 ```
 
-* *Insufficient face-to-object saccades* Following Senju and Csibra (2008), we also excluded any infant who did not make at least one face-to-object saccade during the window of analysis in at least three of the six trials.  There were X`r n_shifts$percents$any_sum` (`r round(n_shifts$percents$any_mean*100, 2)`%) infants who were excluded from analyses for this reason.
+* *Insufficient face-to-object saccades* Following Senju and Csibra (2008), and per our pre-registration, we also excluded any infant who did not make at least one face-to-object saccade during the window of analysis in at least three of the six trials.  A further `r n_shifts$percents$any_sum` (`r round(n_shifts$percents$any_mean*100, 2)`%) infants were excluded from analyses for this reason.

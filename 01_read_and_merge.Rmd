@@ -86,6 +86,13 @@ pd_raw <- full_join(pd_raw, temp_dataset)
 
 ```
 
+# Clean up some issues with NAs
+
+```{r}
+d <- d %>%
+   mutate_if(is.character, list(~na_if(., "na")))
+```
+
 
 ```{r}
 pd_raw %>%
