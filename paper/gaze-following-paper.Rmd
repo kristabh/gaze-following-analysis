@@ -67,33 +67,33 @@ theme_set(theme_bw() +
 ```{r load_authors}
 # downloaded from https://docs.google.com/spreadsheets/d/1ZI-vEoMoZkqPWMoA7wCegWfecydg3wNifbpM9OYHsXU/edit?usp=drive_web&ouid=115164816411219099530 on DATE
 
-#author_data <- read_csv(here("metadata/Gaze Following Author List and Contributions - #Sheet1.csv"), 
-#                     skip = 4) %>% 
-#   rename(first = `Author First Name`, 
-#          last = `Author Last Name`,
-#          affil = Affiliation, 
-#          grant = `Grant acknowledgment(s)`, 
-#          concept = `Early Concept`, 
-#          design = `Study Design`,
-#          protocol = `Protocol Code/Script`,
-#          doc = Documentation, 
-#          manage = `Study Management`,
-#          data = `Data Collection`,
-#          analysis = `Data Analysis`, 
-#          ms1 = `Stage 1 Manuscript`, 
-#          ms2 = `Stage 2 Manuscript`) %>% 
-#   select(first, last, affil, grant, concept:ms2) %>% 
-#   mutate(full = paste0(.$first, " ", .$last, " (", .$affil, ")"), 
-#          status = case_when(last == "Byers-Heinlein" ~ 1, 
-#                             last == "Singh" ~ 3, 
-#                             TRUE ~ 2), 
-#          initials = paste0(gsub("[:a-zé\\öøł:\\.\\ \\-]","",first), gsub("[:a-zé\\öøł:\\.\\ #\\-]","",last))) %>%
-#   group_by(status) %>% 
-#   arrange(last, .by_group = TRUE) 
+author_data <- read_csv(here("metadata/Gaze Following Author List and Contributions - Sheet1.csv"), 
+                     skip = 4) %>% 
+   rename(first = `Author First Name`, 
+          last = `Author Last Name`,
+          affil = Affiliation, 
+          grant = `Grant acknowledgment(s)`, 
+          concept = `Early Concept`, 
+          design = `Study Design`,
+          protocol = `Protocol Code/Script`,
+          doc = Documentation, 
+          manage = `Study Management`,
+          data = `Data Collection`,
+          analysis = `Data Analysis`, 
+          ms1 = `Stage 1 Manuscript`, 
+          ms2 = `Stage 2 Manuscript`) %>% 
+   select(first, last, affil, grant, concept:ms2) %>% 
+   mutate(full = paste0(.$first, " ", .$last, " (", .$affil, ")"), 
+          status = case_when(last == "Byers-Heinlein" ~ 1, 
+                             last == "Singh" ~ 3, 
+                             TRUE ~ 2), 
+          initials = paste0(gsub("[:a-zé\\öøł:\\.\\ \\-]","",first), gsub("[:a-zé\\öøł:\\.\\ \\-]","",last))) %>%
+   group_by(status) %>% 
+   arrange(last, .by_group = TRUE) 
  
-#authors <- author_data %>% 
-#   pull(full) %>% 
-#   paste(collapse = ", ")
+authors <- author_data %>% 
+   pull(full) %>% 
+   paste(collapse = ", ")
  
 # grants <- author_data  %>% 
 #   filter(!is.na(grant)) %>%
@@ -101,6 +101,23 @@ theme_set(theme_bw() +
 #   pull(grant) %>% 
 #   paste(collapse = "; ")
 # Can't figure out how to render this into YAML, pasting for now.
+```
+
+
+```{r load_labs}
+d_participants <- read_csv(here("processed_data/03_data_trial_main.csv"),
+                           col_types = cols(
+                             comm_lang_2 = col_character(),
+                             trial_error_type = col_character()))
+
+#creates 216 parsing errors - all because "na" in original file while column interpreted #logical. Have made issue to change to NA in upstream script
+```
+
+```{r}
+ labs <- d_participants %>%
+   group_by(lab, lang_group, age_group) %>%
+   summarise(n = length(unique(subid))) %>% 
+   spread(lang_group, n)
 ```
 
 
@@ -142,19 +159,9 @@ Finally, bilingualism cannot be randomly assigned. Thus, even when recruited fro
 
 ## Current study
 
-The current study used a multi-lab approach to ask whether monolingual and bilingual infants differ in their basic gaze-following abilities. Data were collected from `r n_labs` labs in XX countries. We tested the hypothesis that the challenging nature of bilingual language-learning environments enhances bilingual infants’ attention to the eye gaze of a social partner, even in non-linguistic situations. Our study compared monolingual and bilingual infants aged 6–9 and 12–15 months using the eye gaze stimuli from Senju and Csibra’s (2008) study. Note that our study did not include the no eye gaze condition reported in Senju and Csibra’s paper, as our interest was in comparing gaze-following behavior in typical situations, across infants of different and from different language backgrounds. On six test trials, infants saw a model look towards the camera, and then direct her head and eyes towards one of two objects located to her left and right. We measured the latency and accuracy of infants’ gaze following.
+The current study used a multi-lab approach to ask whether monolingual and bilingual infants differ in their basic gaze-following abilities. Data were collected from `r length(unique(labs$lab))` labs in XX countries. We tested the hypothesis that the challenging nature of bilingual language-learning environments enhances bilingual infants’ attention to the eye gaze of a social partner, even in non-linguistic situations. Our study compared monolingual and bilingual infants aged 6–9 and 12–15 months using the eye gaze stimuli from Senju and Csibra’s (2008) study. Note that our study did not include the no eye gaze condition reported in Senju and Csibra’s paper, as our interest was in comparing gaze-following behavior in typical situations, across infants of different and from different language backgrounds. On six test trials, infants saw a model look towards the camera, and then direct her head and eyes towards one of two objects located to her left and right. We measured the latency and accuracy of infants’ gaze following.
 
 Previous studies have found that infants follow the actor’s gaze in this condition at above-chance level by 6 months, but their performance is not always reliable (Senju & Csibra, 2008; Szufnarowska et al., 2014). Moreover, there is evidence for improvement of infants’ gaze following in this paradigm from 7 to 13 months (Bedford et al., 2012). We thus expected to see improvement in all infants’ gaze following from the younger age to the older age. We also expected that both groups would demonstrate successful gaze following as demonstrated by Senji and Csibra (2008), but that bilingual infants would show faster and more accurate gaze following than monolingual infants. We also suggest that the effects of bilingualism might interact with age. On the one hand, we might observe a stronger effect of bilingualism at 6-9 months if gaze following emerges earlier for bilinguals; on the other hand we might observe a stronger effect of bilingualism at 12-15 months if this skill emerges at the same age, but is more relied upon by bilingual infants as the demands of language acquisition increase. Both of these findings would reflect interesting and meaningful differences between monolingual and bilingual infants.
-
-
-```{r load_labs}
-d_participants <- read_csv(here("processed_data/03_data_trial_main.csv"),
-                           col_types = cols(
-                             comm_lang_2 = col_character(),
-                             trial_error_type = col_character()))
-
-#creates 216 parsing errors - all because "na" in original file while column interpreted #logical. Have made issue to change to NA in upstream script
-```
 
 # Methods
 
@@ -196,13 +203,6 @@ Although adapted for their language environment by each lab, there is consistenc
 ### Demographics
 
 Each lab administered a questionnaire that gathered basic demographic data about infants, including age, health history, gestation, etc.
-
-```{r}
- labs <- d_participants %>%
-   group_by(lab, lang_group, age_group) %>%
-   summarise(n = length(unique(subid))) %>% 
-   spread(lang_group, n)
-```
 
 ```{r}
 excluded_labs <- read_csv(here("processed_data","02_validated_output.csv")) %>%
