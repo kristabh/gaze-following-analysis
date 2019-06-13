@@ -1,5 +1,4 @@
 lab,subid,trialcount,rowcount,trial_error,present_td,lines_in_pd,age_days,notes,days_preterm,session_error,session_error_type,present_pd,confirmed
-infantlanglab-utk,eg12_4m_s8,NA,NA,NA,FALSE,1,387,did great.,na,noerror,all orders were randomized,TRUE,FALSE
 infantlanglab-utk,NA,NA,NA,NA,FALSE,18,225,did great.,20,noerror,all orders were randomized,TRUE,FALSE
 lll-liv,gf015,NA,NA,NA,FALSE,1,219,NA,na,noerror,na,TRUE,FALSE
 lll-liv,gf045,NA,NA,NA,FALSE,1,421,"did not complete, sat on mothers lap and cried",na,noerror,na,TRUE,FALSE
