@@ -49,7 +49,7 @@ output            : papaja::apa6_pdf
 ---
 
 ```{r load_packages_settings, include = FALSE}
-library("papaja")
+library(papaja)
 library(ggthemes)
 library(lme4)
 library(tidyverse)
@@ -67,40 +67,52 @@ theme_set(theme_bw() +
 ```{r load_authors}
 # downloaded from https://docs.google.com/spreadsheets/d/1ZI-vEoMoZkqPWMoA7wCegWfecydg3wNifbpM9OYHsXU/edit?usp=drive_web&ouid=115164816411219099530 on DATE
 
-# author_data <- read_csv(here("metadata/Gaze Following Author List and Contributions - Sheet1.csv"), 
-#                     skip = 5) %>% 
-#   rename(first = `Author First Name`, 
-#          last = `Author Last Name`,
-#          affil = Affiliation, 
-#          grant = `Grant acknowledgment(s)`, 
-#          concept = `Early Concept`, 
-#          design = `Study Design`,
-#          protocol = `Protocol Code/Script`,
-#          doc = Documentation, 
-#          manage = `Study Management`,
-#          data = `Data Collection`,
-#          analysis = `Data Analysis`, 
-#          ms1 = `Stage 1 Manuscript`, 
-#          ms2 = `Stage 2 Manuscript`) %>% 
-#   select(first, last, affil, grant, concept:ms2) %>% 
-#   mutate(full = paste0(.$first, " ", .$last, " (", .$affil, ")"), 
-#          status = case_when(last == "Byers-Heinlein" ~ 1, 
-#                             last == "Singh" ~ 3, 
-#                             TRUE ~ 2), 
-#          initials = paste0(gsub("[:a-zé\\öøł:\\.\\ \\-]","",first), gsub("[:a-zé\\öøł:\\.\\ \\-]","",last))) %>%
-#   group_by(status) %>% 
-#   arrange(last, .by_group = TRUE) 
-# 
-# authors <- author_data %>% 
-#   pull(full) %>% 
-#   paste(collapse = ", ")
-# 
+author_data <- read_csv(here("metadata/Gaze Following Author List and Contributions - Sheet1.csv"), 
+                     skip = 4) %>% 
+   rename(first = `Author First Name`, 
+          last = `Author Last Name`,
+          affil = Affiliation, 
+          grant = `Grant acknowledgment(s)`, 
+          concept = `Early Concept`, 
+          design = `Study Design`,
+          protocol = `Protocol Code/Script`,
+          doc = Documentation, 
+          manage = `Study Management`,
+          data = `Data Collection`,
+          analysis = `Data Analysis`, 
+          ms1 = `Stage 1 Manuscript`, 
+          ms2 = `Stage 2 Manuscript`) %>% 
+   select(first, last, affil, grant, concept:ms2) %>% 
+   mutate(full = paste0(.$first, " ", .$last, " (", .$affil, ")"), 
+          status = case_when(last == "Byers-Heinlein" ~ 1, 
+                             last == "Singh" ~ 3, 
+                             TRUE ~ 2), 
+          initials = paste0(gsub("[:a-zé\\öøł:\\.\\ \\-]","",first), gsub("[:a-zé\\öøł:\\.\\ \\-]","",last))) %>%
+   group_by(status) %>% 
+   arrange(last, .by_group = TRUE) 
+ 
+authors <- author_data %>% 
+   pull(full) %>% 
+   paste(collapse = ", ")
+ 
 # grants <- author_data  %>% 
 #   filter(!is.na(grant)) %>%
 #   filter(!duplicated(grant)) %>%
 #   pull(grant) %>% 
 #   paste(collapse = "; ")
 # Can't figure out how to render this into YAML, pasting for now.
+```
+
+
+```{r load_labs}
+d_participants <- read_csv(here("processed_data/03_data_trial_main.csv"))
+```
+
+```{r}
+ labs <- d_participants %>%
+   group_by(lab, lang_group, age_group) %>%
+   summarise(n = length(unique(subid))) %>% 
+   spread(lang_group, n)
 ```
 
 
@@ -142,61 +154,16 @@ Finally, bilingualism cannot be randomly assigned. Thus, even when recruited fro
 
 ## Current study
 
-The current study used a multi-lab approach to ask whether monolingual and bilingual infants differ in their basic gaze-following abilities. Data were collected from `r n_labs` labs in XX countries. We tested the hypothesis that the challenging nature of bilingual language-learning environments enhances bilingual infants’ attention to the eye gaze of a social partner, even in non-linguistic situations. Our study compared monolingual and bilingual infants aged 6–9 and 12–15 months using the eye gaze stimuli from Senju and Csibra’s (2008) study. Note that our study did not include the no eye gaze condition reported in Senju and Csibra’s paper, as our interest was in comparing gaze-following behavior in typical situations, across infants of different and from different language backgrounds. On six test trials, infants saw a model look towards the camera, and then direct her head and eyes towards one of two objects located to her left and right. We measured the latency and accuracy of infants’ gaze following.
+The current study used a multi-lab approach to ask whether monolingual and bilingual infants differ in their basic gaze-following abilities. Data were collected from `r length(unique(labs$lab))` labs in XX countries. We tested the hypothesis that the challenging nature of bilingual language-learning environments enhances bilingual infants’ attention to the eye gaze of a social partner, even in non-linguistic situations. Our study compared monolingual and bilingual infants aged 6–9 and 12–15 months using the eye gaze stimuli from Senju and Csibra’s (2008) study. Note that our study did not include the no eye gaze condition reported in Senju and Csibra’s paper, as our interest was in comparing gaze-following behavior in typical situations, across infants of different and from different language backgrounds. On six test trials, infants saw a model look towards the camera, and then direct her head and eyes towards one of two objects located to her left and right. We measured the latency and accuracy of infants’ gaze following.
 
 Previous studies have found that infants follow the actor’s gaze in this condition at above-chance level by 6 months, but their performance is not always reliable (Senju & Csibra, 2008; Szufnarowska et al., 2014). Moreover, there is evidence for improvement of infants’ gaze following in this paradigm from 7 to 13 months (Bedford et al., 2012). We thus expected to see improvement in all infants’ gaze following from the younger age to the older age. We also expected that both groups would demonstrate successful gaze following as demonstrated by Senji and Csibra (2008), but that bilingual infants would show faster and more accurate gaze following than monolingual infants. We also suggest that the effects of bilingualism might interact with age. On the one hand, we might observe a stronger effect of bilingualism at 6-9 months if gaze following emerges earlier for bilinguals; on the other hand we might observe a stronger effect of bilingualism at 12-15 months if this skill emerges at the same age, but is more relied upon by bilingual infants as the demands of language acquisition increase. Both of these findings would reflect interesting and meaningful differences between monolingual and bilingual infants.
-
-
-```{r load_labs}
-d_participants <- read_csv(here("processed_data/03_data_trial_main.csv"))
-
-# labs <- d_participants %>%
-#   group_by(lab) %>%
-#   summarise(n = length(unique(subid)), 
-#             method = paste(unique(method), collapse = ", "))
-
- labs <- d_participants %>%
-   group_by(lab, lang_group) %>%
-   summarise(n = length(unique(subid)))
-              
- n <- labs %>%
-   pull(n) %>%
-   sum
-
-n_labs <- length(unique(labs$lab))
-
-n_bi <- labs %>%
-  filter(lang_group == "bilingual") %>% 
-  pull(n) %>% 
-  sum
-
-n_mono <- labs %>%
-  filter(lang_group == "monolingual") %>% 
-  pull(n) %>% 
-  sum
-
-age <- d_participants %>% 
-  group_by(lang_group, age_group) %>% 
-  summarise(n = length(unique(subid)))
-
-n_6mos_bi <- age %>% filter(lang_group == "bilingual",
-                            age_group == "6-9 mo") %>% pull(n)
-n_6mos_mono <- age %>% filter(lang_group == "monolingual",
-                              age_group == "6-9 mo") %>% pull(n)
-
-n_12mos_bi <- age %>% filter(lang_group == "bilingual",
-                             age_group == "12-15 mo") %>% pull(n)
-n_12mos_mono <- age %>% filter(lang_group == "monolingual",
-                               age_group == "12-15 mo") %>% pull(n)
-
-```
 
 # Methods
 
 ## Participation Details
 
 ### Time frame
-An open call for labs to participate was issued on March 14, 2017. Participant testing began on July 1, 2017 and ended on DATE.
+An open call for labs to participate was issued on March 14, 2017. Participant testing began on July 1, 2017 and ended on August 31, 2018.
 
 ### Age and language groups
 
@@ -204,9 +171,9 @@ Labs contributed samples from one or both of two possible age bins: 6–9 months
 
 ### Lab participation 
 
-Considering the challenges associated with recruiting bilingual infants and the importance of counterbalancing in our experimental design, we asked labs to contribute a minimum of 16 healthy, full-term infants per age (6–9, 12–15) and language group (monolingual, bilingual). However, labs were encouraged to contribute data even if they were only able to provide a bin of data for a single age or for a single language group. Further, labs were invited to contribute additional data provided that decisions about when to stop data collection were made without looking at the data, to avoid biasing effect sizes. Labs were asked to screen ahead of time that infants met inclusion criteria. However, it was acknowledged that most labs would end up recruiting infants who did not necessarily meet our pre-defined criteria for bilingualism (detailed below) upon more detailed in-lab language background assessment. In such cases, the decision whether to test the infant was left up to individual laboratories’ policies, but we asked that data from any babies who entered the testing room be submitted for data processing (even though some such data might be excluded from the main analyses). `r n_labs` labs contributed a sample.
+Considering the challenges associated with recruiting bilingual infants and the importance of counterbalancing in our experimental design, we asked labs to contribute a minimum of 16 healthy, full-term infants per age (6–9, 12–15) and language group (monolingual, bilingual). However, labs were encouraged to contribute data even if they were only able to provide a bin of data for a single age or for a single language group. Further, labs were invited to contribute additional data provided that decisions about when to stop data collection were made without looking at the data, to avoid biasing effect sizes. Labs were asked to screen ahead of time that infants met inclusion criteria. However, it was acknowledged that most labs would end up recruiting infants who did not necessarily meet our pre-defined criteria for bilingualism (detailed below) upon more detailed in-lab language background assessment. In such cases, the decision whether to test the infant was left up to individual laboratories’ policies, but we asked that data from any babies who entered the testing room be submitted for data processing (even though some such data might be excluded from the main analyses). *Thirteen* labs contributed a sample.
 
-XX of the participating labs were also participating in two prior multi-lab collaborative studies (ManyBabies 1 study and/or ManyBabies 1 Bilingual study) investigating infants’ preference for infant-directed speech (ManyBabies Consortium, 2017a; 2017b). The current study emerged out of the unique opportunity afforded by a significant number of labs with a bilingual population coming together to run the Manybabies 1 Bilingual study, and the desire to make optimal use of these resources. As such, prior to completing the current study, XX% of the infants completed the ManyBabies 1 study on the same visit in the lab. Testing infants in two different studies on the same visit is a common practice in many, although not all, infant labs. We note that these two studies adopted different designs (listening preference vs. gaze following), and tracked sensitivity to different sorts of cues (auditory vs. visual). Moreover, the current study (gaze following) presented infants with engaging social stimuli and was short in duration. These features mitigated possible carryover effects.
+Nine of the `r length(unique(labs$lab))` participating labs were also participating in two prior multi-lab collaborative studies (ManyBabies 1 study and/or ManyBabies 1 Bilingual study) investigating infants’ preference for infant-directed speech (ManyBabies Consortium, 2017a; 2017b). The current study emerged out of the unique opportunity afforded by a significant number of labs with a bilingual population coming together to run the Manybabies 1 Bilingual study, and the desire to make optimal use of these resources. As such, prior to completing the current study, XX% of the infants completed the ManyBabies 1 study on the same visit in the lab. Testing infants in two different studies on the same visit is a common practice in many, although not all, infant labs. We note that these two studies adopted different designs (listening preference vs. gaze following), and tracked sensitivity to different sorts of cues (auditory vs. visual). Moreover, the current study (gaze following) presented infants with engaging social stimuli and was short in duration. These features mitigated possible carryover effects.
 
 ### Power analysis 
 
@@ -242,27 +209,7 @@ excluded_labs <- read_csv(here("processed_data","02_validated_output.csv")) %>%
 
 ### Final sample
 
-Our final sample of bilinguals included `r n_bi` infants tested in XX labs. `r n_6mos_bi` were 6–9 months, and `r n_12mos_bi` were 12–15 months old. XYZ of these labs also collected data from monolingual infants (N = XYZ), of whom XYZ were 6–9 months, and XYZ were 12–15 months. Data from monolingual infants were available from XYZ additional labs (N = XYZ), who did not contribute bilingual data. A list of monolingual and bilingual populations in each lab are reported in Table 1. In addition, `r excluded_labs` labs registered to participate but failed to collect data from at least 10 included infants, and so their data were not included. Information about all included labs is given in Table XX.
-
-```{r bin_stats}
-age_stat <- d_participants %>%
-  group_by(lab, subid) %>%
-  summarise(age_days = age_days[1]) %>%
-  ungroup %>%
-  summarise(mean = mean(age_days), 
-            min = min(age_days), 
-            max = max(age_days))
-
-age_bins <- d_participants %>%
-  group_by(lab, age_group) %>%
-  summarise(n_babies = length(unique(subid))) %>%
-  group_by(age_group) %>%
-  summarise(n_babies = sum(n_babies), 
-            n_labs = length(unique(lab))) %>%
-  arrange(age_group)
-
-```
-
+Our final sample of bilinguals included `r `sum(labs$bilingual, na.rm = TRUE)` infants tested in `r length(unique(labs$lab[!is.na(labs$bilingual)]))` labs. `r sum(labs$bilingual[labs$age_group == "6-9 mo"], na.rm = TRUE)` were 6–9 months, and `r sum(labs$bilingual[labs$age_group == "12-15 mo"], na.rm = TRUE)` were 12–15 months old. Each of these labs also collected data from monolingual infants (N = `r sum(labs$monolingual[!is.na(labs$bilingual)], na.rm = TRUE)`), of whom `r sum(labs$monolingual[labs$age_group == "6-9 mo"& !is.na(labs$bilingual)], na.rm = TRUE)` were 6–9 months, and `r sum(labs$monolingual[labs$age_group == "12-15 mo"& !is.na(labs$bilingual)], na.rm = TRUE)` were 12–15 months. Data from monolingual infants were available from two additional labs (N = `r sum(labs$monolingual[is.na(unique(labs$bilingual))], na.rm = TRUE)`), who did not contribute bilingual data. A list of monolingual and bilingual populations in each lab are reported in Table 1. In addition, `r excluded_labs` labs registered to participate but failed to collect data from at least 10 included infants, and so their data were not included. Information about all included labs is given in Table XX.
 
 
 ```{r results="asis"}
@@ -279,7 +226,10 @@ lab_stats <- d_participants %>%
   summarise(`Mean age (days)` = signif(mean(age_days, na.rm = TRUE), 3),
             N = n(),
             Method = paste(unique(coding[!is.na(coding)]), collapse = ", ")) %>%
-  arrange(lab, age_group, lang_group)
+  rename(`Age group` = age_group,
+         `Lang group` = lang_group,
+         Lab = lab) %>% 
+  arrange(Lab, `Age group`, `Lang group`)
 
 kable(lab_stats, digits = 2,
       format = "latex", booktabs = TRUE,
@@ -290,13 +240,13 @@ kable(lab_stats, digits = 2,
 
 ## Stimuli
 
-Stimuli consisted of videos of a female actor sitting at a table, directing her gaze to one of two colorful toys. Each video had the following sequence: the video began with the actor looking straight ahead for 1 second. She looked down for two seconds, after which a beep sounded to attract infants' attention prior to the actor directing her gaze to a toy. Upon presentation of the beep, the actor looked up at the camera and, maintaining a neutral expression, she raised her eyebrows. Four seconds into the video, she began to turn her head towards the left or right and gazed towards the toy in her line of sight until the end of the video. There were a total of 24 different videos in this style, using six different pairs of colourful objects, counterbalancing the side of presentation of the objects and the object at which the actor gazed. Original movies were in .avi format, exported at a framerate of 25 frames/second. Each movie lasted a total of 10 seconds (250 frames).
+Stimuli consisted of videos of a female actor sitting at a table, directing her gaze to one of two colorful toys. Each video had the following sequence: the video began with the actor looking straight ahead for 1 second. She looked down for two seconds, after which a beep sounded to attract infants' attention prior to the actor directing her gaze to a toy. Upon presentation of the beep, the actor looked up at the camera and, maintaining a neutral expression, she raised her eyebrows. Four seconds into the video, she began to turn her head towards the left or right and gazed towards the toy in her line of sight until the end of the video. There were a total of 24 different videos in this style, using six different pairs of colourful objects. Video presentations were counterbalanced for the side of presentation of the objects and the object at which the actor gazed, and arranged such that there were six test trials per infant. Original movies were in .avi format, exported at a framerate of 25 frames/second. Each movie lasted a total of 10 seconds (250 frames).
 
 ## Procedure
 
 We replicated the eye gaze condition of Experiment 1 from Senju and Csibra (2008), using the original stimuli provided by the authors. Infants were seated on their parents’ laps in a quiet, dimly lit testing booth. Caregivers and infants were seated facing a monitor. The caregiver wore an occluder (e.g. sleep mask or opaque sunglasses) to prevent him/her from viewing events on the monitor. An experimenter controlled the study from an area located out of view of the infant, either in the same or a different room. Infants’ eye gaze data were collected automatically via a corneal reflection eye-tracker, or on a digital videotape for later offline coding.
 
-Each infant saw a series of 6 test videos. Infants were assigned to one of four possible trial orders that counterbalanced the direction of the actor’s gaze (either LRRLRL or RLLRLR, where L denotes gaze to the toy on the left and R denotes fixation to the toy on the right), as well as which particular toy was located on the actor’s left and right. Due to a programming error, one lab presented the the same trials in a randomized order instead. Videos were separated by an unrelated attention-grabbing cartoon, which was played between trials until the infant had looked towards it for approximately 1–2 seconds. The experiment lasted approximately XX minutes.
+Each infant saw a series of 6 test videos. Infants were assigned to one of four possible trial orders that counterbalanced the direction of the actor’s gaze (either LRRLRL or RLLRLR, where L denotes gaze to the toy on the left and R denotes fixation to the toy on the right), as well as which particular toy was located on the actor’s left and right. Due to a programming error, one lab presented the the same trials in a randomized order instead. Videos were separated by an unrelated attention-grabbing cartoon, which was played between trials until the infant had looked towards it for approximately 1–2 seconds. The experiment lasted approximately 1.5 minutes.
 
 ## Exclusion Criteria
 
@@ -305,11 +255,6 @@ All data collected for the study (i.e., every infant for whom a data file was ge
 # Analysis overview
 
 ## Data exclusion
-
-
-
-
-
 
 ```{r exclusions, child = "exclusions.Rmd"}
 ```

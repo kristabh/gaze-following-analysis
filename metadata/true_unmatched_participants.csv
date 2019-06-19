@@ -1,21 +1,8 @@
 lab,subid,trialcount,rowcount,trial_error,present_td,lines_in_pd,age_days,notes,session_error,session_error_type,present_pd,confirmed,explanation,DropKeep
-elp-georgetown,8735,NA,NA,NA,FALSE,1,253,na,noerror,na,TRUE,,,
-elp-georgetown,8874,NA,NA,NA,FALSE,1,267,na,noerror,na,TRUE,,,
-elp-georgetown,8938,NA,NA,NA,FALSE,1,270,na,noerror,na,TRUE,,,
-infantlanglab-utk,eg12_4m_s8,NA,NA,NA,FALSE,1,387,NA,noerror,noerror,TRUE,,,
-infantlanglab-utk,eg8_3m_s3,NA,NA,NA,FALSE,1,273,NA,noerror,all orders were randomized,TRUE,,,
-lll-liv,gf015,NA,NA,NA,FALSE,1,219,NA,noerror,na,TRUE,,,
-lll-liv,gf045,NA,NA,NA,FALSE,1,421,"did not complete, sat on mothers lap and cried",noerror,na,TRUE,,,
-lll-liv,gfp1,NA,NA,NA,FALSE,1,574,child ate food throughout the session,noerror,na,TRUE,,,
-lll-liv,gfp2,NA,NA,NA,FALSE,1,401,child had dummy in mouth,noerror,na,TRUE,,,
-lll-liv,gfp3,NA,NA,NA,FALSE,1,653,"turning to mother sat behind, looking down triyng to undo the belt",noerror,na,TRUE,,,
-nusinfantlanguagecentre,mbg002,NA,NA,NA,FALSE,1,392,premature baby,noerror,na,TRUE,,,RealParticipantNoTrials
-nusinfantlanguagecentre,mbg003,NA,NA,NA,FALSE,1,424,premature baby,noerror,na,TRUE,,,RealParticipantNoTrials
-nusinfantlanguagecentre,mbg004,NA,NA,NA,FALSE,1,424,premature baby,noerror,na,TRUE,,,RealParticipantNoTrials
-nusinfantlanguagecentre,mbg013,NA,NA,NA,FALSE,1,393,NA,noerror,na,TRUE,,,
-nusinfantlanguagecentre,mbg015,NA,NA,NA,FALSE,1,453,good. sat through and followed till the end,noerror,na,TRUE,,,
+lll-liv,gfp1,NA,NA,NA,FALSE,1,574,child ate food throughout the session,noerror,na,TRUE,X,pilot,RealParticipantNoTrials
+lll-liv,gfp2,NA,NA,NA,FALSE,1,401,child had dummy in mouth,noerror,na,TRUE,X,pilot,RealParticipantNoTrials
+lll-liv,gfp3,NA,NA,NA,FALSE,1,653,"turning to mother sat behind, looking down triyng to undo the belt",noerror,na,TRUE,X,pilot,RealParticipantNoTrials
+nusinfantlanguagecentre,mbg002,NA,NA,NA,FALSE,1,392,premature baby,noerror,na,TRUE,X,,RealParticipantNoTrials
 nusinfantlanguagecentre,mbg027,NA,NA,NA,FALSE,1,361,only calibration done and no data collected. calibration tried 4 times as the child was not following the cat.,noerror,na,TRUE,X,Should be a session error?,RealParticipantNoTrials
-nusinfantlanguagecentre,mbg030,NA,NA,NA,FALSE,1,446,NA,noerror,na,TRUE,,,
-nusinfantlanguagecentre,ybg001,NA,NA,NA,FALSE,1,262,good. sat through till the end.,noerror,na,TRUE,,,
-nusinfantlanguagecentre,ybg017,NA,NA,NA,FALSE,1,262,fine but child was tired and did not want to sit on the lap or look at the cat for calbration to be done. did not proceed to test trials.,noerror,na,TRUE,,,
+nusinfantlanguagecentre,ybg017,NA,NA,NA,FALSE,1,262,fine but child was tired and did not want to sit on the lap or look at the cat for calbration to be done. did not proceed to test trials.,noerror,na,TRUE,X,Baby didn't calibrate- parents didn't want to continue,RealParticipantNoTrials
 upf_barcelona,subj01,NA,NA,NA,FALSE,1,416,very tired,noerror,na,TRUE,,,

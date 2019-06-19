@@ -50,7 +50,6 @@ for (file in participant_files){
       select(-(starts_with("parent")))%>%
       select(-contains("NAE")) %>%
       select(-starts_with("Bilingual")) %>%
-      select(-contains("days_preterm")) %>%
       select(-contains("prev_earinfection")) %>%
       select(-contains("MacArthur")) %>%
       select(-contains("method")) %>% # This is from MB1
@@ -63,14 +62,13 @@ pd_raw <- full_join(pd_raw, temp_dataset)
   
   # if the merged dataset doesn't exist, create it
   if (!exists("pd_raw")){
-        pd_raw <- read_excel(file, col_names=TRUE) %>%
+      pd_raw <- read_excel(file, col_names=TRUE) %>%
       mutate_all(as.character) %>%
       mutate_all(nc_na) %>%
       select(-(starts_with("Optional"))) %>%
       select(-(starts_with("parent")))%>%
       select(-contains("NAE")) %>%
       select(-starts_with("Bilingual")) %>%
-      select(-contains("days_preterm")) %>%
       select(-contains("prev_earinfection")) %>%
       select(-contains("MacArthur")) %>%
       select(-contains("method")) %>% # This is from MB1
@@ -306,7 +304,7 @@ participants_premerge_td <- td %>%
 
 participants_premerge_pd <- pd %>%
   group_by(lab, subid) %>%
-  summarize(lines_in_pd = n(), age_days = first(age_days), notes = first(notes), session_error = first(session_error), session_error_type = first(session_error_type), notes = first(notes), present_pd=TRUE)
+  summarize(lines_in_pd = n(), age_days = first(age_days), notes = first(notes),days_preterm = first(days_preterm), session_error = first(session_error), session_error_type = first(session_error_type), notes = first(notes), present_pd=TRUE)
 
 all_participants_premerge <- merge(participants_premerge_td, participants_premerge_pd, all.x=TRUE, all.y=TRUE) %>%
   replace_na(list(present_pd = FALSE, present_td=FALSE))
@@ -327,7 +325,7 @@ unmatched_participants_premerge <- merge(unmatched_participants_premerge, conf, 
 write_csv(unmatched_participants_premerge, 'metadata/unconfirmed_unmatched_participants.csv')
 
 unmatched_participants_premerge
- # 
+ 
  # participants_session_errors_all <- pd %>% filter(session_error!= "noerror") %>%
  #   select(lab, subid, session_error, session_error_type, notes) %>%
  #   filter(session_error != "na") %>%
