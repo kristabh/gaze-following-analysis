@@ -689,8 +689,10 @@ d$participant_gender <- toupper(d$participant_gender)
 # 
 # see_if(all(d$gender %in% c("M", "F", NA)))
 # 
- ```
 
+```
+
+ 
 
 ## age_days and age_group
 

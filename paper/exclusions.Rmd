@@ -126,7 +126,7 @@ sessionerr <- exclude_by(d, quo(session_error),
 d <- sessionerr$data
 ```
 
-* *Session errors* There were `r sessionerr$percents$any_sum` (`r round(sessionerr$percents$any_mean*100, 2)`%) infants excluded from the analysis due to issues such including: (`r session_error_type$n[session_error_type$session_error_type_recoded=="equipment failure"]` for equipment failure,  experimenter error, `r session_error_type$n[session_error_type$session_error_type_recoded=="experimenter error"]` for experimenter error, and `r session_error_type$n[session_error_type$session_error_type_recoded=="outside interference"]` for parental/outside interference.
+* *Session errors* There were `r sessionerr$percents$any_sum` (`r round(sessionerr$percents$any_mean*100, 2)`%) infants excluded from the analysis due to issues including: (`r session_error_type$n[session_error_type$session_error_type_recoded=="equipment failure"]` for equipment failure,  experimenter error, `r session_error_type$n[session_error_type$session_error_type_recoded=="experimenter error"]` for experimenter error, `r session_error_type$n[session_error_type$session_error_type_recoded=="fussy"]` for fussiness, and `r session_error_type$n[session_error_type$session_error_type_recoded=="outside interference"]` for parental/outside interference.
 
 ```{r}
 n_shifts <- exclude_by(d, quo(shifts_incl), action = "include", 
