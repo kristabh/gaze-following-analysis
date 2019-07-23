@@ -514,8 +514,6 @@ d %>%
   summarize(total_exposure = sum(lang1_exposure, lang2_exposure, lang3_exposure,lang4_exposure)) %>%
   filter(total_exposure > 101 | total_exposure < 99)
 
-
-
 ```
 
 Cleaning up some of the language names
@@ -537,7 +535,7 @@ d <- d %>%
          lang1 == "spanish (cuba)" ~ "spanish",
          lang1 == "canadian english" ~ "english",
          lang1 == "british english" ~ "english",
-         lang1 == "english " ~ "english",
+         lang1 == "english  " ~ "english",
          TRUE ~ lang1))
 
 d <- d %>%
@@ -560,7 +558,6 @@ d <- d %>%
          lang2 == "english (simbabwe)" ~ "english",
          lang2 == "newfoundland english" ~ "english",
          TRUE ~ lang2))
-d$lang2 <- na_if(d$lang2, "na")
 
 d <- d %>%
   mutate(lang3 = case_when(
@@ -573,16 +570,60 @@ d <- d %>%
          lang3 == "english (south africa)" ~ "english",
          lang3 == "french arabic" ~ "arabic",
          TRUE ~ lang3))
-d$lang3 <- na_if(d$lang3, "na")
 
 d <- d %>%
   mutate(lang4 = case_when(
          lang4 == "portuguese (portugal)" ~ "portuguese",
          lang4 == "scottish english"  ~ "english",
          TRUE ~ lang4))
+
+unique(d$lang1)
+
+# The following correct codes with English as a lang in more than one lang column. 
+d <- d %>%
+  mutate(lang1_exposure = case_when(
+    lang1 == "english" & lang3 == "english" & lang4 == "english"~ lang1_exposure + lang3_exposure + lang4_exposure,
+    lang1 == "english" & lang2 == "english" ~ lang1_exposure + lang2_exposure,
+    lang1 == "english" & lang3 == "english" ~ lang1_exposure + lang3_exposure,
+    TRUE ~ lang1_exposure),
+    lang4 = case_when(
+      lang1 == "english" & lang3 == "english" & lang4 == "english" ~ "na",
+      TRUE ~ lang4),
+    lang3 = case_when(
+      lang1 == "english" & lang3 == "english" ~ "na",
+      TRUE ~ lang3),
+    lang2 = case_when(
+      lang1 == "english" & lang2 == "english" ~ "na",
+      TRUE ~ lang2),
+    lang2_exposure = case_when(
+      lang2 == "na" ~ 0,
+      TRUE ~ lang2_exposure),
+    lang3_exposure = case_when(
+      lang3 == "na" ~ 0,
+      TRUE ~ lang3_exposure),
+    lang4_exposure = case_when(
+      lang4 == "na" ~ 0,
+      TRUE ~ lang4_exposure))
+
+# this corrects codes who had english in multiple columns after they were combined into one column. For example: a child with English as L1 and L2 were combined in English as L1 and their L3 was moved to L2.
+d <- d %>%
+  mutate(lang2_exposure = case_when(
+    lang2 == "na" &  lang3 != "na" ~ lang3_exposure,
+    TRUE ~ lang2_exposure),
+    lang3_exposure = case_when(
+    lang2 == "na" &  lang3 != "na" ~ 0,
+    TRUE ~ lang3_exposure),
+    lang2 = case_when(
+    lang2 == "na" &  lang3 != "na" ~ lang3,
+    TRUE ~ lang2),
+    lang3 = case_when(
+    lang3_exposure == 0 ~ "na",
+    TRUE ~ lang3))
+
+d$lang2 <- na_if(d$lang2, "na")
+d$lang3 <- na_if(d$lang3, "na")
 d$lang4 <- na_if(d$lang4, "na")
 
-unique(d$lang4)
 ```
 
 
