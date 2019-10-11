@@ -349,7 +349,7 @@ bilingual: A dummy-coded variable where 0 is monolingual, 1 is bilingual.
 age_days: The infant’s age in days, centred for ease of interpretation.
 aoi: A dummy-coded variable for analysis of freq_shift, total_look, and latency, for which data from both AOIs are reported. Here, 0 denotes the congruous AOI, and 1 denotes the incongruous AOI.
 
-We ran separate models for each DV. For first_shift, we fit a logistic model as this variable is binary at the trial level. The initial model specification was:
+We ran separate models for each DV. We fit all models using the `lme4` package [@bates2014fitting]. For first_shift, we fit a logistic model as this variable is binary at the trial level. The initial model specification was:
 
 	first_shift ~ bilingual * age_days + 
 (1|subid) + 
