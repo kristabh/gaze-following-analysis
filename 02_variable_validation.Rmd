@@ -221,9 +221,11 @@ d <- d %>%
 
 d$Exclusion <- ifelse(is.na(d$Exclusion),FALSE,d$Exclusion)
 
-d$td <- (d$Exclusion)
-
-d <- select(d, -Exclusion)
+d <- d %>%
+  mutate(td = case_when(
+  Exclusion == FALSE ~ TRUE,
+  Exclusion == TRUE ~ FALSE))%>%
+  select(-Exclusion)
 
 see_if(all(d$td %in% c(TRUE, FALSE)))
 
