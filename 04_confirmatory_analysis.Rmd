@@ -445,16 +445,51 @@ summary(Latency_meta)
 ## First_look MLM
 
 ```{r}
+##The preregistered model: But get "singular fit" error message
+#first_glmer <- d_first %>% 
+#  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+#  filter(!is.na(first_shift)) %>%
+#  mutate(first_shift = fct_rev(first_shift)) %>% # So higher numbers mean more looks to congruent
+#  glmer(first_shift ~ lang_group*age_days + (1|subid) + (lang_group|lab) + (lang_group|trial_num),
+#  data = .,
+#  family = binomial
+#)
 
-first_glmer <- d_first %>% 
-  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+##Simplifying the random effects: But "singular fit" again
+#first_glmer <- d_first %>% 
+#  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+#  filter(!is.na(first_shift)) %>%
+#  mutate(first_shift = case_when(first_shift == "congruent" ~ 1, first_shift == "incongruent" ~ 0))%>%
+#  mutate(first_shift = as.factor(first_shift)) %>%
+#  mutate(first_shift = fct_rev(first_shift)) %>% # So higher numbers mean more looks to congruent
+#  glmer(first_shift ~ lang_group + age_days + (1|subid) + (1|lab) + (1|trial_num),
+#  data = .,
+#  family = binomial, 
+#)
+
+##Dropping the "trial_num" random effect as "trial_num" has 0 variance: But get "model is nearly unidentifiable: very large eigenvalue - Rescale variables?" error message
+#first_glmer <- d_first %>% 
+#  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+#  filter(!is.na(first_shift)) %>%
+#  mutate(first_shift = case_when(first_shift == "congruent" ~ 1, first_shift == "incongruent" ~ 0))%>%
+#  mutate(first_shift = as.factor(first_shift)) %>%
+#  mutate(first_shift = fct_rev(first_shift)) %>% # So higher numbers mean more looks to congruent
+#  glmer(first_shift ~ lang_group + age_days + (1|subid) + (1|lab),
+#  data = .,
+#  family = binomial, 
+#)
+
+##Final model: Rescaling "age_days" variable (scale = TRUE)
+first_glmer2 <- d_first %>% 
+  mutate(age_days = scale(age_days, scale = TRUE)) %>%
   filter(!is.na(first_shift)) %>%
+  mutate(first_shift = case_when(first_shift == "congruent" ~ 1, first_shift == "incongruent" ~ 0))%>%
+  mutate(first_shift = as.factor(first_shift)) %>%
   mutate(first_shift = fct_rev(first_shift)) %>% # So higher numbers mean more looks to congruent
-  glmer(first_shift ~ lang_group*age_days + (1|subid) + (lang_group|lab) + (lang_group|trial_num),
+  glmer(first_shift ~ lang_group + age_days + (1|subid) + (1|lab),
   data = .,
-  family = binomial
+  family = binomial, 
 )
-
 
 summary(first_glmer)
 
@@ -463,17 +498,39 @@ summary(first_glmer)
 ## Frequency LMEM
 
 ```{r}
+##The preregistered model: But get "singular fit" error message
+#freq_lmer <- d_freq %>% 
+#  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+#  mutate(object_bin = (as.integer(fct_rev(object)) - 1)) %>% # Recode to binary: congruent = 1, incongruent = 0
+#  lmer(n_shift ~ lang_group*age_days*object+ (object|subid) + (lang_group*object|lab) + (lang_group*object|trial_num),
+#  data = .
+#)
 
+##Simplifying the random effects: But "singular fit" again
+#freq_lmer <- d_freq %>%
+#  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+#  mutate(object_bin = (as.integer(fct_rev(object)) - 1)) %>% # Recode to binary: congruent = 1, incongruent = 0
+#  lmer(n_shift ~ lang_group*age_days*object+ (1|subid) + (1|lab) + (1|trial_num),
+#  data = .
+#)
+
+##Dropping the "lab" random effect as "lab" has 0 variance: But get "model failed to converge" error message
+#freq_lmer <- d_freq %>%
+#  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+#  mutate(object_bin = (as.integer(fct_rev(object)) - 1)) %>% # Recode to binary: congruent = 1, incongruent = 0
+#  lmer(n_shift ~ lang_group*age_days*object+ (1|subid) + (1|trial_num),
+#  data = .
+#)
+
+##Final model: Changing the default control optimizer to "bobyqa" to solve the convergence issue
 freq_lmer <- d_freq %>% 
   mutate(age_days = scale(age_days, scale = FALSE)) %>%
   mutate(object_bin = (as.integer(fct_rev(object)) - 1)) %>% # Recode to binary: congruent = 1, incongruent = 0
-  lmer(n_shift ~ lang_group*age_days*object+ (object|subid) + (lang_group*object|lab) + (lang_group*object|trial_num),
+  lmer(n_shift ~ lang_group*age_days*object + (1|subid) + (1|trial_num), control = lmerControl("bobyqa"),
   data = .
-)
+ )
 
 summary(freq_lmer)
-
-
 
 ```
 
@@ -496,11 +553,27 @@ d_freq %>%
 # Duration LMEM
 
 ```{r}
+##The preregistered model: But get "singular fit" error message
+#duration_lmer <- d_duration %>% 
+#  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+#  mutate(object_bin = (as.integer(fct_rev(object)) - 1)) %>% # Recode to binary: congruent = 1, incongruent = 0
+#  lmer(duration ~ lang_group*age_days*object+ (object|subid) + (lang_group*object|lab) + (lang_group*object|trial_num),
+#  data = .
+#)
 
+##Simplifying the random effects: But "singular fit" again
+#duration_lmer <- d_duration %>% 
+#  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+#  mutate(object_bin = (as.integer(fct_rev(object)) - 1)) %>% # Recode to binary: congruent = 1, incongruent = #0
+#  lmer(duration ~ lang_group*age_days*object+ (1|subid) + (1|trial_num) + (1|lab),
+#  data = .
+#)
+
+##Final model: Dropping the "subid" random effect as "subid" has 0 variance
 duration_lmer <- d_duration %>% 
   mutate(age_days = scale(age_days, scale = FALSE)) %>%
   mutate(object_bin = (as.integer(fct_rev(object)) - 1)) %>% # Recode to binary: congruent = 1, incongruent = 0
-  lmer(duration ~ lang_group*age_days*object+ (object|subid) + (lang_group*object|lab) + (lang_group*object|trial_num),
+  lmer(duration ~ lang_group*age_days*object + (1|trial_num) + (1|lab),
   data = .
 )
 
@@ -529,11 +602,27 @@ d_duration %>%
 ## Latency LMEM
 
 ```{r}
+##The preregistered model: Since we are looking only at "object = congruent", we have to remove the "object" effect from this model
+#latency_lmer <- d_latency %>% 
+#  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+#  mutate(object_bin = (as.integer(fct_rev(object)) - 1)) %>% # Recode to binary: congruent = 1, incongruent = 0
+#  lmer(latency ~ lang_group*age_days*object+ (object|subid) + (lang_group*object|lab) + (lang_group*object|trial_num),
+#  data = .
+#)
 
+##Dropping the "object" effect: But get "singular fit" error message
+#latency_lmer <- d_latency %>% 
+#  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+#  filter(object == "congruent") %>% # Select only trials that are congruent
+#  lmer(latency ~ lang_group * age_days + (1|subid) + (lang_group|lab) + (lang_group|trial_num),
+#  data = .
+#)
+
+##Final model: Simplifying the random effects
 latency_lmer <- d_latency %>% 
   mutate(age_days = scale(age_days, scale = FALSE)) %>%
-  mutate(object_bin = (as.integer(fct_rev(object)) - 1)) %>% # Recode to binary: congruent = 1, incongruent = 0
-  lmer(latency ~ lang_group*age_days*object+ (object|subid) + (lang_group*object|lab) + (lang_group*object|trial_num),
+  filter(object == "congruent") %>% # Select only trials that are congruent
+  lmer(latency ~ lang_group * age_days + (1|subid) + (1|lab) + (1|trial_num),
   data = .
 )
 
