@@ -332,18 +332,13 @@ d_latency_meta %>%
 
 ## First-look means
 ```{r}
-
 d_first_meta %>%
   group_by(age_group, lang_group) %>%
   summarise(sd_norm = sd(prop), prop = mean(prop), sd_prop = sqrt(prop*(1-prop))) %>% #
   select(age_group, lang_group, prop, sd_prop, sd_norm)
-  
-
 ```
 
-
-```{r}
-
+```{r first meta data}
 d_z_first <- d_first_meta %>%
   group_by(subid, lab, age_group, lang_group) %>%
   summarise(mean_prop = mean(prop, na.rm = TRUE)) %>%
@@ -352,28 +347,22 @@ d_z_first <- d_first_meta %>%
             n = length(unique(subid)), 
             d_var = d_var_calc(n, d)) %>%
  filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
-
-
 ```
 
 ## First look model with language and age
 
-```{r}
+```{r first meta}
 first_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
                     slab = lab, data = d_z_first, method = "REML") 
 summary(first_meta)
 ```
 
-
 ## Frequency means
-
 ```{r}
-
 d_freq_meta %>%
   group_by(age_group, lang_group) %>%
   summarise(sd = sd(prop, na.rm = TRUE), prop = mean(prop, na.rm = TRUE)) %>%
   select(age_group, lang_group, prop, sd)
-
 ```
 
 What is the distribution of infants' first-look proportions?
@@ -384,27 +373,70 @@ d_freq_meta %>%
   ggplot(aes(x = prop, color = lang_group)) +
   facet_grid(lang_group~age_group) +
   geom_histogram()
-
-
 ```
 
-
-```{r}
-
+```{r frequency meta data}
 d_z_freq <- d_freq_meta %>%
   group_by(lab, age_group, lang_group) %>%
   summarise(d = mean(prop, na.rm = TRUE) / sd(prop, na.rm = TRUE), 
             n = length(unique(subid)), 
             d_var = d_var_calc(n, d)) %>%
   filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
-
-
 ```
 
-```{r}
+```{r frequency meta}
 freq_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
                     slab = lab, data = d_z_freq, method = "REML") 
 summary(freq_meta)
+```
+
+## Duration means
+```{r}
+d_duration_meta %>%
+  group_by(age_group, lang_group) %>%
+  summarise(sd = sd(prop, na.rm = TRUE), prop = mean(prop, na.rm = TRUE)) %>%
+  select(age_group, lang_group, prop, sd)
+```
+
+```{r duration meta data}
+d_z_dur <- d_duration_meta %>%
+  group_by(lab, age_group, lang_group) %>%
+  summarise(d = mean(prop, na.rm = TRUE) / sd(prop, na.rm = TRUE), 
+            n = length(unique(subid)), 
+            d_var = d_var_calc(n, d)) %>%
+  filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
+```
+
+```{r duration meta}
+dur_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
+                    slab = lab, data = d_z_dur, method = "REML") 
+summary(dur_meta)
+```
+
+## Latency means
+```{r}
+d_latency_meta %>%
+  filter(object != "incongruent")%>% # Select only trials that are congruent
+  group_by(age_group, lang_group) %>%
+  summarise(sd = sd(latency, na.rm = TRUE), latency = mean(latency, na.rm = TRUE)) %>%
+  select(age_group, lang_group, latency, sd)
+```
+
+```{r latency meta data}
+d_z_latency <- d_latency_meta %>%
+  filter(object != "incongruent")%>% # Select only trials that are congruent
+  group_by(lab, age_group, lang_group, subid) %>% 
+  summarise(latency = mean(latency))%>%
+  group_by(lab, age_group, lang_group) %>% 
+  summarise(d = mean(latency) / sd(latency),
+            n = length(unique(subid)),
+            d_var = d_var_calc(n,d))%>%
+  filter(n>=10) #Filtering out subgroups with fewer than 10 babies
+
+```{r latency meta}
+Latency_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
+                    slab = lab, data = d_z_latency, method = "REML") 
+summary(Latency_meta)
 ```
 
 
