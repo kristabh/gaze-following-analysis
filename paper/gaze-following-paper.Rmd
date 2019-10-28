@@ -331,8 +331,250 @@ Our main meta-analytic model for each dependent variable was:
 
 dz ~ 1 + bilingual + age + bilingual * age
 
-SUMMARY OF RESULTS FOR META-ANALYSIS
+```{r setup, echo=FALSE, message=FALSE}
 
+source(here("helper/common.R"))
+source(here("helper/ma_helper.R"))
+export_figs <- FALSE
+
+iv_columns <- c("lab", "subid", "trial_num", "age_group", "age_days", "participant_gender", "lang_group", "coding")
+dv_columns <- c("first_shift", "latency", "n_shift_congruent", "n_shift_incongruent", "fixation_congruent", "fixation_incongruent")
+
+d <- read_csv(here("processed_data/03_data_trial_main.csv")) %>%
+  select(iv_columns, dv_columns) %>%
+  mutate_at(vars(lab,subid,age_group, participant_gender, lang_group, first_shift, coding), as.factor) %>%
+  mutate_at(vars(age_group, lang_group), fct_rev)
+```
+
+```{r first-look}
+
+## Datasets for First Look analysis 
+#The proportion of first-shifts to congruent versus invcongruent trials by infant
+d_first <- d %>%
+  filter(!is.na(first_shift)) %>% # Select only trials that had a shift
+  select(-latency, -n_shift_congruent, -n_shift_incongruent, -fixation_congruent, - fixation_incongruent)
+
+d_first_meta <- d_first %>%
+  group_by_at(vars(-trial_num)) %>%
+  summarise(n = n()) %>%
+  spread(key = first_shift, value = n, fill = 0) %>%
+  mutate(prop = (congruent-incongruent)/(congruent+incongruent)) %>% # Calculate proportion difference score
+  select(-congruent, -incongruent) %>%
+  filter(!is.na(prop)) %>%
+  group_by(subid, age_group, lang_group, lab) %>%
+  summarise(prop = mean(prop, na.rm = TRUE))
+
+##Meta-analysis
+d_z_first <- d_first_meta %>%
+  group_by(subid, lab, age_group, lang_group) %>%
+  summarise(mean_prop = mean(prop, na.rm = TRUE)) %>%
+  group_by(lab, age_group, lang_group) %>%
+  summarise(d = mean(mean_prop, na.rm = TRUE) / sd(mean_prop, na.rm = TRUE), 
+            n = length(unique(subid)), 
+            d_var = d_var_calc(n, d)) %>%
+ filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
+
+first_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
+                    slab = lab, data = d_z_first, method = "REML") 
+```
+
+We began by examining the relation of the proportion of first looks to bilingualism and age, fitting the main effect model to the `r nrow(d_z_first)` separate group means and variances (after aggregating by lab, age, and language group). The meta-analysis on first look yielded a reference-level intercept of `r round(first_meta$b[1],2)` (CI = [`r round(first_meta$ci.lb[1],2)` - `r round(first_meta$ci.ub[1], 2)`], $z = `r round(first_meta$z[1], 2)`$, $p `r papaja::printp(first_meta$pval[1])`$), reflecting the mean effect size for 6–9 month-old monolingual infants. Bilingualism yielded an effect of `r round(first_meta$b[2],2)` (CI = [`r round(first_meta$ci.lb[2],2)` - `r round(first_meta$ci.ub[2], 2)`], $z = `r round(first_meta$z[2], 2)`$, $p `r papaja::printp(first_meta$pval[2])`$), indicating a non-significant increase in measured effect size for bilingual relative to monolingual infants. Moreover, age yielded an effect of `r round(first_meta$b[3],2)` (CI = [`r round(first_meta$ci.lb[3],2)` - `r round(first_meta$ci.ub[3], 2)`], $z = `r round(first_meta$z[3], 2)`$, $p `r papaja::printp(first_meta$pval[3])`$), indicating a non-significant increase in the average proportion of first looks for older 12-15 month-old infants. Moreover, the interaction between bilingualism and age yielded an effect of `r round(first_meta$b[4],2)` (CI = [`r round(first_meta$ci.lb[4],2)` - `r round(first_meta$ci.ub[4], 2)`], $z = `r round(first_meta$z[4], 2)`$, $p `r papaja::printp(first_meta$pval[4])`$), suggesting that there was not a reliable difference in terms of bilingualism between the older and younger infants. Therefore, no significant differeces in the proportion of first looks were observed among monolingual and bilingual infants as well as older and young infants. A pirate plot for this meta-analysis is shown in Figure 2. 
+
+```{r fig2, fig.cap="Pirate plot for the cross-lab meta-analysis on the proportion of first look."}
+
+d_first_meta %>% 
+  group_by(subid, age_group, lang_group) %>% 
+  summarise(prop = mean(prop, na.rm = TRUE)) %>% 
+  ggplot(aes(x = age_group, y = prop)) + 
+  geom_violin(aes(colour = lang_group), alpha = .5) +
+  # geom_dotplot(binaxis = "y", stackdir = "center", position = position_dodge(width = 0.9), 
+  #              dotsize = .6, alpha = 0.4, aes(fill = lang_group)) +
+  geom_point(aes(x = age_group, color= lang_group), line = "black", alpha = .3, position = position_jitterdodge()) +
+  stat_summary(fun.y = "mean", geom = "bar", color = "black", aes(fill = lang_group), 
+               alpha = .4, position = position_dodge(width = 0.9)) + 
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = .5,  aes(group = lang_group), 
+               position = position_dodge(width = 0.9)) +
+  geom_abline(intercept = 0, lty = 3, slope = 0) +
+  ylab("Difference score") +
+  xlab("Age Group") +
+  scale_colour_manual(name = "Language group", values = c("darkcyan", "darkred")) +
+  scale_fill_manual(name = "Language group", values = c("darkcyan", "darkred")) + 
+  theme(text = element_text(size = 20), legend.position = "bottom")
+```
+
+```{r frequency-of-looks}
+
+## Datasets for frequency analysis 
+d_freq <- d %>%
+  select(-first_shift, -latency, -fixation_congruent, - fixation_incongruent) %>%
+  filter((n_shift_congruent + n_shift_incongruent) > 0) %>% # Select only trials that had a shift
+  gather(key = "object", value = "n_shift", n_shift_congruent, n_shift_incongruent) %>%
+  mutate(object = case_when(
+    object == "n_shift_congruent" ~ "congruent",
+    object == "n_shift_incongruent" ~ "incongruent"
+  )) %>%
+  mutate(object = as.factor(object))
+
+d_freq_meta <- d  %>%
+  group_by_at(vars(-trial_num)) %>%
+  select(-first_shift, -latency, -fixation_congruent, - fixation_incongruent) %>%
+  filter((n_shift_congruent + n_shift_incongruent) > 0) %>% # Select only trials that had a shift
+  mutate(prop = (n_shift_congruent -  n_shift_incongruent)/(n_shift_congruent + n_shift_incongruent)) %>% # Calculate proportion difference score on each trial
+  group_by_at(vars(-trial_num, - prop)) %>%
+  mutate(prop = mean(prop)) %>% # Average proportion difference score by baby
+  group_by(subid, age_group, lang_group, lab) %>%
+  summarise(prop = mean(prop, na.rm = TRUE))
+
+##Meta-analysis
+d_z_freq <- d_freq_meta %>%
+  group_by(lab, age_group, lang_group) %>%
+  summarise(d = mean(prop, na.rm = TRUE) / sd(prop, na.rm = TRUE), 
+            n = length(unique(subid)), 
+            d_var = d_var_calc(n, d)) %>%
+  filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
+
+freq_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
+                    slab = lab, data = d_z_freq, method = "REML") 
+```
+
+We then investigated the relation of frequency of looks to bilingualism and age group. The reference-level intercept (i.e., 6–9 month-old monolingual infants) was `r round(freq_meta$b[1],2)` (CI = [`r round(freq_meta$ci.lb[1],2)` - `r round(freq_meta$ci.ub[1], 2)`], $z = `r round(freq_meta$z[1], 2)`$, $p `r papaja::printp(freq_meta$pval[1])`$). However, no significant effect was yielded in this meta-analysis. Bilingualism yielded an effect of `r round(freq_meta$b[2],2)` (CI = [`r round(freq_meta$ci.lb[2],2)` - `r round(freq_meta$ci.ub[2], 2)`], $z = `r round(freq_meta$z[2], 2)`$, $p `r papaja::printp(freq_meta$pval[2])`$), suggesting that the frequency of looks was on average not significantly larger for bilingual infants. As for age, an effect of  `r round(freq_meta$b[3],2)` (CI = [`r round(freq_meta$ci.lb[3],2)` - `r round(freq_meta$ci.ub[3], 2)`], $z = `r round(freq_meta$z[3], 2)`$, $p `r papaja::printp(freq_meta$pval[3])`$) was yielded, indicating a non-significant increase in frequency of looks for 12-15 month-old infants. The interaction between bilingualism and age yielded an effect of `r round(freq_meta$b[4],2)` (CI = [`r round(freq_meta$ci.lb[4],2)` - `r round(freq_meta$ci.ub[4], 2)`], $z = `r round(freq_meta$z[4], 2)`$, $p `r papaja::printp(freq_meta$pval[4])`$), implying that the difference between monolingual and bilingualism infants was not significantly lower for 12-15 month-old infants than for 6-9 month-old. A pirate plot for this meta-analysis is shown in Figure 3. 
+
+```{r fig3, fig.cap="Pirate plot for the cross-lab meta-analysis on frequency of looks."}
+
+d_freq_meta %>% 
+  group_by(subid, age_group, lang_group) %>% 
+  summarise(prop = mean(prop, na.rm = TRUE)) %>% 
+  ggplot(aes(x = age_group, y = prop)) + 
+  geom_violin(aes(colour = lang_group), alpha = .5) +
+  # geom_dotplot(binaxis = "y", stackdir = "center", position = position_dodge(width = 0.9), 
+  #              dotsize = .6, alpha = 0.4, aes(fill = lang_group)) +
+  geom_point(aes(x = age_group, color= lang_group), line = "black", alpha = .3, position = position_jitterdodge()) +
+  stat_summary(fun.y = "mean", geom = "bar", color = "black", aes(fill = lang_group), 
+               alpha = .4, position = position_dodge(width = 0.9)) + 
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = .5,  aes(group = lang_group), 
+               position = position_dodge(width = 0.9)) +
+  geom_abline(intercept = 0, lty = 3, slope = 0) +
+  ylab("Difference score") +
+  xlab("Age Group") +
+  scale_colour_manual(name = "Language group", values = c("darkcyan", "darkred")) +
+  scale_fill_manual(name = "Language group", values = c("darkcyan", "darkred")) + 
+  theme(text = element_text(size = 20), legend.position = "bottom")
+```
+
+```{r duration-of-looks}
+
+## Datasets for duration analysis 
+d_duration <- d %>%
+  select(-first_shift, -latency, -n_shift_congruent, -n_shift_incongruent) %>%
+  filter(fixation_congruent + fixation_incongruent > 0) %>% # Select only trials that had any looking
+  gather(key = "object", value = "duration", fixation_congruent, fixation_incongruent) %>%
+  mutate(object = case_when(
+    object == "fixation_congruent" ~ "congruent",
+    object == "fixation_incongruent" ~ "incongruent"
+  )) %>%
+  mutate(object = as.factor(object)) %>%
+  mutate(duration = log(duration + 1)) # Log-transform duration scores, adding one to deal with zeros
+
+d_duration_meta <- d %>%
+  select(-first_shift, -latency, -n_shift_congruent, -n_shift_incongruent) %>%
+  filter(fixation_congruent + fixation_incongruent > 0) %>%
+  mutate(prop = (fixation_congruent - fixation_incongruent)/(fixation_congruent + fixation_incongruent)) %>% # Calculate proportion difference score
+  group_by_at(vars(-trial_num, - prop)) %>%
+  mutate(prop = mean(prop)) # Average proportion difference score by baby
+
+##Meta-analysis
+d_z_dur <- d_duration_meta %>%
+  group_by(lab, age_group, lang_group) %>%
+  summarise(d = mean(prop, na.rm = TRUE) / sd(prop, na.rm = TRUE), 
+            n = length(unique(subid)), 
+            d_var = d_var_calc(n, d)) %>%
+  filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
+
+dur_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
+                    slab = lab, data = d_z_dur, method = "REML") 
+```
+
+The cross-lab meta-analysis on duration of looks yielded an estimated reference-level intercept (i.e., 6–9 month-old monolingual infants) of `r round(dur_meta$b[1],2)` (CI = [`r round(dur_meta$ci.lb[1],2)` - `r round(dur_meta$ci.ub[1], 2)`], $z = `r round(dur_meta$z[1], 2)`$, $p `r papaja::printp(dur_meta$pval[1])`$). Similiar to the two previous meta-analyses, no significant effect was yielded. The effect of bilingualism was `r round(dur_meta$b[2],2)` (CI = [`r round(dur_meta$ci.lb[2],2)` - `r round(dur_meta$ci.ub[2], 2)`], $z = `r round(dur_meta$z[2], 2)`$, $p `r papaja::printp(dur_meta$pval[2])`$), suggesting a slight but non-significant increase in duration of looks for biligual infants compared to monolingual infants. Age yielded an effect of `r round(dur_meta$b[3],2)` (CI = [`r round(dur_meta$ci.lb[3],2)` - `r round(dur_meta$ci.ub[3], 2)`], $z = `r round(dur_meta$z[3], 2)`$, $p `r papaja::printp(dur_meta$pval[3])`$), indicating a non-significant increase in measured effect size for 12-15 month-old infants relative to 6-9 month-old infants. As for the interaction between bilingualism and age, the effect was `r round(dur_meta$b[4],2)` (CI = [`r round(dur_meta$ci.lb[4],2)` - `r round(dur_meta$ci.ub[4], 2)`], $z = `r round(dur_meta$z[4], 2)`$, $p `r papaja::printp(dur_meta$pval[4])`$), implying that the difference between monolingual and bilingualism infants was not significantly higher for 12-15 month-old infants than for 6-9 month-old. A pirate plot for this meta-analysis is shown in Figure 4. 
+
+```{r fig4, fig.cap="Pirate plot for the cross-lab meta-analysis on duration of looks."}
+
+d_duration_meta %>% 
+  group_by(subid, age_group, lang_group) %>% 
+  summarise(prop = mean(prop, na.rm = TRUE)) %>% 
+  ggplot(aes(x = age_group, y = prop)) + 
+  geom_violin(aes(colour = lang_group), alpha = .5) +
+  # geom_dotplot(binaxis = "y", stackdir = "center", position = position_dodge(width = 0.9), 
+  #              dotsize = .6, alpha = 0.4, aes(fill = lang_group)) +
+  geom_point(aes(x = age_group, color= lang_group), line = "black", alpha = .3, position = position_jitterdodge()) +
+  stat_summary(fun.y = "mean", geom = "bar", color = "black", aes(fill = lang_group), 
+               alpha = .4, position = position_dodge(width = 0.9)) + 
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = .5,  aes(group = lang_group), 
+               position = position_dodge(width = 0.9)) +
+  geom_abline(intercept = 0, lty = 3, slope = 0) +
+  ylab("Difference score") +
+  xlab("Age Group") +
+  scale_colour_manual(name = "Language group", values = c("darkcyan", "darkred")) +
+  scale_fill_manual(name = "Language group", values = c("darkcyan", "darkred")) + 
+  theme(text = element_text(size = 20), legend.position = "bottom")
+```
+
+```{r latency}
+
+## Datasets for latency analysis 
+d_latency <- d %>%
+  select(-n_shift_congruent, -n_shift_incongruent, -fixation_congruent, - fixation_incongruent) %>%
+  rename("object" = "first_shift") %>%
+  filter(!is.na(object)) %>% # only trials with first shifts
+  mutate(latency = log(latency + 1)) # Log transform latency scores, adding one to deal with zeros
+  
+d_latency_meta <- d %>%
+  select(-n_shift_congruent, -n_shift_incongruent, -fixation_congruent, - fixation_incongruent) %>%
+  rename("object" = "first_shift") %>%
+  filter(!is.na(object)) %>%
+  mutate(object = as.factor(object)) %>%
+  group_by_at(vars(-trial_num, - latency)) %>%
+  mutate(latency = mean(latency)) # Average proportion difference score by baby
+
+##Meta-analysis
+d_z_latency <- d_latency_meta %>%
+  filter(object != "incongruent")%>%
+  group_by(lab, age_group, lang_group, subid) %>% 
+  summarise(latency = mean(latency))%>%
+  group_by(lab, age_group, lang_group) %>% 
+  summarise(d = mean(latency) / sd(latency),
+            n = length(unique(subid)),
+            d_var = d_var_calc(n,d))%>%
+  filter(n>=10) #Filtering out subgroups with fewer than 10 babies
+  
+Latency_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
+                    slab = lab, data = d_z_latency, method = "REML") 
+```
+
+The cross-lab meta-analysis on latency yielded a reference-level intercept (i.e., 6–9 month-old monolingual infants) of `r round(Latency_meta$b[1],2)` (CI = [`r round(Latency_meta$ci.lb[1],2)` - `r round(Latency_meta$ci.ub[1], 2)`], $z = `r round(Latency_meta$z[1], 2)`$, $p `r papaja::printp(Latency_meta$pval[1])`$). Bilingualism yielded an effect of `r round(Latency_meta$b[2],2)` (CI = [`r round(Latency_meta$ci.lb[2],2)` - `r round(Latency_meta$ci.ub[2], 2)`], $z = `r round(Latency_meta$z[2], 2)`$, $p `r papaja::printp(Latency_meta$pval[2])`$), suggesting a non-significant increase in duration of looks for biligual infants relative to monolingual infants. Age yielded an effect of `r round(Latency_meta$b[3],2)` (CI = [`r round(Latency_meta$ci.lb[3],2)` - `r round(Latency_meta$ci.ub[3], 2)`], $z = `r round(Latency_meta$z[3], 2)`$, $p `r papaja::printp(Latency_meta$pval[3])`$), indicating a non-significant decrease in latency for 12-15 month-old infants compared to 6-9 month-old infants. The effect of the interaction between bilingualism and age was `r round(Latency_meta$b[4],2)` (CI = [`r round(Latency_meta$ci.lb[4],2)` - `r round(Latency_meta$ci.ub[4], 2)`], $z = `r round(Latency_meta$z[4], 2)`$, $p `r papaja::printp(Latency_meta$pval[4])`$), implying that the difference between monolingual and bilingualism infants was smaller for 12-15 month-old infants than for 6-9 month-old but this difference was not significant. A pirate plot for this meta-analysis is shown in Figure 5. 
+
+```{r fig5, fig.cap="Pirate plot for the cross-lab meta-analysis on latency."}
+
+d_latency_meta %>% 
+  filter(object == "congruent") %>%
+  group_by(subid, age_group, lang_group) %>% 
+  summarise(latency = mean(latency, na.rm = TRUE)) %>% 
+    group_by(subid, age_group, lang_group) %>% 
+  ggplot(aes(x = age_group, y = latency)) + 
+  geom_violin(aes(colour = lang_group), alpha = .5) +
+  # geom_dotplot(binaxis = "y", stackdir = "center", position = position_dodge(width = 0.9), 
+  #              dotsize = .6, alpha = 0.4, aes(fill = lang_group)) +
+  geom_point(aes(x = age_group, color= lang_group), line = "black", alpha = .3, position = position_jitterdodge()) +
+  stat_summary(fun.y = "mean", geom = "bar", color = "black", aes(fill = lang_group), 
+               alpha = .4, position = position_dodge(width = 0.9)) + 
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = .5,  aes(group = lang_group), 
+               position = position_dodge(width = 0.9)) +
+  geom_abline(intercept = 0, lty = 3, slope = 0) +
+  ylab("Latency (ms)") +
+  xlab("Age Group") +
+  scale_colour_manual(name = "Language group", values = c("darkcyan", "darkred")) +
+  scale_fill_manual(name = "Language group", values = c("darkcyan", "darkred")) + 
+  theme(text = element_text(size = 20), legend.position = "bottom")
+```
 
 ## Mixed-effects regression framework 
 
