@@ -445,50 +445,45 @@ summary(Latency_meta)
 ## First_look MLM
 
 ```{r}
-##The preregistered model: But get "singular fit" error message
+##The preregistered model: But get "singular fit" & "failure to converge" error message
 #first_glmer <- d_first %>% 
 #  mutate(age_days = scale(age_days, scale = FALSE)) %>%
 #  filter(!is.na(first_shift)) %>%
 #  mutate(first_shift = fct_rev(first_shift)) %>% # So higher numbers mean more looks to congruent
-#  glmer(first_shift ~ lang_group*age_days + (1|subid) + (lang_group|lab) + (lang_group|trial_num),
+#  glmer(first_shift ~ lang_group*age_days + (1|subid) + (lang_group*age_days|lab) + (lang_group*age_days|trial_num),
 #  data = .,
 #  family = binomial
 #)
 
-##Simplifying the random effects: But "singular fit" again
+##Simplifying the random effects: But "Model failed to converge with max|grad|" & "Model is nearly unidentifiable: very large eigenvalue - Rescale variables?" error messages
 #first_glmer <- d_first %>% 
 #  mutate(age_days = scale(age_days, scale = FALSE)) %>%
 #  filter(!is.na(first_shift)) %>%
-#  mutate(first_shift = case_when(first_shift == "congruent" ~ 1, first_shift == "incongruent" ~ 0))%>%
-#  mutate(first_shift = as.factor(first_shift)) %>%
 #  mutate(first_shift = fct_rev(first_shift)) %>% # So higher numbers mean more looks to congruent
 #  glmer(first_shift ~ lang_group * age_days + (1|subid) + (1|lab) + (1|trial_num),
 #  data = .,
-#  family = binomial, 
+#  family = binomial 
 #)
 
-##Dropping the "trial_num" random effect as "trial_num" has 0 variance: But get "model is nearly unidentifiable: very large eigenvalue - Rescale variables?" error message
+##Changing the default control optimizer to "bobyqa" & rescaling "age_days" variable (scale = TRUE) to solve the convergence issues: But "singular fit" error message again
 #first_glmer <- d_first %>% 
-#  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+#  mutate(age_days = scale(age_days, scale = TRUE)) %>%
 #  filter(!is.na(first_shift)) %>%
-#  mutate(first_shift = case_when(first_shift == "congruent" ~ 1, first_shift == "incongruent" ~ 0))%>%
-#  mutate(first_shift = as.factor(first_shift)) %>%
 #  mutate(first_shift = fct_rev(first_shift)) %>% # So higher numbers mean more looks to congruent
-#  glmer(first_shift ~ lang_group * age_days + (1|subid) + (1|lab),
+#  glmer(first_shift ~ lang_group * age_days + (1|subid) + (1|lab) + (1|trial_num),
 #  data = .,
-#  family = binomial, 
+#  control=glmerControl(optimizer="bobyqa"),
+#  family = binomial 
 #)
 
-##Final model: Rescaling "age_days" variable (scale = TRUE)
+##Final model: Dropping the "trial_num" random effect as "trial_num" has 0 variance
 first_glmer <- d_first %>% 
   mutate(age_days = scale(age_days, scale = TRUE)) %>%
   filter(!is.na(first_shift)) %>%
-  mutate(first_shift = case_when(first_shift == "congruent" ~ 1, first_shift == "incongruent" ~ 0))%>%
-  mutate(first_shift = as.factor(first_shift)) %>%
   mutate(first_shift = fct_rev(first_shift)) %>% # So higher numbers mean more looks to congruent
   glmer(first_shift ~ lang_group * age_days + (1|subid) + (1|lab),
   data = .,
-  family = binomial, 
+  family = binomial 
 )
 
 summary(first_glmer)
