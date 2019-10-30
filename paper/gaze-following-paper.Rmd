@@ -377,6 +377,7 @@ d_z_first <- d_first_meta %>%
 first_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
                     slab = lab, data = d_z_first, method = "REML") 
 ```
+### First look
 
 We began by examining the relation of the proportion of first looks to bilingualism and age, fitting the main effect model to the `r nrow(d_z_first)` separate group means and variances (after aggregating by lab, age, and language group). The meta-analysis on first look yielded a reference-level intercept of `r round(first_meta$b[1],2)` (CI = [`r round(first_meta$ci.lb[1],2)` - `r round(first_meta$ci.ub[1], 2)`], $z = `r round(first_meta$z[1], 2)`$, $p `r papaja::printp(first_meta$pval[1])`$), reflecting the mean effect size for 6–9 month-old monolingual infants. Bilingualism yielded an effect of `r round(first_meta$b[2],2)` (CI = [`r round(first_meta$ci.lb[2],2)` - `r round(first_meta$ci.ub[2], 2)`], $z = `r round(first_meta$z[2], 2)`$, $p `r papaja::printp(first_meta$pval[2])`$), indicating a non-significant increase in measured effect size for bilingual relative to monolingual infants. Moreover, age yielded an effect of `r round(first_meta$b[3],2)` (CI = [`r round(first_meta$ci.lb[3],2)` - `r round(first_meta$ci.ub[3], 2)`], $z = `r round(first_meta$z[3], 2)`$, $p `r papaja::printp(first_meta$pval[3])`$), indicating a non-significant increase in the average proportion of first looks for older 12-15 month-old infants. Moreover, the interaction between bilingualism and age yielded an effect of `r round(first_meta$b[4],2)` (CI = [`r round(first_meta$ci.lb[4],2)` - `r round(first_meta$ci.ub[4], 2)`], $z = `r round(first_meta$z[4], 2)`$, $p `r papaja::printp(first_meta$pval[4])`$), suggesting that there was not a reliable difference in terms of bilingualism between the older and younger infants. Therefore, no significant differeces in the proportion of first looks were observed among monolingual and bilingual infants as well as older and young infants. A pirate plot for this meta-analysis is shown in Figure 2. 
 
@@ -437,6 +438,8 @@ freq_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var,
                     slab = lab, data = d_z_freq, method = "REML") 
 ```
 
+### Frequency of looks
+
 We then investigated the relation of frequency of looks to bilingualism and age group. The reference-level intercept (i.e., 6–9 month-old monolingual infants) was `r round(freq_meta$b[1],2)` (CI = [`r round(freq_meta$ci.lb[1],2)` - `r round(freq_meta$ci.ub[1], 2)`], $z = `r round(freq_meta$z[1], 2)`$, $p `r papaja::printp(freq_meta$pval[1])`$). However, no significant effect was yielded in this meta-analysis. Bilingualism yielded an effect of `r round(freq_meta$b[2],2)` (CI = [`r round(freq_meta$ci.lb[2],2)` - `r round(freq_meta$ci.ub[2], 2)`], $z = `r round(freq_meta$z[2], 2)`$, $p `r papaja::printp(freq_meta$pval[2])`$), suggesting that the frequency of looks was on average not significantly larger for bilingual infants. As for age, an effect of  `r round(freq_meta$b[3],2)` (CI = [`r round(freq_meta$ci.lb[3],2)` - `r round(freq_meta$ci.ub[3], 2)`], $z = `r round(freq_meta$z[3], 2)`$, $p `r papaja::printp(freq_meta$pval[3])`$) was yielded, indicating a non-significant increase in frequency of looks for 12-15 month-old infants. The interaction between bilingualism and age yielded an effect of `r round(freq_meta$b[4],2)` (CI = [`r round(freq_meta$ci.lb[4],2)` - `r round(freq_meta$ci.ub[4], 2)`], $z = `r round(freq_meta$z[4], 2)`$, $p `r papaja::printp(freq_meta$pval[4])`$), implying that the difference between monolingual and bilingualism infants was not significantly lower for 12-15 month-old infants than for 6-9 month-old. A pirate plot for this meta-analysis is shown in Figure 3. 
 
 ```{r fig3, fig.cap="Pirate plot for the cross-lab meta-analysis on frequency of looks."}
@@ -494,6 +497,8 @@ dur_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var,
                     slab = lab, data = d_z_dur, method = "REML") 
 ```
 
+### Duration of looks
+
 The cross-lab meta-analysis on duration of looks yielded an estimated reference-level intercept (i.e., 6–9 month-old monolingual infants) of `r round(dur_meta$b[1],2)` (CI = [`r round(dur_meta$ci.lb[1],2)` - `r round(dur_meta$ci.ub[1], 2)`], $z = `r round(dur_meta$z[1], 2)`$, $p `r papaja::printp(dur_meta$pval[1])`$). Similiar to the two previous meta-analyses, no significant effect was yielded. The effect of bilingualism was `r round(dur_meta$b[2],2)` (CI = [`r round(dur_meta$ci.lb[2],2)` - `r round(dur_meta$ci.ub[2], 2)`], $z = `r round(dur_meta$z[2], 2)`$, $p `r papaja::printp(dur_meta$pval[2])`$), suggesting a slight but non-significant increase in duration of looks for biligual infants compared to monolingual infants. Age yielded an effect of `r round(dur_meta$b[3],2)` (CI = [`r round(dur_meta$ci.lb[3],2)` - `r round(dur_meta$ci.ub[3], 2)`], $z = `r round(dur_meta$z[3], 2)`$, $p `r papaja::printp(dur_meta$pval[3])`$), indicating a non-significant increase in measured effect size for 12-15 month-old infants relative to 6-9 month-old infants. As for the interaction between bilingualism and age, the effect was `r round(dur_meta$b[4],2)` (CI = [`r round(dur_meta$ci.lb[4],2)` - `r round(dur_meta$ci.ub[4], 2)`], $z = `r round(dur_meta$z[4], 2)`$, $p `r papaja::printp(dur_meta$pval[4])`$), implying that the difference between monolingual and bilingualism infants was not significantly higher for 12-15 month-old infants than for 6-9 month-old. A pirate plot for this meta-analysis is shown in Figure 4. 
 
 ```{r fig4, fig.cap="Pirate plot for the cross-lab meta-analysis on duration of looks."}
@@ -550,6 +555,8 @@ Latency_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var,
                     slab = lab, data = d_z_latency, method = "REML") 
 ```
 
+### Latency 
+
 The cross-lab meta-analysis on latency yielded a reference-level intercept (i.e., 6–9 month-old monolingual infants) of `r round(Latency_meta$b[1],2)` (CI = [`r round(Latency_meta$ci.lb[1],2)` - `r round(Latency_meta$ci.ub[1], 2)`], $z = `r round(Latency_meta$z[1], 2)`$, $p `r papaja::printp(Latency_meta$pval[1])`$). Bilingualism yielded an effect of `r round(Latency_meta$b[2],2)` (CI = [`r round(Latency_meta$ci.lb[2],2)` - `r round(Latency_meta$ci.ub[2], 2)`], $z = `r round(Latency_meta$z[2], 2)`$, $p `r papaja::printp(Latency_meta$pval[2])`$), suggesting a non-significant increase in duration of looks for biligual infants relative to monolingual infants. Age yielded an effect of `r round(Latency_meta$b[3],2)` (CI = [`r round(Latency_meta$ci.lb[3],2)` - `r round(Latency_meta$ci.ub[3], 2)`], $z = `r round(Latency_meta$z[3], 2)`$, $p `r papaja::printp(Latency_meta$pval[3])`$), indicating a non-significant decrease in latency for 12-15 month-old infants compared to 6-9 month-old infants. The effect of the interaction between bilingualism and age was `r round(Latency_meta$b[4],2)` (CI = [`r round(Latency_meta$ci.lb[4],2)` - `r round(Latency_meta$ci.ub[4], 2)`], $z = `r round(Latency_meta$z[4], 2)`$, $p `r papaja::printp(Latency_meta$pval[4])`$), implying that the difference between monolingual and bilingualism infants was smaller for 12-15 month-old infants than for 6-9 month-old but this difference was not significant. A pirate plot for this meta-analysis is shown in Figure 5. 
 
 ```{r fig5, fig.cap="Pirate plot for the cross-lab meta-analysis on latency."}
@@ -605,7 +612,169 @@ DV ~ bilingual * age_days * aoi +
 (bilingual * age_days * aoi|lab) + 
 (bilingual * age_days * aoi |item)
 
-REPORT THE FINAL MODEL SPECIFICATION. We planned to follow up on any significant interaction of age and bilingualism by calculating simple intercepts, simple slopes, and regions of significance as appropriate by re-running the model, changing the levels of moderators coded as a baseline. DISCUSSION OF RESULTS HERE.
+### First shift towards the AOI
+
+After pruning random effects for non-convergence, our final model specification for first shift was:
+
+\begin{equation}
+\begin{split}
+\text{first_shift} \sim & \text{bilingual} * \text{age_days} + \\
+& (1 \mid \text{subid}) + \\
+& (1 \mid \text{lab}).
+\end{split}
+\end{equation}
+
+```{r coef_table_firstshift, results="asis"}
+
+first_glmer <- d_first %>% 
+  mutate(age_days = scale(age_days, scale = TRUE)) %>%
+  filter(!is.na(first_shift)) %>%
+  mutate(first_shift = fct_rev(first_shift)) %>% # So higher numbers mean more looks to congruent
+  glmer(first_shift ~ lang_group * age_days + (1|subid) + (1|lab),
+  data = .,
+  family = binomial 
+)
+
+firstshift_coefs <- summary(first_glmer)$coef %>%
+  as.data.frame %>%
+  mutate_at(c("Estimate","Std. Error", "z value", "Pr(>|z|)"), 
+            function (x) signif(x, digits = 3)) %>% 
+    rename(SE = `Std. Error`, 
+         z = `z value`,
+         p = `Pr(>|z|)`)
+
+rownames(firstshift_coefs) <- c("Intercept", "Bilingualism", "Age_days", 
+                     "Bilingualism * Age_days") 
+
+papaja::apa_table(firstshift_coefs, format.args = list(digits = 3),
+                  caption = "Coefficient estimates from a logistic mixed effects model predicting the probability of making first looks to congruent objects.",
+                  col.names =c("","Estimate","$SE$","$z$","$p$"),
+                  align=c("l","l","c","c","c"))
+```
+
+\noindent Table 2 shows coefficient estimates from this model. To aid convergence, we scaled age, and the random effect of item was removed. Positive coefficients indicate a higher probability of making first look to the congruent object. While there is no obvious evidence for a difference between monolingual and bilingual infants, a significant positive effect of age was found, suggesting that older infants had a greater probability of making their first looks to the congruent as opposed to the incongruent object. The interaction of bilingualism and age was, however, not significant.
+
+### Frequency of shifting gaze towards the AOI 
+
+The linear mixed-effects model for frequency of shift was also modified by pruning random effects for non-convergence. The final model specification for frequency of shift was:
+
+\begin{equation}
+\begin{split}
+\text{freq_shift} \sim & \text{bilingual} * \text{age_days} *  \text{aoi} + \\
+& (1 \mid \text{subid}) + \\
+& (1 \mid \text{item}).
+\end{split}
+\end{equation}
+
+```{r coef_table_frequency, results="asis"}
+freq_lmer <- d_freq %>% 
+  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+  mutate(object_bin = (as.integer(fct_rev(object)) - 1)) %>% # Recode to binary: congruent = 1, incongruent = 0
+  lmer(n_shift ~ lang_group*age_days*object + (1|subid) + (1|trial_num), 
+  control = lmerControl("bobyqa"),
+  data = .)
+
+freq_coefs <- summary(freq_lmer)$coef %>%
+  as.data.frame %>%
+  mutate_at(c("Estimate","Std. Error", "t value", "Pr(>|t|)"), 
+            function (x) signif(x, digits = 3)) %>% 
+    rename(SE = `Std. Error`, 
+         t = `t value`,
+         p = `Pr(>|t|)`)
+
+rownames(freq_coefs) <- c("Intercept", "Bilingualism", "Age_days", "AOI",
+                     "Bilingualism * Age_days", "Bilingualism * AOI", "Age_days * AOI",
+                     "Bilingualism * Age_days * AOI") 
+
+papaja::apa_table(freq_coefs, format.args = list(digits = 3),
+                  caption = "Coefficient estimates from a linear mixed effects model predicting frequency of shifting gaze towards the congruent AOI.",
+                  col.names =c("","Estimate","$SE$","$t$","$p$"),
+                  align=c("l","l","c","c","c"))
+```
+
+\noindent Table 3 shows coefficient estimates from this model. The random effect of lab was removed to aid convergence. There were significant main effects of age and aoi, where older infants and the congruent aoi had greater amount of frequency as opposed to younger infants and incongruent aoi, respectively. The interaction of age and aoi was also significant, further suggesting that older infants shifted more frequently to the congruent than the incongruent AOI compared to younger infants. The effect of bilingualism, however, was not significant, neither were its 2-way and 3-way interactions with age and aoi; this suggests that there was not a reliable difference between bilingual and monolingual infants in the number of times they shifted gaze towards the congruent aoi. 
+
+### Duration of fixations towards the AOI during the trial
+
+The final model specification for duration of fixations was:
+
+\begin{equation}
+\begin{split}
+\text{total_look} \sim & \text{bilingual} * \text{age_days} *  \text{aoi} + \\
+& (1 \mid \text{lab}) + \\
+& (1 \mid \text{item}).
+\end{split}
+\end{equation}
+
+```{r coef_table_duration, results="asis"}
+duration_lmer <- d_duration %>% 
+  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+  mutate(object_bin = (as.integer(fct_rev(object)) - 1)) %>% # Recode to binary: congruent = 1, incongruent = 0
+  lmer(duration ~ lang_group*age_days*object_bin + (1|lab) + (1|trial_num),
+  data = .
+)
+
+duration_coefs <- summary(duration_lmer)$coef %>%
+  as.data.frame %>%
+  mutate_at(c("Estimate","Std. Error", "t value", "Pr(>|t|)"), 
+            function (x) signif(x, digits = 3)) %>% 
+    rename(SE = `Std. Error`, 
+         t = `t value`,
+         p = `Pr(>|t|)`)
+
+rownames(duration_coefs) <- c("Intercept", "Bilingualism", "Age_days", "AOI",
+                     "Bilingualism * Age_days", "Bilingualism * AOI", "Age_days * AOI",
+                     "Bilingualism * Age_days * AOI") 
+
+papaja::apa_table(duration_coefs, format.args = list(digits = 3),
+                  caption = "Coefficient estimates from a linear mixed effects model predicting duration of fixations towards the AOI during the trial.",
+                  col.names =c("","Estimate","$SE$","$t$","$p$"),
+                  align=c("l","l","c","c","c"))
+```
+
+\noindent Table 4 shows coefficient estimates from this model. The random effect of subject was removed to aid convergence. The significant effect of age indicated that the duration of fixations was greater for older infants. The main effect of aoi was also significant; with congruent aoi as the reference level, it is suggested that congruent aoi had longer duration of fixations compared to incongruent aoi. While the effect of bilingualism was non-significant, it is not a strong predictor of duration of fixations in our data. Other interactions were also non-significant.
+
+### Latency
+
+As the preregistered model specification for latency ran into convergence issue, random effects were pruned for the final model specification:
+
+\begin{equation}
+\begin{split}
+\text{latency} \sim & \text{bilingual} * \text{age_days} * \text{aoi} + \\
+& (1 \mid \text{subid}) + \\
+& (1 \mid \text{lab}) + \\
+& (1 \mid \text{item}).
+\end{split}
+\end{equation}
+
+```{r coef_table_latency, results="asis"}
+latency_lmer <- d_latency %>% 
+  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+  mutate(object_bin = (as.integer(fct_rev(object)) - 1)) %>% # Recode to binary: congruent = 1, incongruent = 0
+  lmer(latency ~ lang_group*age_days*object+ (1|subid) + (1|lab) + (1|trial_num),
+  data = .,
+  control = lmerControl("bobyqa")
+)
+
+latency_coefs <- summary(latency_lmer)$coef %>%
+  as.data.frame %>%
+  mutate_at(c("Estimate","Std. Error", "t value", "Pr(>|t|)"), 
+            function (x) signif(x, digits = 3)) %>% 
+    rename(SE = `Std. Error`, 
+         t = `t value`,
+         p = `Pr(>|t|)`)
+
+rownames(latency_coefs) <- c("Intercept", "Bilingualism", "Age_days", "AOI",
+                     "Bilingualism * Age_days", "Bilingualism * AOI", "Age_days * AOI",
+                     "Bilingualism * Age_days * AOI") 
+
+papaja::apa_table(latency_coefs, format.args = list(digits = 3),
+                  caption = "Coefficient estimates from a linear mixed effects model predicting latency between the onset of the actor's headturn and the moment of first fixation on an object AOI.",
+                  col.names =c("","Estimate","$SE$","$t$","$p$"),
+                  align=c("l","l","c","c","c"))
+```
+
+\noindent Table 5 shows coefficient estimates from this model. The main effect of age was significant, suggesting that older infants had a shorter latency to first fixation than younger infants. However, the effect of aoi was not significant, implying that latency did not reliably differ as a function of whether it is to the congruent or incongruent AOI. Other coefficients were also non-significant.
 
 ## Exploratory analyses
 
