@@ -597,11 +597,19 @@ d_duration %>%
 ## Latency LMEM
 
 ```{r}
-##The preregistered model: Since we are looking only at "object = congruent", we have to remove the "object" effect from this model
+##The preregistered model: But "singular fit" error message
 #latency_lmer <- d_latency %>% 
 #  mutate(age_days = scale(age_days, scale = FALSE)) %>%
 #  mutate(object_bin = (as.integer(fct_rev(object)) - 1)) %>% # Recode to binary: congruent = 1, incongruent = 0
 #  lmer(latency ~ lang_group*age_days*object+ (object|subid) + (lang_group*object|lab) + (lang_group*object|trial_num),
+#  data = .
+#)
+
+##Simplifying the random effects: But "Model failed to converge with max|grad|" error message
+#latency_lmer <- d_latency %>% 
+#  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+#  mutate(object_bin = (as.integer(fct_rev(object)) - 1)) %>% # Recode to binary: congruent = 1, incongruent = 0
+#  lmer(latency ~ lang_group*age_days*object_bin+ (1|subid) + (1|lab) + (1|trial_num),
 #  data = .
 #)
 
@@ -613,12 +621,13 @@ d_duration %>%
 #  data = .
 #)
 
-##Final model: Simplifying the random effects
+##Final model: Changing the default control optimizer to "bobyqa" to solve the convergence issue
 latency_lmer <- d_latency %>% 
   mutate(age_days = scale(age_days, scale = FALSE)) %>%
-  filter(object == "congruent") %>% # Select only trials that are congruent
-  lmer(latency ~ lang_group * age_days + (1|subid) + (1|lab) + (1|trial_num),
-  data = .
+  mutate(object_bin = (as.integer(fct_rev(object)) - 1)) %>% # Recode to binary: congruent = 1, incongruent = 0
+  lmer(latency ~ lang_group*age_days*object_bin+ (1|subid) + (1|lab) + (1|trial_num),
+  data = .,
+  control = lmerControl("bobyqa")
 )
 
 summary(latency_lmer)
