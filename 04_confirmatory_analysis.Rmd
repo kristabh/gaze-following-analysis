@@ -490,6 +490,26 @@ summary(first_glmer)
 
 ```
 
+### First_look GLMEM visualization
+```{r}
+d_first%>%
+  mutate(pred_prob = predict(first_glmer, type ="response"))%>%
+  mutate(first_shift = case_when(first_shift == "congruent" ~ 1, first_shift == "incongruent" ~ 0))%>%
+  mutate(first_shift = as.integer(first_shift))%>%
+  ggplot() +
+  aes(x=age_days, y=first_shift, color=lang_group) +
+  geom_point()+
+  geom_smooth(method="glm",
+              aes(x=age_days, y=pred_prob),
+              method.args = list(family = "quasibinomial"),
+              se = FALSE)+
+  ylab("Probability of first look to the congruent AOI") +
+  xlab("Age in days") +
+  scale_colour_manual(name = "Language group", values = c("darkcyan", "darkred")) +
+  scale_fill_manual(name = "Language group", values = c("darkcyan", "darkred")) + 
+  theme(text = element_text(size = 12), legend.position = "bottom")
+```
+
 ## Frequency LMEM
 
 ```{r}
@@ -529,19 +549,20 @@ summary(freq_lmer)
 
 ```
 
-## Freq_look visualization
+### Freq_look LMEM visualization
 
 ```{r}
-d_freq %>% 
-  group_by(age_group, lang_group) %>%
- # summarize(prop = mean(prop, na.rm = TRUE), sd = sd(prop, na.rm = TRUE)) %>%
-  ggplot(aes(x = lang_group, y = n_shift, color = lang_group)) +
-  geom_boxplot() +
-  geom_jitter() +
-  facet_grid(.~age_group)  
-
-
-
+d_freq %>%
+  group_by(lang_group, object) %>%
+  ggplot() +
+  facet_grid(.~lang_group) +
+  aes(x = age_days, y = n_shift, color = object) +
+  geom_smooth(method = "lm", aes(fill=object)) +
+  ylab("Frequency of shifts towards the AOI") +
+  xlab("Age in days") +
+  scale_colour_manual(name = "AOI", values = c("darkcyan", "darkred")) +
+  scale_fill_manual(name = "AOI", values = c("darkcyan", "darkred")) + 
+  theme(text = element_text(size = 12), legend.position = "bottom")
 ```
 
 
@@ -578,19 +599,15 @@ summary(duration_lmer)
 
 ```
 
-## Visualize duration
+## Duration LMEM visualization
 
 ```{r}
-
 d_duration %>%
- # group_by(age_group, lang_group, object) %>%
- # summarize(duration = mean(duration)) %>%
-  ggplot(aes(y = duration, x = object, color - lang_group)) +
-  facet_grid(lang_group ~ age_group) +
-  geom_violin() +
-  geom_boxplot(width = .1)
-
-
+  group_by(lang_group, object) %>%
+  ggplot() +
+  facet_grid(.~lang_group) +
+  aes(x = age_days, y = duration, color = object) +
+  geom_smooth(method = "lm", aes(fill=object)) 
 ```
 
 
@@ -624,6 +641,13 @@ latency_lmer <- d_latency %>%
 
 summary(latency_lmer)
 
-
-
+```
+### Latency LMEM visualization
+```{r}
+d_latency %>%
+  group_by(lang_group, object) %>%
+  ggplot() +
+  facet_grid(.~lang_group) +
+  aes(x = age_days, y = latency, color = object) +
+  geom_smooth(method = "lm", aes(fill=object)) 
 ```
