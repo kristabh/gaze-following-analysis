@@ -652,7 +652,27 @@ papaja::apa_table(firstshift_coefs, format.args = list(digits = 3),
                   align=c("l","l","c","c","c"))
 ```
 
-\noindent Table 2 shows coefficient estimates from this model. To aid convergence, we scaled age, and the random effect of item was removed. Positive coefficients indicate a higher probability of making first look to the congruent object. While there is no obvious evidence for a difference between monolingual and bilingual infants, a significant positive effect of age was found, suggesting that older infants had a greater probability of making their first looks to the congruent as opposed to the incongruent object. The interaction of bilingualism and age was, however, not significant.
+\noindent Table 2 shows coefficient estimates from this model and Figure 6 visualizes this model. To aid convergence, we scaled age, and the random effect of item was removed. Positive coefficients indicate a higher probability of making first look to the congruent object. While there is no obvious evidence for a difference between monolingual and bilingual infants, a significant positive effect of age was found, suggesting that older infants had a greater probability of making their first looks to the congruent as opposed to the incongruent object. The interaction of bilingualism and age was, however, not significant.
+
+```{r fig6, fig.cap="The logistic regression model predicting the probability of making first look to the congruent object."}
+
+d_first%>%
+  mutate(pred_prob = predict(first_glmer, type ="response"))%>%
+  mutate(first_shift = case_when(first_shift == "congruent" ~ 1, first_shift == "incongruent" ~ 0))%>%
+  mutate(first_shift = as.integer(first_shift))%>%
+  ggplot() +
+  aes(x=age_days, y=first_shift, color=lang_group) +
+  geom_point()+
+  geom_smooth(method="glm",
+              aes(x=age_days, y=pred_prob),
+              method.args = list(family = "quasibinomial"),
+              se = FALSE)+
+  ylab("Probability of first look to the congruent AOI") +
+  xlab("Age in days") +
+  scale_colour_manual(name = "Language group", values = c("darkcyan", "darkred")) +
+  scale_fill_manual(name = "Language group", values = c("darkcyan", "darkred")) + 
+  theme(text = element_text(size = 12), legend.position = "bottom")
+```
 
 ### Frequency of shifting gaze towards the AOI 
 
@@ -692,7 +712,22 @@ papaja::apa_table(freq_coefs, format.args = list(digits = 3),
                   align=c("l","l","c","c","c"))
 ```
 
-\noindent Table 3 shows coefficient estimates from this model. The random effect of lab was removed to aid convergence. There were significant main effects of age and aoi, where older infants and the congruent aoi had greater amount of frequency as opposed to younger infants and incongruent aoi, respectively. The interaction of age and aoi was also significant, further suggesting that older infants shifted more frequently to the congruent than the incongruent AOI compared to younger infants. The effect of bilingualism, however, was not significant, neither were its 2-way and 3-way interactions with age and aoi; this suggests that there was not a reliable difference between bilingual and monolingual infants in the number of times they shifted gaze towards the congruent aoi. 
+\noindent Table 3 shows coefficient estimates from this model and Figure 7 visualizes this model. The random effect of lab was removed to aid convergence. There were significant main effects of age and aoi, where older infants and the congruent aoi had greater amount of frequency as opposed to younger infants and incongruent aoi, respectively. The interaction of age and aoi was also significant, further suggesting that older infants shifted more frequently to the congruent than the incongruent AOI compared to younger infants. The effect of bilingualism, however, was not significant, neither were its 2-way and 3-way interactions with age and aoi; this suggests that there was not a reliable difference between bilingual and monolingual infants in the number of times they shifted gaze towards the congruent aoi. 
+
+```{r fig7, fig.cap="The linear regression model predicting the frequency of shift towards the AOI."}
+
+d_freq %>%
+  group_by(lang_group, object) %>%
+  ggplot() +
+  facet_grid(.~lang_group) +
+  aes(x = age_days, y = n_shift, color = object) +
+  geom_smooth(method = "lm", aes(fill=object)) +
+  ylab("Frequency of shifts towards the AOI") +
+  xlab("Age in days") +
+  scale_colour_manual(name = "AOI", values = c("darkcyan", "darkred")) +
+  scale_fill_manual(name = "AOI", values = c("darkcyan", "darkred")) + 
+  theme(text = element_text(size = 12), legend.position = "bottom")
+```
 
 ### Duration of fixations towards the AOI during the trial
 
@@ -732,7 +767,17 @@ papaja::apa_table(duration_coefs, format.args = list(digits = 3),
                   align=c("l","l","c","c","c"))
 ```
 
-\noindent Table 4 shows coefficient estimates from this model. The random effect of subject was removed to aid convergence. The significant effect of age indicated that the duration of fixations was greater for older infants. The main effect of aoi was also significant; with congruent aoi as the reference level, it is suggested that congruent aoi had longer duration of fixations compared to incongruent aoi. While the effect of bilingualism was non-significant, it is not a strong predictor of duration of fixations in our data. Other interactions were also non-significant.
+\noindent Table 4 shows coefficient estimates from this model and Figure 8 visualizes this model. The random effect of subject was removed to aid convergence. The significant effect of age indicated that the duration of fixations was greater for older infants. The main effect of aoi was also significant; with congruent aoi as the reference level, it is suggested that congruent aoi had longer duration of fixations compared to incongruent aoi. While the effect of bilingualism was non-significant, it is not a strong predictor of duration of fixations in our data. Other interactions were also non-significant.
+
+```{r fig8, fig.cap="The linear regression model predicting duration of fixations towards the AOI."}
+
+d_duration %>%
+  group_by(lang_group, object) %>%
+  ggplot() +
+  facet_grid(.~lang_group) +
+  aes(x = age_days, y = duration, color = object) +
+  geom_smooth(method = "lm", aes(fill=object)) 
+```
 
 ### Latency
 
@@ -774,7 +819,17 @@ papaja::apa_table(latency_coefs, format.args = list(digits = 3),
                   align=c("l","l","c","c","c"))
 ```
 
-\noindent Table 5 shows coefficient estimates from this model. The main effect of age was significant, suggesting that older infants had a shorter latency to first fixation than younger infants. However, the effect of aoi was not significant, implying that latency did not reliably differ as a function of whether it is to the congruent or incongruent AOI. Other coefficients were also non-significant.
+\noindent Table 5 shows coefficient estimates from this model and Figure 9 visualizes this model. The main effect of age was significant, suggesting that older infants had a shorter latency to first fixation than younger infants. However, the effect of aoi was not significant, implying that latency did not reliably differ as a function of whether it is to the congruent or incongruent AOI. Other coefficients were also non-significant.
+
+```{r fig9, fig.cap="The linear regression model predicting duration of fixations towards the AOI."}
+
+d_latency %>%
+  group_by(lang_group, object) %>%
+  ggplot() +
+  facet_grid(.~lang_group) +
+  aes(x = age_days, y = latency, color = object) +
+  geom_smooth(method = "lm", aes(fill=object)) 
+```
 
 ## Exploratory analyses
 
