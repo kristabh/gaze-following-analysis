@@ -379,28 +379,45 @@ first_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var,
 ```
 ### First look
 
-We began by examining the relation of the proportion of first looks to bilingualism and age, fitting the main effect model to the `r nrow(d_z_first)` separate group means and variances (after aggregating by lab, age, and language group). The meta-analysis on first look yielded a reference-level intercept of `r round(first_meta$b[1],2)` (CI = [`r round(first_meta$ci.lb[1],2)` - `r round(first_meta$ci.ub[1], 2)`], $z = `r round(first_meta$z[1], 2)`$, $p `r papaja::printp(first_meta$pval[1])`$), reflecting the mean effect size for 6–9 month-old monolingual infants. Bilingualism yielded an effect of `r round(first_meta$b[2],2)` (CI = [`r round(first_meta$ci.lb[2],2)` - `r round(first_meta$ci.ub[2], 2)`], $z = `r round(first_meta$z[2], 2)`$, $p `r papaja::printp(first_meta$pval[2])`$), indicating a non-significant increase in measured effect size for bilingual relative to monolingual infants. Moreover, age yielded an effect of `r round(first_meta$b[3],2)` (CI = [`r round(first_meta$ci.lb[3],2)` - `r round(first_meta$ci.ub[3], 2)`], $z = `r round(first_meta$z[3], 2)`$, $p `r papaja::printp(first_meta$pval[3])`$), indicating a non-significant increase in the average proportion of first looks for older 12-15 month-old infants. Moreover, the interaction between bilingualism and age yielded an effect of `r round(first_meta$b[4],2)` (CI = [`r round(first_meta$ci.lb[4],2)` - `r round(first_meta$ci.ub[4], 2)`], $z = `r round(first_meta$z[4], 2)`$, $p `r papaja::printp(first_meta$pval[4])`$), suggesting that there was not a reliable difference in terms of bilingualism between the older and younger infants. Therefore, no significant differeces in the proportion of first looks were observed among monolingual and bilingual infants as well as older and young infants. A pirate plot for this meta-analysis is shown in Figure 2. 
+We began by examining the relation of the proportion of first looks to bilingualism and age, fitting the main effect model to the `r nrow(d_z_first)` separate group means and variances (after aggregating by lab, age, and language group). The meta-analysis on first look yielded a reference-level intercept of `r round(first_meta$b[1],2)` (CI = [`r round(first_meta$ci.lb[1],2)` - `r round(first_meta$ci.ub[1], 2)`], $z = `r round(first_meta$z[1], 2)`$, $p `r papaja::printp(first_meta$pval[1])`$), reflecting the mean effect size for 6–9 month-old monolingual infants. Bilingualism yielded an effect of `r round(first_meta$b[2],2)` (CI = [`r round(first_meta$ci.lb[2],2)` - `r round(first_meta$ci.ub[2], 2)`], $z = `r round(first_meta$z[2], 2)`$, $p `r papaja::printp(first_meta$pval[2])`$), indicating a non-significant increase in measured effect size for bilingual relative to monolingual infants. Moreover, age yielded an effect of `r round(first_meta$b[3],2)` (CI = [`r round(first_meta$ci.lb[3],2)` - `r round(first_meta$ci.ub[3], 2)`], $z = `r round(first_meta$z[3], 2)`$, $p `r papaja::printp(first_meta$pval[3])`$), indicating a non-significant increase in the average proportion of first looks for older 12-15 month-old infants. Moreover, the interaction between bilingualism and age yielded an effect of `r round(first_meta$b[4],2)` (CI = [`r round(first_meta$ci.lb[4],2)` - `r round(first_meta$ci.ub[4], 2)`], $z = `r round(first_meta$z[4], 2)`$, $p `r papaja::printp(first_meta$pval[4])`$), suggesting that there was not a reliable difference in terms of bilingualism between the older and younger infants. Therefore, no significant differeces in the proportion of first looks were observed among monolingual and bilingual infants as well as older and young infants. A forest plot for this meta-analysis is shown in Figure 2. 
 
-```{r fig2, fig.cap="Pirate plot for the cross-lab meta-analysis on the proportion of first look."}
+```{r fig2, fig.cap="Forest plot for the cross-lab meta-analysis on the proportion of first look."}
 
-d_first_meta %>% 
-  group_by(subid, age_group, lang_group) %>% 
-  summarise(prop = mean(prop, na.rm = TRUE)) %>% 
-  ggplot(aes(x = age_group, y = prop)) + 
-  geom_violin(aes(colour = lang_group), alpha = .5) +
-  # geom_dotplot(binaxis = "y", stackdir = "center", position = position_dodge(width = 0.9), 
-  #              dotsize = .6, alpha = 0.4, aes(fill = lang_group)) +
-  geom_point(aes(x = age_group, color= lang_group), line = "black", alpha = .3, position = position_jitterdodge()) +
-  stat_summary(fun.y = "mean", geom = "bar", color = "black", aes(fill = lang_group), 
-               alpha = .4, position = position_dodge(width = 0.9)) + 
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .5,  aes(group = lang_group), 
-               position = position_dodge(width = 0.9)) +
-  geom_abline(intercept = 0, lty = 3, slope = 0) +
-  ylab("Difference score") +
-  xlab("Age Group") +
-  scale_colour_manual(name = "Language group", values = c("darkcyan", "darkred")) +
-  scale_fill_manual(name = "Language group", values = c("darkcyan", "darkred")) + 
-  theme(text = element_text(size = 20), legend.position = "bottom")
+first_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
+                                  slab = lab, data = d_z_first, method = "REML")
+
+alpha <- .05
+
+p_first_lang <- predict(first_lang_only_matched, newmods =  c(0,1)) %>%
+  as_tibble %>%
+  mutate(lang_group = levels(d_z_first$lang_group), 
+         age_group = "",
+         lab = "Meta-analytic estimate")
+
+first_forest_data <- ungroup(d_z_first) %>%
+  mutate(pred = d, 
+         ci.lb = d - qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
+         ci.ub = d + qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
+         inverse_vars = 1/d_var, 
+         age_group = as.character(age_group)) %>%
+  bind_rows(p_first_lang) %>%
+  mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", ""))) 
+
+ggplot(first_forest_data,
+       aes(x = lab, y = pred,
+           ymin = ci.lb, ymax = ci.ub, col = lang_group)) +
+  geom_point(aes(y = d, size = inverse_vars),
+             position = position_dodge(width = .2)) +
+  geom_point(data = filter(first_forest_data, lab == "Meta-analytic estimate"), pch = 5)+
+  geom_linerange(position = position_dodge(width = .2)) +
+  facet_grid(age_group ~ ., scales = "free", space = "free") +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
+  coord_flip() +
+  scale_size_continuous(guide = FALSE) +
+  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#000000")) +
+  xlab("Lab") +
+  ylab("Effect Size") +
+  theme(legend.position = "bottom")
 ```
 
 ```{r frequency-of-looks}
@@ -440,28 +457,45 @@ freq_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var,
 
 ### Frequency of looks
 
-We then investigated the relation of frequency of looks to bilingualism and age group. The reference-level intercept (i.e., 6–9 month-old monolingual infants) was `r round(freq_meta$b[1],2)` (CI = [`r round(freq_meta$ci.lb[1],2)` - `r round(freq_meta$ci.ub[1], 2)`], $z = `r round(freq_meta$z[1], 2)`$, $p `r papaja::printp(freq_meta$pval[1])`$). However, no significant effect was yielded in this meta-analysis. Bilingualism yielded an effect of `r round(freq_meta$b[2],2)` (CI = [`r round(freq_meta$ci.lb[2],2)` - `r round(freq_meta$ci.ub[2], 2)`], $z = `r round(freq_meta$z[2], 2)`$, $p `r papaja::printp(freq_meta$pval[2])`$), suggesting that the frequency of looks was on average not significantly larger for bilingual infants. As for age, an effect of  `r round(freq_meta$b[3],2)` (CI = [`r round(freq_meta$ci.lb[3],2)` - `r round(freq_meta$ci.ub[3], 2)`], $z = `r round(freq_meta$z[3], 2)`$, $p `r papaja::printp(freq_meta$pval[3])`$) was yielded, indicating a non-significant increase in frequency of looks for 12-15 month-old infants. The interaction between bilingualism and age yielded an effect of `r round(freq_meta$b[4],2)` (CI = [`r round(freq_meta$ci.lb[4],2)` - `r round(freq_meta$ci.ub[4], 2)`], $z = `r round(freq_meta$z[4], 2)`$, $p `r papaja::printp(freq_meta$pval[4])`$), implying that the difference between monolingual and bilingualism infants was not significantly lower for 12-15 month-old infants than for 6-9 month-old. A pirate plot for this meta-analysis is shown in Figure 3. 
+We then investigated the relation of frequency of looks to bilingualism and age group. The reference-level intercept (i.e., 6–9 month-old monolingual infants) was `r round(freq_meta$b[1],2)` (CI = [`r round(freq_meta$ci.lb[1],2)` - `r round(freq_meta$ci.ub[1], 2)`], $z = `r round(freq_meta$z[1], 2)`$, $p `r papaja::printp(freq_meta$pval[1])`$). However, no significant effect was yielded in this meta-analysis. Bilingualism yielded an effect of `r round(freq_meta$b[2],2)` (CI = [`r round(freq_meta$ci.lb[2],2)` - `r round(freq_meta$ci.ub[2], 2)`], $z = `r round(freq_meta$z[2], 2)`$, $p `r papaja::printp(freq_meta$pval[2])`$), suggesting that the frequency of looks was on average not significantly larger for bilingual infants. As for age, an effect of  `r round(freq_meta$b[3],2)` (CI = [`r round(freq_meta$ci.lb[3],2)` - `r round(freq_meta$ci.ub[3], 2)`], $z = `r round(freq_meta$z[3], 2)`$, $p `r papaja::printp(freq_meta$pval[3])`$) was yielded, indicating a non-significant increase in frequency of looks for 12-15 month-old infants. The interaction between bilingualism and age yielded an effect of `r round(freq_meta$b[4],2)` (CI = [`r round(freq_meta$ci.lb[4],2)` - `r round(freq_meta$ci.ub[4], 2)`], $z = `r round(freq_meta$z[4], 2)`$, $p `r papaja::printp(freq_meta$pval[4])`$), implying that the difference between monolingual and bilingualism infants was not significantly lower for 12-15 month-old infants than for 6-9 month-old. A forest plot for this meta-analysis is shown in Figure 3. 
 
-```{r fig3, fig.cap="Pirate plot for the cross-lab meta-analysis on frequency of looks."}
+```{r fig3, fig.cap="Forest plot for the cross-lab meta-analysis on frequency of looks."}
 
-d_freq_meta %>% 
-  group_by(subid, age_group, lang_group) %>% 
-  summarise(prop = mean(prop, na.rm = TRUE)) %>% 
-  ggplot(aes(x = age_group, y = prop)) + 
-  geom_violin(aes(colour = lang_group), alpha = .5) +
-  # geom_dotplot(binaxis = "y", stackdir = "center", position = position_dodge(width = 0.9), 
-  #              dotsize = .6, alpha = 0.4, aes(fill = lang_group)) +
-  geom_point(aes(x = age_group, color= lang_group), line = "black", alpha = .3, position = position_jitterdodge()) +
-  stat_summary(fun.y = "mean", geom = "bar", color = "black", aes(fill = lang_group), 
-               alpha = .4, position = position_dodge(width = 0.9)) + 
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .5,  aes(group = lang_group), 
-               position = position_dodge(width = 0.9)) +
-  geom_abline(intercept = 0, lty = 3, slope = 0) +
-  ylab("Difference score") +
-  xlab("Age Group") +
-  scale_colour_manual(name = "Language group", values = c("darkcyan", "darkred")) +
-  scale_fill_manual(name = "Language group", values = c("darkcyan", "darkred")) + 
-  theme(text = element_text(size = 20), legend.position = "bottom")
+freq_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
+                                        slab = lab, data = d_z_freq, method = "REML")
+
+alpha <- .05
+
+p_freq_lang <- predict(freq_lang_only_matched, newmods =  c(0,1)) %>%
+  as_tibble %>%
+  mutate(lang_group = levels(d_z_freq$lang_group), 
+         age_group = "",
+         lab = "Meta-analytic estimate")
+
+freq_forest_data <- ungroup(d_z_freq) %>%
+  mutate(pred = d, 
+         ci.lb = d - qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
+         ci.ub = d + qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
+         inverse_vars = 1/d_var, 
+         age_group = as.character(age_group)) %>%
+  bind_rows(p_freq_lang) %>%
+  mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", ""))) 
+
+ggplot(freq_forest_data,
+       aes(x = lab, y = pred,
+           ymin = ci.lb, ymax = ci.ub, col = lang_group)) +
+  geom_point(aes(y = d, size = inverse_vars),
+             position = position_dodge(width = .2)) +
+  geom_point(data = filter(freq_forest_data, lab == "Meta-analytic estimate"), pch = 5)+
+  geom_linerange(position = position_dodge(width = .2)) +
+  facet_grid(age_group ~ ., scales = "free", space = "free") +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
+  coord_flip() +
+  scale_size_continuous(guide = FALSE) +
+  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#000000")) +
+  xlab("Lab") +
+  ylab("Effect Size") +
+  theme(legend.position = "bottom")
 ```
 
 ```{r duration-of-looks}
@@ -499,28 +533,45 @@ dur_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var,
 
 ### Duration of looks
 
-The cross-lab meta-analysis on duration of looks yielded an estimated reference-level intercept (i.e., 6–9 month-old monolingual infants) of `r round(dur_meta$b[1],2)` (CI = [`r round(dur_meta$ci.lb[1],2)` - `r round(dur_meta$ci.ub[1], 2)`], $z = `r round(dur_meta$z[1], 2)`$, $p `r papaja::printp(dur_meta$pval[1])`$). Similiar to the two previous meta-analyses, no significant effect was yielded. The effect of bilingualism was `r round(dur_meta$b[2],2)` (CI = [`r round(dur_meta$ci.lb[2],2)` - `r round(dur_meta$ci.ub[2], 2)`], $z = `r round(dur_meta$z[2], 2)`$, $p `r papaja::printp(dur_meta$pval[2])`$), suggesting a slight but non-significant increase in duration of looks for biligual infants compared to monolingual infants. Age yielded an effect of `r round(dur_meta$b[3],2)` (CI = [`r round(dur_meta$ci.lb[3],2)` - `r round(dur_meta$ci.ub[3], 2)`], $z = `r round(dur_meta$z[3], 2)`$, $p `r papaja::printp(dur_meta$pval[3])`$), indicating a non-significant increase in measured effect size for 12-15 month-old infants relative to 6-9 month-old infants. As for the interaction between bilingualism and age, the effect was `r round(dur_meta$b[4],2)` (CI = [`r round(dur_meta$ci.lb[4],2)` - `r round(dur_meta$ci.ub[4], 2)`], $z = `r round(dur_meta$z[4], 2)`$, $p `r papaja::printp(dur_meta$pval[4])`$), implying that the difference between monolingual and bilingualism infants was not significantly higher for 12-15 month-old infants than for 6-9 month-old. A pirate plot for this meta-analysis is shown in Figure 4. 
+The cross-lab meta-analysis on duration of looks yielded an estimated reference-level intercept (i.e., 6–9 month-old monolingual infants) of `r round(dur_meta$b[1],2)` (CI = [`r round(dur_meta$ci.lb[1],2)` - `r round(dur_meta$ci.ub[1], 2)`], $z = `r round(dur_meta$z[1], 2)`$, $p `r papaja::printp(dur_meta$pval[1])`$). Similiar to the two previous meta-analyses, no significant effect was yielded. The effect of bilingualism was `r round(dur_meta$b[2],2)` (CI = [`r round(dur_meta$ci.lb[2],2)` - `r round(dur_meta$ci.ub[2], 2)`], $z = `r round(dur_meta$z[2], 2)`$, $p `r papaja::printp(dur_meta$pval[2])`$), suggesting a slight but non-significant increase in duration of looks for biligual infants compared to monolingual infants. Age yielded an effect of `r round(dur_meta$b[3],2)` (CI = [`r round(dur_meta$ci.lb[3],2)` - `r round(dur_meta$ci.ub[3], 2)`], $z = `r round(dur_meta$z[3], 2)`$, $p `r papaja::printp(dur_meta$pval[3])`$), indicating a non-significant increase in measured effect size for 12-15 month-old infants relative to 6-9 month-old infants. As for the interaction between bilingualism and age, the effect was `r round(dur_meta$b[4],2)` (CI = [`r round(dur_meta$ci.lb[4],2)` - `r round(dur_meta$ci.ub[4], 2)`], $z = `r round(dur_meta$z[4], 2)`$, $p `r papaja::printp(dur_meta$pval[4])`$), implying that the difference between monolingual and bilingualism infants was not significantly higher for 12-15 month-old infants than for 6-9 month-old. A forest plot for this meta-analysis is shown in Figure 4. 
 
-```{r fig4, fig.cap="Pirate plot for the cross-lab meta-analysis on duration of looks."}
+```{r fig4, fig.cap="Forest plot for the cross-lab meta-analysis on duration of looks."}
 
-d_duration_meta %>% 
-  group_by(subid, age_group, lang_group) %>% 
-  summarise(prop = mean(prop, na.rm = TRUE)) %>% 
-  ggplot(aes(x = age_group, y = prop)) + 
-  geom_violin(aes(colour = lang_group), alpha = .5) +
-  # geom_dotplot(binaxis = "y", stackdir = "center", position = position_dodge(width = 0.9), 
-  #              dotsize = .6, alpha = 0.4, aes(fill = lang_group)) +
-  geom_point(aes(x = age_group, color= lang_group), line = "black", alpha = .3, position = position_jitterdodge()) +
-  stat_summary(fun.y = "mean", geom = "bar", color = "black", aes(fill = lang_group), 
-               alpha = .4, position = position_dodge(width = 0.9)) + 
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .5,  aes(group = lang_group), 
-               position = position_dodge(width = 0.9)) +
-  geom_abline(intercept = 0, lty = 3, slope = 0) +
-  ylab("Difference score") +
-  xlab("Age Group") +
-  scale_colour_manual(name = "Language group", values = c("darkcyan", "darkred")) +
-  scale_fill_manual(name = "Language group", values = c("darkcyan", "darkred")) + 
-  theme(text = element_text(size = 20), legend.position = "bottom")
+dur_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
+                                       slab = lab, data = d_z_dur, method = "REML")
+
+alpha <- .05
+
+p_dur_lang <- predict(dur_lang_only_matched, newmods =  c(0,1)) %>%
+  as_tibble %>%
+  mutate(lang_group = levels(d_z_dur$lang_group), 
+         age_group = "",
+         lab = "Meta-analytic estimate")
+
+dur_forest_data <- ungroup(d_z_dur) %>%
+  mutate(pred = d, 
+         ci.lb = d - qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
+         ci.ub = d + qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
+         inverse_vars = 1/d_var, 
+         age_group = as.character(age_group)) %>%
+  bind_rows(p_dur_lang) %>%
+  mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", ""))) 
+
+ggplot(dur_forest_data,
+       aes(x = lab, y = pred,
+           ymin = ci.lb, ymax = ci.ub, col = lang_group)) +
+  geom_point(aes(y = d, size = inverse_vars),
+             position = position_dodge(width = .2)) +
+  geom_point(data = filter(dur_forest_data, lab == "Meta-analytic estimate"), pch = 5)+
+  geom_linerange(position = position_dodge(width = .2)) +
+  facet_grid(age_group ~ ., scales = "free", space = "free") +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
+  coord_flip() +
+  scale_size_continuous(guide = FALSE) +
+  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#000000")) +
+  xlab("Lab") +
+  ylab("Effect Size") +
+  theme(legend.position = "bottom")
 ```
 
 ```{r latency}
@@ -557,30 +608,45 @@ Latency_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var,
 
 ### Latency 
 
-The cross-lab meta-analysis on latency yielded a reference-level intercept (i.e., 6–9 month-old monolingual infants) of `r round(Latency_meta$b[1],2)` (CI = [`r round(Latency_meta$ci.lb[1],2)` - `r round(Latency_meta$ci.ub[1], 2)`], $z = `r round(Latency_meta$z[1], 2)`$, $p `r papaja::printp(Latency_meta$pval[1])`$). Bilingualism yielded an effect of `r round(Latency_meta$b[2],2)` (CI = [`r round(Latency_meta$ci.lb[2],2)` - `r round(Latency_meta$ci.ub[2], 2)`], $z = `r round(Latency_meta$z[2], 2)`$, $p `r papaja::printp(Latency_meta$pval[2])`$), suggesting a non-significant increase in duration of looks for biligual infants relative to monolingual infants. Age yielded an effect of `r round(Latency_meta$b[3],2)` (CI = [`r round(Latency_meta$ci.lb[3],2)` - `r round(Latency_meta$ci.ub[3], 2)`], $z = `r round(Latency_meta$z[3], 2)`$, $p `r papaja::printp(Latency_meta$pval[3])`$), indicating a non-significant decrease in latency for 12-15 month-old infants compared to 6-9 month-old infants. The effect of the interaction between bilingualism and age was `r round(Latency_meta$b[4],2)` (CI = [`r round(Latency_meta$ci.lb[4],2)` - `r round(Latency_meta$ci.ub[4], 2)`], $z = `r round(Latency_meta$z[4], 2)`$, $p `r papaja::printp(Latency_meta$pval[4])`$), implying that the difference between monolingual and bilingualism infants was smaller for 12-15 month-old infants than for 6-9 month-old but this difference was not significant. A pirate plot for this meta-analysis is shown in Figure 5. 
+The cross-lab meta-analysis on latency yielded a reference-level intercept (i.e., 6–9 month-old monolingual infants) of `r round(Latency_meta$b[1],2)` (CI = [`r round(Latency_meta$ci.lb[1],2)` - `r round(Latency_meta$ci.ub[1], 2)`], $z = `r round(Latency_meta$z[1], 2)`$, $p `r papaja::printp(Latency_meta$pval[1])`$). Bilingualism yielded an effect of `r round(Latency_meta$b[2],2)` (CI = [`r round(Latency_meta$ci.lb[2],2)` - `r round(Latency_meta$ci.ub[2], 2)`], $z = `r round(Latency_meta$z[2], 2)`$, $p `r papaja::printp(Latency_meta$pval[2])`$), suggesting a non-significant increase in duration of looks for biligual infants relative to monolingual infants. Age yielded an effect of `r round(Latency_meta$b[3],2)` (CI = [`r round(Latency_meta$ci.lb[3],2)` - `r round(Latency_meta$ci.ub[3], 2)`], $z = `r round(Latency_meta$z[3], 2)`$, $p `r papaja::printp(Latency_meta$pval[3])`$), indicating a non-significant decrease in latency for 12-15 month-old infants compared to 6-9 month-old infants. The effect of the interaction between bilingualism and age was `r round(Latency_meta$b[4],2)` (CI = [`r round(Latency_meta$ci.lb[4],2)` - `r round(Latency_meta$ci.ub[4], 2)`], $z = `r round(Latency_meta$z[4], 2)`$, $p `r papaja::printp(Latency_meta$pval[4])`$), implying that the difference between monolingual and bilingualism infants was smaller for 12-15 month-old infants than for 6-9 month-old but this difference was not significant. A forest plot for this meta-analysis is shown in Figure 5. 
 
-```{r fig5, fig.cap="Pirate plot for the cross-lab meta-analysis on latency."}
+```{r fig5, fig.cap="Forest plot for the cross-lab meta-analysis on latency."}
 
-d_latency_meta %>% 
-  filter(object == "congruent") %>%
-  group_by(subid, age_group, lang_group) %>% 
-  summarise(latency = mean(latency, na.rm = TRUE)) %>% 
-    group_by(subid, age_group, lang_group) %>% 
-  ggplot(aes(x = age_group, y = latency)) + 
-  geom_violin(aes(colour = lang_group), alpha = .5) +
-  # geom_dotplot(binaxis = "y", stackdir = "center", position = position_dodge(width = 0.9), 
-  #              dotsize = .6, alpha = 0.4, aes(fill = lang_group)) +
-  geom_point(aes(x = age_group, color= lang_group), line = "black", alpha = .3, position = position_jitterdodge()) +
-  stat_summary(fun.y = "mean", geom = "bar", color = "black", aes(fill = lang_group), 
-               alpha = .4, position = position_dodge(width = 0.9)) + 
-  stat_summary(fun.data = mean_se, geom = "errorbar", width = .5,  aes(group = lang_group), 
-               position = position_dodge(width = 0.9)) +
-  geom_abline(intercept = 0, lty = 3, slope = 0) +
-  ylab("Latency (ms)") +
-  xlab("Age Group") +
-  scale_colour_manual(name = "Language group", values = c("darkcyan", "darkred")) +
-  scale_fill_manual(name = "Language group", values = c("darkcyan", "darkred")) + 
-  theme(text = element_text(size = 20), legend.position = "bottom")
+latency_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
+                                      slab = lab, data = d_z_latency, method = "REML")
+
+alpha <- .05
+
+p_latency_lang <- predict(latency_lang_only_matched, newmods =  c(0,1)) %>%
+  as_tibble %>%
+  mutate(lang_group = levels(d_z_latency$lang_group), 
+         age_group = "",
+         lab = "Meta-analytic estimate")
+
+latency_forest_data <- ungroup(d_z_latency) %>%
+  mutate(pred = d, 
+         ci.lb = d - qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
+         ci.ub = d + qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
+         inverse_vars = 1/d_var, 
+         age_group = as.character(age_group)) %>%
+  bind_rows(p_latency_lang) %>%
+  mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", ""))) 
+
+ggplot(latency_forest_data,
+       aes(x = lab, y = pred,
+           ymin = ci.lb, ymax = ci.ub, col = lang_group)) +
+  geom_point(aes(y = d, size = inverse_vars),
+             position = position_dodge(width = .2)) +
+  geom_point(data = filter(latency_forest_data, lab == "Meta-analytic estimate"), pch = 5)+
+  geom_linerange(position = position_dodge(width = .2)) +
+  facet_grid(age_group ~ ., scales = "free", space = "free") +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
+  coord_flip() +
+  scale_size_continuous(guide = FALSE) +
+  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#000000")) +
+  xlab("Lab") +
+  ylab("Effect Size") +
+  theme(legend.position = "bottom")
 ```
 
 ## Mixed-effects regression framework 
@@ -654,24 +720,27 @@ papaja::apa_table(firstshift_coefs, format.args = list(digits = 3),
 
 \noindent Table 2 shows coefficient estimates from this model and Figure 6 visualizes this model. To aid convergence, we scaled age, and the random effect of item was removed. Positive coefficients indicate a higher probability of making first look to the congruent object. While there is no obvious evidence for a difference between monolingual and bilingual infants, a significant positive effect of age was found, suggesting that older infants had a greater probability of making their first looks to the congruent as opposed to the incongruent object. The interaction of bilingualism and age was, however, not significant.
 
-```{r fig6, fig.cap="The logistic regression model predicting the probability of making first look to the congruent object."}
+```{r fig6, fig.cap="The logistic regression model predicting the probability of making first look to the congruent object, plotted with individual participants' probabilities."}
 
 d_first%>%
   mutate(pred_prob = predict(first_glmer, type ="response"))%>%
   mutate(first_shift = case_when(first_shift == "congruent" ~ 1, first_shift == "incongruent" ~ 0))%>%
   mutate(first_shift = as.integer(first_shift))%>%
   ggplot() +
-  aes(x=age_days, y=first_shift, color=lang_group) +
-  geom_point()+
+  aes(x=age_days, y=pred_prob, color=lang_group) +
+  geom_point(alpha = 0.20, aes(shape=lang_group), size=3.5) +
   geom_smooth(method="glm",
               aes(x=age_days, y=pred_prob),
               method.args = list(family = "quasibinomial"),
               se = FALSE)+
   ylab("Probability of first look to the congruent AOI") +
   xlab("Age in days") +
-  scale_colour_manual(name = "Language group", values = c("darkcyan", "darkred")) +
-  scale_fill_manual(name = "Language group", values = c("darkcyan", "darkred")) + 
-  theme(text = element_text(size = 12), legend.position = "bottom")
+  geom_hline(yintercept=0.50, linetype="dashed", color = "#000000") +
+  scale_y_continuous(limits=c(0.40, 1.00), breaks=seq(0.40,1.00,0.1)) + 
+  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#000000")) +
+  scale_fill_manual(name = "Language group", values = c("#bdbdbd", "#000000")) + 
+  theme(text = element_text(size = 12), legend.position = "bottom") +
+  labs(color  = "Language group", linetype = "Language group", shape = "Language group")
 ```
 
 ### Frequency of shifting gaze towards the AOI 
@@ -721,11 +790,11 @@ d_freq %>%
   ggplot() +
   facet_grid(.~lang_group) +
   aes(x = age_days, y = n_shift, color = object) +
-  geom_smooth(method = "lm", aes(fill=object)) +
+  geom_smooth(method = "lm", aes(fill=object), se=FALSE) +
   ylab("Frequency of shifts towards the AOI") +
   xlab("Age in days") +
-  scale_colour_manual(name = "AOI", values = c("darkcyan", "darkred")) +
-  scale_fill_manual(name = "AOI", values = c("darkcyan", "darkred")) + 
+  scale_colour_manual(name = "AOI", values = c("#000000", "#bdbdbd")) +
+  scale_fill_manual(name = "AOI", values = c("#000000", "#bdbdbd")) + 
   theme(text = element_text(size = 12), legend.position = "bottom")
 ```
 
@@ -776,7 +845,12 @@ d_duration %>%
   ggplot() +
   facet_grid(.~lang_group) +
   aes(x = age_days, y = duration, color = object) +
-  geom_smooth(method = "lm", aes(fill=object)) 
+  geom_smooth(method = "lm", aes(fill=object), se=FALSE) +
+  ylab("Duration of fixations towards the AOI") +
+  xlab("Age in days") +
+  scale_colour_manual(name = "AOI", values = c("#000000", "#bdbdbd")) +
+  scale_fill_manual(name = "AOI", values = c("#000000", "#bdbdbd")) + 
+  theme(text = element_text(size = 12), legend.position = "bottom")
 ```
 
 ### Latency
@@ -821,14 +895,19 @@ papaja::apa_table(latency_coefs, format.args = list(digits = 3),
 
 \noindent Table 5 shows coefficient estimates from this model and Figure 9 visualizes this model. The main effect of age was significant, suggesting that older infants had a shorter latency to first fixation than younger infants. However, the effect of aoi was not significant, implying that latency did not reliably differ as a function of whether it is to the congruent or incongruent AOI. Other coefficients were also non-significant.
 
-```{r fig9, fig.cap="The linear regression model predicting duration of fixations towards the AOI."}
+```{r fig9, fig.cap="The linear regression model predicting latency of fixations towards the AOI."}
 
 d_latency %>%
   group_by(lang_group, object) %>%
   ggplot() +
   facet_grid(.~lang_group) +
   aes(x = age_days, y = latency, color = object) +
-  geom_smooth(method = "lm", aes(fill=object)) 
+  geom_smooth(method = "lm", aes(fill=object), se=FALSE) +
+  ylab("Latency of fixations towards the AOI") +
+  xlab("Age in days") +
+  scale_colour_manual(name = "AOI", values = c("#000000", "#bdbdbd")) +
+  scale_fill_manual(name = "AOI", values = c("#000000", "#bdbdbd")) + 
+  theme(text = element_text(size = 12), legend.position = "bottom")
 ```
 
 ## Exploratory analyses
