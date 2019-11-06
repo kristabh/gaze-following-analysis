@@ -357,6 +357,45 @@ first_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var,
 summary(first_meta)
 ```
 
+### First look meta visualization
+```{r first meta forest plot}
+first_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
+                                  slab = lab, data = d_z_first, method = "REML")
+
+alpha <- .05
+
+p_first_lang <- predict(first_lang_only_matched, newmods =  c(0,1)) %>%
+  as_tibble %>%
+  mutate(lang_group = levels(d_z_first$lang_group), 
+         age_group = "",
+         lab = "Meta-analytic estimate")
+
+first_forest_data <- ungroup(d_z_first) %>%
+  mutate(pred = d, 
+         ci.lb = d - qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
+         ci.ub = d + qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
+         inverse_vars = 1/d_var, 
+         age_group = as.character(age_group)) %>%
+  bind_rows(p_first_lang) %>%
+  mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", ""))) 
+
+ggplot(first_forest_data,
+       aes(x = lab, y = pred,
+           ymin = ci.lb, ymax = ci.ub, col = lang_group)) +
+  geom_point(aes(y = d, size = inverse_vars),
+             position = position_dodge(width = .2)) +
+  geom_point(data = filter(first_forest_data, lab == "Meta-analytic estimate"), pch = 5)+
+  geom_linerange(position = position_dodge(width = .2)) +
+  facet_grid(age_group ~ ., scales = "free", space = "free") +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
+  coord_flip() +
+  scale_size_continuous(guide = FALSE) +
+  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#000000")) +
+  xlab("Lab") +
+  ylab("Effect Size") +
+  theme(legend.position = "bottom")
+```
+
 ## Frequency means
 ```{r}
 d_freq_meta %>%
@@ -364,8 +403,6 @@ d_freq_meta %>%
   summarise(sd = sd(prop, na.rm = TRUE), prop = mean(prop, na.rm = TRUE)) %>%
   select(age_group, lang_group, prop, sd)
 ```
-
-What is the distribution of infants' first-look proportions?
 
 ```{r}
 
@@ -390,6 +427,45 @@ freq_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var,
 summary(freq_meta)
 ```
 
+### Frequency meta visualization
+```{r frequency meta forest plot}
+freq_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
+                                        slab = lab, data = d_z_freq, method = "REML")
+
+alpha <- .05
+
+p_freq_lang <- predict(freq_lang_only_matched, newmods =  c(0,1)) %>%
+  as_tibble %>%
+  mutate(lang_group = levels(d_z_freq$lang_group), 
+         age_group = "",
+         lab = "Meta-analytic estimate")
+
+freq_forest_data <- ungroup(d_z_freq) %>%
+  mutate(pred = d, 
+         ci.lb = d - qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
+         ci.ub = d + qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
+         inverse_vars = 1/d_var, 
+         age_group = as.character(age_group)) %>%
+  bind_rows(p_freq_lang) %>%
+  mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", ""))) 
+
+ggplot(freq_forest_data,
+       aes(x = lab, y = pred,
+           ymin = ci.lb, ymax = ci.ub, col = lang_group)) +
+  geom_point(aes(y = d, size = inverse_vars),
+             position = position_dodge(width = .2)) +
+  geom_point(data = filter(freq_forest_data, lab == "Meta-analytic estimate"), pch = 5)+
+  geom_linerange(position = position_dodge(width = .2)) +
+  facet_grid(age_group ~ ., scales = "free", space = "free") +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
+  coord_flip() +
+  scale_size_continuous(guide = FALSE) +
+  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#000000")) +
+  xlab("Lab") +
+  ylab("Effect Size") +
+  theme(legend.position = "bottom")
+```
+
 ## Duration means
 ```{r}
 d_duration_meta %>%
@@ -411,6 +487,45 @@ d_z_dur <- d_duration_meta %>%
 dur_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
                     slab = lab, data = d_z_dur, method = "REML") 
 summary(dur_meta)
+```
+
+### Duration meta visualization
+```{r duration meta forest plot}
+dur_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
+                                       slab = lab, data = d_z_dur, method = "REML")
+
+alpha <- .05
+
+p_dur_lang <- predict(dur_lang_only_matched, newmods =  c(0,1)) %>%
+  as_tibble %>%
+  mutate(lang_group = levels(d_z_dur$lang_group), 
+         age_group = "",
+         lab = "Meta-analytic estimate")
+
+dur_forest_data <- ungroup(d_z_dur) %>%
+  mutate(pred = d, 
+         ci.lb = d - qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
+         ci.ub = d + qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
+         inverse_vars = 1/d_var, 
+         age_group = as.character(age_group)) %>%
+  bind_rows(p_dur_lang) %>%
+  mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", ""))) 
+
+ggplot(dur_forest_data,
+       aes(x = lab, y = pred,
+           ymin = ci.lb, ymax = ci.ub, col = lang_group)) +
+  geom_point(aes(y = d, size = inverse_vars),
+             position = position_dodge(width = .2)) +
+  geom_point(data = filter(dur_forest_data, lab == "Meta-analytic estimate"), pch = 5)+
+  geom_linerange(position = position_dodge(width = .2)) +
+  facet_grid(age_group ~ ., scales = "free", space = "free") +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
+  coord_flip() +
+  scale_size_continuous(guide = FALSE) +
+  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#000000")) +
+  xlab("Lab") +
+  ylab("Effect Size") +
+  theme(legend.position = "bottom")
 ```
 
 ## Latency means
@@ -439,11 +554,49 @@ Latency_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var,
 summary(Latency_meta)
 ```
 
+### Latency meta visualization
+```{r latency meta forest plot}
+latency_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
+                                      slab = lab, data = d_z_latency, method = "REML")
+
+alpha <- .05
+
+p_latency_lang <- predict(latency_lang_only_matched, newmods =  c(0,1)) %>%
+  as_tibble %>%
+  mutate(lang_group = levels(d_z_latency$lang_group), 
+         age_group = "",
+         lab = "Meta-analytic estimate")
+
+latency_forest_data <- ungroup(d_z_latency) %>%
+  mutate(pred = d, 
+         ci.lb = d - qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
+         ci.ub = d + qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
+         inverse_vars = 1/d_var, 
+         age_group = as.character(age_group)) %>%
+  bind_rows(p_latency_lang) %>%
+  mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", ""))) 
+
+ggplot(latency_forest_data,
+       aes(x = lab, y = pred,
+           ymin = ci.lb, ymax = ci.ub, col = lang_group)) +
+  geom_point(aes(y = d, size = inverse_vars),
+             position = position_dodge(width = .2)) +
+  geom_point(data = filter(latency_forest_data, lab == "Meta-analytic estimate"), pch = 5)+
+  geom_linerange(position = position_dodge(width = .2)) +
+  facet_grid(age_group ~ ., scales = "free", space = "free") +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
+  coord_flip() +
+  scale_size_continuous(guide = FALSE) +
+  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#000000")) +
+  xlab("Lab") +
+  ylab("Effect Size") +
+  theme(legend.position = "bottom")
+```
+
 
 #MLM framework
 
 ## First_look MLM
-
 ```{r}
 ##The preregistered model: But get "singular fit" & "failure to converge" error message
 #first_glmer <- d_first %>% 
@@ -487,7 +640,6 @@ first_glmer <- d_first %>%
 )
 
 summary(first_glmer)
-
 ```
 
 ### First_look GLMEM visualization
@@ -497,21 +649,23 @@ d_first%>%
   mutate(first_shift = case_when(first_shift == "congruent" ~ 1, first_shift == "incongruent" ~ 0))%>%
   mutate(first_shift = as.integer(first_shift))%>%
   ggplot() +
-  aes(x=age_days, y=first_shift, color=lang_group) +
-  geom_point()+
+  aes(x=age_days, y=pred_prob, color=lang_group) +
+  geom_point(alpha = 0.20, aes(shape=lang_group), size=3.5) +
   geom_smooth(method="glm",
               aes(x=age_days, y=pred_prob),
               method.args = list(family = "quasibinomial"),
               se = FALSE)+
   ylab("Probability of first look to the congruent AOI") +
   xlab("Age in days") +
-  scale_colour_manual(name = "Language group", values = c("darkcyan", "darkred")) +
-  scale_fill_manual(name = "Language group", values = c("darkcyan", "darkred")) + 
-  theme(text = element_text(size = 12), legend.position = "bottom")
+  geom_hline(yintercept=0.50, linetype="dashed", color = "#000000") +
+  scale_y_continuous(limits=c(0.40, 1.00), breaks=seq(0.40,1.00,0.1)) + 
+  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#000000")) +
+  scale_fill_manual(name = "Language group", values = c("#bdbdbd", "#000000")) + 
+  theme(text = element_text(size = 12), legend.position = "bottom") +
+  labs(color  = "Language group", linetype = "Language group", shape = "Language group")
 ```
 
 ## Frequency LMEM
-
 ```{r}
 ##The preregistered model: But get "singular fit" error message
 #freq_lmer <- d_freq %>% 
@@ -546,28 +700,25 @@ freq_lmer <- d_freq %>%
  )
 
 summary(freq_lmer)
-
 ```
 
 ### Freq_look LMEM visualization
-
 ```{r}
 d_freq %>%
   group_by(lang_group, object) %>%
   ggplot() +
   facet_grid(.~lang_group) +
   aes(x = age_days, y = n_shift, color = object) +
-  geom_smooth(method = "lm", aes(fill=object)) +
+  geom_smooth(method = "lm", aes(fill=object), se=FALSE) +
   ylab("Frequency of shifts towards the AOI") +
   xlab("Age in days") +
-  scale_colour_manual(name = "AOI", values = c("darkcyan", "darkred")) +
-  scale_fill_manual(name = "AOI", values = c("darkcyan", "darkred")) + 
+  scale_colour_manual(name = "AOI", values = c("#000000", "#bdbdbd")) +
+  scale_fill_manual(name = "AOI", values = c("#000000", "#bdbdbd")) + 
   theme(text = element_text(size = 12), legend.position = "bottom")
 ```
 
 
-# Duration LMEM
-
+## Duration LMEM
 ```{r}
 ##The preregistered model: But get "singular fit" error message
 #duration_lmer <- d_duration %>% 
@@ -594,12 +745,9 @@ duration_lmer <- d_duration %>%
 )
 
 summary(duration_lmer)
-
-
-
 ```
 
-## Duration LMEM visualization
+### Duration LMEM visualization
 
 ```{r}
 d_duration %>%
@@ -607,12 +755,16 @@ d_duration %>%
   ggplot() +
   facet_grid(.~lang_group) +
   aes(x = age_days, y = duration, color = object) +
-  geom_smooth(method = "lm", aes(fill=object)) 
+  geom_smooth(method = "lm", aes(fill=object), se=FALSE) +
+  ylab("Duration of fixations towards the AOI") +
+  xlab("Age in days") +
+  scale_colour_manual(name = "AOI", values = c("#000000", "#bdbdbd")) +
+  scale_fill_manual(name = "AOI", values = c("#000000", "#bdbdbd")) + 
+  theme(text = element_text(size = 12), legend.position = "bottom")
 ```
 
 
 ## Latency LMEM
-
 ```{r}
 ##The preregistered model: But "singular fit" error message
 #latency_lmer <- d_latency %>% 
@@ -640,8 +792,8 @@ latency_lmer <- d_latency %>%
 )
 
 summary(latency_lmer)
-
 ```
+
 ### Latency LMEM visualization
 ```{r}
 d_latency %>%
@@ -649,5 +801,10 @@ d_latency %>%
   ggplot() +
   facet_grid(.~lang_group) +
   aes(x = age_days, y = latency, color = object) +
-  geom_smooth(method = "lm", aes(fill=object)) 
+  geom_smooth(method = "lm", aes(fill=object), se=FALSE) +
+  ylab("Latency of fixations towards the AOI") +
+  xlab("Age in days") +
+  scale_colour_manual(name = "AOI", values = c("#000000", "#bdbdbd")) +
+  scale_fill_manual(name = "AOI", values = c("#000000", "#bdbdbd")) + 
+  theme(text = element_text(size = 12), legend.position = "bottom")
 ```
