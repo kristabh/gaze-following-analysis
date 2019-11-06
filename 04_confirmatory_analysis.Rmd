@@ -345,8 +345,8 @@ d_z_first <- d_first_meta %>%
   group_by(lab, age_group, lang_group) %>%
   summarise(d = mean(mean_prop, na.rm = TRUE) / sd(mean_prop, na.rm = TRUE), 
             n = length(unique(subid)), 
-            d_var = d_var_calc(n, d)) %>%
- filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
+            d_var = d_var_calc(n, d)) #%>%
+ #filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
 ```
 
 ## First look model with language and age
@@ -417,8 +417,8 @@ d_z_freq <- d_freq_meta %>%
   group_by(lab, age_group, lang_group) %>%
   summarise(d = mean(prop, na.rm = TRUE) / sd(prop, na.rm = TRUE), 
             n = length(unique(subid)), 
-            d_var = d_var_calc(n, d)) %>%
-  filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
+            d_var = d_var_calc(n, d)) #%>%
+  #filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
 ```
 
 ```{r frequency meta}
@@ -479,8 +479,8 @@ d_z_dur <- d_duration_meta %>%
   group_by(lab, age_group, lang_group) %>%
   summarise(d = mean(prop, na.rm = TRUE) / sd(prop, na.rm = TRUE), 
             n = length(unique(subid)), 
-            d_var = d_var_calc(n, d)) %>%
-  filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
+            d_var = d_var_calc(n, d)) #%>%
+  #filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
 ```
 
 ```{r duration meta}
@@ -545,8 +545,8 @@ d_z_latency <- d_latency_meta %>%
   group_by(lab, age_group, lang_group) %>% 
   summarise(d = mean(latency) / sd(latency),
             n = length(unique(subid)),
-            d_var = d_var_calc(n,d))%>%
-  filter(n>=10) #Filtering out subgroups with fewer than 10 babies
+            d_var = d_var_calc(n,d))#%>%
+  #filter(n>=10) #Filtering out subgroups with fewer than 10 babies
 
 ```{r latency meta}
 Latency_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
