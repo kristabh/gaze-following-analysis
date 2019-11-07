@@ -379,7 +379,7 @@ first_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var,
 ```
 ### First look
 
-We began by examining the relation of the proportion of first looks to bilingualism and age, fitting the main effect model to the `r nrow(d_z_first)` separate group means and variances (after aggregating by lab, age, and language group). The meta-analysis on first look yielded a reference-level intercept of `r round(first_meta$b[1],2)` (CI = [`r round(first_meta$ci.lb[1],2)` - `r round(first_meta$ci.ub[1], 2)`], $z = `r round(first_meta$z[1], 2)`$, $p `r papaja::printp(first_meta$pval[1])`$), reflecting the mean effect size for 6–9 month-old monolingual infants. Bilingualism yielded an effect of `r round(first_meta$b[2],2)` (CI = [`r round(first_meta$ci.lb[2],2)` - `r round(first_meta$ci.ub[2], 2)`], $z = `r round(first_meta$z[2], 2)`$, $p `r papaja::printp(first_meta$pval[2])`$), indicating a non-significant increase in measured effect size for bilingual relative to monolingual infants. Moreover, age yielded an effect of `r round(first_meta$b[3],2)` (CI = [`r round(first_meta$ci.lb[3],2)` - `r round(first_meta$ci.ub[3], 2)`], $z = `r round(first_meta$z[3], 2)`$, $p `r papaja::printp(first_meta$pval[3])`$), indicating a non-significant increase in the average proportion of first looks for older 12-15 month-old infants. Moreover, the interaction between bilingualism and age yielded an effect of `r round(first_meta$b[4],2)` (CI = [`r round(first_meta$ci.lb[4],2)` - `r round(first_meta$ci.ub[4], 2)`], $z = `r round(first_meta$z[4], 2)`$, $p `r papaja::printp(first_meta$pval[4])`$), suggesting that there was not a reliable difference in terms of bilingualism between the older and younger infants. Therefore, no significant differeces in the proportion of first looks were observed among monolingual and bilingual infants as well as older and young infants. A forest plot for this meta-analysis is shown in Figure 2. 
+We began by examining the relation of the proportion of first looks to bilingualism and age, fitting the main effect model to the `r nrow(d_z_first)` separate group means and variances (after aggregating by lab, age, and language group). The meta-analysis on first look yielded a reference-level intercept of `r round(first_meta$b[1],2)` (CI = [`r round(first_meta$ci.lb[1],2)` - `r round(first_meta$ci.ub[1], 2)`], $z = `r round(first_meta$z[1], 2)`$, $p = `r papaja::printp(first_meta$pval[1])`$), reflecting the mean effect size for 6–9 month-old monolingual infants. Bilingualism yielded an effect of `r round(first_meta$b[2],2)` (CI = [`r round(first_meta$ci.lb[2],2)` - `r round(first_meta$ci.ub[2], 2)`], $z = `r round(first_meta$z[2], 2)`$, $p = `r papaja::printp(first_meta$pval[2])`$), indicating a non-significant increase in measured effect size for bilingual relative to monolingual infants. Age yielded an effect of `r round(first_meta$b[3],2)` (CI = [`r round(first_meta$ci.lb[3],2)` - `r round(first_meta$ci.ub[3], 2)`], $z = `r round(first_meta$z[3], 2)`$, $p = `r papaja::printp(first_meta$pval[3])`$), indicating a non-significant increase in the average proportion of first looks for older 12-15 month-old infants. Moreover, the interaction between bilingualism and age yielded an effect of `r round(first_meta$b[4],2)` (CI = [`r round(first_meta$ci.lb[4],2)` - `r round(first_meta$ci.ub[4], 2)`], $z = `r round(first_meta$z[4], 2)`$, $p = `r papaja::printp(first_meta$pval[4])`$), suggesting that there was not a reliable difference in terms of bilingualism between the older and younger infants. Therefore, no significant differeces in the proportion of first looks were observed among monolingual and bilingual infants as well as older and young infants. A forest plot for this meta-analysis is shown in Figure 2. 
 
 ```{r fig2, fig.cap="Forest plot for the cross-lab meta-analysis on the proportion of first look."}
 
@@ -457,7 +457,7 @@ freq_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var,
 
 ### Frequency of looks
 
-We then investigated the relation of frequency of looks to bilingualism and age group. The reference-level intercept (i.e., 6–9 month-old monolingual infants) was `r round(freq_meta$b[1],2)` (CI = [`r round(freq_meta$ci.lb[1],2)` - `r round(freq_meta$ci.ub[1], 2)`], $z = `r round(freq_meta$z[1], 2)`$, $p `r papaja::printp(freq_meta$pval[1])`$). However, no significant effect was yielded in this meta-analysis. Bilingualism yielded an effect of `r round(freq_meta$b[2],2)` (CI = [`r round(freq_meta$ci.lb[2],2)` - `r round(freq_meta$ci.ub[2], 2)`], $z = `r round(freq_meta$z[2], 2)`$, $p `r papaja::printp(freq_meta$pval[2])`$), suggesting that the frequency of looks was on average not significantly larger for bilingual infants. As for age, an effect of  `r round(freq_meta$b[3],2)` (CI = [`r round(freq_meta$ci.lb[3],2)` - `r round(freq_meta$ci.ub[3], 2)`], $z = `r round(freq_meta$z[3], 2)`$, $p `r papaja::printp(freq_meta$pval[3])`$) was yielded, indicating a non-significant increase in frequency of looks for 12-15 month-old infants. The interaction between bilingualism and age yielded an effect of `r round(freq_meta$b[4],2)` (CI = [`r round(freq_meta$ci.lb[4],2)` - `r round(freq_meta$ci.ub[4], 2)`], $z = `r round(freq_meta$z[4], 2)`$, $p `r papaja::printp(freq_meta$pval[4])`$), implying that the difference between monolingual and bilingualism infants was not significantly lower for 12-15 month-old infants than for 6-9 month-old. A forest plot for this meta-analysis is shown in Figure 3. 
+We then investigated the relation of frequency of looks to bilingualism and age group. The reference-level intercept (i.e., 6–9 month-old monolingual infants) was `r round(freq_meta$b[1],2)` (CI = [`r round(freq_meta$ci.lb[1],2)` - `r round(freq_meta$ci.ub[1], 2)`], $z = `r round(freq_meta$z[1], 2)`$, $p = `r papaja::printp(freq_meta$pval[1])`$). However, no significant effect was yielded in this meta-analysis. Bilingualism yielded an effect of `r round(freq_meta$b[2],2)` (CI = [`r round(freq_meta$ci.lb[2],2)` - `r round(freq_meta$ci.ub[2], 2)`], $z = `r round(freq_meta$z[2], 2)`$, $p = `r papaja::printp(freq_meta$pval[2])`$), suggesting that the frequency of looks was on average not significantly larger for bilingual infants. As for age, an effect of  `r round(freq_meta$b[3],2)` (CI = [`r round(freq_meta$ci.lb[3],2)` - `r round(freq_meta$ci.ub[3], 2)`], $z = `r round(freq_meta$z[3], 2)`$, $p = `r papaja::printp(freq_meta$pval[3])`$) was yielded, indicating a non-significant increase in frequency of looks for 12-15 month-old infants. The interaction between bilingualism and age yielded an effect of `r round(freq_meta$b[4],2)` (CI = [`r round(freq_meta$ci.lb[4],2)` - `r round(freq_meta$ci.ub[4], 2)`], $z = `r round(freq_meta$z[4], 2)`$, $p = `r papaja::printp(freq_meta$pval[4])`$), implying that the difference between monolingual and bilingualism infants was not significantly lower for 12-15 month-old infants than for 6-9 month-old. A forest plot for this meta-analysis is shown in Figure 3. 
 
 ```{r fig3, fig.cap="Forest plot for the cross-lab meta-analysis on frequency of looks."}
 
@@ -533,7 +533,7 @@ dur_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var,
 
 ### Duration of looks
 
-The cross-lab meta-analysis on duration of looks yielded an estimated reference-level intercept (i.e., 6–9 month-old monolingual infants) of `r round(dur_meta$b[1],2)` (CI = [`r round(dur_meta$ci.lb[1],2)` - `r round(dur_meta$ci.ub[1], 2)`], $z = `r round(dur_meta$z[1], 2)`$, $p `r papaja::printp(dur_meta$pval[1])`$). Similiar to the two previous meta-analyses, no significant effect was yielded. The effect of bilingualism was `r round(dur_meta$b[2],2)` (CI = [`r round(dur_meta$ci.lb[2],2)` - `r round(dur_meta$ci.ub[2], 2)`], $z = `r round(dur_meta$z[2], 2)`$, $p `r papaja::printp(dur_meta$pval[2])`$), suggesting a slight but non-significant increase in duration of looks for biligual infants compared to monolingual infants. Age yielded an effect of `r round(dur_meta$b[3],2)` (CI = [`r round(dur_meta$ci.lb[3],2)` - `r round(dur_meta$ci.ub[3], 2)`], $z = `r round(dur_meta$z[3], 2)`$, $p `r papaja::printp(dur_meta$pval[3])`$), indicating a non-significant increase in measured effect size for 12-15 month-old infants relative to 6-9 month-old infants. As for the interaction between bilingualism and age, the effect was `r round(dur_meta$b[4],2)` (CI = [`r round(dur_meta$ci.lb[4],2)` - `r round(dur_meta$ci.ub[4], 2)`], $z = `r round(dur_meta$z[4], 2)`$, $p `r papaja::printp(dur_meta$pval[4])`$), implying that the difference between monolingual and bilingualism infants was not significantly higher for 12-15 month-old infants than for 6-9 month-old. A forest plot for this meta-analysis is shown in Figure 4. 
+The cross-lab meta-analysis on duration of looks yielded an estimated reference-level intercept (i.e., 6–9 month-old monolingual infants) of `r round(dur_meta$b[1],2)` (CI = [`r round(dur_meta$ci.lb[1],2)` - `r round(dur_meta$ci.ub[1], 2)`], $z = `r round(dur_meta$z[1], 2)`$, $p = `r papaja::printp(dur_meta$pval[1])`$). Similiar to the two previous meta-analyses, no significant effect was yielded. The effect of bilingualism was `r round(dur_meta$b[2],2)` (CI = [`r round(dur_meta$ci.lb[2],2)` - `r round(dur_meta$ci.ub[2], 2)`], $z = `r round(dur_meta$z[2], 2)`$, $p = `r papaja::printp(dur_meta$pval[2])`$), suggesting a slight but non-significant increase in duration of looks for biligual infants compared to monolingual infants. Age yielded an effect of `r round(dur_meta$b[3],2)` (CI = [`r round(dur_meta$ci.lb[3],2)` - `r round(dur_meta$ci.ub[3], 2)`], $z = `r round(dur_meta$z[3], 2)`$, $p = `r papaja::printp(dur_meta$pval[3])`$), indicating a non-significant increase in measured effect size for 12-15 month-old infants relative to 6-9 month-old infants. As for the interaction between bilingualism and age, the effect was `r round(dur_meta$b[4],2)` (CI = [`r round(dur_meta$ci.lb[4],2)` - `r round(dur_meta$ci.ub[4], 2)`], $z = `r round(dur_meta$z[4], 2)`$, $p = `r papaja::printp(dur_meta$pval[4])`$), implying that the difference between monolingual and bilingualism infants was not significantly higher for 12-15 month-old infants than for 6-9 month-old. A forest plot for this meta-analysis is shown in Figure 4. 
 
 ```{r fig4, fig.cap="Forest plot for the cross-lab meta-analysis on duration of looks."}
 
@@ -608,7 +608,7 @@ Latency_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var,
 
 ### Latency 
 
-The cross-lab meta-analysis on latency yielded a reference-level intercept (i.e., 6–9 month-old monolingual infants) of `r round(Latency_meta$b[1],2)` (CI = [`r round(Latency_meta$ci.lb[1],2)` - `r round(Latency_meta$ci.ub[1], 2)`], $z = `r round(Latency_meta$z[1], 2)`$, $p `r papaja::printp(Latency_meta$pval[1])`$). Bilingualism yielded an effect of `r round(Latency_meta$b[2],2)` (CI = [`r round(Latency_meta$ci.lb[2],2)` - `r round(Latency_meta$ci.ub[2], 2)`], $z = `r round(Latency_meta$z[2], 2)`$, $p `r papaja::printp(Latency_meta$pval[2])`$), suggesting a non-significant increase in duration of looks for biligual infants relative to monolingual infants. Age yielded an effect of `r round(Latency_meta$b[3],2)` (CI = [`r round(Latency_meta$ci.lb[3],2)` - `r round(Latency_meta$ci.ub[3], 2)`], $z = `r round(Latency_meta$z[3], 2)`$, $p `r papaja::printp(Latency_meta$pval[3])`$), indicating a non-significant decrease in latency for 12-15 month-old infants compared to 6-9 month-old infants. The effect of the interaction between bilingualism and age was `r round(Latency_meta$b[4],2)` (CI = [`r round(Latency_meta$ci.lb[4],2)` - `r round(Latency_meta$ci.ub[4], 2)`], $z = `r round(Latency_meta$z[4], 2)`$, $p `r papaja::printp(Latency_meta$pval[4])`$), implying that the difference between monolingual and bilingualism infants was smaller for 12-15 month-old infants than for 6-9 month-old but this difference was not significant. A forest plot for this meta-analysis is shown in Figure 5. 
+The cross-lab meta-analysis on latency yielded a reference-level intercept (i.e., 6–9 month-old monolingual infants) of `r round(Latency_meta$b[1],2)` (CI = [`r round(Latency_meta$ci.lb[1],2)` - `r round(Latency_meta$ci.ub[1], 2)`], $z = `r round(Latency_meta$z[1], 2)`$, $p = `r papaja::printp(Latency_meta$pval[1])`$). Bilingualism yielded an effect of `r round(Latency_meta$b[2],2)` (CI = [`r round(Latency_meta$ci.lb[2],2)` - `r round(Latency_meta$ci.ub[2], 2)`], $z = `r round(Latency_meta$z[2], 2)`$, $p = `r papaja::printp(Latency_meta$pval[2])`$), suggesting a non-significant increase in duration of looks for biligual infants relative to monolingual infants. Age yielded an effect of `r round(Latency_meta$b[3],2)` (CI = [`r round(Latency_meta$ci.lb[3],2)` - `r round(Latency_meta$ci.ub[3], 2)`], $z = `r round(Latency_meta$z[3], 2)`$, $p = `r papaja::printp(Latency_meta$pval[3])`$), indicating a non-significant decrease in latency for 12-15 month-old infants compared to 6-9 month-old infants. The effect of the interaction between bilingualism and age was `r round(Latency_meta$b[4],2)` (CI = [`r round(Latency_meta$ci.lb[4],2)` - `r round(Latency_meta$ci.ub[4], 2)`], $z = `r round(Latency_meta$z[4], 2)`$, $p = `r papaja::printp(Latency_meta$pval[4])`$), implying that the difference between monolingual and bilingualism infants was smaller for 12-15 month-old infants than for 6-9 month-old but this difference was not significant. A forest plot for this meta-analysis is shown in Figure 5. 
 
 ```{r fig5, fig.cap="Forest plot for the cross-lab meta-analysis on latency."}
 
@@ -664,7 +664,7 @@ bilingual: A dummy-coded variable where 0 is monolingual, 1 is bilingual.
 age_days: The infant’s age in days, centred for ease of interpretation.
 aoi: A dummy-coded variable for analysis of freq_shift, total_look, and latency, for which data from both AOIs are reported. Here, 0 denotes the congruous AOI, and 1 denotes the incongruous AOI.
 
-We ran separate models for each DV. We fit all models using the `lme4` package [@bates2014fitting]. For first_shift, we fit a logistic model as this variable is binary at the trial level. The initial model specification was:
+We ran separate models for each DV. We fit all models using the `lme4` package (Bates et al., 2015). For first_shift, we fit a logistic model as this variable is binary at the trial level. The initial model specification was:
 
 	first_shift ~ bilingual * age_days + 
 (1|subid) + 
@@ -682,13 +682,9 @@ DV ~ bilingual * age_days * aoi +
 
 After pruning random effects for non-convergence, our final model specification for first shift was:
 
-\begin{equation}
-\begin{split}
-\text{first_shift} \sim & \text{bilingual} * \text{age_days} + \\
-& (1 \mid \text{subid}) + \\
-& (1 \mid \text{lab}).
-\end{split}
-\end{equation}
+  first_shift ~ bilingual * age_days + 
+(1|subid) + 
+(1|lab) 
 
 ```{r coef_table_firstshift, results="asis"}
 
@@ -747,13 +743,9 @@ d_first%>%
 
 The linear mixed-effects model for frequency of shift was also modified by pruning random effects for non-convergence. The final model specification for frequency of shift was:
 
-\begin{equation}
-\begin{split}
-\text{freq_shift} \sim & \text{bilingual} * \text{age_days} *  \text{aoi} + \\
-& (1 \mid \text{subid}) + \\
-& (1 \mid \text{item}).
-\end{split}
-\end{equation}
+  freq_shift ~ bilingual * age_days * aoi + 
+(1|subid) + 
+(1|item)
 
 ```{r coef_table_frequency, results="asis"}
 freq_lmer <- d_freq %>% 
@@ -802,13 +794,9 @@ d_freq %>%
 
 The final model specification for duration of fixations was:
 
-\begin{equation}
-\begin{split}
-\text{total_look} \sim & \text{bilingual} * \text{age_days} *  \text{aoi} + \\
-& (1 \mid \text{lab}) + \\
-& (1 \mid \text{item}).
-\end{split}
-\end{equation}
+  total_look ~ bilingual * age_days * aoi + 
+(1|lab) + 
+(1|item)
 
 ```{r coef_table_duration, results="asis"}
 duration_lmer <- d_duration %>% 
@@ -857,14 +845,10 @@ d_duration %>%
 
 As the preregistered model specification for latency ran into convergence issue, random effects were pruned for the final model specification:
 
-\begin{equation}
-\begin{split}
-\text{latency} \sim & \text{bilingual} * \text{age_days} * \text{aoi} + \\
-& (1 \mid \text{subid}) + \\
-& (1 \mid \text{lab}) + \\
-& (1 \mid \text{item}).
-\end{split}
-\end{equation}
+  latency ~ bilingual * age_days * aoi + 
+(1|subid) + 
+(1|lab) + 
+(1|item)
 
 ```{r coef_table_latency, results="asis"}
 latency_lmer <- d_latency %>% 
