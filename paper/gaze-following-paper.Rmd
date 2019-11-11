@@ -757,6 +757,7 @@ freq_lmer <- d_freq %>%
 
 freq_coefs <- summary(freq_lmer)$coef %>%
   as.data.frame %>%
+  select(-df)%>%
   mutate_at(c("Estimate","Std. Error", "t value", "Pr(>|t|)"), 
             function (x) signif(x, digits = 3)) %>% 
     rename(SE = `Std. Error`, 
@@ -808,6 +809,7 @@ duration_lmer <- d_duration %>%
 
 duration_coefs <- summary(duration_lmer)$coef %>%
   as.data.frame %>%
+  select(-df)%>%
   mutate_at(c("Estimate","Std. Error", "t value", "Pr(>|t|)"), 
             function (x) signif(x, digits = 3)) %>% 
     rename(SE = `Std. Error`, 
@@ -861,6 +863,7 @@ latency_lmer <- d_latency %>%
 
 latency_coefs <- summary(latency_lmer)$coef %>%
   as.data.frame %>%
+  select(-df)%>%
   mutate_at(c("Estimate","Std. Error", "t value", "Pr(>|t|)"), 
             function (x) signif(x, digits = 3)) %>% 
     rename(SE = `Std. Error`, 
