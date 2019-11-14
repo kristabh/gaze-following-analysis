@@ -651,7 +651,7 @@ ggplot(latency_forest_data,
 
 ## Mixed-effects regression framework 
 
-As opposed to the meta-analytic framework, the mixed-effects regression framework allowed us to model trial-level data from individual infants rather than analyzing averages. Mixed-effects models are described as such because they include both fixed effects and random effects. Our fixed effects modeled the main variables of interest: age and bilingualism. Our random effects accounted for correlations in the data that could arise due to dependency between data from the same infants, lab, and test items. For each model, we planned to initially fit a maximal random effects structure (Barr, Levy, Scheepers, & Tily, 2013), while anticipating the need for pruning. We aimed to identify a pruned random-effects structure that would be well-supported by our data, while conserving the most theoretically important effects (Matsuchek, Kleigl, Visishth, Baayen, & Bates, 2017). The approach to pruning random effects was somewhat exploratory, as we did not have a specific hypothesis about the random effects. Note that while the particular random effects structure of the model can affect the estimates of standard errors, it does not affect the estimates of the fixed effects, which were our main interest. 
+As opposed to the meta-analytic framework, the mixed-effects regression framework allowed us to model trial-level data from individual infants rather than analyzing averages. Mixed-effects models are described as such because they include both fixed effects and random effects. Our fixed effects modeled the main variables of interest: age and bilingualism. Our random effects accounted for correlations in the data that could arise due to dependency between data from the same infants, lab, and test items. For each model, we planned to initially fit a maximal random effects structure (Barr, Levy, Scheepers, & Tily, 2013), while anticipating the need for pruning. We aimed to identify a pruned random-effects structure that would be well-supported by our data, while conserving the most theoretically important effects (Matsuchek, Kleigl, Visishth, Baayen, & Bates, 2017). The approach to pruning random effects was somewhat exploratory, as we did not have a specific hypothesis about the random effects. Note that while the particular random effects structure of the model can affect the estimates of standard errors, in a balanced design it does not affect the estimates of the fixed effects, which were our main interest. 
 
 Our dependent variables (DV) were:
 
@@ -661,7 +661,7 @@ freq_shift: The number of times in the trial an infant shifted gaze towards the 
 total_look: The total duration of fixations towards the AOI during the trial.
 Our predictor variables were: 
 bilingual: A dummy-coded variable where 0 is monolingual, 1 is bilingual.
-age_days: The infant’s age in days, centred for ease of interpretation.
+age_days: The infant’s age in days, scaled and centred for ease of interpretation.
 aoi: A dummy-coded variable for analysis of freq_shift, total_look, and latency, for which data from both AOIs are reported. Here, 0 denotes the congruous AOI, and 1 denotes the incongruous AOI.
 
 We ran separate models for each DV. We fit all models using the `lme4` package (Bates et al., 2015). For first_shift, we fit a logistic model as this variable is binary at the trial level. The initial model specification was:
@@ -680,7 +680,7 @@ DV ~ bilingual * age_days * aoi +
 
 ### First shift towards the AOI
 
-After pruning random effects for non-convergence, our final model specification for first shift was:
+Our final model specification for first shift was:
 
   first_shift ~ bilingual * age_days + 
 (1|subid) + 
@@ -714,7 +714,7 @@ papaja::apa_table(firstshift_coefs, format.args = list(digits = 3),
                   align=c("l","l","c","c","c"))
 ```
 
-\noindent Table 2 shows coefficient estimates from this model and Figure 6 visualizes this model. To aid convergence, we scaled age, and the random effect of item was removed. Positive coefficients indicate a higher probability of making first look to the congruent object. While there is no obvious evidence for a difference between monolingual and bilingual infants, a significant positive effect of age was found, suggesting that older infants had a greater probability of making their first looks to the congruent as opposed to the incongruent object. The interaction of bilingualism and age was, however, not significant.
+\noindent Table 2 shows coefficient estimates from this model and Figure 6 visualizes this model. Positive coefficients indicate a higher probability of making first look to the congruent object. A significant positive effect of age was found, suggesting that older infants had a greater probability of making their first looks to the congruent as opposed to the incongruent object. While there is no obvious evidence for a difference between monolingual and bilingual infants, the interaction of bilingualism and age was also not significant.
 
 ```{r fig6, fig.cap="The logistic regression model predicting the probability of making first look to the congruent object, plotted with individual participants' probabilities."}
 
@@ -741,7 +741,7 @@ d_first%>%
 
 ### Frequency of shifting gaze towards the AOI 
 
-The linear mixed-effects model for frequency of shift was also modified by pruning random effects for non-convergence. The final model specification for frequency of shift was:
+The final model specification for frequency of shift was:
 
   freq_shift ~ bilingual * age_days * aoi + 
 (1|subid) + 
@@ -749,7 +749,7 @@ The linear mixed-effects model for frequency of shift was also modified by pruni
 
 ```{r coef_table_frequency, results="asis"}
 freq_lmer <- d_freq %>% 
-  mutate(age_days = scale(age_days, scale = FALSE)) %>%
+  mutate(age_days = scale(age_days, scale = TRUE)) %>%
   mutate(object_bin = (as.integer(fct_rev(object)) - 1)) %>% # Recode to binary: congruent = 1, incongruent = 0
   lmer(n_shift ~ lang_group*age_days*object + (1|subid) + (1|trial_num), 
   control = lmerControl("bobyqa"),
@@ -774,16 +774,16 @@ papaja::apa_table(freq_coefs, format.args = list(digits = 3),
                   align=c("l","l","c","c","c"))
 ```
 
-\noindent Table 3 shows coefficient estimates from this model and Figure 7 visualizes this model. The random effect of lab was removed to aid convergence. There were significant main effects of age and aoi, where older infants and the congruent aoi had greater amount of frequency as opposed to younger infants and incongruent aoi, respectively. The interaction of age and aoi was also significant, further suggesting that older infants shifted more frequently to the congruent than the incongruent AOI compared to younger infants. The effect of bilingualism, however, was not significant, neither were its 2-way and 3-way interactions with age and aoi; this suggests that there was not a reliable difference between bilingual and monolingual infants in the number of times they shifted gaze towards the congruent aoi. 
+\noindent Table 3 shows coefficient estimates from this model and Figure 7 visualizes this model. The significant main effect of age indicated that older infants had a greater amount of frequency as opposed to younger infants. There was also a significant main effect of aoi, where overall infants shifted more often to the congruent aoi as opposed to the incongruent aoi. The interaction of age and aoi was also significant, further suggesting that older infants shifted more frequently to the congruent than the incongruent AOI compared to younger infants. The effect of bilingualism, however, was not significant, neither were its 2-way and 3-way interactions with age and aoi; this suggests that there was not a reliable difference between bilingual and monolingual infants in the number of times they shifted gaze towards the congruent aoi. 
 
-```{r fig7, fig.cap="The linear regression model predicting the frequency of shift towards the AOI."}
+```{r fig7, fig.cap="The linear regression model predicting the frequency of shift towards the AOI, with error bars showing 95% confidence interval."}
 
 d_freq %>%
   group_by(lang_group, object) %>%
   ggplot() +
   facet_grid(.~lang_group) +
   aes(x = age_days, y = n_shift, color = object) +
-  geom_smooth(method = "lm", aes(fill=object), se=FALSE) +
+  geom_smooth(method = "lm", aes(fill=object), se=TRUE) +
   ylab("Frequency of shifts towards the AOI") +
   xlab("Age in days") +
   scale_colour_manual(name = "AOI", values = c("#000000", "#bdbdbd")) +
@@ -826,16 +826,16 @@ papaja::apa_table(duration_coefs, format.args = list(digits = 3),
                   align=c("l","l","c","c","c"))
 ```
 
-\noindent Table 4 shows coefficient estimates from this model and Figure 8 visualizes this model. The random effect of subject was removed to aid convergence. The significant effect of age indicated that the duration of fixations was greater for older infants. The main effect of aoi was also significant; with congruent aoi as the reference level, it is suggested that congruent aoi had longer duration of fixations compared to incongruent aoi. While the effect of bilingualism was non-significant, it is not a strong predictor of duration of fixations in our data. Other interactions were also non-significant.
+\noindent Table 4 shows coefficient estimates from this model and Figure 8 visualizes this model. The significant effect of age indicated that the duration of fixations was greater for older infants. The main effect of aoi was also significant, suggesting that infants looked longer at the congruent aoi than at the incongruent aoi. While the effect of bilingualism was non-significant, it was not a strong predictor of the difference in duration of fixations between bilingual and monolingual infants. Other interactions were also non-significant.
 
-```{r fig8, fig.cap="The linear regression model predicting duration of fixations towards the AOI."}
+```{r fig8, fig.cap="The linear regression model predicting duration of fixations towards the AOI, with error bars showing 95% confidence interval."}
 
 d_duration %>%
   group_by(lang_group, object) %>%
   ggplot() +
   facet_grid(.~lang_group) +
   aes(x = age_days, y = duration, color = object) +
-  geom_smooth(method = "lm", aes(fill=object), se=FALSE) +
+  geom_smooth(method = "lm", aes(fill=object), se=TRUE) +
   ylab("Duration of fixations towards the AOI") +
   xlab("Age in days") +
   scale_colour_manual(name = "AOI", values = c("#000000", "#bdbdbd")) +
@@ -845,7 +845,7 @@ d_duration %>%
 
 ### Latency
 
-As the preregistered model specification for latency ran into convergence issue, random effects were pruned for the final model specification:
+The final model specification for latency was:
 
   latency ~ bilingual * age_days * aoi + 
 (1|subid) + 
@@ -880,16 +880,16 @@ papaja::apa_table(latency_coefs, format.args = list(digits = 3),
                   align=c("l","l","c","c","c"))
 ```
 
-\noindent Table 5 shows coefficient estimates from this model and Figure 9 visualizes this model. The main effect of age was significant, suggesting that older infants had a shorter latency to first fixation than younger infants. However, the effect of aoi was not significant, implying that latency did not reliably differ as a function of whether it is to the congruent or incongruent AOI. Other coefficients were also non-significant.
+\noindent Table 5 shows coefficient estimates from this model and Figure 9 visualizes this model. The main effect of age was significant, suggesting that older infants had a shorter latency to first fixation than younger infants. However, the effect of aoi was not significant, implying that latency did not reliably show gaze-following towards the congruent or incongruent AOI. Other coefficients were also non-significant.
 
-```{r fig9, fig.cap="The linear regression model predicting latency of fixations towards the AOI."}
+```{r fig9, fig.cap="The linear regression model predicting latency of fixations towards the AOI, with error bars showing 95% confidence interval."}
 
 d_latency %>%
   group_by(lang_group, object) %>%
   ggplot() +
   facet_grid(.~lang_group) +
   aes(x = age_days, y = latency, color = object) +
-  geom_smooth(method = "lm", aes(fill=object), se=FALSE) +
+  geom_smooth(method = "lm", aes(fill=object), se=TRUE) +
   ylab("Latency of fixations towards the AOI") +
   xlab("Age in days") +
   scale_colour_manual(name = "AOI", values = c("#000000", "#bdbdbd")) +
