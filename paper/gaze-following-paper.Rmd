@@ -383,15 +383,46 @@ We began by examining the relation of the proportion of first looks to bilingual
 
 ```{r fig2, fig.cap="Forest plot for the cross-lab meta-analysis on the proportion of first look."}
 
-first_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
-                                  slab = lab, data = d_z_first, method = "REML")
+#first_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
+#                                  slab = lab, data = d_z_first, method = "REML")
 
 alpha <- .05
 
-p_first_lang <- predict(first_lang_only_matched, newmods =  c(0,1)) %>%
+#p_first_lang <- predict(first_lang_only_matched, newmods =  c(0,1)) %>%
+#  as_tibble %>%
+#  mutate(lang_group = levels(d_z_first$lang_group), 
+#         age_group = "",
+#         lab = "Meta-analytic estimate")
+
+p_first <- predict(first_meta) %>%
   as_tibble %>%
-  mutate(lang_group = levels(d_z_first$lang_group), 
-         age_group = "",
+  mutate(age_group = "",
+         lang_group = "The intercept",
+         lab = "Meta-analytic estimate")%>%
+  filter(row_number()==1) #Keeping only the intercept
+  
+d_z_first_6to9 <- d_z_first%>%
+  filter(age_group == "6-9 mo")
+
+first_lang_only_matched_in6to9 <- metafor::rma(d ~ lang_group, vi = d_var,
+                                  slab = lab, data = d_z_first_6to9, method = "REML")
+
+d_z_first_12to15 <- d_z_first%>%
+  filter(age_group == "12-15 mo")
+
+first_lang_only_matched_in12to15 <- metafor::rma(d ~ lang_group, vi = d_var,
+                                  slab = lab, data = d_z_first_12to15, method = "REML")
+
+p_first_lang_6to9 <- predict(first_lang_only_matched_in6to9, newmods =  c(0,1)) %>%
+  as_tibble %>%
+  mutate(lang_group = levels(d_z_first_6to9$lang_group), 
+         age_group = "6-9 mo",
+         lab = "Meta-analytic estimate")
+
+p_first_lang_12to15 <- predict(first_lang_only_matched_in12to15, newmods =  c(0,1)) %>%
+  as_tibble %>%
+  mutate(lang_group = levels(d_z_first_12to15$lang_group), 
+         age_group = "12-15 mo",
          lab = "Meta-analytic estimate")
 
 first_forest_data <- ungroup(d_z_first) %>%
@@ -400,8 +431,12 @@ first_forest_data <- ungroup(d_z_first) %>%
          ci.ub = d + qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
          inverse_vars = 1/d_var, 
          age_group = as.character(age_group)) %>%
-  bind_rows(p_first_lang) %>%
-  mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", ""))) 
+  # bind_rows(p_first_lang) %>%
+  bind_rows(p_first) %>%
+  bind_rows(p_first_lang_6to9)%>%
+  bind_rows(p_first_lang_12to15)%>%
+  mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", "")),
+	 lab = fct_relevel(lab, "Meta-analytic estimate")) 
 
 ggplot(first_forest_data,
        aes(x = lab, y = pred,
@@ -414,9 +449,10 @@ ggplot(first_forest_data,
   geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
   coord_flip() +
   scale_size_continuous(guide = FALSE) +
-  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#000000")) +
+  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#636363", "#000000")) +
+  scale_y_continuous(limits=c(-1, 4)) +
   xlab("Lab") +
-  ylab("Effect Size") +
+  ylab("Effect Size: First look") +
   theme(legend.position = "bottom")
 ```
 
@@ -461,16 +497,47 @@ We then investigated the relation of frequency of looks to bilingualism and age 
 
 ```{r fig3, fig.cap="Forest plot for the cross-lab meta-analysis on frequency of looks."}
 
-freq_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
-                                        slab = lab, data = d_z_freq, method = "REML")
+#freq_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
+#                                        slab = lab, data = d_z_freq, method = "REML")
 
 alpha <- .05
 
-p_freq_lang <- predict(freq_lang_only_matched, newmods =  c(0,1)) %>%
+#p_freq_lang <- predict(freq_lang_only_matched, newmods =  c(0,1)) %>%
+#  as_tibble %>%
+#  mutate(lang_group = levels(d_z_freq$lang_group), 
+#         age_group = "",
+#         lab = "Meta-analytic estimate")
+
+p_freq <- predict(freq_meta) %>%
   as_tibble %>%
-  mutate(lang_group = levels(d_z_freq$lang_group), 
-         age_group = "",
+  mutate(age_group = "",
+         lang_group = "The intercept",
+         lab = "Meta-analytic estimate")%>%
+  filter(row_number()==1) #Keeping only the intercept
+  
+d_z_freq_6to9 <- d_z_freq%>%
+  filter(age_group == "6-9 mo")
+
+freq_lang_only_matched_in6to9 <- metafor::rma(d ~ lang_group, vi = d_var,
+                                  slab = lab, data = d_z_freq_6to9, method = "REML")
+
+d_z_freq_12to15 <- d_z_freq%>%
+  filter(age_group == "12-15 mo")
+
+freq_lang_only_matched_in12to15 <- metafor::rma(d ~ lang_group, vi = d_var,
+                                  slab = lab, data = d_z_freq_12to15, method = "REML")
+
+p_freq_lang_6to9 <- predict(freq_lang_only_matched_in6to9, newmods =  c(0,1)) %>%
+  as_tibble %>%
+  mutate(lang_group = levels(d_z_freq_6to9$lang_group), 
+         age_group = "6-9 mo",
          lab = "Meta-analytic estimate")
+
+p_freq_lang_12to15 <- predict(freq_lang_only_matched_in12to15, newmods =  c(0,1)) %>%
+  as_tibble %>%
+  mutate(lang_group = levels(d_z_freq_12to15$lang_group), 
+         age_group = "12-15 mo",
+         lab = "Meta-analytic estimate")  
 
 freq_forest_data <- ungroup(d_z_freq) %>%
   mutate(pred = d, 
@@ -478,8 +545,12 @@ freq_forest_data <- ungroup(d_z_freq) %>%
          ci.ub = d + qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
          inverse_vars = 1/d_var, 
          age_group = as.character(age_group)) %>%
-  bind_rows(p_freq_lang) %>%
-  mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", ""))) 
+#  bind_rows(p_freq_lang) %>%
+  bind_rows(p_freq) %>%
+  bind_rows(p_freq_lang_6to9)%>%
+  bind_rows(p_freq_lang_12to15)%>%
+  mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", "")),
+         lab = fct_relevel(lab, "Meta-analytic estimate")) 
 
 ggplot(freq_forest_data,
        aes(x = lab, y = pred,
@@ -492,9 +563,10 @@ ggplot(freq_forest_data,
   geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
   coord_flip() +
   scale_size_continuous(guide = FALSE) +
-  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#000000")) +
+  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#636363", "#000000")) +
+  scale_y_continuous(limits=c(-1, 4)) +
   xlab("Lab") +
-  ylab("Effect Size") +
+  ylab("Effect Size: Frequency of looks") +
   theme(legend.position = "bottom")
 ```
 
@@ -537,15 +609,46 @@ The cross-lab meta-analysis on duration of looks yielded an estimated reference-
 
 ```{r fig4, fig.cap="Forest plot for the cross-lab meta-analysis on duration of looks."}
 
-dur_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
-                                       slab = lab, data = d_z_dur, method = "REML")
+#dur_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
+#                                       slab = lab, data = d_z_dur, method = "REML")
 
 alpha <- .05
 
-p_dur_lang <- predict(dur_lang_only_matched, newmods =  c(0,1)) %>%
+#p_dur_lang <- predict(dur_lang_only_matched, newmods =  c(0,1)) %>%
+#  as_tibble %>%
+#  mutate(lang_group = levels(d_z_dur$lang_group), 
+#         age_group = "",
+#         lab = "Meta-analytic estimate")
+
+p_dur <- predict(dur_meta) %>%
   as_tibble %>%
-  mutate(lang_group = levels(d_z_dur$lang_group), 
-         age_group = "",
+  mutate(age_group = "",
+         lang_group = "The intercept",
+         lab = "Meta-analytic estimate")%>%
+  filter(row_number()==1) #Keeping only the intercept
+
+d_z_dur_6to9 <- d_z_dur%>%
+  filter(age_group == "6-9 mo")
+
+dur_lang_only_matched_in6to9 <- metafor::rma(d ~ lang_group, vi = d_var,
+                                  slab = lab, data = d_z_dur_6to9, method = "REML")
+
+d_z_dur_12to15 <- d_z_dur%>%
+  filter(age_group == "12-15 mo")
+
+dur_lang_only_matched_in12to15 <- metafor::rma(d ~ lang_group, vi = d_var,
+                                  slab = lab, data = d_z_dur_12to15, method = "REML")
+
+p_dur_lang_6to9 <- predict(dur_lang_only_matched_in6to9, newmods =  c(0,1)) %>%
+  as_tibble %>%
+  mutate(lang_group = levels(d_z_dur_6to9$lang_group), 
+         age_group = "6-9 mo",
+         lab = "Meta-analytic estimate")
+
+p_dur_lang_12to15 <- predict(dur_lang_only_matched_in12to15, newmods =  c(0,1)) %>%
+  as_tibble %>%
+  mutate(lang_group = levels(d_z_dur_12to15$lang_group), 
+         age_group = "12-15 mo",
          lab = "Meta-analytic estimate")
 
 dur_forest_data <- ungroup(d_z_dur) %>%
@@ -554,8 +657,12 @@ dur_forest_data <- ungroup(d_z_dur) %>%
          ci.ub = d + qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
          inverse_vars = 1/d_var, 
          age_group = as.character(age_group)) %>%
-  bind_rows(p_dur_lang) %>%
-  mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", ""))) 
+ # bind_rows(p_dur_lang) %>%
+  bind_rows(p_dur) %>%
+  bind_rows(p_dur_lang_6to9)%>%
+  bind_rows(p_dur_lang_12to15)%>%
+  mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", "")),
+         lab = fct_relevel(lab, "Meta-analytic estimate")) 
 
 ggplot(dur_forest_data,
        aes(x = lab, y = pred,
@@ -568,9 +675,10 @@ ggplot(dur_forest_data,
   geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
   coord_flip() +
   scale_size_continuous(guide = FALSE) +
-  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#000000")) +
+  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#636363", "#000000")) +
+  scale_y_continuous(limits=c(-1, 4)) +
   xlab("Lab") +
-  ylab("Effect Size") +
+  ylab("Effect Size: Duration of looks") +
   theme(legend.position = "bottom")
 ```
 
@@ -612,15 +720,46 @@ The cross-lab meta-analysis on latency yielded a reference-level intercept (i.e.
 
 ```{r fig5, fig.cap="Forest plot for the cross-lab meta-analysis on latency."}
 
-latency_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
-                                      slab = lab, data = d_z_latency, method = "REML")
+#latency_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
+#                                      slab = lab, data = d_z_latency, method = "REML")
 
 alpha <- .05
 
-p_latency_lang <- predict(latency_lang_only_matched, newmods =  c(0,1)) %>%
+#p_latency_lang <- predict(latency_lang_only_matched, newmods =  c(0,1)) %>%
+#  as_tibble %>%
+#  mutate(lang_group = levels(d_z_latency$lang_group), 
+#         age_group = "",
+#         lab = "Meta-analytic estimate")
+
+p_latency <- predict(Latency_meta) %>%
   as_tibble %>%
-  mutate(lang_group = levels(d_z_latency$lang_group), 
-         age_group = "",
+  mutate(age_group = "",
+         lang_group = "The intercept",
+         lab = "Meta-analytic estimate")%>%
+  filter(row_number()==1) #Keeping only the intercept
+  
+d_z_latency_6to9 <- d_z_latency%>%
+  filter(age_group == "6-9 mo")
+
+latency_lang_only_matched_in6to9 <- metafor::rma(d ~ lang_group, vi = d_var,
+                                  slab = lab, data = d_z_latency_6to9, method = "REML")
+
+d_z_latency_12to15 <- d_z_latency%>%
+  filter(age_group == "12-15 mo")
+
+latency_lang_only_matched_in12to15 <- metafor::rma(d ~ lang_group, vi = d_var,
+                                  slab = lab, data = d_z_latency_12to15, method = "REML")
+
+p_latency_lang_6to9 <- predict(latency_lang_only_matched_in6to9, newmods =  c(0,1)) %>%
+  as_tibble %>%
+  mutate(lang_group = levels(d_z_latency_6to9$lang_group), 
+         age_group = "6-9 mo",
+         lab = "Meta-analytic estimate")
+
+p_latency_lang_12to15 <- predict(latency_lang_only_matched_in12to15, newmods =  c(0,1)) %>%
+  as_tibble %>%
+  mutate(lang_group = levels(d_z_latency_12to15$lang_group), 
+         age_group = "12-15 mo",
          lab = "Meta-analytic estimate")
 
 latency_forest_data <- ungroup(d_z_latency) %>%
@@ -629,8 +768,12 @@ latency_forest_data <- ungroup(d_z_latency) %>%
          ci.ub = d + qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
          inverse_vars = 1/d_var, 
          age_group = as.character(age_group)) %>%
-  bind_rows(p_latency_lang) %>%
-  mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", ""))) 
+#  bind_rows(p_latency_lang) %>%
+  bind_rows(p_latency) %>%
+  bind_rows(p_latency_lang_6to9)%>%
+  bind_rows(p_latency_lang_12to15)%>%
+  mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", "")),
+         lab = fct_relevel(lab, "Meta-analytic estimate")) 
 
 ggplot(latency_forest_data,
        aes(x = lab, y = pred,
@@ -643,9 +786,10 @@ ggplot(latency_forest_data,
   geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
   coord_flip() +
   scale_size_continuous(guide = FALSE) +
-  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#000000")) +
+  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#636363", "#000000")) +
+  scale_y_continuous(limits=c(-1, 15), breaks=seq(-1,15,1)) +
   xlab("Lab") +
-  ylab("Effect Size") +
+  ylab("Effect Size: Latency") +
   theme(legend.position = "bottom")
 ```
 
