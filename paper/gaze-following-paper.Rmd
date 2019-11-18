@@ -858,7 +858,7 @@ papaja::apa_table(firstshift_coefs, format.args = list(digits = 3),
                   align=c("l","l","c","c","c"))
 ```
 
-\noindent Table 2 shows coefficient estimates from this model and Figure 6 visualizes this model. Positive coefficients indicate a higher probability of making first look to the congruent object. A significant positive effect of age was found, suggesting that older infants had a greater probability of making their first looks to the congruent as opposed to the incongruent object. While there is no obvious evidence for a difference between monolingual and bilingual infants, the interaction of bilingualism and age was also not significant.
+\noindent Table 2 shows coefficient estimates from this model and Figure 6 visualizes this model. Positive coefficients indicate a higher probability of making first look to the congruent object. A significant positive effect of age was found, suggesting that older infants had a greater probability of making their first looks to the congruent as opposed to the incongruent object. While there is no obvious evidence for a difference between monolingual and bilingual infants, the interaction of bilingualism and age was also not significant. Monolingual and bilingual infants, therefore, did not differ in their probabilities of first look across ages.
 
 ```{r fig6, fig.cap="The logistic regression model predicting the probability of making first look to the congruent object, plotted with individual participants' probabilities."}
 
@@ -970,8 +970,8 @@ papaja::apa_table(duration_coefs, format.args = list(digits = 3),
                   align=c("l","l","c","c","c"))
 ```
 
-\noindent Table 4 shows coefficient estimates from this model and Figure 8 visualizes this model. The significant effect of age indicated that the duration of fixations was greater for older infants. The main effect of aoi was also significant, suggesting that infants looked longer at the congruent aoi than at the incongruent aoi. While the effect of bilingualism was non-significant, it was not a strong predictor of the difference in duration of fixations between bilingual and monolingual infants. Other interactions were also non-significant.
-
+\noindent Table 4 shows coefficient estimates from this model and Figure 8 visualizes this model. The significant effect of age indicated that the duration of fixations was greater for older infants. The main effect of aoi was also significant, suggesting that infants looked longer at the congruent aoi than at the incongruent aoi. While the effect of bilingualism was significant, it was suggested that in general bilingual infants looked longer at the AOIs than did the monolingual infants. No significant interactions were observed.
+ 
 ```{r fig8, fig.cap="The linear regression model predicting duration of fixations towards the AOI, with error bars showing 95% confidence interval."}
 
 d_duration %>%
@@ -1024,7 +1024,7 @@ papaja::apa_table(latency_coefs, format.args = list(digits = 3),
                   align=c("l","l","c","c","c"))
 ```
 
-\noindent Table 5 shows coefficient estimates from this model and Figure 9 visualizes this model. The main effect of age was significant, suggesting that older infants had a shorter latency to first fixation than younger infants. However, the effect of aoi was not significant, implying that latency did not reliably show gaze-following towards the congruent or incongruent AOI. Other coefficients were also non-significant.
+\noindent Table 5 shows coefficient estimates from this model and Figure 9 visualizes this model. The main effect of age was significant, suggesting that older infants were more rapid than younger infants in fixating their first look to the AOIs. However, the effect of aoi was not significant, implying that infants did not differ in their rate of first fixation towards the congruent or incongruent AOIs. Other coefficients were also non-significant.
 
 ```{r fig9, fig.cap="The linear regression model predicting latency of fixations towards the AOI, with error bars showing 95% confidence interval."}
 
@@ -1040,6 +1040,9 @@ d_latency %>%
   scale_fill_manual(name = "AOI", values = c("#000000", "#bdbdbd")) + 
   theme(text = element_text(size = 12), legend.position = "bottom")
 ```
+### Summary of mixed-effects regression
+
+Overall, our mixed-effects regression revealed that early gaze-following development is significantly modulated by age-related changes, where older infants tend to show a more reliable gaze-following ability than younger infants. In particular, older infants were shown to be more accurate and rapid than younger infants in directing their first gaze towards the congruent objects. Older infants also looked longer and more frequent at the congruent objects than at the incongruent objects. On the contrary, the effect of bilingualism did not predicted infants’ gaze-following latency and accuracy, but predicted only their duration of fixations. In general, relative to monolingual infants, bilingual infants looked longer at both the congruent and incongruent objects. Together, these findings suggested that monolingual and bilingual infants appear to follow a similar trajectory of gaze-following development despite the difference in their language experience. 
 
 ## Exploratory analyses
 
