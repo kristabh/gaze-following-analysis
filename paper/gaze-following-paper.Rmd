@@ -795,7 +795,7 @@ ggplot(latency_forest_data,
 
 ### Summary of meta-analysis
 
-Overall, our meta-analysis models revealed greater effect sizes in the measures of first looks and frequency of looks. 
+Overall, our meta-analysis models revealed greater effect sizes in the measures of first looks and frequency of looks, such that these two measure appeared to be more sensitive measures than duration of fixations or latency. Moreover, these two first measures revealed that the effect of age had greater effect sizes, suggesting that older infants showed more reliable gaze-following than younger infants. However, we observed no evidence of bilingualism as a statistically significant moderator of gaze-following development, suggesting that bilingual infants tend to perform similarly as the monolingual infants.
 
 ## Mixed-effects regression framework 
 
