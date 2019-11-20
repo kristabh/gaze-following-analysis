@@ -114,6 +114,8 @@ d_participants <- read_csv(here("processed_data/03_data_trial_main.csv"))
    group_by(lab, lang_group, age_group) %>%
    summarise(n = length(unique(subid))) %>% 
    spread(lang_group, n)
+   
+ labs[labs$lab == 'babylab-princeton' & is.na(labs)] <- 0
 ```
 
 
@@ -210,7 +212,7 @@ excluded_labs <- read_csv(here("processed_data","02_validated_output.csv")) %>%
 
 ### Final sample
 
-Our final sample of bilinguals included `r sum(labs$bilingual, na.rm = TRUE)` infants tested in `r length(unique(labs$lab[!is.na(labs$bilingual)]))` labs. `r sum(labs$bilingual[labs$age_group == "6-9 mo"], na.rm = TRUE)` were 6–9 months, and `r sum(labs$bilingual[labs$age_group == "12-15 mo"], na.rm = TRUE)` were 12–15 months old. Each of these labs also collected data from monolingual infants (N = `r sum(labs$monolingual[!is.na(labs$bilingual)], na.rm = TRUE)`), of whom `r sum(labs$monolingual[labs$age_group == "6-9 mo"& !is.na(labs$bilingual)], na.rm = TRUE)` were 6–9 months, and `r sum(labs$monolingual[labs$age_group == "12-15 mo"& !is.na(labs$bilingual)], na.rm = TRUE)` were 12–15 months. Data from monolingual infants were available from two additional labs (N = `r sum(labs$monolingual[is.na(unique(labs$bilingual))], na.rm = TRUE)`), who did not contribute bilingual data. A list of monolingual and bilingual populations in each lab are reported in Table 1. In addition, `r excluded_labs` labs registered to participate but failed to collect data from at least 10 included infants, and so their data were not included. Information about all included labs is given in Table XX.
+Our final sample of bilinguals included `r sum(labs$bilingual, na.rm = TRUE)` infants tested in `r length(unique(labs$lab[!is.na(labs$bilingual)]))` labs. `r sum(labs$bilingual[labs$age_group == "6-9 mo"], na.rm = TRUE)` were 6–9 months, and `r sum(labs$bilingual[labs$age_group == "12-15 mo"], na.rm = TRUE)` were 12–15 months old. Each of these labs also collected data from monolingual infants (N = `r sum(labs$monolingual[!is.na(labs$bilingual)], na.rm = TRUE)`), of whom `r sum(labs$monolingual[labs$age_group == "6-9 mo"& !is.na(labs$bilingual)], na.rm = TRUE)` were 6–9 months, and `r sum(labs$monolingual[labs$age_group == "12-15 mo"& !is.na(labs$bilingual)], na.rm = TRUE)` were 12–15 months. Data from monolingual infants were available from two additional labs (N = `r sum(labs$monolingual[is.na(labs$bilingual)], na.rm = TRUE)`), who did not contribute bilingual data. A list of monolingual and bilingual populations in each lab are reported in Table 1. In addition, `r excluded_labs` labs registered to participate but failed to collect data from at least 10 included infants, and so their data were not included. Information about all included labs is given in Table XX.
 
 
 ```{r results="asis"}
