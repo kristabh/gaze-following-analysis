@@ -707,12 +707,13 @@ d_z_latency <- d_latency_meta %>%
   group_by(lab, age_group, lang_group, subid) %>% 
   summarise(latency = mean(latency))%>%
   group_by(lab, age_group, lang_group) %>% 
-  summarise(d = mean(latency) / sd(latency),
+  summarise(mean = mean(latency),
+            sd = sd(latency),
             n = length(unique(subid)),
-            d_var = d_var_calc(n,d)) # %>%
- # filter(n>=10) #Filtering out subgroups with fewer than 10 babies
+            var = ((sd^2)/n)) #sampling variance %>%
+# filter(n>=10) #Filtering out subgroups with fewer than 10 babies
   
-Latency_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
+Latency_meta <- metafor::rma(mean ~ lang_group * age_group, vi = var, 
                     slab = lab, data = d_z_latency, method = "REML") 
 ```
 
@@ -722,7 +723,7 @@ The cross-lab meta-analysis on latency yielded a reference-level intercept (i.e.
 
 ```{r fig5, fig.cap="Forest plot for the cross-lab meta-analysis on latency."}
 
-#latency_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
+#latency_lang_only_matched <- metafor::rma(mean ~ lang_group, vi = var,
 #                                      slab = lab, data = d_z_latency, method = "REML")
 
 alpha <- .05
@@ -743,13 +744,13 @@ p_latency <- predict(Latency_meta) %>%
 d_z_latency_6to9 <- d_z_latency%>%
   filter(age_group == "6-9 mo")
 
-latency_lang_only_matched_in6to9 <- metafor::rma(d ~ lang_group, vi = d_var,
+latency_lang_only_matched_in6to9 <- metafor::rma(mean ~ lang_group, vi = var,
                                   slab = lab, data = d_z_latency_6to9, method = "REML")
 
 d_z_latency_12to15 <- d_z_latency%>%
   filter(age_group == "12-15 mo")
 
-latency_lang_only_matched_in12to15 <- metafor::rma(d ~ lang_group, vi = d_var,
+latency_lang_only_matched_in12to15 <- metafor::rma(mean ~ lang_group, vi = var,
                                   slab = lab, data = d_z_latency_12to15, method = "REML")
 
 p_latency_lang_6to9 <- predict(latency_lang_only_matched_in6to9, newmods =  c(0,1)) %>%
@@ -765,10 +766,10 @@ p_latency_lang_12to15 <- predict(latency_lang_only_matched_in12to15, newmods =  
          lab = "Meta-analytic estimate")
 
 latency_forest_data <- ungroup(d_z_latency) %>%
-  mutate(pred = d, 
-         ci.lb = d - qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
-         ci.ub = d + qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
-         inverse_vars = 1/d_var, 
+  mutate(pred = mean, 
+         ci.lb = mean - qnorm(alpha / 2, lower.tail = FALSE) * sqrt(var), 
+         ci.ub = mean + qnorm(alpha / 2, lower.tail = FALSE) * sqrt(var), 
+         inverse_vars = 1/var, 
          age_group = as.character(age_group)) %>%
 #  bind_rows(p_latency_lang) %>%
   bind_rows(p_latency) %>%
@@ -780,7 +781,7 @@ latency_forest_data <- ungroup(d_z_latency) %>%
 ggplot(latency_forest_data,
        aes(x = lab, y = pred,
            ymin = ci.lb, ymax = ci.ub, col = lang_group)) +
-  geom_point(aes(y = d, size = inverse_vars),
+  geom_point(aes(y = mean, size = inverse_vars),
              position = position_dodge(width = .2)) +
   geom_point(data = filter(latency_forest_data, lab == "Meta-analytic estimate"), pch = 5)+
   geom_linerange(position = position_dodge(width = .2)) +
@@ -788,10 +789,10 @@ ggplot(latency_forest_data,
   geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
   coord_flip() +
   scale_size_continuous(guide = FALSE) +
-  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#636363", "#000000")) +
+  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#636363", "#000000"), breaks= c("bilingual", "monolingual")) +
   scale_y_continuous(limits=c(-1, 15), breaks=seq(-1,15,1)) +
   xlab("Lab") +
-  ylab("Effect Size: Latency") +
+  ylab("Mean Latency to Congruent AOI") +
   theme(legend.position = "bottom")
 ```
 
