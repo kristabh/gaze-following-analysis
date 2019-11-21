@@ -451,7 +451,7 @@ ggplot(first_forest_data,
   geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
   coord_flip() +
   scale_size_continuous(guide = FALSE) +
-  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#636363", "#000000")) +
+  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#636363", "#000000"), breaks= c("bilingual", "monolingual")) +
   scale_y_continuous(limits=c(-1, 4)) +
   xlab("Lab") +
   ylab("Effect Size: First look") +
@@ -565,7 +565,7 @@ ggplot(freq_forest_data,
   geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
   coord_flip() +
   scale_size_continuous(guide = FALSE) +
-  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#636363", "#000000")) +
+  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#636363", "#000000"), breaks= c("bilingual", "monolingual")) +
   scale_y_continuous(limits=c(-1, 4)) +
   xlab("Lab") +
   ylab("Effect Size: Frequency of looks") +
@@ -677,7 +677,7 @@ ggplot(dur_forest_data,
   geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
   coord_flip() +
   scale_size_continuous(guide = FALSE) +
-  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#636363", "#000000")) +
+  scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#636363", "#000000"), breaks= c("bilingual", "monolingual")) +
   scale_y_continuous(limits=c(-1, 4)) +
   xlab("Lab") +
   ylab("Effect Size: Duration of looks") +
