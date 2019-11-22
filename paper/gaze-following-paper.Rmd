@@ -212,7 +212,7 @@ excluded_labs <- read_csv(here("processed_data","02_validated_output.csv")) %>%
 
 ### Final sample
 
-Our final sample of bilinguals included `r sum(labs$bilingual, na.rm = TRUE)` infants tested in `r length(unique(labs$lab[!is.na(labs$bilingual)]))` labs. `r sum(labs$bilingual[labs$age_group == "6-9 mo"], na.rm = TRUE)` were 6–9 months, and `r sum(labs$bilingual[labs$age_group == "12-15 mo"], na.rm = TRUE)` were 12–15 months old. Each of these labs also collected data from monolingual infants (N = `r sum(labs$monolingual[!is.na(labs$bilingual)], na.rm = TRUE)`), of whom `r sum(labs$monolingual[labs$age_group == "6-9 mo"& !is.na(labs$bilingual)], na.rm = TRUE)` were 6–9 months, and `r sum(labs$monolingual[labs$age_group == "12-15 mo"& !is.na(labs$bilingual)], na.rm = TRUE)` were 12–15 months. Data from monolingual infants were available from two additional labs (N = `r sum(labs$monolingual[is.na(labs$bilingual)], na.rm = TRUE)`), who did not contribute bilingual data. A list of monolingual and bilingual populations in each lab are reported in Table 1. In addition, `r excluded_labs` labs registered to participate but failed to collect data from at least 10 included infants, and so their data were not included. Information about all included labs is given in Table XX.
+Our final sample of bilinguals included `r sum(labs$bilingual, na.rm = TRUE)` infants tested in `r length(unique(labs$lab[!is.na(labs$bilingual)]))` labs. `r sum(labs$bilingual[labs$age_group == "6-9 mo"], na.rm = TRUE)` were 6–9 months, and `r sum(labs$bilingual[labs$age_group == "12-15 mo"], na.rm = TRUE)` were 12–15 months old. Each of these labs also collected data from monolingual infants (N = `r sum(labs$monolingual[!is.na(labs$bilingual)], na.rm = TRUE)`), of whom `r sum(labs$monolingual[labs$age_group == "6-9 mo"& !is.na(labs$bilingual)], na.rm = TRUE)` were 6–9 months, and `r sum(labs$monolingual[labs$age_group == "12-15 mo"& !is.na(labs$bilingual)], na.rm = TRUE)` were 12–15 months. Data from monolingual infants were available from two additional labs (N = `r sum(labs$monolingual[is.na(labs$bilingual)], na.rm = TRUE)`), who did not contribute bilingual data. A list of monolingual and bilingual populations in each lab are reported in Table 1. In addition, `r excluded_labs` labs registered to participate but failed to collect data from at least 10 included infants, and so their data were not included. Information about all included labs is given in Table 1.
 
 
 ```{r results="asis"}
@@ -806,18 +806,25 @@ As opposed to the meta-analytic framework, the mixed-effects regression framewor
 
 Our dependent variables (DV) were:
 
-first_shift: A binary variable denoting the AOI of the first shift, where 0 is the incongruous object and 1 is the congruous object.
-latency: The time interval in milliseconds between the onset of the actor’s headturn, and the moment of first fixation on an object AOI.
-freq_shift: The number of times in the trial an infant shifted gaze towards the AOI.
-total_look: The total duration of fixations towards the AOI during the trial.
+* *first_shift*: A binary variable denoting the AOI of the first shift, where 0 is the incongruous object and 1 is the congruous object.
+
+* *latency*: The time interval in milliseconds between the onset of the actor’s headturn, and the moment of first fixation on an object AOI.
+
+* *freq_shift*: The number of times in the trial an infant shifted gaze towards the AOI.
+
+* *total_look*: The total duration of fixations towards the AOI during the trial.
+
 Our predictor variables were: 
-bilingual: A dummy-coded variable where 0 is monolingual, 1 is bilingual.
-age_days: The infant’s age in days, scaled and centred for ease of interpretation.
-aoi: A dummy-coded variable for analysis of freq_shift, total_look, and latency, for which data from both AOIs are reported. Here, 0 denotes the congruous AOI, and 1 denotes the incongruous AOI.
+
+* *bilingual*: A dummy-coded variable where 0 is monolingual, 1 is bilingual.
+
+* *age_days*: The infant’s age in days, scaled and centred for ease of interpretation.
+
+* *aoi*: A dummy-coded variable for analysis of freq_shift, total_look, and latency, for which data from both AOIs are reported. Here, 0 denotes the congruous AOI, and 1 denotes the incongruous AOI.
 
 We ran separate models for each DV. We fit all models using the `lme4` package (Bates et al., 2015). For first_shift, we fit a logistic model as this variable is binary at the trial level. The initial model specification was:
 
-	first_shift ~ bilingual * age_days + 
+first_shift ~ bilingual * age_days + 
 (1|subid) + 
 (bilingual * age_days|lab) + 
 (bilingual * age_days|item)
@@ -1082,18 +1089,17 @@ The authors declare that there were no conflicts of interest with respect to the
 
 # Funding
 
-ndividual participating labs acknowledge funding support from: XYZ
-
+Individual participating labs acknowledge funding support from: XYZ
 
 # Disclosures 
 
 ## Preregistration
 
-Our manuscript was reviewed prior to data collection; in addition, we registered our instructions and materials prior to data collection OSF LINK HERE.
+Our manuscript was reviewed prior to data collection; in addition, we registered our instructions and materials prior to data collection osf.io/2ey3k/.
 
 ## Data, materials, and online resources
 
-All materials, data, and analytic code are available at OSF LINK HERE.
+All materials, data, and analytic code are available at osf.io/2ey3k/.
 
 ## Reporting 
 
@@ -1109,6 +1115,8 @@ We report how we determined our sample size, all data exclusions, all manipulati
 Baldwin, D. A. (1995). Understanding the link between joint attention and language. In C. Moore & P.J. Dunham (Eds.), Joint attention: Its origins and role in development (pp. 131–58). Hillsdale, NJ: Erlbaum.
 
 Barr, D. J., Levy, R., Scheepers, C., & Tily, H. J. (2013). Random effects structure for confirmatory hypothesis testing: Keep it maximal. Journal of Memory and Language, 68, 255-278. doi: 10.1016/j.jml.2012.11.001
+
+Bates, D., Maechler, M., Bolker, B., & Walker, S. (2015). Fitting Linear Mixed-Effects Models Using lme4. *Journal of Statistical Software, 67*(1), 1-48.  doi: 10.18637/jss.v067.i01.
 
 Bedford, R., Elsabbagh, M., Gliga, T., Pickles, A., Senju, A., Charman, T.,..., & the BASIS team. (2012). Precursors to social and communication difficulties in infants at-risk for autism: Gaze-following and attentional engagement. Journal of Autism and Developmental Disorders, 42, 2208–2218. doi: 10.1007/s10803-012-1450-y
 
