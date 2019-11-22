@@ -282,9 +282,9 @@ Eye-trackers measured the coordinates of eye gaze, from which the direction and 
 
 For labs that did not have an eye-tracker, trained human coders examined videos of infants’ faces frame-by-frame to identify fixations and saccades (shifts). Fixations were coded for duration and location with respect to the areas of interest (i.e. congruent object, incongruent object, actor, or off-target). Shifts were coded for direction, defined with respect to the horizontal and vertical midlines; i.e. movement could be left, right, down, and/or up. For these labs, a minimum of 20% of participants were double-coded by a second human coder and reliability estimates computed. 
 
-```{r aoi-figure}
+```{r fig1, fig.cap="Screenshot of one of the videos presented to infants showing the three areas of interest (AOIs) used: face, congruent object, and incongruent object."}
 
-#INSERT AOI FIGURE HERE
+knitr::include_graphics("Figure1")
 
 ```
 
