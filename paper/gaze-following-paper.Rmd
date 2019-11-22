@@ -315,7 +315,7 @@ This measured the total duration of fixation to the congruent AOI and to the inc
 
 ### Latency. 
 
-This established infants’ reaction times to follow the actor’s gaze in milliseconds. On each trial, latency was coded as the latency of the first face-to-object shift, whether it was to such that each infant had a value on each trial for latency to look at both the congruent or theand incongruent AOIs. As raw latency scores wereIf non-normal, theyscores will be were log-transformed transformed prior to analysis, following the pre-registered analysis plan.
+This established infants’ reaction times to follow the actor’s gaze in milliseconds. On each trial, latency was coded as the latency of the first face-to-object shift, whether it was to such that each infant had a value on each trial for latency to look at both the congruent and incongruent AOIs. As raw latency scores were non-normal, theyscores will be were log-transformed transformed prior to analysis, following the pre-registered analysis plan.
 
 ## Analysis approach
 
@@ -790,9 +790,8 @@ ggplot(latency_forest_data,
   coord_flip() +
   scale_size_continuous(guide = FALSE) +
   scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#636363", "#000000"), breaks= c("bilingual", "monolingual")) +
-  scale_y_continuous(limits=c(-1, 15), breaks=seq(-1,15,1)) +
   xlab("Lab") +
-  ylab("Mean Latency to Congruent AOI") +
+  ylab("Mean Latency to Congruent AOI (ms)") +
   theme(legend.position = "bottom")
 ```
 
