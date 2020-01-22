@@ -1106,7 +1106,7 @@ author_contribution <- author_data %>%
     Contribution == "analysis" ~ "Data analysis",
     Contribution == "ms1" ~ "Stage 1 manuscript",
     Contribution == "ms2" ~ "Stage 2 manuscript")) %>%
-  unite("authors", "KBH":"LS", sep = ", ", na.rm = TRUE)
+  unite("Authors", "KBH":"LS", sep = ", ", na.rm = TRUE)
   
 kable(author_contribution,
       format = "latex", 
