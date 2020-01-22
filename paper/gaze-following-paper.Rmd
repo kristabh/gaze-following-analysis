@@ -1086,7 +1086,36 @@ XYZ
 
 # Author Contributions
 
-Author contribution initials reflect authorship order. `r paste(author_data$initials[!is.na(author_data$concept)], collapse = ", ")` contributed to the study concept. `r paste(author_data$initials[!is.na(author_data$design)], collapse = ", ")` contributed to the study design. `r paste(author_data$initials[!is.na(author_data$stim)], collapse = ", ")` contributed to stimulus creation. `r paste(author_data$initials[!is.na(author_data$pilot)], collapse = ", ")` contributed to piloting. `r paste(author_data$initials[!is.na(author_data$protocol)], collapse = ", ")` contributed to the final protocol. `r paste(author_data$initials[!is.na(author_data$doc)], collapse = ", ")` contributed to study documentation. `r paste(author_data$initials[!is.na(author_data$manage)], collapse = ", ")` contributed to study management. `r paste(author_data$initials[!is.na(author_data$data)], collapse = ", ")` contributed to data collection. `r paste(author_data$initials[!is.na(author_data$analysis)], collapse = ", ")` contributed to data analysis. `r paste(author_data$initials[!is.na(author_data$ms1)], collapse = ", ")` contributed to the stage 1 manuscript. `r paste(author_data$initials[!is.na(author_data$ms2)], collapse = ", ")` contributed to the stage 2 manuscript.  
+Author contribution initials reflect authorship order. 
+
+```{r authortable, results="asis"}
+
+author_contribution <- author_data %>%
+  ungroup() %>%
+  select(initials,c(5:13)) %>%
+  mutate_at(vars(-initials),funs(case_when(. == "S" ~ initials, . == "M" ~ initials))) %>%
+  pivot_longer(c("concept":"ms2"), names_to = "Contribution", values_to = "author") %>%
+  pivot_wider(names_from = "initials", values_from = "author") %>%
+  mutate(Contribution = case_when(
+    Contribution == "concept" ~ "Study concept",
+    Contribution == "design" ~ "Study design",
+    Contribution == "protocol" ~"Final protocol",
+    Contribution == "doc" ~ "Study documentation",
+    Contribution == "manage" ~ "Study management",
+    Contribution == "data" ~ "Data collection",
+    Contribution == "analysis" ~ "Data analysis",
+    Contribution == "ms1" ~ "Stage 1 manuscript",
+    Contribution == "ms2" ~ "Stage 2 manuscript")) %>%
+  unite("authors", "KBH":"LS", sep = ", ", na.rm = TRUE)
+  
+kable(author_contribution,
+      format = "latex", 
+      booktabs = TRUE,
+      longtable = TRUE) %>%
+  column_spec(column = 2, width = "30em") %>%
+  kable_styling(latex_options = "hold_position")
+  
+```
 
 # Conflicts of Interest
 
