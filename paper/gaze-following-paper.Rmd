@@ -868,8 +868,8 @@ firstshift_coefs <- summary(first_glmer)$coef %>%
          z = `z value`,
          p = `Pr(>|z|)`)
 
-rownames(firstshift_coefs) <- c("Intercept", "Bilingualism", "Age_days", 
-                     "Bilingualism * Age_days") 
+rownames(firstshift_coefs) <- c("Intercept", "bilingual", "age_days", 
+                     "bilingual * age_days") 
 
 papaja::apa_table(firstshift_coefs, format.args = list(digits = 3),
                   caption = "Coefficient estimates from a logistic mixed effects model predicting the probability of making first looks to congruent objects.",
@@ -887,7 +887,7 @@ d_first%>%
   mutate(first_shift = as.integer(first_shift))%>%
   ggplot() +
   aes(x=age_days, y=pred_prob, color=lang_group) +
-  geom_point(alpha = 0.20, aes(shape=lang_group), size=3.5) +
+  geom_point(alpha = 1.00, aes(shape=lang_group), size=3.5) +
   geom_smooth(method="glm",
               aes(x=age_days, y=pred_prob),
               method.args = list(family = "quasibinomial"),
@@ -927,9 +927,9 @@ freq_coefs <- summary(freq_lmer)$coef %>%
          t = `t value`,
          p = `Pr(>|t|)`)
 
-rownames(freq_coefs) <- c("Intercept", "Bilingualism", "Age_days", "AOI",
-                     "Bilingualism * Age_days", "Bilingualism * AOI", "Age_days * AOI",
-                     "Bilingualism * Age_days * AOI") 
+rownames(freq_coefs) <- c("Intercept", "bilingual", "age_days", "aoi",
+                     "bilingual * age_days", "bilingual * aoi", "age_days * aoi",
+                     "bilingual * age_days * aoi") 
 
 papaja::apa_table(freq_coefs, format.args = list(digits = 3),
                   caption = "Coefficient estimates from a linear mixed effects model predicting frequency of shifting gaze towards the congruent AOI.",
@@ -979,9 +979,9 @@ duration_coefs <- summary(duration_lmer)$coef %>%
          t = `t value`,
          p = `Pr(>|t|)`)
 
-rownames(duration_coefs) <- c("Intercept", "Bilingualism", "Age_days", "AOI",
-                     "Bilingualism * Age_days", "Bilingualism * AOI", "Age_days * AOI",
-                     "Bilingualism * Age_days * AOI") 
+rownames(duration_coefs) <- c("Intercept", "bilingual", "age_days", "aoi",
+                     "bilingual * age_days", "bilingual * aoi", "age_days * aoi",
+                     "bilingual * age_days * aoi") 
 
 papaja::apa_table(duration_coefs, format.args = list(digits = 3),
                   caption = "Coefficient estimates from a linear mixed effects model predicting duration of fixations towards the AOI during the trial.",
@@ -1033,9 +1033,9 @@ latency_coefs <- summary(latency_lmer)$coef %>%
          t = `t value`,
          p = `Pr(>|t|)`)
 
-rownames(latency_coefs) <- c("Intercept", "Bilingualism", "Age_days", "AOI",
-                     "Bilingualism * Age_days", "Bilingualism * AOI", "Age_days * AOI",
-                     "Bilingualism * Age_days * AOI") 
+rownames(latency_coefs) <- c("Intercept", "bilingual", "age_days", "aoi",
+                     "bilingual * age_days", "bilingual * aoi", "age_days * aoi",
+                     "bilingual * age_days * aoi") 
 
 papaja::apa_table(latency_coefs, format.args = list(digits = 3),
                   caption = "Coefficient estimates from a linear mixed effects model predicting latency between the onset of the actor's headturn and the moment of first fixation on an object AOI.",
