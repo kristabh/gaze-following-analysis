@@ -262,7 +262,7 @@ All data collected for the study (i.e., every infant for whom a data file was ge
 ```{r exclusions, child = "exclusions.Rmd"}
 ```
 
-We also excluded any trials in which infants did not gaze at the congruent or incongruent object during the window of analysis. This meant that different infants contributed different numbers of trials. One lab mistakenly used preliminary rather than the final version of the experiment. The version used contained the same experimental stimuli and events as the final version with two exceptions: the attention getter to recruit the infant’s attention to the screen differed and the aspect ratio of the on-screen stimuli differed slightly. As this version of the experiment was only very slightly different from the final version, these data were retained for analysis.
+One lab mistakenly used preliminary rather than the final version of the experiment. The version used contained the same experimental stimuli and events as the final version with two exceptions: the attention getter to recruit the infant’s attention to the screen differed and the aspect ratio of the on-screen stimuli differed slightly. As this version of the experiment was only very slightly different from the final version, these data were retained for analysis.
 
 
 ## Post-Data Collection Methods Addendum
