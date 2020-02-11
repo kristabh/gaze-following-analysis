@@ -1,6 +1,4 @@
 
-# This script borrows heavily from a similar script from MB1
-
 ```{r chunk-opts, echo=FALSE}
 opts_chunk$set(echo = FALSE)
 ```
@@ -126,7 +124,7 @@ sessionerr <- exclude_by(d, quo(session_error),
 d <- sessionerr$data
 ```
 
-* *Session errors* There were `r sessionerr$percents$any_sum` (`r round(sessionerr$percents$any_mean*100, 2)`%) infants excluded from the analysis due to issues including: (`r session_error_type$n[session_error_type$session_error_type_recoded=="equipment failure"]` for equipment failure, `r session_error_type$n[session_error_type$session_error_type_recoded=="fussiness"]` for fussiness, and `r session_error_type$n[session_error_type$session_error_type_recoded=="outside interference"]` for parental/outside interference.
+* *Session errors*. There were `r sessionerr$percents$any_sum` (`r round(sessionerr$percents$any_mean*100, 2)`%) infants excluded from the analysis due to issues including: (`r session_error_type$n[session_error_type$session_error_type_recoded=="equipment failure"]` for equipment failure, `r session_error_type$n[session_error_type$session_error_type_recoded=="fussiness"]` for fussiness, and `r session_error_type$n[session_error_type$session_error_type_recoded=="outside interference"]` for parental/outside interference.
 
 ```{r}
 n_shifts <- exclude_by(d, quo(shifts_incl), action = "include", 
@@ -136,4 +134,22 @@ n_shifts <- exclude_by(d, quo(shifts_incl), action = "include",
 d <- n_shifts$data
 ```
 
-* *Insufficient face-to-object saccades* Following Senju and Csibra (2008), and per our pre-registration, we also excluded any infant who did not make at least one face-to-object saccade during the window of analysis in at least three of the six trials.  A further `r n_shifts$percents$any_sum` (`r round(n_shifts$percents$any_mean*100, 2)`%) infants were excluded from analyses for this reason.
+* *Insufficient face-to-object saccades*. Following Senju and Csibra (2008), and per our pre-registration, we also excluded any infant who did not make at least one face-to-object saccade during the window of analysis in at least three of the six trials.  A further `r n_shifts$percents$any_sum` (`r round(n_shifts$percents$any_mean*100, 2)`%) infants were excluded from analyses for this reason.
+
+```r
+
+# We exclude trials where no look towards the congruent or incongruent object was made.
+
+d <- d %>%
+  replace_na(list("n_shift_congruent" = 0, "n_shift_incongruent" = 0)) %>%
+  mutate(look_excluded = case_when(
+    !(n_shift_congruent + n_shift_incongruent) > 0 ~ TRUE,
+    TRUE ~ FALSE
+  ))
+  
+n_nolook <- d %>%
+  count(look_excluded, name = "n") 
+  
+```
+
+* *Failure to attend*. We also excluded any trials in which infants did not look at the congruent or incongruent object during the window of analysis. This meant that each infants contributed a different number of trials. An additional `r n_nolook$n[n_nolook$look_excluded =="TRUE"]` (`r round(((n_nolook$n[n_nolook$look_excluded =="TRUE"]) / nrow(d)) *100, 2)`%) were excluded from the analyses.
