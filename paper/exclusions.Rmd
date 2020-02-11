@@ -152,4 +152,4 @@ n_nolook <- d %>%
   
 ```
 
-* *Failure to attend*. We also excluded any trials in which infants did not look at the congruent or incongruent object during the window of analysis. This meant that each infants contributed a different number of trials. An additional `r n_nolook$n[n_nolook$look_excluded =="TRUE"]` (`r round(((n_nolook$n[n_nolook$look_excluded =="TRUE"]) / nrow(d)) *100, 2)`%) were excluded from the analyses.
+* *Failure to attend*. We also excluded any trials in which infants did not look at the congruent or incongruent object during the window of analysis. This meant that each infants contributed a different number of trials. An additional `r n_nolook$n[n_nolook$look_excluded =="TRUE"]` trials (`r round(((n_nolook$n[n_nolook$look_excluded =="TRUE"]) / nrow(d)) *100, 2)`%) were excluded from the analyses.
