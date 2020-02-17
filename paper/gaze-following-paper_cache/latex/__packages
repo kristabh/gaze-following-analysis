@@ -16,3 +16,17 @@ here
 knitr
 kableExtra
 english
+visdat
+readxl
+rlang
+magrittr
+DT
+assertthat
+naniar
+ggridges
+lmerTest
+jpeg
+coda
+BayesFactor
+circlize
+yarrr

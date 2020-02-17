@@ -21,7 +21,7 @@ d <- exclude_by(d, quo(pilot), quiet = TRUE)
 ```
 
 
-Labs were asked to submit all data collected as part of the study to the analysis team. Data were first screened to determine whether labs contributed useable data, and whether infants met our inclusion criteria. Note that some infants had more than one reason for exclusion, and exclusion criteria were applied sequentially.
+Labs were asked to submit all data collected as part of the study to the analysis team. Data were first screened to determine whether labs contributed useable data and whether infants met our inclusion criteria. Note that some infants had more than one reason for exclusion, and exclusion criteria were applied sequentially.
 
 ```{r lab }
 # Exclude labs from bll-umanitoba, after discussion with lab that they could not reliably code their data
@@ -44,7 +44,7 @@ d <- lab_excluded$data
 
 ```
 
-* *Lab reliability*. Data from two of the labs using the handcoding method were excluded after extensive discussions with the participating labroatories. One lab could not achieve an acceptable level of inter-rater reliability, due to difficulty coding infant eye movements from the available videos. A second lab initially coded the data incorrectly (i.e., coded face-to-object saccades differently than had been specififed), but then insufficient resources to re-code the data. There were `r lab_excluded$percents$any_sum` (`r round(lab_excluded$percents$any_mean*100, 1)`%) infants who were tested in these labs.
+* *Lab reliability*. Data from two of the labs using the hand-coding method were excluded after extensive discussions with the participating laboratories. One lab could not achieve an acceptable level of inter-rater reliability, due to difficulty coding infant eye movements from the available videos. A second lab initially coded the data incorrectly (i.e., coded gaze shift from face to object differently than had been specified), but then had insufficient resources to re-code the data. There were `r lab_excluded$percents$any_sum` (`r round(lab_excluded$percents$any_mean*100, 1)`%) infants who were tested in these labs.
 
 ```{r age}
 # We exclude kids who are outside of the 6-9 or 12-15 month age range. 
@@ -73,7 +73,7 @@ lang_incl <- exclude_by(d, quo(lang_incl), action = "include",
 d <- lang_incl$data
 ```
 
-* *Language background*. There were `r lang_incl$percents$any_sum` (`r round(lang_incl$percents$any_mean*100, 1)`%) infants who were tested but did not meet our inclusion criteria for either the monolingual or bilingual group.  For example, an infant who heard English 20% of the time and Italian 80% of the time woudl not meet the criteria as either monolingual (at least 90% exposure to one language) or bilingual (at least 25% exposure to each of two languages).
+* *Language background*. There were `r lang_incl$percents$any_sum` (`r round(lang_incl$percents$any_mean*100, 1)`%) infants who were tested but did not meet our inclusion criteria for either the monolingual or bilingual group.  For example, an infant who heard English 20% of the time and Italian 80% of the time would not meet the criteria as either monolingual (at least 90% exposure to one language) or bilingual (at least 25% exposure to each of two languages).
 
 
 ```{r}
@@ -84,7 +84,7 @@ full_term <- exclude_by(d, quo(full_term), action = "include",
 d <- full_term$data
 ```
 
-* *Full-term*. We defined full term as gestation times greater than or equal to 37 weeks. There were `r full_term$percents$any_sum` (`r round(full_term$percents$any_mean*100, 1)`%) infants who were tested but did not meet this criterion.
+* *Full-term*. We defined full-term as gestation times greater than or equal to 37 weeks. There were `r full_term$percents$any_sum` (`r round(full_term$percents$any_mean*100, 1)`%) infants who were tested but did not meet this criterion.
 
 ```{r}
 ndd <- exclude_by(d, quo(td), action = "include", 
@@ -94,7 +94,7 @@ ndd <- exclude_by(d, quo(td), action = "include",
 d <- ndd$data
 ```
 
-* *No diagnosed developmental disorders*. We excluded data from `r ndd$percents$any_sum` (`r round(ndd$percents$any_mean*100, 1)`%) infants with with parent-reported developmental disorders or sensory impairments.
+* *No diagnosed developmental disorders*. We excluded data from `r ndd$percents$any_sum` (`r round(ndd$percents$any_mean*100, 1)`%) infant with parent-reported developmental disorders or sensory impairments.
 
 ```{r trial_errors}
 trial_err <- exclude_by(d, quo(trial_error), 
@@ -123,7 +123,7 @@ sessionerr <- exclude_by(d, quo(session_error),
 d <- sessionerr$data
 ```
 
-* *Session errors*. There were `r sessionerr$percents$any_sum` (`r round(sessionerr$percents$any_mean*100, 2)`%) infants excluded from the analysis due to issues including: (`r session_error_type$n[session_error_type$session_error_type_recoded=="equipment failure"]` for equipment failure, `r session_error_type$n[session_error_type$session_error_type_recoded=="fussiness"]` for fussiness, and `r session_error_type$n[session_error_type$session_error_type_recoded=="outside interference"]` for parental/outside interference.
+* *Session errors*. There were `r sessionerr$percents$any_sum` (`r round(sessionerr$percents$any_mean*100, 2)`%) infants excluded from the analysis due to issues including: `r session_error_type$n[session_error_type$session_error_type_recoded=="equipment failure"]` for equipment failure, `r session_error_type$n[session_error_type$session_error_type_recoded=="fussiness"]` for fussiness, and `r session_error_type$n[session_error_type$session_error_type_recoded=="outside interference"]` for parental/external interference.
 
 ```{r}
 n_shifts <- exclude_by(d, quo(shifts_incl), action = "include", 
@@ -134,7 +134,7 @@ d <- n_shifts$data
 
 ```
 
-* *Insufficient face-to-object saccades*. Following Senju and Csibra (2008), and per our pre-registration, we also excluded any infant who did not make at least one face-to-object saccade during the window of analysis in at least three of the six trials.  A further `r n_shifts$percents$any_sum` (`r round(n_shifts$percents$any_mean*100, 2)`%) infants were excluded from analyses for this reason. 
+* *Insufficient face-to-object saccades*. Following Senju and Csibra (2008), and per our pre-registration, we also excluded any infant who did not make at least one gaze shift from face to object during the window of analysis in at least three of the six trials.  A further `r n_shifts$percents$any_sum` (`r round(n_shifts$percents$any_mean*100, 2)`%) infants were excluded from analyses for this reason. 
 
 
 ```{r}
@@ -174,4 +174,4 @@ d_compare <- read_csv(here("processed_data","02_validated_output.csv")) %>%
 
 ```
 
-* *Failure to attend*. We also excluded any trials in which infants did not look at the congruent or incongruent object during the window of analysis. This meant that each infants contributed a different number of trials. An additional `r n_nolook$n[n_nolook$look_excluded =="TRUE"]` trials (`r round(((n_nolook$n[n_nolook$look_excluded =="TRUE"]) / nrow(d)) *100, 2)`%) were excluded from the analyses. This left us with a total number of `r d_compare$valid_trial[d_compare$group == "total trial"]` valid trials (`r round(d_compare$percentage[d_compare$group == "total trial"], 2)`% of the data before all the screenings) for later analyses: `r d_compare$valid_trial[d_compare$group == "6-9 mo monolingual"]` trials for 6-to-9-month-old monolinguals (`r round(d_compare$percentage[d_compare$group == "6-9 mo monolingual"], 2)`% of the original data), `r d_compare$valid_trial[d_compare$group == "12-15 mo monolingual"]` trials for 12-to-15-month-old monolinguals (`r round(d_compare$percentage[d_compare$group == "12-15 mo monolingual"], 2)`% of the original data), `r d_compare$valid_trial[d_compare$group == "6-9 mo bilingual"]` trials for 6-to-9-month-old bilinguals (`r round(d_compare$percentage[d_compare$group == "6-9 mo bilingual"], 2)`% of the original data), and `r d_compare$valid_trial[d_compare$group == "12-15 mo bilingual"]` trials for 12-to-15-month-old bilinguals (`r round(d_compare$percentage[d_compare$group == "12-15 mo bilingual"], 2)`% of the original data).
+* *Failure to attend*. We also excluded any trials in which infants did not look at the congruent or incongruent object during the window of analysis. This meant that each infant contributed a different number of trials. An additional `r n_nolook$n[n_nolook$look_excluded =="TRUE"]` trials (`r round(((n_nolook$n[n_nolook$look_excluded =="TRUE"]) / nrow(d)) *100, 2)`%) were excluded from the analyses. This left us with a total number of `r d_compare$valid_trial[d_compare$group == "total trial"]` valid trials (`r round(d_compare$percentage[d_compare$group == "total trial"], 2)`% of the data before all the screenings) for later analyses: `r d_compare$valid_trial[d_compare$group == "6-9 mo monolingual"]` trials for 6-to-9-month-old monolinguals (`r round(d_compare$percentage[d_compare$group == "6-9 mo monolingual"], 2)`% of the original data), `r d_compare$valid_trial[d_compare$group == "12-15 mo monolingual"]` trials for 12-to-15-month-old monolinguals (`r round(d_compare$percentage[d_compare$group == "12-15 mo monolingual"], 2)`% of the original data), `r d_compare$valid_trial[d_compare$group == "6-9 mo bilingual"]` trials for 6-to-9-month-old bilinguals (`r round(d_compare$percentage[d_compare$group == "6-9 mo bilingual"], 2)`% of the original data), and `r d_compare$valid_trial[d_compare$group == "12-15 mo bilingual"]` trials for 12-to-15-month-old bilinguals (`r round(d_compare$percentage[d_compare$group == "12-15 mo bilingual"], 2)`% of the original data).
