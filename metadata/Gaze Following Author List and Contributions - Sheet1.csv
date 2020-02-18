@@ -6,10 +6,10 @@ Author Last Name,Author First Name,Affiliation,labid,Grant acknowledgment(s),I C
 Byers-Heinlein,Krista,Concordia University,irl-concordia,Natural Sciences and Engineering Research Council of Canada (402470-2011),Y,S,S,M,S,S,S,S,S,S,
 Laoun-Rubenstein,Alexandra,Concordia University,irl-concordia,,Y,,,,,,S,,,,
 Lew-Williams,Casey,Princeton University,babylab_princeton,,Y,,M,,,,S,,M,,
-Singh,Leher,National University of Singapore,nuslab,ODPRT funds,Y,S,S,,,M,S,,S,?,
+Singh,Leher,National University of Singapore,nuslab,ODPRT funds,Y,S,S,,,M,S,,S,S,
 Potter,Christine E.,Princeton University,babylab_princeton,,Y,,,,,,S,,,,
 Barr,Rachel,Georgetown University,elp-georgetown,NSF (BCS-1551719),Y,,M,,,,M,,M,,worked closely with my graduate student Joscelin Rocha-Hidalgo
-Rocha-Hidalgo,Joscelin,Georgetown University,elp-georgetown,NSF (BCS-1551719),Y,,,,,,S,,,,
+Rocha-Hidalgo,Joscelin,Georgetown University,elp-georgetown,NSF (BCS-1551719),Y,,,,,,S,,,M,
 Durrant,Samantha,University of Liverpool,lll-liv,ESRC ES/L008955/1,Y,,,,,,S,,,,
 Noble,Claire,University of Liverpool,lll-liv,ESRC ES/L008955/1,Y,,,,,,S,,,,
 Brown,Anna,University of Liverpool,lll-liv,ESRC ES/L008955/1,Y,,,,,,S,,,,
@@ -17,8 +17,8 @@ Gonzalez-Gomez,Nayeli,Oxford Brookes University,brookes-babylab,The Leverhulme T
 Gampe,Anja,University of Zurich,weltentdecker-zurich,,Y,,,,,,S,,,,
 Liu,Liquan,Western Sydney University,wsu: kw,"Early Career Researcher Grant, Start-up Grant, Western Sydney University",Y,,,,,,S,,,,
 Waddell,Connor,Western Sydney University,wsu: kw,"Early Career Researcher Grant, Start-up Grant, Western Sydney University",Y,,,,,,S,,,,
-Kovács,Ágnes Melinda,Central European University,cdc-ceu,,Y,,,,,,,,,,
-Hernik,Mikołaj,Central European University,cdc-ceu,"European Research Council Synergy Grant, SOMICS (609819)",Y,,,,,,S,,,,
+Kov�cs,�gnes Melinda,Central European University,cdc-ceu,,Y,,,,,,,,,,
+Hernik,Miko_aj,Central European University,cdc-ceu,"European Research Council Synergy Grant, SOMICS (609819)",Y,,,,,,S,,,,
 van Renswoude,Daan,University of Amsterdam,,,,,,,,,,S,,,
 Visser,Ingmar,University of Amsterdam,,,,,,,,,,M,M,,"data analysis protocol decisions, together with Daan van Renswoude, not sure whether they should go under Protocol or Stage 1 manuscript"
 Jartó,Marianna,University of Hamburg,koku-hh,,Y,,,,,,S,M,,,
@@ -27,3 +27,4 @@ Soderstrom,Melanie,University of Manitoba,bll-umanitoba,"Research Manitoba, Univ
 Black,Alexis K.,Haskins Laboratories,,,,,,,,,,S,S,,
 Wermelinger,Stephanie,University of Zurich,weltentdecker-zurich,,Y,,,,,,,,,,
 Tsui,Rachel Ka-Ying,Concordia University,irl-concordia,,,,,,,,,S,,,
+Hay,Jessica,"University of Tennessee, Knoxville",infantlanglab-utk,,,,,,,,S,,,,

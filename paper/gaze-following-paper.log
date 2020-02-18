@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.11.6)  17 FEB 2020 15:30
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.11.6)  18 FEB 2020 10:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -916,12 +916,12 @@ File: ts1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 Underfull \vbox (badness 7649) has occurred while \output is active []
 
 [15]
-Overfull \hbox (50.50085pt too wide) in alignment at lines 226--252
+Overfull \hbox (70.73676pt too wide) in alignment at lines 226--252
  [] [] [] [] [] [] 
  []
 
 
-Overfull \hbox (50.50085pt too wide) in alignment at lines 252--270
+Overfull \hbox (70.73676pt too wide) in alignment at lines 252--270
  [] [] [] [] [] [] 
  []
 
@@ -1023,34 +1023,25 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [37]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[38 <./gaze-following-paper_files/figure-latex/fig8-1.pdf>] [39]
-Overfull \hbox (17.38689pt too wide) in alignment at lines 661--676
- [] [] 
- []
-
-
-Underfull \vbox (badness 10000) detected at line 676
- []
-
-[40 <./gaze-following-paper_files/figure-latex/fig9-1.pdf>] [41] [42] [43] [44]
-[45] [46] [47] [48] [49] [50] AED endfloat: Processing end Figures and Tables [
-51]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 872.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 872.
+[38 <./gaze-following-paper_files/figure-latex/fig8-1.pdf>] [39] [40 <./gaze-fo
+llowing-paper_files/figure-latex/fig9-1.pdf>] [41] [42] [43] [44] [45] [46] [47
+] [48] [49] AED endfloat: Processing end Figures and Tables [50]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 855.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 855.
 (./gaze-following-paper.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 872.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 872.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 855.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 855.
 Package rerunfilecheck Info: File `gaze-following-paper.out' has not changed.
 (rerunfilecheck)             Checksum: 051B2967D0E73630504FD87EF129A7C0;9127.
  ) 
 Here is how much of TeX's memory you used:
- 14387 strings out of 494111
- 213194 string characters out of 6170577
- 294429 words of memory out of 5000000
- 18039 multiletter control sequences out of 15000+600000
+ 14384 strings out of 494111
+ 213175 string characters out of 6170577
+ 294393 words of memory out of 5000000
+ 18038 multiletter control sequences out of 15000+600000
  48731 words of font info for 53 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 46i,10n,51p,2065b,501s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 46i,10n,51p,2065b,497s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/Users/rachelkytsui/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}
 {/Users/rachelkytsui/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.en
 c}{/Users/rachelkytsui/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}
@@ -1065,10 +1056,10 @@ i12.pfb></Users/rachelkytsui/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/l
 mss8.pfb></Users/rachelkytsui/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/
 lmsy10.pfb></Users/rachelkytsui/Library/TinyTeX/texmf-dist/fonts/type1/public/l
 m/lmtt12.pfb>
-Output written on gaze-following-paper.pdf (51 pages, 1085446 bytes).
+Output written on gaze-following-paper.pdf (50 pages, 1085286 bytes).
 PDF statistics:
- 680 PDF objects out of 1000 (max. 8388607)
- 595 compressed objects within 6 object streams
- 184 named destinations out of 1000 (max. 500000)
+ 675 PDF objects out of 1000 (max. 8388607)
+ 591 compressed objects within 6 object streams
+ 182 named destinations out of 1000 (max. 500000)
  502 words of extra memory for PDF output out of 10000 (max. 10000000)
 
