@@ -94,7 +94,7 @@ ndd <- exclude_by(d, quo(td), action = "include",
 d <- ndd$data
 ```
 
-* *No diagnosed developmental disorders*. We excluded data from `r ndd$percents$any_sum` (`r round(ndd$percents$any_mean*100, 1)`%) infant with parent-reported developmental disorders or sensory impairments.
+* *No diagnosed developmental disorders*. We excluded data from `r ndd$percents$any_sum` (`r round(ndd$percents$any_mean*100, 1)`%) infant with a parent-reported developmental disorder.
 
 ```{r trial_errors}
 trial_err <- exclude_by(d, quo(trial_error), 
@@ -132,6 +132,9 @@ n_shifts <- exclude_by(d, quo(shifts_incl), action = "include",
 
 d <- n_shifts$data
 
+#Duplicating the data set for comparison in the next chunk
+d_after_previousscreening <- d
+
 ```
 
 * *Insufficient face-to-object saccades*. Following Senju and Csibra (2008), and per our pre-registration, we also excluded any infant who did not make at least one gaze shift from face to object during the window of analysis in at least three of the six trials.  A further `r n_shifts$percents$any_sum` (`r round(n_shifts$percents$any_mean*100, 2)`%) infants were excluded from analyses for this reason. 
@@ -160,18 +163,14 @@ valid_trial <- d %>%
   add_row(age_group = "total", lang_group = "trial", valid_trial = sum(.$valid_trial)) %>%
   unite(group, c(age_group, lang_group), sep = " ", remove = TRUE)
 
-# Compare to the original number of attempted trials
-d_compare <- read_csv(here("processed_data","02_validated_output.csv")) %>%
-  group_by(age_group, lang_group) %>%
-  summarise(total_trial = length(trial_num)) %>%
-  ungroup(age_group, lang_group) %>%
-  add_row(age_group = "total", lang_group = "trial", total_trial = sum(.$total_trial)) %>%
-  filter(lang_group != "other") %>%
-  filter(age_group == "6-9 mo" | age_group == "12-15 mo" | age_group == "total") %>%
+#Comapre to the data that were left after the previous screenings
+d_compare <- d_after_previousscreening %>%
+  count(age_group, lang_group, name = "trials_left") %>%
+  add_row(age_group = "total", lang_group = "trial", trials_left = sum(.$trials_left)) %>%
   unite(group, c(age_group, lang_group), sep = " ", remove = TRUE) %>%
   left_join(., valid_trial) %>%
-  mutate(percentage = (valid_trial/total_trial)*100)
+  mutate(percentage = (valid_trial/trials_left)*100)
 
 ```
 
-* *Failure to attend*. We also excluded any trials in which infants did not look at the congruent or incongruent object during the window of analysis. This meant that each infant contributed a different number of trials. An additional `r n_nolook$n[n_nolook$look_excluded =="TRUE"]` trials (`r round(((n_nolook$n[n_nolook$look_excluded =="TRUE"]) / nrow(d)) *100, 2)`%) were excluded from the analyses. This left us with a total number of `r d_compare$valid_trial[d_compare$group == "total trial"]` valid trials (`r round(d_compare$percentage[d_compare$group == "total trial"], 2)`% of the data before all the screenings) for later analyses: `r d_compare$valid_trial[d_compare$group == "6-9 mo monolingual"]` trials for 6-to-9-month-old monolinguals (`r round(d_compare$percentage[d_compare$group == "6-9 mo monolingual"], 2)`% of the original data), `r d_compare$valid_trial[d_compare$group == "12-15 mo monolingual"]` trials for 12-to-15-month-old monolinguals (`r round(d_compare$percentage[d_compare$group == "12-15 mo monolingual"], 2)`% of the original data), `r d_compare$valid_trial[d_compare$group == "6-9 mo bilingual"]` trials for 6-to-9-month-old bilinguals (`r round(d_compare$percentage[d_compare$group == "6-9 mo bilingual"], 2)`% of the original data), and `r d_compare$valid_trial[d_compare$group == "12-15 mo bilingual"]` trials for 12-to-15-month-old bilinguals (`r round(d_compare$percentage[d_compare$group == "12-15 mo bilingual"], 2)`% of the original data).
+* *Failure to attend*. We also excluded any trials in which infants did not look at the congruent or incongruent object during the window of analysis. This meant that each infant contributed a different number of trials. An additional `r n_nolook$n[n_nolook$look_excluded =="TRUE"]` trials (`r round(((n_nolook$n[n_nolook$look_excluded =="TRUE"]) / nrow(d)) *100, 2)`%) were excluded from the analyses. This left us with a total number of `r d_compare$valid_trial[d_compare$group == "total trial"]` valid trials (`r round(d_compare$percentage[d_compare$group == "total trial"], 2)`% of the data after the previous screenings) for later analyses: `r d_compare$valid_trial[d_compare$group == "6-9 mo monolingual"]` trials for 6-to-9-month-old monolinguals (`r round(d_compare$percentage[d_compare$group == "6-9 mo monolingual"], 2)`% of the data), `r d_compare$valid_trial[d_compare$group == "12-15 mo monolingual"]` trials for 12-to-15-month-old monolinguals (`r round(d_compare$percentage[d_compare$group == "12-15 mo monolingual"], 2)`% of the data), `r d_compare$valid_trial[d_compare$group == "6-9 mo bilingual"]` trials for 6-to-9-month-old bilinguals (`r round(d_compare$percentage[d_compare$group == "6-9 mo bilingual"], 2)`% of the data), and `r d_compare$valid_trial[d_compare$group == "12-15 mo bilingual"]` trials for 12-to-15-month-old bilinguals (`r round(d_compare$percentage[d_compare$group == "12-15 mo bilingual"], 2)`% of the data).
