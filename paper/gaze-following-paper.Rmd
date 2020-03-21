@@ -397,7 +397,7 @@ knitr::include_graphics("Figure1")
 
 ## Data reliability 
 
-Because of the variability across labs in terms of methods and setups, different intrinsic reliability issues emerged regarding data consistency across different eye-tracker setups, between different human coders, and between eye-tracker and manual coding setups. These issues have been addressed in three different ways. First, as described above, all eye-tracking data were processed using the same GazePath tool, which is optimized to account for variability across different ages, populations, and setups [@vanRenswoude_etal_2018]. Second, all labs using human coding rather than an eye-tracker double coded a minimum of 25% of their data. For 6- to 9-month-olds, frame and shift agreement ranged from 98.27-99.27% and 95.40-99.55%, respectively. For 12- to 15-month-olds, frame and shift agreement ranged from 96.01-99.30% and 90.54-99.63%, respectively. (These numbers do not include the one laboratory described above whose data were excluded due to low inter-rater reliability, which obtained well below 70% agreement due to poor video quality.) One lab had additionally planned to hand-code eye-tracking data to assess the comparability of eye-tracking and human-coded data, but was unable to successfully do so due to unforeseen technical and staffing issues. Overall, offline and eye-tracking-coded data each appeared to have good reliability, although we were not able to assess the comparability of these approaches.
+Because of the variability across labs in terms of methods and setups, different intrinsic reliability issues emerged regarding data consistency across different eye-tracker setups, between different human coders, and between eye-tracker and manual coding setups. These issues have been addressed in three different ways. First, as described above, all eye-tracking data were processed using the same GazePath tool, which is optimized to account for variability across different ages, populations, and setups [@vanRenswoude_etal_2018]. Second, all labs using human coding rather than an eye-tracker double coded a minimum of 25% of their data. For 6- to 9-month-olds, frame and shift agreement ranged from 98.27-99.27% and 95.40-99.55%, respectively. For 12- to 15-month-olds, frame and shift agreement ranged from 96.01-99.30% and 90.54-99.63%, respectively. These numbers do not include the one laboratory described above whose data were excluded due to low inter-rater reliability, which obtained well below 70% agreement due to poor video quality. One lab had additionally planned to hand-code eye-tracking data to assess the comparability of eye-tracking and human-coded data, but was unable to successfully do so due to unforeseen technical and staffing issues. Overall, offline and eye-tracking-coded data each appeared to have good reliability, although we were not able to assess the comparability of these approaches.
 
 # Results
  <!--- ALL PLANNED ANALYSES ARE DETAILED BELOW IN OUR PRE-SUBMISSION MANUSCRIPT, BUT SOME ANALYSES MAY APPEAR IN AN ONLINE SUPPLEMENT RATHER THAN THE MAIN TEXT. -->
@@ -430,7 +430,7 @@ All planned analyses were pre-registered at osf.io/2ey3k/. Following previous la
 
 ### Meta-analytic framework
 
-Under this framework, we first calculated mean scores for each individual infant on the four dependent variables. For first look, frequency of looks, and total duration of looks, we calculated proportion difference scores for each infant, which subtracted the mean value for congruent trials (c) from the mean for incongruent trials (i), and divided by the total number of trials that contributed to that measure [(c - i)/(c + i1)]. Trials without values for a particular measure were excluded from the calculation. In the case of first looks, this involved taking the number of trials for which the first look was congruent and dividing it by the total number of trials that were coded for a first look. For latency, we limited the analysis to only those trials with a congruent first look, and for the meta-analytic model, we focused on the mean latency for each infant to look towards the congruent AOI. We then collapsed these for each dataset (i.e., a combination of lab, bilingualism status, and age group) to calculate a grand mean (M) and standard deviation (sd) across participants in each dataset. Finally, using the formula dz = M/sd, the derived M and sd were used to compute a within-subject Cohen’s *d* for first look, frequency of looks, and total duration of looks. For latency, we deviated from the pre-registered analysis plan. As the analysis was limited to latency towards the congruent AOI, it was not ideal to generate a Cohen’s *d* effect size without a comparison between two means. Instead of computing a within-subject Cohen’s *d*, the raw grand mean (M) and standard deviation (sd) across participants were entered into the meta-analytic model for latency. Sampling variance within each lab was calculated based on the formula sd ^ 2/n. 
+Under this framework, we first calculated mean scores for each individual infant on the four dependent variables. For first look, frequency of looks, and total duration of looks, we calculated proportion difference scores for each infant, which subtracted the mean value for congruent trials (c) from the mean for incongruent trials (i), and divided by the total number of trials that contributed to that measure [(c - i)/(c + i)]. Trials without values for a particular measure were excluded from the calculation. In the case of first looks, this involved taking the number of trials for which the first look was congruent and dividing it by the total number of trials that were coded for a first look. For latency, we limited the analysis to only those trials with a congruent first look, and for the meta-analytic model, we focused on the mean latency for each infant to look towards the congruent AOI. We then collapsed these for each dataset (i.e., a combination of lab, bilingualism status, and age group) to calculate a grand mean (M) and standard deviation (sd) across participants in each dataset. Finally, using the formula dz = M/sd, the derived M and sd were used to compute a within-subject Cohen’s *d* for first look, frequency of looks, and total duration of looks. For latency, we deviated from the pre-registered analysis plan. As the analysis was limited to latency towards the congruent AOI, it was not ideal to generate a Cohen’s *d* effect size without a comparison between two means. Instead of computing a within-subject Cohen’s *d*, the raw grand mean (M) and standard deviation (sd) across participants were entered into the meta-analytic model for latency. Sampling variance within each lab was calculated based on the formula sd ^ 2/n. 
 
 Random-effects meta-analysis models with a restricted maximum-likelihood estimator (REML) were fit with the metafor package [@Viechtbauer_2010]. A logistic model was fit for first look, frequency of looks, and total duration of looks as each infant’s score was bounded between 0 and 1. A linear model was fit for latency. To account for the dependence between mono- and bilingual datasets stemming from the same lab, we included laboratory as a random factor. Bilingualism was dummy coded (0 = monolingual, 1 = bilingual), and age was coded as the average age for each lab’s contributed sample for each language group (centered for ease of interpretation). 
 
@@ -451,6 +451,7 @@ d <- read_csv(here("processed_data/03_data_trial_main.csv")) %>%
   select(iv_columns, dv_columns) %>%
   mutate_at(vars(lab,subid,age_group, participant_gender, lang_group, first_shift, coding), as.factor) %>%
   mutate_at(vars(age_group, lang_group), fct_rev)
+
 ```
 
 ```{r first-look}
@@ -502,12 +503,12 @@ alpha <- .05
 #         age_group = "",
 #         lab = "Meta-analytic estimate")
 
-p_first <- predict(first_meta) %>%
-  as_tibble %>%
-  mutate(age_group = "",
-         lang_group = "The intercept",
-         lab = "Meta-analytic estimate")%>%
-  filter(row_number()==1) #Keeping only the intercept
+#p_first <- predict(first_meta) %>%
+#  as_tibble %>%
+#  mutate(age_group = "",
+#         lang_group = "The intercept",
+#         lab = "Meta-analytic estimate")%>%
+#  filter(row_number()==1) #Keeping only the intercept
   
 d_z_first_6to9 <- d_z_first%>%
   filter(age_group == "6-9 mo")
@@ -540,7 +541,7 @@ first_forest_data <- ungroup(d_z_first) %>%
          inverse_vars = 1/d_var, 
          age_group = as.character(age_group)) %>%
   # bind_rows(p_first_lang) %>%
-  bind_rows(p_first) %>%
+#  bind_rows(p_first) %>%
   bind_rows(p_first_lang_6to9)%>%
   bind_rows(p_first_lang_12to15)%>%
   mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", "")),
@@ -616,12 +617,12 @@ alpha <- .05
 #         age_group = "",
 #         lab = "Meta-analytic estimate")
 
-p_freq <- predict(freq_meta) %>%
-  as_tibble %>%
-  mutate(age_group = "",
-         lang_group = "The intercept",
-         lab = "Meta-analytic estimate")%>%
-  filter(row_number()==1) #Keeping only the intercept
+#p_freq <- predict(freq_meta) %>%
+#  as_tibble %>%
+#  mutate(age_group = "",
+#         lang_group = "The intercept",
+#         lab = "Meta-analytic estimate")%>%
+#  filter(row_number()==1) #Keeping only the intercept
   
 d_z_freq_6to9 <- d_z_freq%>%
   filter(age_group == "6-9 mo")
@@ -654,7 +655,7 @@ freq_forest_data <- ungroup(d_z_freq) %>%
          inverse_vars = 1/d_var, 
          age_group = as.character(age_group)) %>%
 #  bind_rows(p_freq_lang) %>%
-  bind_rows(p_freq) %>%
+#  bind_rows(p_freq) %>%
   bind_rows(p_freq_lang_6to9)%>%
   bind_rows(p_freq_lang_12to15)%>%
   mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", "")),
@@ -730,12 +731,12 @@ alpha <- .05
 #         age_group = "",
 #         lab = "Meta-analytic estimate")
 
-p_dur <- predict(dur_meta) %>%
-  as_tibble %>%
-  mutate(age_group = "",
-         lang_group = "The intercept",
-         lab = "Meta-analytic estimate")%>%
-  filter(row_number()==1) #Keeping only the intercept
+#p_dur <- predict(dur_meta) %>%
+#  as_tibble %>%
+#  mutate(age_group = "",
+#         lang_group = "The intercept",
+#         lab = "Meta-analytic estimate")%>%
+#  filter(row_number()==1) #Keeping only the intercept
 
 d_z_dur_6to9 <- d_z_dur%>%
   filter(age_group == "6-9 mo")
@@ -768,7 +769,7 @@ dur_forest_data <- ungroup(d_z_dur) %>%
          inverse_vars = 1/d_var, 
          age_group = as.character(age_group)) %>%
  # bind_rows(p_dur_lang) %>%
-  bind_rows(p_dur) %>%
+#  bind_rows(p_dur) %>%
   bind_rows(p_dur_lang_6to9)%>%
   bind_rows(p_dur_lang_12to15)%>%
   mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", "")),
@@ -848,12 +849,12 @@ alpha <- .05
 #         age_group = "",
 #         lab = "Meta-analytic estimate")
 
-p_latency <- predict(Latency_meta) %>%
-  as_tibble %>%
-  mutate(age_group = "",
-         lang_group = "The intercept",
-         lab = "Meta-analytic estimate")%>%
-  filter(row_number()==1) #Keeping only the intercept
+# <- predict(Latency_meta) %>%
+#  as_tibble %>%
+#  mutate(age_group = "",
+#         lang_group = "The intercept",
+#         lab = "Meta-analytic estimate")%>%
+#  filter(row_number()==1) #Keeping only the intercept
   
 d_z_latency_6to9 <- d_z_latency%>%
   filter(age_group == "6-9 mo")
@@ -886,7 +887,7 @@ latency_forest_data <- ungroup(d_z_latency) %>%
          inverse_vars = 1/var, 
          age_group = as.character(age_group)) %>%
 #  bind_rows(p_latency_lang) %>%
-  bind_rows(p_latency) %>%
+#  bind_rows(p_latency) %>%
   bind_rows(p_latency_lang_6to9)%>%
   bind_rows(p_latency_lang_12to15)%>%
   mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", "")),
@@ -972,9 +973,15 @@ firstshift_coefs <- summary(first_glmer)$coef %>%
   as.data.frame %>%
   mutate_at(c("Estimate","Std. Error", "z value", "Pr(>|z|)"), 
             function (x) signif(x, digits = 3)) %>% 
-    rename(SE = `Std. Error`, 
+  rename(SE = `Std. Error`, 
          z = `z value`,
-         p = `Pr(>|z|)`)
+         p = `Pr(>|z|)`) %>%
+  mutate_if(is.numeric, round, digits = 3) %>%
+  mutate(p = case_when(
+    p < .001 ~ "<.001",
+    p < .01 ~ "<.01",
+    p < .05 ~ "<.05",
+    TRUE ~ as.character(p)))
 
 rownames(firstshift_coefs) <- c("Intercept", "bilingual", "age_days", 
                      "bilingual * age_days") 
@@ -1030,9 +1037,15 @@ freq_coefs <- summary(freq_lmer)$coef %>%
   select(-df)%>%
   mutate_at(c("Estimate","Std. Error", "t value", "Pr(>|t|)"), 
             function (x) signif(x, digits = 3)) %>% 
-    rename(SE = `Std. Error`, 
+  rename(SE = `Std. Error`, 
          t = `t value`,
-         p = `Pr(>|t|)`)
+         p = `Pr(>|t|)`) %>%
+  mutate_if(is.numeric, round, digits = 3) %>%
+  mutate(p = case_when(
+    p < .001 ~ "<.001",
+    p < .01 ~ "<.01",
+    p < .05 ~ "<.05",
+    TRUE ~ as.character(p)))
 
 rownames(freq_coefs) <- c("Intercept", "bilingual", "age_days", "aoi",
                      "bilingual * age_days", "bilingual * aoi", "age_days * aoi",
@@ -1042,6 +1055,7 @@ papaja::apa_table(freq_coefs, format.args = list(digits = 3),
                   caption = "Coefficient estimates from a linear mixed-effects model predicting frequency of shifting gaze towards the congruent AOI.",
                   col.names =c("","Estimate","$SE$","$t$","$p$"),
                   align=c("l","l","c","c","c"))
+
 ```
 
 \noindent Table 3 shows coefficient estimates from this model and Figure 7 visualizes this model. The significant main effect of age indicated that older monolingual infants looked more frequently at the objects as compared to younger monolingual infants. The interaction between age and bilingualism, although not significant, indicated a tendency for bilingual infants to show a greater increase in their frequency of looks towards the objects with age compared to monolinguals. More centrally, there were both a significant main effect of aoi and an interaction between aoi and age, suggesting that infants shifted more often to the congruent object as opposed to the incongruent object and that this pattern of looking increased as infants aged. The effect of bilingualism, however, was not significant, and neither were its 2-way interaction with aoi nor its 3-way interaction with age and aoi; this suggests that there was not a reliable difference between bilingual and monolingual infants in the number of times they shifted gaze towards the congruent object.
@@ -1081,9 +1095,15 @@ duration_coefs <- summary(duration_lmer)$coef %>%
   select(-df)%>%
   mutate_at(c("Estimate","Std. Error", "t value", "Pr(>|t|)"), 
             function (x) signif(x, digits = 3)) %>% 
-    rename(SE = `Std. Error`, 
+  rename(SE = `Std. Error`, 
          t = `t value`,
-         p = `Pr(>|t|)`)
+         p = `Pr(>|t|)`) %>%
+  mutate_if(is.numeric, round, digits = 3) %>%
+  mutate(p = case_when(
+    p < .001 ~ "<.001",
+    p < .01 ~ "<.01",
+    p < .05 ~ "<.05",
+    TRUE ~ as.character(p)))
 
 rownames(duration_coefs) <- c("Intercept", "bilingual", "age_days", "aoi",
                      "bilingual * age_days", "bilingual * aoi", "age_days * aoi",
@@ -1134,9 +1154,15 @@ latency_coefs <- summary(latency_lmer)$coef %>%
   select(-df)%>%
   mutate_at(c("Estimate","Std. Error", "t value", "Pr(>|t|)"), 
             function (x) signif(x, digits = 3)) %>% 
-    rename(SE = `Std. Error`, 
+  rename(SE = `Std. Error`, 
          t = `t value`,
-         p = `Pr(>|t|)`)
+         p = `Pr(>|t|)`)%>%
+  mutate_if(is.numeric, round, digits = 3) %>%
+  mutate(p = case_when(
+    p < .001 ~ "<.001",
+    p < .01 ~ "<.01",
+    p < .05 ~ "<.05",
+    TRUE ~ as.character(p)))
 
 rownames(latency_coefs) <- c("Intercept", "bilingual", "age_days", "aoi",
                      "bilingual * age_days", "bilingual * aoi", "age_days * aoi",
