@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.11.6)  20 MAR 2020 21:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2020.4.1)  1 APR 2020 15:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -474,16 +474,22 @@ hobsub not currently supported, see hobsub.dtx to extract original code
 y
 Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 )
-(/Users/rachelkytsui/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/pdftexcmds
+(/Users/rachelkytsui/Library/TinyTeX/texmf-dist/tex/latex/pdftexcmds/pdftexcmds
 .sty
-Package: pdftexcmds 2019/07/25 v0.30 Utility functions of pdfTeX for LuaTeX (HO
+Package: pdftexcmds 2019/11/24 v0.31 Utility functions of pdfTeX for LuaTeX (HO
 )
 
 (/Users/rachelkytsui/Library/TinyTeX/texmf-dist/tex/generic/oberdiek/infwarerr.
 sty
 Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
 )
-Package pdftexcmds Info: LuaTeX not detected.
+
+LaTeX Warning: You have requested, on input line 186, version
+               `2019/11/07' of package iftex,
+               but only version
+               `2019/11/04 v1.0b TeX engine tests'
+               is available.
+
 Package pdftexcmds Info: \pdf@primitive is available.
 Package pdftexcmds Info: \pdf@ifprimitive is available.
 Package pdftexcmds Info: \pdfdraftmode found.
@@ -520,9 +526,9 @@ Package: letltxmacro 2016/05/16 v1.5 Let assignment for LaTeX macros (HO)
 ty
 Package: auxhook 2016/05/16 v1.4 Hooks for auxiliary files (HO)
 )
-(/Users/rachelkytsui/Library/TinyTeX/texmf-dist/tex/latex/oberdiek/kvoptions.st
-y
-Package: kvoptions 2016/05/16 v3.12 Key value format for package options (HO)
+(/Users/rachelkytsui/Library/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptions.s
+ty
+Package: kvoptions 2019/11/29 v3.13 Key value format for package options (HO)
 )
 \@linkdim=\dimen142
 \Hy@linkcounter=\count117
@@ -946,6 +952,9 @@ File: "gaze-following-paper_files/figure-latex/""fig2-1".pdf Graphic file (type
 Package pdftex.def Info: "gaze-following-paper_files/figure-latex/""fig2-1".pdf
   used on input line 392.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 [28 <./gaze-following-paper_files/figure-latex/fig2-1.pdf>]
 <"gaze-following-paper_files/figure-latex/""fig3-1".pdf, id=399, 469.755pt x 32
 5.215pt>
@@ -955,6 +964,9 @@ File: "gaze-following-paper_files/figure-latex/""fig3-1".pdf Graphic file (type
 Package pdftex.def Info: "gaze-following-paper_files/figure-latex/""fig3-1".pdf
   used on input line 403.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 [29 <./gaze-following-paper_files/figure-latex/fig3-1.pdf>]
 <"gaze-following-paper_files/figure-latex/""fig4-1".pdf, id=411, 469.755pt x 32
 5.215pt>
@@ -964,6 +976,9 @@ File: "gaze-following-paper_files/figure-latex/""fig4-1".pdf Graphic file (type
 Package pdftex.def Info: "gaze-following-paper_files/figure-latex/""fig4-1".pdf
   used on input line 414.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 [30 <./gaze-following-paper_files/figure-latex/fig4-1.pdf>]
 <"gaze-following-paper_files/figure-latex/""fig5-1".pdf, id=423, 469.755pt x 32
 5.215pt>
@@ -976,13 +991,13 @@ Package pdftex.def Info: "gaze-following-paper_files/figure-latex/""fig5-1".pdf
 
 Underfull \vbox (badness 2189) has occurred while \output is active []
 
-[31] [32 <./gaze-following-paper_files/figure-latex/fig5-1.pdf>]
+[31] [32 <./gaze-following-paper_files/figure-latex/fig5-1.pdf>] [33]
 LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 4
 63.
 (/Users/rachelkytsui/Library/TinyTeX/texmf-dist/tex/latex/lm/t1lmtt.fd
 File: t1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
-) [33]
-<"gaze-following-paper_files/figure-latex/""fig6-1".pdf, id=447, 361.35pt x 325
+) [34]
+<"gaze-following-paper_files/figure-latex/""fig6-1".pdf, id=452, 361.35pt x 325
 .215pt>
 File: "gaze-following-paper_files/figure-latex/""fig6-1".pdf Graphic file (type
  pdf)
@@ -990,8 +1005,8 @@ File: "gaze-following-paper_files/figure-latex/""fig6-1".pdf Graphic file (type
 Package pdftex.def Info: "gaze-following-paper_files/figure-latex/""fig6-1".pdf
   used on input line 508.
 (pdftex.def)             Requested size: 361.34912pt x 325.2142pt.
-[34]
-<"gaze-following-paper_files/figure-latex/""fig7-1".pdf, id=454, 469.755pt x 32
+[35]
+<"gaze-following-paper_files/figure-latex/""fig7-1".pdf, id=460, 469.755pt x 32
 5.215pt>
 File: "gaze-following-paper_files/figure-latex/""fig7-1".pdf Graphic file (type
  pdf)
@@ -999,8 +1014,8 @@ File: "gaze-following-paper_files/figure-latex/""fig7-1".pdf Graphic file (type
 Package pdftex.def Info: "gaze-following-paper_files/figure-latex/""fig7-1".pdf
   used on input line 547.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[35]
-<"gaze-following-paper_files/figure-latex/""fig8-1".pdf, id=462, 469.755pt x 32
+[36 <./gaze-following-paper_files/figure-latex/fig6-1.pdf>]
+<"gaze-following-paper_files/figure-latex/""fig8-1".pdf, id=472, 469.755pt x 32
 5.215pt>
 File: "gaze-following-paper_files/figure-latex/""fig8-1".pdf Graphic file (type
  pdf)
@@ -1008,8 +1023,8 @@ File: "gaze-following-paper_files/figure-latex/""fig8-1".pdf Graphic file (type
 Package pdftex.def Info: "gaze-following-paper_files/figure-latex/""fig8-1".pdf
   used on input line 586.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
-[36 <./gaze-following-paper_files/figure-latex/fig6-1.pdf>]
-<"gaze-following-paper_files/figure-latex/""fig9-1".pdf, id=474, 469.755pt x 32
+[37]
+<"gaze-following-paper_files/figure-latex/""fig9-1".pdf, id=481, 469.755pt x 32
 5.215pt>
 File: "gaze-following-paper_files/figure-latex/""fig9-1".pdf Graphic file (type
  pdf)
@@ -1018,34 +1033,25 @@ Package pdftex.def Info: "gaze-following-paper_files/figure-latex/""fig9-1".pdf
   used on input line 626.
 (pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
 
+Underfull \vbox (badness 1817) has occurred while \output is active []
+
+[38 <./gaze-following-paper_files/figure-latex/fig7-1.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[37]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-[38 <./gaze-following-paper_files/figure-latex/fig7-1.pdf>] [39]
-Underfull \vbox (badness 3623) has occurred while \output is active []
-
-[40 <./gaze-following-paper_files/figure-latex/fig8-1.pdf>]
+[39] [40 <./gaze-following-paper_files/figure-latex/fig8-1.pdf>]
 Underfull \vbox (badness 1028) has occurred while \output is active []
 
 [41]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 3623) has occurred while \output is active []
 
 [42 <./gaze-following-paper_files/figure-latex/fig9-1.pdf>] [43]
 Underfull \vbox (badness 7649) has occurred while \output is active []
 
-[44] [45]
-Underfull \vbox (badness 1838) has occurred while \output is active []
-
-[46]
+[44] [45] [46]
 Underfull \vbox (badness 7649) has occurred while \output is active []
 
-[47]
-Underfull \vbox (badness 1436) has occurred while \output is active []
-
-[48] [49] [50] [51] [52] [53] [54] [55] [56] [57] [58] [59] [60] AED endfloat: 
-Processing end Figures and Tables [61]
+[47] [48] [49] [50] [51] [52] [53] [54] [55] [56] [57] [58] [59] [60] AED endfl
+oat: Processing end Figures and Tables [61]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 993.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 993.
 (./gaze-following-paper.aux)
@@ -1056,12 +1062,12 @@ Package rerunfilecheck Info: File `gaze-following-paper.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  14480 strings out of 494111
- 215138 string characters out of 6170577
- 298337 words of memory out of 5000000
+ 215143 string characters out of 6172521
+ 298281 words of memory out of 5000000
  18034 multiletter control sequences out of 15000+600000
  48731 words of font info for 53 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 46i,10n,51p,2491b,497s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 46i,10n,51p,2394b,497s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/Users/rachelkytsui/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-ec.enc}
 {/Users/rachelkytsui/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.en
 c}{/Users/rachelkytsui/Library/TinyTeX/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}
@@ -1076,7 +1082,7 @@ i12.pfb></Users/rachelkytsui/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/l
 mss8.pfb></Users/rachelkytsui/Library/TinyTeX/texmf-dist/fonts/type1/public/lm/
 lmsy10.pfb></Users/rachelkytsui/Library/TinyTeX/texmf-dist/fonts/type1/public/l
 m/lmtt12.pfb>
-Output written on gaze-following-paper.pdf (61 pages, 1123068 bytes).
+Output written on gaze-following-paper.pdf (61 pages, 1122875 bytes).
 PDF statistics:
  902 PDF objects out of 1000 (max. 8388607)
  804 compressed objects within 9 object streams
