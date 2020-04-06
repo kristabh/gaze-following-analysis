@@ -107,7 +107,7 @@ affiliation:
     institution   : "National University of Singapore"
 
 author_note: |
-  Individual participating labs acknowledge funding support from: TO BE ADDED
+  Individual participating labs acknowledge funding support from: the Natural Sciences and Engineering Research Council of Canada (402470-2011); the National Science Foundation (BCS-1551719); the UK Economic and Social Research Council (ESRC ES/L008955/1); the Leverhulme Trust (ECF-2015-009); the National Institute of Child Health and Human Development (R01HD083312); the European Research Council Synergy Grant (SOMICS 609819); the Early Career Research Grant, Start-up Grant, Western Sydney University; the European Research Council Advanced Grant, UNDER CONTROL (323961); Research Manitoba, University of Manitoba, Children's Hospital Research Institute of Manitoba; and the ODPRT funds, National University of Singapore.
 
 abstract: |
   Determining the meanings of words requires language learners to attend to what other people say. However, it behooves a young language learner to simultaneously attend to what other people attend to, for example, by following the direction of their eye gaze. Sensitivity to cues such as eye gaze might be particularly important for bilingual infants, as they encounter less consistency between words and objects than monolinguals, and do not always have access to the same word learning heuristics (e.g., mutual exclusivity). In a pre-registered study, we tested the hypothesis that bilingual experience would lead to a more pronounced ability to follow another’s gaze. We used the gaze-following paradigm developed by @Senju_Csibra_2008 to test a total of 93 6–9 month-old and 229 12–15 month-old monolingual and bilingual infants, in 11 labs located in 8 countries. Monolingual and bilingual infants showed similar gaze-following abilities, and both groups showed age-related improvements in speed, accuracy, frequency and duration of fixations to congruent objects. Unexpectedly, bilinguals tended to make more frequent fixations to onscreen objects, whether or not they were cued by the actor. These results suggest that gaze sensitivity is a fundamental aspect of development that is robust to variation in language exposure.
@@ -151,7 +151,7 @@ theme_set(theme_bw() +
 ```
 
 ```{r load_authors}
-# downloaded from https://docs.google.com/spreadsheets/d/1ZI-vEoMoZkqPWMoA7wCegWfecydg3wNifbpM9OYHsXU/edit?usp=drive_web&ouid=115164816411219099530 on April 1 2020
+# downloaded from https://docs.google.com/spreadsheets/d/1ZI-vEoMoZkqPWMoA7wCegWfecydg3wNifbpM9OYHsXU/edit?usp=drive_web&ouid=115164816411219099530 on April 6 2020
 
 author_data <- read_csv(here("metadata/Gaze Following Author List and Contributions - Sheet1.csv"), 
                      skip = 4) %>% 
