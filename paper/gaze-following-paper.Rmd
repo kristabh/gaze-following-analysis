@@ -21,54 +21,56 @@ author:
     corresponding : yes    # Define only one corresponding author
     address       : "Department of Psychology, 7141 Sherbrooke St. West, Montreal, QC, Canada, H2T1V2"
     email         : "k.byers@concordia.ca"
-  - name          : "Rachel Barr"
+  - name          : "Rachel Ka-Ying Tsui"
+    affiliation   : "1" 
+  - name          : "Daan van Renswoude"
     affiliation   : "2"
   - name          : "Alexis K. Black"
     affiliation   : "3"
+  - name          : "Rachel Barr"
+    affiliation   : "4"
   - name          : "Anna Brown"
-    affiliation   : "4"
-  - name          : "Samantha Durrant"
-    affiliation   : "4"
-  - name          : "Anja Gampe"
     affiliation   : "5"
-  - name          : "Nayeli Gonzalez-Gomez"
+  - name          : "Samantha Durrant"
+    affiliation   : "5"
+  - name          : "Anja Gampe"
     affiliation   : "6"
-  - name          : "Jessica F. Hay"
+  - name          : "Nayeli Gonzalez-Gomez"
     affiliation   : "7"
-  - name          : "Mikołaj Hernik"
+  - name          : "Jessica F. Hay"
     affiliation   : "8"
-  - name          : "Marianna Jartó"
+  - name          : "Mikołaj Hernik"
     affiliation   : "9"
-  - name          : "Ágnes Melinda Kovács"
+  - name          : "Marianna Jartó"
     affiliation   : "10"
+  - name          : "Ágnes Melinda Kovács"
+    affiliation   : "11"
   - name          : "Alexandra Laoun-Rubenstein"
     affiliation   : "1"
   - name          : "Casey Lew-Williams"
-    affiliation   : "11"
+    affiliation   : "12"
   - name          : "Ulf Liszkowski"
-    affiliation   : "9"
+    affiliation   : "10"
   - name          : "Liquan Liu"
-    affiliation   : "12"
-  - name          : "Claire Noble"
-    affiliation   : "4"
-  - name          : "Christine E. Potter"
-    affiliation   : "11"
-  - name          : "Joscelin Rocha-Hidalgo"
-    affiliation   : "2"
-  - name          : "Nuria Sebastian-Galles"
     affiliation   : "13"
-  - name          : "Melanie Soderstrom"
-    affiliation   : "14"
-  - name          : "Rachel Ka-Ying Tsui"
-    affiliation   : "1"
-  - name          : "Daan van Renswoude"
-    affiliation   : "15"
-  - name          : "Ingmar Visser"
-    affiliation   : "15"
-  - name          : "Connor Waddell"
-    affiliation   : "12"
-  - name          : "Stephanie Wermelinger"
+  - name          : "Claire Noble"
     affiliation   : "5"
+  - name          : "Christine E. Potter"
+    affiliation   : "12"
+  - name          : "Joscelin Rocha-Hidalgo"
+    affiliation   : "4"
+  - name          : "Nuria Sebastian-Galles"
+    affiliation   : "14"
+  - name          : "Melanie Soderstrom"
+    affiliation   : "15"
+
+
+  - name          : "Ingmar Visser"
+    affiliation   : "2"
+  - name          : "Connor Waddell"
+    affiliation   : "13"
+  - name          : "Stephanie Wermelinger"
+    affiliation   : "6"
   - name          : "Leher Singh"
     affiliation   : "16"
 
@@ -76,38 +78,36 @@ affiliation:
   - id            : "1"
     institution   : "Concordia University"
   - id            : "2"
-    institution   : "Georgetown University"
+    institution   : "University of Amsterdam"
   - id            : "3"
     institution   : "Haskins Laboratories"
   - id            : "4"
-    institution   : "University of Liverpool"
+    institution   : "Georgetown University"
   - id            : "5"
-    institution   : "University of Zurich"
+    institution   : "University of Liverpool"
   - id            : "6"
-    institution   : "Oxford Brookes University"
+    institution   : "University of Zurich"
   - id            : "7"
-    institution   : "University of Tennessee"
+    institution   : "Oxford Brookes University"
   - id            : "8"
-    institution   : "UiT The Arctic University of Norway"
+    institution   : "University of Tennessee"
   - id            : "9"
-    institution   : "University of Hamburg"
+    institution   : "UiT The Arctic University of Norway"
   - id            : "10"
-    institution   : "Central European University"
+    institution   : "University of Hamburg"
   - id            : "11"
-    institution   : "Princeton University"
+    institution   : "Central European University"
   - id            : "12"
-    institution   : "Western Sydney University"
+    institution   : "Princeton University"
   - id            : "13"
-    institution   : "Universitat Pompeu Fabra"
+    institution   : "Western Sydney University"
   - id            : "14"
-    institution   : "University of Manitoba"
+    institution   : "Universitat Pompeu Fabra"
   - id            : "15"
-    institution   : "University of Amsterdam"
+    institution   : "University of Manitoba"
   - id            : "16"
     institution   : "National University of Singapore"
 
-author_note: |
-  Individual participating labs acknowledge funding support from: the Natural Sciences and Engineering Research Council of Canada (402470-2011); the National Science Foundation (BCS-1551719); the UK Economic and Social Research Council (ESRC ES/L008955/1); the Leverhulme Trust (ECF-2015-009); the National Institute of Child Health and Human Development (R01HD083312); the European Research Council Synergy Grant (SOMICS 609819); the Early Career Research Grant, Start-up Grant, Western Sydney University; the European Research Council Advanced Grant, UNDER CONTROL (323961); Research Manitoba, University of Manitoba, Children's Hospital Research Institute of Manitoba; and the ODPRT funds, National University of Singapore.
 
 abstract: |
   Determining the meanings of words requires language learners to attend to what other people say. However, it behooves a young language learner to simultaneously attend to what other people attend to, for example, by following the direction of their eye gaze. Sensitivity to cues such as eye gaze might be particularly important for bilingual infants, as they encounter less consistency between words and objects than monolinguals, and do not always have access to the same word learning heuristics (e.g., mutual exclusivity). In a pre-registered study, we tested the hypothesis that bilingual experience would lead to a more pronounced ability to follow another’s gaze. We used the gaze-following paradigm developed by @Senju_Csibra_2008 to test a total of 93 6–9 month-old and 229 12–15 month-old monolingual and bilingual infants, in 11 labs located in 8 countries. Monolingual and bilingual infants showed similar gaze-following abilities, and both groups showed age-related improvements in speed, accuracy, frequency and duration of fixations to congruent objects. Unexpectedly, bilinguals tended to make more frequent fixations to onscreen objects, whether or not they were cued by the actor. These results suggest that gaze sensitivity is a fundamental aspect of development that is robust to variation in language exposure.
@@ -390,7 +390,7 @@ For labs that did not have an eye-tracker, trained human coders examined videos 
 
 ```{r fig1, fig.cap="Screenshot of one of the videos presented to infants showing the three areas of interest (AOIs) used: face, congruent object, and incongruent object."}
 
-knitr::include_graphics("Figure1")
+knitr::include_graphics("Figure1.png")
 
 ```
 
@@ -1233,7 +1233,7 @@ This study forms part of a groundswell of large-scale, multi-lab initiatives all
 
 # Author Contributions
 
-Author contribution initials reflect authorship order. `r paste(author_data$initials[!is.na(author_data$concept)], collapse = ", ")` contributed to the study concept. `r paste(author_data$initials[!is.na(author_data$design)], collapse = ", ")` contributed to the study design. `r paste(author_data$initials[!is.na(author_data$protocol)], collapse = ", ")` contributed to the final protocol. `r paste(author_data$initials[!is.na(author_data$doc)], collapse = ", ")` contributed to study documentation. `r paste(author_data$initials[!is.na(author_data$manage)], collapse = ", ")` contributed to study management. `r paste(author_data$initials[!is.na(author_data$data)], collapse = ", ")` contributed to data collection. `r paste(author_data$initials[!is.na(author_data$analysis)], collapse = ", ")` contributed to data management and analysis. `r paste(author_data$initials[!is.na(author_data$ms1)], collapse = ", ")` contributed to the Stage 1 manuscript. `r paste(author_data$initials[!is.na(author_data$ms2)], collapse = ", ")` contributed to the Stage 2 manuscript.  
+Authorship order reflects the first author and the final author as project leads, authors 2-5 as the core analysis team, and authors 5-25 listed in alphabetical order by last name. Detailed contributions are as follows: `r paste(author_data$initials[!is.na(author_data$concept)], collapse = ", ")` contributed to the study concept. `r paste(author_data$initials[!is.na(author_data$design)], collapse = ", ")` contributed to the study design. `r paste(author_data$initials[!is.na(author_data$protocol)], collapse = ", ")` contributed to the final protocol. `r paste(author_data$initials[!is.na(author_data$doc)], collapse = ", ")` contributed to study documentation. `r paste(author_data$initials[!is.na(author_data$manage)], collapse = ", ")` contributed to study management. `r paste(author_data$initials[!is.na(author_data$data)], collapse = ", ")` contributed to data collection. `r paste(author_data$initials[!is.na(author_data$analysis)], collapse = ", ")` contributed to data management and analysis. `r paste(author_data$initials[!is.na(author_data$ms1)], collapse = ", ")` contributed to the Stage 1 manuscript. `r paste(author_data$initials[!is.na(author_data$ms2)], collapse = ", ")` contributed to the Stage 2 manuscript.  
 
 ```{r authortable, results="asis"}
 
@@ -1275,7 +1275,7 @@ The authors declare that there were no conflicts of interest with respect to the
 
 # Funding
 
-Individual participating labs acknowledge funding support from: XYZ
+Individual participating labs acknowledge funding support from: the Natural Sciences and Engineering Research Council of Canada (402470-2011; 2018-04390); the National Science Foundation (BCS-1551719); the UK Economic and Social Research Council (ESRC ES/L008955/1); the Leverhulme Trust (ECF-2015-009); the National Institute of Child Health and Human Development (R01HD083312); the European Research Council Synergy Grant (SOMICS 609819); the Early Career Research Grant & Start-up Grant, Western Sydney University; the European Research Council Advanced Grant, UNDER CONTROL (323961); Research Manitoba, University of Manitoba, Children's Hospital Research Institute of Manitoba; and the ODPRT funds, National University of Singapore.
 
 # Disclosures 
 
