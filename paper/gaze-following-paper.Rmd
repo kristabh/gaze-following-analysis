@@ -19,7 +19,7 @@ author:
   - name          : "Krista Byers-Heinlein"
     affiliation   : "1"
     corresponding : yes    # Must define only one corresponding author. Work-around to get two corresponding authors
-    address       : "Department of Psychology, 7141 Sherbrooke St. West, Montreal, QC, Canada, H2T1V2, or Leher Singh, Department of Psychology, 7 Arts Link, AS5 04-30, Singapore 117571."
+    address       : "Department of Psychology, 7141 Sherbrooke St. West, Montreal, QC, Canada, H2T1V2, or Leher Singh, Department of Psychology, 7 Arts Link, AS5 04-30, Singapore 117571"
     email         : "k.byers@concordia.ca or leher.singh@nus.edu.sg"
   - name          : "Rachel Ka-Ying Tsui"
     affiliation   : "1" 
