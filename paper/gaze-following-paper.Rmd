@@ -18,9 +18,9 @@ header-includes:
 author: 
   - name          : "Krista Byers-Heinlein"
     affiliation   : "1"
-    corresponding : yes    # Define only one corresponding author
-    address       : "Department of Psychology, 7141 Sherbrooke St. West, Montreal, QC, Canada, H2T1V2"
-    email         : "k.byers@concordia.ca"
+    corresponding : yes    # Must define only one corresponding author. Work-around to get two corresponding authors
+    address       : "Department of Psychology, 7141 Sherbrooke St. West, Montreal, QC, Canada, H2T1V2, or Leher Singh, Department of Psychology, 7 Arts Link, AS5 04-30, Singapore 117571."
+    email         : "k.byers@concordia.ca or leher.singh@nus.edu.sg"
   - name          : "Rachel Ka-Ying Tsui"
     affiliation   : "1" 
   - name          : "Daan van Renswoude"
@@ -63,8 +63,6 @@ author:
     affiliation   : "14"
   - name          : "Melanie Soderstrom"
     affiliation   : "15"
-
-
   - name          : "Ingmar Visser"
     affiliation   : "2"
   - name          : "Connor Waddell"
@@ -107,7 +105,6 @@ affiliation:
     institution   : "University of Manitoba"
   - id            : "16"
     institution   : "National University of Singapore"
-
 
 abstract: |
   Determining the meanings of words requires language learners to attend to what other people say. However, it behooves a young language learner to simultaneously attend to what other people attend to, for example, by following the direction of their eye gaze. Sensitivity to cues such as eye gaze might be particularly important for bilingual infants, as they encounter less consistency between words and objects than monolinguals, and do not always have access to the same word learning heuristics (e.g., mutual exclusivity). In a pre-registered study, we tested the hypothesis that bilingual experience would lead to a more pronounced ability to follow another’s gaze. We used the gaze-following paradigm developed by @Senju_Csibra_2008 to test a total of 93 6–9 month-old and 229 12–15 month-old monolingual and bilingual infants, in 11 labs located in 8 countries. Monolingual and bilingual infants showed similar gaze-following abilities, and both groups showed age-related improvements in speed, accuracy, frequency and duration of fixations to congruent objects. Unexpectedly, bilinguals tended to make more frequent fixations to onscreen objects, whether or not they were cued by the actor. These results suggest that gaze sensitivity is a fundamental aspect of development that is robust to variation in language exposure.
