@@ -31,44 +31,46 @@ author:
     affiliation   : "4"
   - name          : "Anna Brown"
     affiliation   : "5"
+  - name          : "Marc Colomer"
+    affiliation   : "6"
   - name          : "Samantha Durrant"
     affiliation   : "5"
   - name          : "Anja Gampe"
-    affiliation   : "6"
-  - name          : "Nayeli Gonzalez-Gomez"
     affiliation   : "7"
-  - name          : "Jessica F. Hay"
+  - name          : "Nayeli Gonzalez-Gomez"
     affiliation   : "8"
-  - name          : "Mikołaj Hernik"
+  - name          : "Jessica F. Hay"
     affiliation   : "9"
-  - name          : "Marianna Jartó"
+  - name          : "Mikołaj Hernik"
     affiliation   : "10"
-  - name          : "Ágnes Melinda Kovács"
+  - name          : "Marianna Jartó"
     affiliation   : "11"
+  - name          : "Ágnes Melinda Kovács"
+    affiliation   : "12"
   - name          : "Alexandra Laoun-Rubenstein"
     affiliation   : "1"
   - name          : "Casey Lew-Williams"
-    affiliation   : "12"
-  - name          : "Ulf Liszkowski"
-    affiliation   : "10"
-  - name          : "Liquan Liu"
     affiliation   : "13"
+  - name          : "Ulf Liszkowski"
+    affiliation   : "11"
+  - name          : "Liquan Liu"
+    affiliation   : "14"
   - name          : "Claire Noble"
     affiliation   : "5"
   - name          : "Christine E. Potter"
-    affiliation   : "12"
+    affiliation   : "13"
   - name          : "Joscelin Rocha-Hidalgo"
     affiliation   : "4"
   - name          : "Nuria Sebastian-Galles"
-    affiliation   : "14"
+    affiliation   : "6"
   - name          : "Melanie Soderstrom"
     affiliation   : "15"
   - name          : "Ingmar Visser"
     affiliation   : "2"
   - name          : "Connor Waddell"
-    affiliation   : "13"
+    affiliation   : "14"
   - name          : "Stephanie Wermelinger"
-    affiliation   : "6"
+    affiliation   : "7"
   - name          : "Leher Singh"
     affiliation   : "16"
 
@@ -84,27 +86,28 @@ affiliation:
   - id            : "5"
     institution   : "University of Liverpool"
   - id            : "6"
-    institution   : "University of Zurich"
-  - id            : "7"
-    institution   : "Oxford Brookes University"
-  - id            : "8"
-    institution   : "University of Tennessee"
-  - id            : "9"
-    institution   : "UiT The Arctic University of Norway"
-  - id            : "10"
-    institution   : "University of Hamburg"
-  - id            : "11"
-    institution   : "Central European University"
-  - id            : "12"
-    institution   : "Princeton University"
-  - id            : "13"
-    institution   : "Western Sydney University"
-  - id            : "14"
     institution   : "Universitat Pompeu Fabra"
+  - id            : "7"
+    institution   : "University of Zurich"
+  - id            : "8"
+    institution   : "Oxford Brookes University"
+  - id            : "9"
+    institution   : "University of Tennessee"
+  - id            : "10"
+    institution   : "UiT The Arctic University of Norway"
+  - id            : "11"
+    institution   : "University of Hamburg"
+  - id            : "12"
+    institution   : "Central European University"
+  - id            : "13"
+    institution   : "Princeton University"
+  - id            : "14"
+    institution   : "Western Sydney University"
   - id            : "15"
     institution   : "University of Manitoba"
   - id            : "16"
     institution   : "National University of Singapore"
+
 
 abstract: |
   Determining the meanings of words requires language learners to attend to what other people say. However, it behooves a young language learner to simultaneously attend to what other people attend to, for example, by following the direction of their eye gaze. Sensitivity to cues such as eye gaze might be particularly important for bilingual infants, as they encounter less consistency between words and objects than monolinguals, and do not always have access to the same word learning heuristics (e.g., mutual exclusivity). In a pre-registered study, we tested the hypothesis that bilingual experience would lead to a more pronounced ability to follow another’s gaze. We used the gaze-following paradigm developed by @Senju_Csibra_2008 to test a total of 93 6–9 month-old and 229 12–15 month-old monolingual and bilingual infants, in 11 labs located in 8 countries. Monolingual and bilingual infants showed similar gaze-following abilities, and both groups showed age-related improvements in speed, accuracy, frequency and duration of fixations to congruent objects. Unexpectedly, bilinguals tended to make more frequent fixations to onscreen objects, whether or not they were cued by the actor. These results suggest that gaze sensitivity is a fundamental aspect of development that is robust to variation in language exposure.
@@ -122,9 +125,6 @@ mask              : no
 
 bibliography      : ["gaze-following_references.bib"]
 replace_ampersands: yes
-
-#nocite            : |
-# @Yow_etal_2017
 
 class             : "man"
 output            : papaja::apa6_pdf
@@ -148,7 +148,7 @@ theme_set(theme_bw() +
 ```
 
 ```{r load_authors}
-# downloaded from https://docs.google.com/spreadsheets/d/1ZI-vEoMoZkqPWMoA7wCegWfecydg3wNifbpM9OYHsXU/edit?usp=drive_web&ouid=115164816411219099530 on April 6 2020
+# downloaded from https://docs.google.com/spreadsheets/d/1ZI-vEoMoZkqPWMoA7wCegWfecydg3wNifbpM9OYHsXU/edit?usp=drive_web&ouid=115164816411219099530 on April 14 2020
 
 author_data <- read_csv(here("metadata/Gaze Following Author List and Contributions - Sheet1.csv"), 
                      skip = 4) %>% 
@@ -180,12 +180,6 @@ authors <- author_data %>%
    pull(full) %>% 
    paste(collapse = ", ")
  
-# grants <- author_data  %>% 
-#   filter(!is.na(grant)) %>%
-#   filter(!duplicated(grant)) %>%
-#   pull(grant) %>% 
-#   paste(collapse = "; ")
-# Can't figure out how to render this into YAML, pasting for now.
 ```
 
 
@@ -350,7 +344,9 @@ lab_stats <- d_participants %>%
 kable(lab_stats, digits = 2,
       format = "latex", booktabs = TRUE,
       longtable = TRUE,
-      caption = "Statistics of the included labs. N refers to the number of infants included in the final analysis.")
+      caption = "Statistics of the included labs. N refers to the number of infants included in the final analysis.") %>%
+  kableExtra::kable_styling(font_size = 10)
+
 ```
 
 
@@ -387,7 +383,7 @@ For labs that did not have an eye-tracker, trained human coders examined videos 
 
 ```{r fig1, fig.cap="Screenshot of one of the videos presented to infants showing the three areas of interest (AOIs) used: face, congruent object, and incongruent object."}
 
-knitr::include_graphics("Figure1.png")
+knitr::include_graphics("Figure1")
 
 ```
 
@@ -476,8 +472,7 @@ d_z_first <- d_first_meta %>%
   group_by(lab, age_group, lang_group) %>%
   summarise(d = mean(mean_prop, na.rm = TRUE) / sd(mean_prop, na.rm = TRUE), 
             n = length(unique(subid)), 
-            d_var = d_var_calc(n, d)) #%>%
-# filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
+            d_var = d_var_calc(n, d))
 
 first_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
                     slab = lab, data = d_z_first, method = "REML") 
@@ -489,23 +484,7 @@ We began by examining the relation of the proportion of congruent first looks to
 
 ```{r fig2, fig.cap="Forest plot for the cross-lab meta-analysis on the proportion of first look."}
 
-#first_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
-#                                  slab = lab, data = d_z_first, method = "REML")
-
 alpha <- .05
-
-#p_first_lang <- predict(first_lang_only_matched, newmods =  c(0,1)) %>%
-#  as_tibble %>%
-#  mutate(lang_group = levels(d_z_first$lang_group), 
-#         age_group = "",
-#         lab = "Meta-analytic estimate")
-
-#p_first <- predict(first_meta) %>%
-#  as_tibble %>%
-#  mutate(age_group = "",
-#         lang_group = "The intercept",
-#         lab = "Meta-analytic estimate")%>%
-#  filter(row_number()==1) #Keeping only the intercept
   
 d_z_first_6to9 <- d_z_first%>%
   filter(age_group == "6-9 mo")
@@ -537,8 +516,6 @@ first_forest_data <- ungroup(d_z_first) %>%
          ci.ub = d + qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
          inverse_vars = 1/d_var, 
          age_group = as.character(age_group)) %>%
-  # bind_rows(p_first_lang) %>%
-#  bind_rows(p_first) %>%
   bind_rows(p_first_lang_6to9)%>%
   bind_rows(p_first_lang_12to15)%>%
   mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", "")),
@@ -590,8 +567,7 @@ d_z_freq <- d_freq_meta %>%
   group_by(lab, age_group, lang_group) %>%
   summarise(d = mean(prop, na.rm = TRUE) / sd(prop, na.rm = TRUE), 
             n = length(unique(subid)), 
-            d_var = d_var_calc(n, d)) #%>%
- # filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
+            d_var = d_var_calc(n, d)) 
 
 freq_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var, 
                     slab = lab, data = d_z_freq, method = "REML") 
@@ -603,23 +579,7 @@ We then investigated the relation of frequency of looks to bilingualism and age 
 
 ```{r fig3, fig.cap="Forest plot for the cross-lab meta-analysis on frequency of looks."}
 
-#freq_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
-#                                        slab = lab, data = d_z_freq, method = "REML")
-
 alpha <- .05
-
-#p_freq_lang <- predict(freq_lang_only_matched, newmods =  c(0,1)) %>%
-#  as_tibble %>%
-#  mutate(lang_group = levels(d_z_freq$lang_group), 
-#         age_group = "",
-#         lab = "Meta-analytic estimate")
-
-#p_freq <- predict(freq_meta) %>%
-#  as_tibble %>%
-#  mutate(age_group = "",
-#         lang_group = "The intercept",
-#         lab = "Meta-analytic estimate")%>%
-#  filter(row_number()==1) #Keeping only the intercept
   
 d_z_freq_6to9 <- d_z_freq%>%
   filter(age_group == "6-9 mo")
@@ -651,8 +611,6 @@ freq_forest_data <- ungroup(d_z_freq) %>%
          ci.ub = d + qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
          inverse_vars = 1/d_var, 
          age_group = as.character(age_group)) %>%
-#  bind_rows(p_freq_lang) %>%
-#  bind_rows(p_freq) %>%
   bind_rows(p_freq_lang_6to9)%>%
   bind_rows(p_freq_lang_12to15)%>%
   mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", "")),
@@ -702,8 +660,7 @@ d_z_dur <- d_duration_meta %>%
   group_by(lab, age_group, lang_group) %>%
   summarise(d = mean(prop, na.rm = TRUE) / sd(prop, na.rm = TRUE), 
             n = length(unique(subid)), 
-            d_var = d_var_calc(n, d)) # %>%
- # filter(n >= 10) #Filtering out subgroups with fewer than 10 babies
+            d_var = d_var_calc(n, d)) 
 
 library(metafor)
 
@@ -717,23 +674,7 @@ The cross-lab meta-analysis on duration of looks yielded a non-significant mean 
 
 ```{r fig4, fig.cap="Forest plot for the cross-lab meta-analysis on duration of looks."}
 
-#dur_lang_only_matched <- metafor::rma(d ~ lang_group, vi = d_var,
-#                                       slab = lab, data = d_z_dur, method = "REML")
-
 alpha <- .05
-
-#p_dur_lang <- predict(dur_lang_only_matched, newmods =  c(0,1)) %>%
-#  as_tibble %>%
-#  mutate(lang_group = levels(d_z_dur$lang_group), 
-#         age_group = "",
-#         lab = "Meta-analytic estimate")
-
-#p_dur <- predict(dur_meta) %>%
-#  as_tibble %>%
-#  mutate(age_group = "",
-#         lang_group = "The intercept",
-#         lab = "Meta-analytic estimate")%>%
-#  filter(row_number()==1) #Keeping only the intercept
 
 d_z_dur_6to9 <- d_z_dur%>%
   filter(age_group == "6-9 mo")
@@ -765,8 +706,6 @@ dur_forest_data <- ungroup(d_z_dur) %>%
          ci.ub = d + qnorm(alpha / 2, lower.tail = FALSE) * sqrt(d_var), 
          inverse_vars = 1/d_var, 
          age_group = as.character(age_group)) %>%
- # bind_rows(p_dur_lang) %>%
-#  bind_rows(p_dur) %>%
   bind_rows(p_dur_lang_6to9)%>%
   bind_rows(p_dur_lang_12to15)%>%
   mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", "")),
@@ -816,8 +755,7 @@ d_z_latency <- d_latency_meta %>%
   summarise(mean = mean(latency),
             sd = sd(latency),
             n = length(unique(subid)),
-            var = ((sd^2)/n)) #sampling variance %>%
-# filter(n>=10) #Filtering out subgroups with fewer than 10 babies
+            var = ((sd^2)/n)) #sampling variance
   
 Latency_meta <- metafor::rma(mean ~ lang_group * age_group, vi = var, 
                     slab = lab, data = d_z_latency, method = "REML") 
@@ -835,23 +773,7 @@ The cross-lab meta-analysis on latency towards the congruent object yielded a re
 
 ```{r fig5, fig.cap="Forest plot for the cross-lab meta-analysis on latency."}
 
-#latency_lang_only_matched <- metafor::rma(mean ~ lang_group, vi = var,
-#                                      slab = lab, data = d_z_latency, method = "REML")
-
 alpha <- .05
-
-#p_latency_lang <- predict(latency_lang_only_matched, newmods =  c(0,1)) %>%
-#  as_tibble %>%
-#  mutate(lang_group = levels(d_z_latency$lang_group), 
-#         age_group = "",
-#         lab = "Meta-analytic estimate")
-
-# <- predict(Latency_meta) %>%
-#  as_tibble %>%
-#  mutate(age_group = "",
-#         lang_group = "The intercept",
-#         lab = "Meta-analytic estimate")%>%
-#  filter(row_number()==1) #Keeping only the intercept
   
 d_z_latency_6to9 <- d_z_latency%>%
   filter(age_group == "6-9 mo")
@@ -883,8 +805,6 @@ latency_forest_data <- ungroup(d_z_latency) %>%
          ci.ub = mean + qnorm(alpha / 2, lower.tail = FALSE) * sqrt(var), 
          inverse_vars = 1/var, 
          age_group = as.character(age_group)) %>%
-#  bind_rows(p_latency_lang) %>%
-#  bind_rows(p_latency) %>%
   bind_rows(p_latency_lang_6to9)%>%
   bind_rows(p_latency_lang_12to15)%>%
   mutate(age_group = fct_relevel(age_group, c("6-9 mo", "12-15 mo", "")),
@@ -1170,10 +1090,6 @@ papaja::apa_table(latency_coefs, format.args = list(digits = 3),
                   col.names =c("","Estimate","$SE$","$t$","$p$"),
                   align=c("l","l","c","c","c"))
 
-##Plotting the age_days*object interaction
-#emmeans(latency_lmer, pairwise ~ object|age_days, at = list(age_days = c(-2:1)))
-#library(interactions)
-#interact_plot(latency_lmer, pred = age_days, modx = object)
 
 ```
 
@@ -1232,47 +1148,13 @@ This study forms part of a groundswell of large-scale, multi-lab initiatives all
 
 Authorship order reflects the first author and the final author as project leads, authors 2-4 as the core analysis team, and authors 5-25 listed in alphabetical order by last name. Detailed contributions are as follows: `r paste(author_data$initials[!is.na(author_data$concept)], collapse = ", ")` contributed to the study concept. `r paste(author_data$initials[!is.na(author_data$design)], collapse = ", ")` contributed to the study design. `r paste(author_data$initials[!is.na(author_data$protocol)], collapse = ", ")` contributed to the final protocol. `r paste(author_data$initials[!is.na(author_data$doc)], collapse = ", ")` contributed to study documentation. `r paste(author_data$initials[!is.na(author_data$manage)], collapse = ", ")` contributed to study management. `r paste(author_data$initials[!is.na(author_data$data)], collapse = ", ")` contributed to data collection. `r paste(author_data$initials[!is.na(author_data$analysis)], collapse = ", ")` contributed to data management and analysis. `r paste(author_data$initials[!is.na(author_data$ms1)], collapse = ", ")` contributed to the Stage 1 manuscript. `r paste(author_data$initials[!is.na(author_data$ms2)], collapse = ", ")` contributed to the Stage 2 manuscript.  
 
-```{r authortable, results="asis"}
-
-
-#`r author_data %>% filter(!is.na(ms2)) %>% str_(initials, collapse = ", ")` blah blah
-
-
-#author_contribution <- author_data %>%
-#  ungroup() %>%
-#  select(initials,c(5:13)) %>%
-#  mutate_at(vars(-initials),funs(case_when(. == "S" ~ initials, . == "M" ~ initials))) %>%
-#  pivot_longer(c("concept":"ms2"), names_to = "Contribution", values_to = "author") %>%
-#  pivot_wider(names_from = "initials", values_from = "author") %>%
-#  mutate(Contribution = case_when(
-#    Contribution == "concept" ~ "Study concept",
-#    Contribution == "design" ~ "Study design",
-#    Contribution == "protocol" ~"Final protocol",
-#    Contribution == "doc" ~ "Study documentation",
-#    Contribution == "manage" ~ "Study management",
-#    Contribution == "data" ~ "Data collection",
-#    Contribution == "analysis" ~ "Data management and analysis",
-#    Contribution == "ms1" ~ "Stage 1 manuscript",
-#    Contribution == "ms2" ~ "Stage 2 manuscript")) %>%
-#  unite("Authors", "KBH":"LS", sep = ", ", na.rm = TRUE)
-#  
-#kable(author_contribution,
-#      format = "latex", 
-#      booktabs = TRUE,
-#      longtable = TRUE) %>%
-#  column_spec(column = 2, width = "30em") %>%
-#  kable_styling(latex_options = "hold_position")
-  
-```
-
-
 # Conflicts of Interest
 
 The authors declare that there were no conflicts of interest with respect to the authorship or the publication of this article.
 
 # Funding
 
-Individual participating labs acknowledge funding support from: the Natural Sciences and Engineering Research Council of Canada (402470-2011; 2018-04390); the National Science Foundation (BCS-1551719); the UK Economic and Social Research Council (ESRC ES/L008955/1); the Leverhulme Trust (ECF-2015-009); the National Institute of Child Health and Human Development (R01HD083312); the European Research Council Synergy Grant (SOMICS 609819); the Early Career Research Grant & Start-up Grant, Western Sydney University; the European Research Council Advanced Grant, UNDER CONTROL (323961); Research Manitoba, University of Manitoba, Children's Hospital Research Institute of Manitoba; and the ODPRT funds, National University of Singapore.
+Individual participating labs acknowledge funding support from: the Natural Sciences and Engineering Research Council of Canada (402470-2011; 2018-04390); the National Science Foundation (BCS-1551719); the UK Economic and Social Research Council (ESRC ES/L008955/1); the European Research Council Advanced Grant, UNDER CONTROL (323961); the European Research Council Marie Skłodowska-Curie grant (798658); the Leverhulme Trust (ECF-2015-009); the National Institute of Child Health and Human Development (R01HD083312); the European Research Council Synergy Grant (SOMICS 609819); the Early Career Research Grant & Start-up Grant, Western Sydney University; Research Manitoba, University of Manitoba, Children's Hospital Research Institute of Manitoba; and the ODPRT funds, National University of Singapore.
 
 # Disclosures 
 
