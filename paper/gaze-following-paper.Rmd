@@ -127,7 +127,7 @@ bibliography      : ["gaze-following_references.bib"]
 replace_ampersands: yes
 
 class             : "man"
-output            : papaja::apa6_pdf
+output            : papaja::apa6_word
 ---
 
 ```{r load_packages_settings, include = FALSE}
@@ -383,7 +383,7 @@ For labs that did not have an eye-tracker, trained human coders examined videos 
 
 ```{r fig1, fig.cap="Screenshot of one of the videos presented to infants showing the three areas of interest (AOIs) used: face, congruent object, and incongruent object."}
 
-knitr::include_graphics("Figure1")
+knitr::include_graphics("Figure1.png")
 
 ```
 
