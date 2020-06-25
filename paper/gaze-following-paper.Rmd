@@ -251,7 +251,7 @@ Previous studies have found that infants follow the actor’s gaze in this condi
 
 # Methods
 
-We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study.
+We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. The present study was conducted according to guidelines laid down in the Declaration of Helsinki, with written informed consent obtained from a parent or guardian for each child before any assessment or data collection. All procedures involving human subjects in this study were approved by the Institutional Review Board or Ethics Committee at each lab's respective institution.
 
 ## Participation Details
 
