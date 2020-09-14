@@ -381,7 +381,7 @@ Eye-trackers measured the coordinates of eye gaze, from which the direction and 
 
 For labs that did not have an eye-tracker, trained human coders examined videos of infants’ faces frame-by-frame to identify fixations and gaze shifts. Fixations were coded for duration and location with respect to the areas of interest (i.e., congruent object, incongruent object, actor, or off-target). Shifts were coded for direction, defined with respect to the horizontal and vertical midlines; i.e., movement could be left, right, down, and/or up. For these labs, a target minimum of 25% of participants were double-coded by a second human coder and reliability estimates computed. Ultimately 27% of participants were double-coded.
 
-```{r fig1, fig.cap="Screenshot of one of the videos presented to infants showing the three areas of interest (AOIs) used: face, congruent object, and incongruent object."}
+```{r fig1, fig.cap="Screenshot of one of the videos presented to infants showing the three areas of interest (AOIs) used: face, congruent object, and incongruent object.", fig.align='center'}
 
 knitr::include_graphics("Figure1.png")
 
@@ -467,10 +467,8 @@ d_first_meta <- d_first %>%
 
 ##Meta-analysis
 d_z_first <- d_first_meta %>%
-  group_by(subid, lab, age_group, lang_group) %>%
-  summarise(mean_prop = mean(prop, na.rm = TRUE)) %>%
   group_by(lab, age_group, lang_group) %>%
-  summarise(d = mean(mean_prop, na.rm = TRUE) / sd(mean_prop, na.rm = TRUE), 
+  summarise(d = mean(prop, na.rm = TRUE) / sd(prop, na.rm = TRUE), 
             n = length(unique(subid)), 
             d_var = d_var_calc(n, d))
 
@@ -482,7 +480,7 @@ first_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var,
 We began by examining the relation of the proportion of congruent first looks to bilingualism and age, fitting the main effect model to the `r nrow(d_z_first)` separate group means and variances (after aggregating by lab, age, and language group). Note that, because incongruent trials are subtracted from congruent in the numerator of this calculation, the first look proportion scores are centered around 0 with negative values indicating behaviors in the direction of incongruent trials, and positive values indicating greater proportion of behaviors in the direction of congruent trials. The meta-analysis on first look yielded a mean effect size estimate of `r round(first_meta$b[1],2)` (CI = [`r round(first_meta$ci.lb[1],2)` - `r round(first_meta$ci.ub[1], 2)`], $z = `r round(first_meta$z[1], 2)`$, $p = `r papaja::printp(first_meta$pval[1])`$) for 6–9 month-old monolingual infants (the reference level). Age yielded an additional effect of `r round(first_meta$b[3],2)` (CI = [`r round(first_meta$ci.lb[3],2)` - `r round(first_meta$ci.ub[3], 2)`], $z = `r round(first_meta$z[3], 2)`$, $p = `r papaja::printp(first_meta$pval[3])`$), suggesting a mean increase in the proportion of first looks to the target for 12–15 month-old monolingual infants, although this effect was not statistically significant. The bilingual coefficient of `r round(first_meta$b[2],2)` (CI = [`r round(first_meta$ci.lb[2],2)` - `r round(first_meta$ci.ub[2], 2)`], $z = `r round(first_meta$z[2], 2)`$, $p = `r papaja::printp(first_meta$pval[2])`$) suggests no difference between bilingual and monolingual infants at 6–9 months (the reference age). Moreover, the interaction between bilingualism and age was small and not statistically different from zero ($\beta$ = `r round(first_meta$b[4],2)`, CI = [`r round(first_meta$ci.lb[4],2)` - `r round(first_meta$ci.ub[4], 2)`], $z = `r round(first_meta$z[4], 2)`$, $p = `r papaja::printp(first_meta$pval[4])`$). Taken together, this suggests no reliable difference in proportion of first looks to the target between bilingual and monolingual infants at either age. A forest plot for this meta-analysis is shown in Figure 2. 
 
 
-```{r fig2, fig.cap="Forest plot for the cross-lab meta-analysis on the proportion of first look.", echo = FALSE}
+```{r fig2, fig.cap="Forest plot for the cross-lab meta-analysis on the proportion of first look.", echo = FALSE, dpi = 1000}
 
 alpha <- .05
   
@@ -559,6 +557,7 @@ d_freq_meta <- d  %>%
   mutate(prop = (n_shift_congruent -  n_shift_incongruent)/(n_shift_congruent + n_shift_incongruent)) %>% # Calculate proportion difference score on each trial
   group_by_at(vars(-trial_num, - prop)) %>%
   mutate(prop = mean(prop)) %>% # Average proportion difference score by baby
+  filter(!is.na(prop)) %>%
   group_by(subid, age_group, lang_group, lab) %>%
   summarise(prop = mean(prop, na.rm = TRUE))
 
@@ -577,7 +576,7 @@ freq_meta <- metafor::rma(d ~ lang_group * age_group, vi = d_var,
 
 We then investigated the relation of frequency of looks to bilingualism and age group. The overall mean effect size estimate for 6–9 month-old monolingual infants was `r round(freq_meta$b[1],2)` (CI = [`r round(freq_meta$ci.lb[1],2)` - `r round(freq_meta$ci.ub[1], 2)`], $z = `r round(freq_meta$z[1], 2)`$, $p = `r papaja::printp(freq_meta$pval[1])`$). Age yielded an additional effect of `r round(freq_meta$b[3],2)` (CI = [`r round(freq_meta$ci.lb[3],2)` - `r round(freq_meta$ci.ub[3], 2)`], $z = `r round(freq_meta$z[3], 2)`$, $p = `r papaja::printp(freq_meta$pval[3])`$), but was not statistically significant. There was no evidence that bilingual infants differed from monolingual infants at 6–9 months, as the additional effect of bilingualism was `r round(freq_meta$b[2],2)` (CI = [`r round(freq_meta$ci.lb[2],2)` - `r round(freq_meta$ci.ub[2], 2)`], $z = `r round(freq_meta$z[2], 2)`$, $p = `r papaja::printp(freq_meta$pval[2])`$). Moreover, the interaction between bilingualism and age yielded a very small effect of `r round(freq_meta$b[4],2)` (CI = [`r round(freq_meta$ci.lb[4],2)` - `r round(freq_meta$ci.ub[4], 2)`], $z = `r round(freq_meta$z[4], 2)`$, $p = `r papaja::printp(freq_meta$pval[4])`$), implying no differences between monolingual and bilingual infants in frequency of target looks at both ages. A forest plot for this meta-analysis is shown in Figure 3. 
 
-```{r fig3, fig.cap="Forest plot for the cross-lab meta-analysis on frequency of looks.", echo = FALSE}
+```{r fig3, fig.cap="Forest plot for the cross-lab meta-analysis on frequency of looks.", echo = FALSE, dpi = 1000}
 
 alpha <- .05
   
@@ -648,12 +647,15 @@ d_duration <- d %>%
   mutate(object = as.factor(object)) %>%
   mutate(duration = log(duration + 1)) # Log-transform duration scores, adding one to deal with zeros
 
-d_duration_meta <- d %>%
-  select(-first_shift, -latency, -n_shift_congruent, -n_shift_incongruent) %>%
-  filter(fixation_congruent + fixation_incongruent > 0) %>%
-  mutate(prop = (fixation_congruent - fixation_incongruent)/(fixation_congruent + fixation_incongruent)) %>% # Calculate proportion difference score
+d_duration_meta <- d_duration %>%
+  group_by_at(vars(-trial_num)) %>%
+  pivot_wider(names_from = object, values_from = duration) %>%
+  mutate(prop = (congruent - incongruent)/(congruent + incongruent)) %>% # Calculate proportion difference score
   group_by_at(vars(-trial_num, - prop)) %>%
-  mutate(prop = mean(prop)) # Average proportion difference score by baby
+  mutate(prop = mean(prop)) %>% # Average proportion difference score by baby
+  filter(!is.na(prop)) %>%
+  group_by(subid, age_group, lang_group, lab) %>%
+  summarise(prop = mean(prop, na.rm = TRUE))
 
 ##Meta-analysis
 d_z_dur <- d_duration_meta %>%
@@ -672,7 +674,7 @@ dur_meta <- rma(d ~ lang_group * age_group, vi = d_var,
 
 The cross-lab meta-analysis on duration of looks yielded a non-significant mean effect size estimate for 6–9 month-old monolingual infants of `r round(dur_meta$b[1],2)` (CI = [`r round(dur_meta$ci.lb[1],2)` - `r round(dur_meta$ci.ub[1], 2)`], $z = `r round(dur_meta$z[1], 2)`$, $p = `r papaja::printp(dur_meta$pval[1])`$). Age yielded a non-significant additional effect of `r round(dur_meta$b[3],2)` (CI = [`r round(dur_meta$ci.lb[3],2)` - `r round(dur_meta$ci.ub[3], 2)`], $z = `r round(dur_meta$z[3], 2)`$, $p = `r papaja::printp(dur_meta$pval[3])`$). The additional bilingualism effect of `r round(dur_meta$b[2],2)` (CI = [`r round(dur_meta$ci.lb[2],2)` - `r round(dur_meta$ci.ub[2], 2)`], $z = `r round(dur_meta$z[2], 2)`$, $p = `r papaja::printp(dur_meta$pval[2])`$) was also not statistically significant, suggesting that 6–9 month-old bilingual infants did not look significantly longer to the target relative to the distractor compared to monolingual infants. Moreover, the interaction between bilingualism and age yielded a very small effect of `r round(dur_meta$b[4],2)` (CI = [`r round(dur_meta$ci.lb[4],2)` - `r round(dur_meta$ci.ub[4], 2)`], $z = `r round(dur_meta$z[4], 2)`$, $p = `r papaja::printp(dur_meta$pval[4])`$), suggesting no evidence of differences between monolingual and bilingual infants across both ages. A forest plot for this meta-analysis is shown in Figure 4. 
 
-```{r fig4, fig.cap="Forest plot for the cross-lab meta-analysis on duration of looks."}
+```{r fig4, fig.cap="Forest plot for the cross-lab meta-analysis on duration of looks.", dpi = 1000}
 
 alpha <- .05
 
@@ -738,19 +740,18 @@ d_latency <- d %>%
   filter(!is.na(object)) %>% # only trials with first shifts
   mutate(latency = log(latency + 1)) # Log transform latency scores, adding one to deal with zeros
   
-d_latency_meta <- d %>%
-  select(-n_shift_congruent, -n_shift_incongruent, -fixation_congruent, - fixation_incongruent) %>%
-  rename("object" = "first_shift") %>%
-  filter(!is.na(object)) %>%
+d_latency_meta <- d_latency %>%
+  group_by_at(vars(-trial_num)) %>%
   mutate(object = as.factor(object)) %>%
-  group_by_at(vars(-trial_num, - latency)) %>%
-  mutate(latency = mean(latency)) # Average proportion difference score by baby
-
+  filter(object != "incongruent")%>%
+  group_by_at(vars(-trial_num, -latency)) %>%
+  mutate(latency = mean(latency)) %>% # Average latency by baby
+  filter(!is.na(latency)) %>%
+  group_by(subid, age_group, lang_group, lab) %>%
+  summarise(latency = mean(latency, na.rm = TRUE))
+  
 ##Meta-analysis
 d_z_latency <- d_latency_meta %>%
-  filter(object != "incongruent")%>%
-  group_by(lab, age_group, lang_group, subid) %>% 
-  summarise(latency = mean(latency))%>%
   group_by(lab, age_group, lang_group) %>% 
   summarise(mean = mean(latency),
             sd = sd(latency),
@@ -769,9 +770,9 @@ pairwise <- anova(Latency_meta_interaction, L=rbind(c(1,0,-1,0),c(0,1,0,-1))) #p
 
 ### Latency 
 
-The cross-lab meta-analysis on latency towards the congruent object yielded a reference-level mean latency estimate of `r round(Latency_meta$b[1],2)` milliseconds (CI = [`r round(Latency_meta$ci.lb[1],2)` - `r round(Latency_meta$ci.ub[1], 2)`], $z = `r round(Latency_meta$z[1], 2)`$, $p = `r papaja::printp(Latency_meta$pval[1])`$) for 6–9 month-old monolingual infants. With the effect of age, the mean latency estimate decreased significantly, with an estimated difference for the older group of `r round(Latency_meta$b[3],2)` milliseconds (CI = [`r round(Latency_meta$ci.lb[3],2)` - `r round(Latency_meta$ci.ub[3], 2)`], $z = `r round(Latency_meta$z[3], 2)`$, $p = `r papaja::printp(Latency_meta$pval[3])`$); in other words, 12–15 month-old monolingual infants were faster than 6–9 month-old monolingual infants to fixate the congruent object. Bilingualism increased the mean latency estimate by `r round(Latency_meta$b[2],2)` milliseconds (CI = [`r round(Latency_meta$ci.lb[2],2)` - `r round(Latency_meta$ci.ub[2], 2)`], $z = `r round(Latency_meta$z[2], 2)`$, $p = `r papaja::printp(Latency_meta$pval[2])`$); in other words, the estimate for bilinguals suggested they might be slower than monolingual infants to fixate the congruent object, but this was non-significant. The interaction between bilingualism and age suggested a possible attenuation of this pattern for older 12–15 month-old bilingual versus monolingual infants, although again this did not reach statistical significance (estimate = `r round(Latency_meta$b[4],2)`, CI = [`r round(Latency_meta$ci.lb[4],2)` - `r round(Latency_meta$ci.ub[4], 2)`], $z = `r round(Latency_meta$z[4], 2)`$, $p = `r papaja::printp(Latency_meta$pval[4])`$). Pairwise comparisons revealed that, at the age of 12–15 months, there was no longer any evidence of a difference in target fixation latency between monolingual and bilingual infants (estimate = `r round(pairwise$Lb[2],2)`, $se = `r round(pairwise$se[2],2)`$, $z = `r round(pairwise$z[2], 2)`$, $p = `r papaja::printp(pairwise$pval[2])`$). A forest plot for this meta-analysis is shown in Figure 5.
+The cross-lab meta-analysis on latency towards the congruent object yielded a reference-level mean log latency estimate of `r round(Latency_meta$b[1],2)` (CI = [`r round(Latency_meta$ci.lb[1],2)` - `r round(Latency_meta$ci.ub[1], 2)`], $z = `r round(Latency_meta$z[1], 2)`$, $p = `r papaja::printp(Latency_meta$pval[1])`$) for 6–9 month-old monolingual infants. With the effect of age, the mean log latency estimate decreased significantly, with an estimated difference for the older group of `r round(Latency_meta$b[3],2)` (CI = [`r round(Latency_meta$ci.lb[3],2)` - `r round(Latency_meta$ci.ub[3], 2)`], $z = `r round(Latency_meta$z[3], 2)`$, $p = `r papaja::printp(Latency_meta$pval[3])`$); in other words, 12–15 month-old monolingual infants were faster than 6–9 month-old monolingual infants to fixate the congruent object. Bilingualism increased the mean log latency estimate by `r round(Latency_meta$b[2],2)` (CI = [`r round(Latency_meta$ci.lb[2],2)` - `r round(Latency_meta$ci.ub[2], 2)`], $z = `r round(Latency_meta$z[2], 2)`$, $p = `r papaja::printp(Latency_meta$pval[2])`$); in other words, the estimate for bilinguals suggested they might be slower than monolingual infants to fixate the congruent object, but this was non-significant. The interaction between bilingualism and age suggested a possible attenuation of this pattern for older 12–15 month-old bilingual versus monolingual infants, although again this did not reach statistical significance (estimate = `r round(Latency_meta$b[4],2)`, CI = [`r round(Latency_meta$ci.lb[4],2)` - `r round(Latency_meta$ci.ub[4], 2)`], $z = `r round(Latency_meta$z[4], 2)`$, $p = `r papaja::printp(Latency_meta$pval[4])`$). Pairwise comparisons revealed that, at the age of 12–15 months, there was no longer any evidence of a difference in target fixation latency between monolingual and bilingual infants (estimate = `r round(pairwise$Lb[2],2)`, $se = `r round(pairwise$se[2],2)`$, $z = `r round(pairwise$z[2], 2)`$, $p = `r papaja::printp(pairwise$pval[2])`$). A forest plot for this meta-analysis is shown in Figure 5.
 
-```{r fig5, fig.cap="Forest plot for the cross-lab meta-analysis on latency.", echo = FALSE}
+```{r fig5, fig.cap="Forest plot for the cross-lab meta-analysis on latency.", echo = FALSE, dpi = 1000}
 
 alpha <- .05
   
@@ -823,7 +824,7 @@ ggplot(latency_forest_data,
   scale_size_continuous(guide = FALSE) +
   scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#636363", "#000000"), breaks= c("bilingual", "monolingual")) +
   xlab("Lab") +
-  ylab("Mean Latency to Congruent AOI (ms)") +
+  ylab("Mean Log Latency to Congruent AOI") +
   theme(legend.position = "bottom")
 ```
 
@@ -880,7 +881,7 @@ Our final logistic model specification for first shift was:
 first_glmer <- d_first %>% 
   mutate(age_days = scale(age_days, scale = TRUE)) %>%
   filter(!is.na(first_shift)) %>%
-  mutate(first_shift = fct_rev(first_shift)) %>% # So higher numbers mean more looks to congruent
+  mutate(first_shift = fct_rev(first_shift)) %>% # So higher numbers = more looks to congruent
   glmer(first_shift ~ lang_group * age_days + (1|subid) + (1|lab),
   data = .,
   family = binomial 
@@ -911,7 +912,7 @@ papaja::apa_table(firstshift_coefs, format.args = list(digits = 3),
 
 \noindent Table 2 shows coefficient estimates from this model and Figure 6 visualizes this model. Positive coefficients indicate a higher probability of making a first look to the congruent object. The significant intercept indicated that infants were more likely to first look to the congruent versus the incongruent object; moreover, a significant positive coefficient for age indicated that older infants did so at an even higher rate. There was no obvious evidence for a difference between monolingual and bilingual infants, and the interaction of bilingualism and age was also not significant. Monolingual and bilingual infants, therefore, did not differ in their probabilities of first looking to the congruent object across ages.
 
-```{r fig6, fig.cap="The logistic regression model predicting the probability of making first look to the congruent object, plotted with individual participants' probabilities.", fig.width = 5, echo = FALSE}
+```{r fig6, fig.cap="The logistic regression model predicting the probability of making first look to the congruent object, plotted with individual participants' probabilities.", fig.width = 5, echo = FALSE, dpi = 1000}
 
 d_first%>%
   mutate(pred_prob = predict(first_glmer, type ="response"))%>%
@@ -977,7 +978,7 @@ papaja::apa_table(freq_coefs, format.args = list(digits = 3),
 
 \noindent Table 3 shows coefficient estimates from this model and Figure 7 visualizes this model. The significant main effect of age indicated that older monolingual infants looked more frequently at the objects as compared to younger monolingual infants. More centrally, there were both a significant main effect of aoi and an interaction between aoi and age, suggesting that infants shifted more often to the congruent object as opposed to the incongruent object and that this pattern of looking increased as infants aged. The effect of bilingualism, however, was not significant, and neither were its 2-way interaction with aoi nor its 3-way interaction with age and aoi; this suggests that there was not a reliable difference between bilingual and monolingual infants in the number of times they shifted gaze towards the congruent object. However, the direction of the interaction effect between age and bilingualism, although not significant, would indicate that bilingual infants might show a greater increase in their frequency of looks towards the objects with age compared to monolinguals.
 
-```{r fig7, fig.cap="The linear regression model predicting the frequency of shift towards the AOI, with error bars showing 95% confidence interval.", echo = FALSE}
+```{r fig7, fig.cap="The linear regression model predicting the frequency of shift towards the AOI, with error bars showing 95% confidence interval.", echo = FALSE, dpi = 1000}
 
 d_freq %>%
   group_by(lang_group, object) %>%
@@ -1034,7 +1035,7 @@ papaja::apa_table(duration_coefs, format.args = list(digits = 3),
 
 \noindent Table 4 shows coefficient estimates from this model and Figure 8 visualizes this model. There were two main effects (age and aoi), but no significant interactions. This suggests that monolingual infants looked longer to congruent versus incongruent objects, and that in general older infants looked longer at the objects than did younger infants. The effect of bilingualism was, however, not significant as a main effect or in interaction with any other factors, suggesting no reliable differences between bilingual and monolingual infants in terms of their duration of looking at the congruent versus incongruent objects.
  
-```{r fig8, fig.cap="The linear regression model predicting duration of fixations towards the AOI, with error bars showing 95% confidence interval.", echo = FALSE}
+```{r fig8, fig.cap="The linear regression model predicting duration of fixations towards the AOI, with error bars showing 95% confidence interval.", echo = FALSE, dpi = 1000}
 
 d_duration %>%
   group_by(lang_group, object) %>%
@@ -1095,7 +1096,7 @@ papaja::apa_table(latency_coefs, format.args = list(digits = 3),
 
 \noindent Table 5 shows coefficient estimates from this model and Figure 9 visualizes this model. The only significant effect in the model was age, suggesting that older monolingual infants were more rapid than younger monolingual infants in fixating their first look at the congruent objects. There was no significant effect of bilingualism; however, the directions of the marginally-significant interaction effect between age and bilingualism would indicate that bilinguals had a steeper drop in the latency of fixations as they aged compared to monolinguals. Finally, the direction of the interaction between age and aoi suggested that younger monolingual infants made faster first fixations to the congruent objects than to the incongruent objects, but that this latency difference was reduced in older infants. However, the effect of aoi itself was not significant, implying that in general infants did not differ in latency of their first fixation towards the congruent or incongruent objects. Taken together, then, the model reveals that older infants are quicker to make fixations than younger infants, and that language background and object identity do not reliably impact fixation latency.
 
-```{r fig9, fig.cap="The linear regression model predicting latency of fixations towards the AOI, with error bars showing 95% confidence interval.", echo = FALSE}
+```{r fig9, fig.cap="The linear regression model predicting latency of fixations towards the AOI, with error bars showing 95% confidence interval.", echo = FALSE, dpi = 1000}
 
 d_latency %>%
   group_by(lang_group, object) %>%

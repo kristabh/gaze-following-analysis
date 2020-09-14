@@ -1,4 +1,7 @@
-\documentclass[,man,floatsintext]{apa6}
+\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[english,,man,floatsintext]{apa6}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
@@ -6,25 +9,28 @@
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provides euro and other symbols
 \else % if luatex or xelatex
-  \ifxetex
-    \usepackage{mathspec}
-  \else
-    \usepackage{fontspec}
-  \fi
+  \usepackage{unicode-math}
   \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
 \fi
 % use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
 % use microtype if available
 \IfFileExists{microtype.sty}{%
-\usepackage{microtype}
+\usepackage[]{microtype}
 \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
+\IfFileExists{parskip.sty}{%
+\usepackage{parskip}
+}{% else
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+}
 \usepackage{hyperref}
-\hypersetup{unicode=true,
+\hypersetup{
             pdftitle={The Development of Gaze Following in Monolingual and Bilingual Infants: A Multi-Lab Study},
-            pdfauthor={Krista Byers-Heinlein, Rachel Ka-Ying Tsui, Daan van Renswoude, Alexis K. Black, Rachel Barr, Anna Brown, Marc Colomer, Samantha Durrant, Anja Gampe, Nayeli Gonzalez-Gomez, Jessica F. Hay, Mikołaj Hernik, Marianna Jartó, Ágnes Melinda Kovács, Alexandra Laoun-Rubenstein, Casey Lew-Williams, Ulf Liszkowski, Liquan Liu, Claire Noble, Christine E. Potter, Joscelin Rocha-Hidalgo, Nuria Sebastian-Galles, Melanie Soderstrom, Ingmar Visser, Connor Waddell, Stephanie Wermelinger, \& Leher Singh},
+            pdfauthor={Krista Byers-Heinlein1, Rachel Ka-Ying Tsui1, Daan van Renswoude2, Alexis K. Black3, Rachel Barr4, Anna Brown5, Marc Colomer6, Samantha Durrant5, Anja Gampe7, Nayeli Gonzalez-Gomez8, Jessica F. Hay9, Mikołaj Hernik10, Marianna Jartó11, Ágnes Melinda Kovács12, Alexandra Laoun-Rubenstein1, Casey Lew-Williams13, Ulf Liszkowski11, Liquan Liu14, Claire Noble5, Christine E. Potter13, Joscelin Rocha-Hidalgo4, Nuria Sebastian-Galles6, Melanie Soderstrom15, Ingmar Visser2, Connor Waddell14, Stephanie Wermelinger7, \& Leher Singh16},
             pdfkeywords={gaze following, bilingualism, infancy, replication, reproducibility, age-related changes},
             pdfborder={0 0 0},
             breaklinks=true}
@@ -38,63 +44,63 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
 \setlength{\emergencystretch}{3em}  % prevent overfull lines
 \providecommand{\tightlist}{%
   \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
 \setcounter{secnumdepth}{0}
-% Redefines (sub)paragraphs to behave more like sections
-\ifx\paragraph\undefined\else
-\let\oldparagraph\paragraph
-\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-\let\oldsubparagraph\subparagraph
-\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
 
-%%% Use protect on footnotes to avoid problems with footnotes in titles
-\let\rmarkdownfootnote\footnote%
-\def\footnote{\protect\rmarkdownfootnote}
+% set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
 
-
-  \title{The Development of Gaze Following in Monolingual and Bilingual Infants: A Multi-Lab Study}
-    \author{Krista Byers-Heinlein\textsuperscript{1}, Rachel Ka-Ying Tsui\textsuperscript{1}, Daan van Renswoude\textsuperscript{2}, Alexis K. Black\textsuperscript{3}, Rachel Barr\textsuperscript{4}, Anna Brown\textsuperscript{5}, Marc Colomer\textsuperscript{6}, Samantha Durrant\textsuperscript{5}, Anja Gampe\textsuperscript{7}, Nayeli Gonzalez-Gomez\textsuperscript{8}, Jessica F. Hay\textsuperscript{9}, Mikołaj Hernik\textsuperscript{10}, Marianna Jartó\textsuperscript{11}, Ágnes Melinda Kovács\textsuperscript{12}, Alexandra Laoun-Rubenstein\textsuperscript{1}, Casey Lew-Williams\textsuperscript{13}, Ulf Liszkowski\textsuperscript{11}, Liquan Liu\textsuperscript{14}, Claire Noble\textsuperscript{5}, Christine E. Potter\textsuperscript{13}, Joscelin Rocha-Hidalgo\textsuperscript{4}, Nuria Sebastian-Galles\textsuperscript{6}, Melanie Soderstrom\textsuperscript{15}, Ingmar Visser\textsuperscript{2}, Connor Waddell\textsuperscript{14}, Stephanie Wermelinger\textsuperscript{7}, \& Leher Singh\textsuperscript{16}}
-    \date{}
-  
-\shorttitle{Gaze following in infants}
-\affiliation{
-\vspace{0.5cm}
-\textsuperscript{1} Concordia University\\\textsuperscript{2} University of Amsterdam\\\textsuperscript{3} Haskins Laboratories\\\textsuperscript{4} Georgetown University\\\textsuperscript{5} University of Liverpool\\\textsuperscript{6} Universitat Pompeu Fabra\\\textsuperscript{7} University of Zurich\\\textsuperscript{8} Oxford Brookes University\\\textsuperscript{9} University of Tennessee\\\textsuperscript{10} UiT The Arctic University of Norway\\\textsuperscript{11} University of Hamburg\\\textsuperscript{12} Central European University\\\textsuperscript{13} Princeton University\\\textsuperscript{14} Western Sydney University\\\textsuperscript{15} University of Manitoba\\\textsuperscript{16} National University of Singapore}
-\keywords{gaze following, bilingualism, infancy, replication, reproducibility, age-related changes}
-\usepackage{csquotes}
+% Manuscript styling
 \usepackage{upgreek}
 \captionsetup{font=singlespacing,justification=justified}
 
+% Table formatting
 \usepackage{longtable}
 \usepackage{lscape}
-\usepackage{multirow}
-\usepackage{tabularx}
-\usepackage[flushleft]{threeparttable}
-\usepackage{threeparttablex}
+% \usepackage[counterclockwise]{rotating}   % Landscape page setup for large tables
+\usepackage{multirow}		% Table styling
+\usepackage{tabularx}		% Control Column width
+\usepackage[flushleft]{threeparttable}	% Allows for three part tables with a specified notes section
+\usepackage{threeparttablex}            % Lets threeparttable work with longtable
 
+% Create new environments so endfloat can handle them
+% \newenvironment{ltable}
+%   {\begin{landscape}\begin{center}\begin{threeparttable}}
+%   {\end{threeparttable}\end{center}\end{landscape}}
 \newenvironment{lltable}{\begin{landscape}\begin{center}\begin{ThreePartTable}}{\end{ThreePartTable}\end{center}\end{landscape}}
 
+% Enables adjusting longtable caption width to table width
+% Solution found at http://golatex.de/longtable-mit-caption-so-breit-wie-die-tabelle-t15767.html
 \makeatletter
 \newcommand\LastLTentrywidth{1em}
 \newlength\longtablewidth
 \setlength{\longtablewidth}{1in}
 \newcommand{\getlongtablewidth}{\begingroup \ifcsname LT@\roman{LT@tables}\endcsname \global\longtablewidth=0pt \renewcommand{\LT@entry}[2]{\global\advance\longtablewidth by ##2\relax\gdef\LastLTentrywidth{##2}}\@nameuse{LT@\roman{LT@tables}} \fi \endgroup}
 
+% \setlength{\parindent}{0.5in}
+% \setlength{\parskip}{0pt plus 0pt minus 0pt}
 
+% \usepackage{etoolbox}
+\makeatletter
+\patchcmd{\HyOrg@maketitle}
+  {\section{\normalfont\normalsize\abstractname}}
+  {\section*{\normalfont\normalsize\abstractname}}
+  {}{\typeout{Failed to patch abstract.}}
+\patchcmd{\HyOrg@maketitle}
+  {\section{\protect\normalfont{\@title}}}
+  {\section*{\protect\normalfont{\@title}}}
+  {}{\typeout{Failed to patch title.}}
+\makeatother
+\shorttitle{Gaze following in infants}
+\keywords{gaze following, bilingualism, infancy, replication, reproducibility, age-related changes}
 \usepackage{lineno}
 
 \linenumbers
+\usepackage{csquotes}
 \usepackage{amsmath}
 \renewcommand{\topfraction}{1}
 \renewcommand{\bottomfraction}{1}
@@ -104,16 +110,26 @@
 \setcounter{bottomnumber}{9}
 \setcounter{totalnumber}{20}
 \setcounter{dbltopnumber}{9}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+  \usepackage[shorthands=off,main=english]{babel}
+\else
+  % load polyglossia as late as possible as it *could* call bidi if RTL lang (e.g. Hebrew or Arabic)
+  \usepackage{polyglossia}
+  \setmainlanguage[]{english}
+\fi
 
-\authornote{
+\title{The Development of Gaze Following in Monolingual and Bilingual Infants: A Multi-Lab Study}
+\author{Krista Byers-Heinlein\textsuperscript{1}, Rachel Ka-Ying Tsui\textsuperscript{1}, Daan van Renswoude\textsuperscript{2}, Alexis K. Black\textsuperscript{3}, Rachel Barr\textsuperscript{4}, Anna Brown\textsuperscript{5}, Marc Colomer\textsuperscript{6}, Samantha Durrant\textsuperscript{5}, Anja Gampe\textsuperscript{7}, Nayeli Gonzalez-Gomez\textsuperscript{8}, Jessica F. Hay\textsuperscript{9}, Mikołaj Hernik\textsuperscript{10}, Marianna Jartó\textsuperscript{11}, Ágnes Melinda Kovács\textsuperscript{12}, Alexandra Laoun-Rubenstein\textsuperscript{1}, Casey Lew-Williams\textsuperscript{13}, Ulf Liszkowski\textsuperscript{11}, Liquan Liu\textsuperscript{14}, Claire Noble\textsuperscript{5}, Christine E. Potter\textsuperscript{13}, Joscelin Rocha-Hidalgo\textsuperscript{4}, Nuria Sebastian-Galles\textsuperscript{6}, Melanie Soderstrom\textsuperscript{15}, Ingmar Visser\textsuperscript{2}, Connor Waddell\textsuperscript{14}, Stephanie Wermelinger\textsuperscript{7}, \& Leher Singh\textsuperscript{16}}
+\date{}
 
-Correspondence concerning this article should be addressed to Krista Byers-Heinlein, Department of Psychology, 7141 Sherbrooke St.~West, Montreal, QC, Canada, H2T1V2, or Leher Singh, Department of Psychology, 7 Arts Link, AS5 04-30, Singapore 117571. E-mail: \href{mailto:k.byers@concordia.ca}{\nolinkurl{k.byers@concordia.ca}} or \href{mailto:leher.singh@nus.edu.sg}{\nolinkurl{leher.singh@nus.edu.sg}}}
+
+\affiliation{\vspace{0.5cm}\textsuperscript{1} Concordia University\\\textsuperscript{2} University of Amsterdam\\\textsuperscript{3} Haskins Laboratories\\\textsuperscript{4} Georgetown University\\\textsuperscript{5} University of Liverpool\\\textsuperscript{6} Universitat Pompeu Fabra\\\textsuperscript{7} University of Zurich\\\textsuperscript{8} Oxford Brookes University\\\textsuperscript{9} University of Tennessee\\\textsuperscript{10} UiT The Arctic University of Norway\\\textsuperscript{11} University of Hamburg\\\textsuperscript{12} Central European University\\\textsuperscript{13} Princeton University\\\textsuperscript{14} Western Sydney University\\\textsuperscript{15} University of Manitoba\\\textsuperscript{16} National University of Singapore}
 
 \abstract{
 Determining the meanings of words requires language learners to attend to what other people say. However, it behooves a young language learner to simultaneously attend to what other people attend to, for example, by following the direction of their eye gaze. Sensitivity to cues such as eye gaze might be particularly important for bilingual infants, as they encounter less consistency between words and objects than monolinguals, and do not always have access to the same word learning heuristics (e.g., mutual exclusivity). In a pre-registered study, we tested the hypothesis that bilingual experience would lead to a more pronounced ability to follow another's gaze. We used the gaze-following paradigm developed by Senju and Csibra (2008) to test a total of 93 6--9 month-old and 229 12--15 month-old monolingual and bilingual infants, in 11 labs located in 8 countries. Monolingual and bilingual infants showed similar gaze-following abilities, and both groups showed age-related improvements in speed, accuracy, frequency and duration of fixations to congruent objects. Unexpectedly, bilinguals tended to make more frequent fixations to onscreen objects, whether or not they were cued by the actor. These results suggest that gaze sensitivity is a fundamental aspect of development that is robust to variation in language exposure.
-
-
 }
+
+
 
 \begin{document}
 \maketitle
@@ -167,7 +183,7 @@ Previous studies have found that infants follow the actor's gaze in this conditi
 \hypertarget{methods}{%
 \section{Methods}\label{methods}}
 
-We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study.
+We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. The present study was conducted according to guidelines laid down in the Declaration of Helsinki, with written informed consent obtained from a parent or guardian for each child before any assessment or data collection. All procedures involving human subjects in this study were approved by the Institutional Review Board or Ethics Committee at each lab's respective institution.
 
 \hypertarget{participation-details}{%
 \subsection{Participation Details}\label{participation-details}}
@@ -328,9 +344,12 @@ Eye-trackers measured the coordinates of eye gaze, from which the direction and 
 For labs that did not have an eye-tracker, trained human coders examined videos of infants' faces frame-by-frame to identify fixations and gaze shifts. Fixations were coded for duration and location with respect to the areas of interest (i.e., congruent object, incongruent object, actor, or off-target). Shifts were coded for direction, defined with respect to the horizontal and vertical midlines; i.e., movement could be left, right, down, and/or up. For these labs, a target minimum of 25\% of participants were double-coded by a second human coder and reliability estimates computed. Ultimately 27\% of participants were double-coded.
 
 \begin{figure}
-\centering
-\includegraphics{Figure1}
-\caption{\label{fig:fig1}Screenshot of one of the videos presented to infants showing the three areas of interest (AOIs) used: face, congruent object, and incongruent object.}
+
+{\centering \includegraphics[width=2.91in]{Figure1} 
+
+}
+
+\caption{Screenshot of one of the videos presented to infants showing the three areas of interest (AOIs) used: face, congruent object, and incongruent object.}\label{fig:fig1}
 \end{figure}
 
 \hypertarget{data-reliability}{%
@@ -410,7 +429,7 @@ We then investigated the relation of frequency of looks to bilingualism and age 
 \hypertarget{duration-of-looks-1}{%
 \subsubsection{Duration of looks}\label{duration-of-looks-1}}
 
-The cross-lab meta-analysis on duration of looks yielded a non-significant mean effect size estimate for 6--9 month-old monolingual infants of 0.32 (CI = {[}-0.09 - 0.72{]}, \(z = 1.53\), \(p = .125\)). Age yielded a non-significant additional effect of 0.08 (CI = {[}-0.39 - 0.54{]}, \(z = 0.32\), \(p = .752\)). The additional bilingualism effect of -0.06 (CI = {[}-0.64 - 0.52{]}, \(z = -0.21\), \(p = .837\)) was also not statistically significant, suggesting that 6--9 month-old bilingual infants did not look significantly longer to the target relative to the distractor compared to monolingual infants. Moreover, the interaction between bilingualism and age yielded a very small effect of 0.08 (CI = {[}-0.62 - 0.77{]}, \(z = 0.22\), \(p = .824\)), suggesting no evidence of differences between monolingual and bilingual infants across both ages. A forest plot for this meta-analysis is shown in Figure 4.
+The cross-lab meta-analysis on duration of looks yielded a non-significant mean effect size estimate for 6--9 month-old monolingual infants of 0.61 (CI = {[}0.19 - 1.04{]}, \(z = 2.84\), \(p = .004\)). Age yielded a non-significant additional effect of 0.17 (CI = {[}-0.32 - 0.66{]}, \(z = 0.67\), \(p = .501\)). The additional bilingualism effect of -0.02 (CI = {[}-0.62 - 0.58{]}, \(z = -0.05\), \(p = .958\)) was also not statistically significant, suggesting that 6--9 month-old bilingual infants did not look significantly longer to the target relative to the distractor compared to monolingual infants. Moreover, the interaction between bilingualism and age yielded a very small effect of 0.05 (CI = {[}-0.68 - 0.77{]}, \(z = 0.12\), \(p = .903\)), suggesting no evidence of differences between monolingual and bilingual infants across both ages. A forest plot for this meta-analysis is shown in Figure 4.
 
 \begin{figure}
 \centering
@@ -421,7 +440,7 @@ The cross-lab meta-analysis on duration of looks yielded a non-significant mean 
 \hypertarget{latency-1}{%
 \subsubsection{Latency}\label{latency-1}}
 
-The cross-lab meta-analysis on latency towards the congruent object yielded a reference-level mean latency estimate of 2,345.76 milliseconds (CI = {[}2,056.47 - 2,635.06{]}, \(z = 15.89\), \(p = < .001\)) for 6--9 month-old monolingual infants. With the effect of age, the mean latency estimate decreased significantly, with an estimated difference for the older group of -493.06 milliseconds (CI = {[}-835.03 - -151.09{]}, \(z = -2.83\), \(p = .005\)); in other words, 12--15 month-old monolingual infants were faster than 6--9 month-old monolingual infants to fixate the congruent object. Bilingualism increased the mean latency estimate by 378.29 milliseconds (CI = {[}-26.76 - 783.34{]}, \(z = 1.83\), \(p = .067\)); in other words, the estimate for bilinguals suggested they might be slower than monolingual infants to fixate the congruent object, but this was non-significant. The interaction between bilingualism and age suggested a possible attenuation of this pattern for older 12--15 month-old bilingual versus monolingual infants, although again this did not reach statistical significance (estimate = -437.30, CI = {[}-930.57 - 55.97{]}, \(z = -1.74\), \(p = .082\)). Pairwise comparisons revealed that, at the age of 12--15 months, there was no longer any evidence of a difference in target fixation latency between monolingual and bilingual infants (estimate = 59.01, \(se = 143.63\), \(z = 0.41\), \(p = .681\)). A forest plot for this meta-analysis is shown in Figure 5.
+The cross-lab meta-analysis on latency towards the congruent object yielded a reference-level mean log latency estimate of 7.64 (CI = {[}7.48 - 7.80{]}, \(z = 92.20\), \(p = < .001\)) for 6--9 month-old monolingual infants. With the effect of age, the mean log latency estimate decreased significantly, with an estimated difference for the older group of -0.29 (CI = {[}-0.48 - -0.09{]}, \(z = -2.89\), \(p = .004\)); in other words, 12--15 month-old monolingual infants were faster than 6--9 month-old monolingual infants to fixate the congruent object. Bilingualism increased the mean log latency estimate by 0.18 (CI = {[}-0.04 - 0.39{]}, \(z = 1.61\), \(p = .108\)); in other words, the estimate for bilinguals suggested they might be slower than monolingual infants to fixate the congruent object, but this was non-significant. The interaction between bilingualism and age suggested a possible attenuation of this pattern for older 12--15 month-old bilingual versus monolingual infants, although again this did not reach statistical significance (estimate = -0.24, CI = {[}-0.52 - 0.03{]}, \(z = -1.74\), \(p = .083\)). Pairwise comparisons revealed that, at the age of 12--15 months, there was no longer any evidence of a difference in target fixation latency between monolingual and bilingual infants (estimate = 0.07, \(se = 0.09\), \(z = 0.76\), \(p = .448\)). A forest plot for this meta-analysis is shown in Figure 5.
 
 \begin{figure}
 \centering
@@ -487,9 +506,12 @@ first\_shift \textasciitilde{} bilingual * age\_days +
 (1\textbar{}lab)
 
 \begin{table}[tbp]
+
 \begin{center}
 \begin{threeparttable}
+
 \caption{\label{tab:coef_table_firstshift}Coefficient estimates from a logistic mixed-effects model predicting the probability of making first looks to congruent objects.}
+
 \begin{tabular}{llccc}
 \toprule
  & Estimate & $SE$ & $z$ & $p$\\
@@ -500,8 +522,10 @@ age\_days & 0.197 & 0.079 & 2.500 & <.05\\
 bilingual * age\_days & -0.096 & 0.123 & -0.779 & 0.436\\
 \bottomrule
 \end{tabular}
+
 \end{threeparttable}
 \end{center}
+
 \end{table}
 
 \noindent Table 2 shows coefficient estimates from this model and Figure 6 visualizes this model. Positive coefficients indicate a higher probability of making a first look to the congruent object. The significant intercept indicated that infants were more likely to first look to the congruent versus the incongruent object; moreover, a significant positive coefficient for age indicated that older infants did so at an even higher rate. There was no obvious evidence for a difference between monolingual and bilingual infants, and the interaction of bilingualism and age was also not significant. Monolingual and bilingual infants, therefore, did not differ in their probabilities of first looking to the congruent object across ages.
@@ -712,151 +736,151 @@ We report how we determined our sample size, all data exclusions, all manipulati
 
 \hypertarget{refs}{}
 \leavevmode\hypertarget{ref-Antovich_GrafEstes_2017}{}%
-Antovich, D. M., \& Graf Estes, K. (2018). Learning across languages: Bilingual experience supports dual language statistical word segmentation. \emph{Developmental Science}, \emph{21}(2), e12548. doi:\href{https://doi.org/10.1111/desc.12548}{10.1111/desc.12548}
+Antovich, D. M., \& Graf Estes, K. (2018). Learning across languages: Bilingual experience supports dual language statistical word segmentation. \emph{Developmental Science}, \emph{21}(2), e12548. \url{https://doi.org/10.1111/desc.12548}
 
 \leavevmode\hypertarget{ref-Baldwin_1995}{}%
 Baldwin, D. A. (1995). Understanding the link between joint attention and language. In C. Moore \& P. J. Dunham (Eds.), \emph{Joint attention: Its origins and role in development} (pp. 131--158). Hillsdale, NJ: Erlbaum.
 
 \leavevmode\hypertarget{ref-Barr_etal_2013}{}%
-Barr, D. J., Levy, R., Scheepers, C., \& Tily, H. J. (2013). Random effects structure for confirmatory hypothesis testing: Keep it maximal. \emph{Journal of Memory and Language}, \emph{68}(3), 255--278. doi:\href{https://doi.org/10.1016/j.jml.2012.11.001}{10.1016/j.jml.2012.11.001}
+Barr, D. J., Levy, R., Scheepers, C., \& Tily, H. J. (2013). Random effects structure for confirmatory hypothesis testing: Keep it maximal. \emph{Journal of Memory and Language}, \emph{68}(3), 255--278. \url{https://doi.org/10.1016/j.jml.2012.11.001}
 
 \leavevmode\hypertarget{ref-Bates_etal_2015}{}%
-Bates, D., Mächler, M., Bolker, B., \& Walker, S. (2015). Fitting linear mixed-effects models using lme4. \emph{Journal of Statistical Software}, \emph{67}(1), 1--48. doi:\href{https://doi.org/10.18637/jss.v067.i01}{10.18637/jss.v067.i01}
+Bates, D., Mächler, M., Bolker, B., \& Walker, S. (2015). Fitting linear mixed-effects models using lme4. \emph{Journal of Statistical Software}, \emph{67}(1), 1--48. \url{https://doi.org/10.18637/jss.v067.i01}
 
 \leavevmode\hypertarget{ref-Bedford_etal_2012}{}%
-Bedford, R., Elsabbagh, M., Gliga, T., Pickles, A., Senju, A., Charman, T., \ldots{} BASIS team. (2012). Precursors to social and communication difficulties in infants at-risk for autism: Gaze following and attentional engagement. \emph{Journal of Autism and Developmental Disorders}, \emph{42}(10), 2208--2218. doi:\href{https://doi.org/10.1007/s10803-012-1450-y}{10.1007/s10803-012-1450-y}
+Bedford, R., Elsabbagh, M., Gliga, T., Pickles, A., Senju, A., Charman, T., \ldots{} BASIS team. (2012). Precursors to social and communication difficulties in infants at-risk for autism: Gaze following and attentional engagement. \emph{Journal of Autism and Developmental Disorders}, \emph{42}(10), 2208--2218. \url{https://doi.org/10.1007/s10803-012-1450-y}
 
 \leavevmode\hypertarget{ref-Bergelson_Swingley_2012}{}%
-Bergelson, E., \& Swingley, D. (2012). At 6--9 months, human infants know the meanings of many common nouns. \emph{Proceedings of the National Academy of Sciences}, \emph{109}(9), 3253--3258. doi:\href{https://doi.org/10.1073/pnas.1113380109}{10.1073/pnas.1113380109}
+Bergelson, E., \& Swingley, D. (2012). At 6--9 months, human infants know the meanings of many common nouns. \emph{Proceedings of the National Academy of Sciences}, \emph{109}(9), 3253--3258. \url{https://doi.org/10.1073/pnas.1113380109}
 
 \leavevmode\hypertarget{ref-Bilson_etal_2015}{}%
-Bilson, S., Yoshida, H., Tran, C. D., Woods, E. A., \& Hills, T. T. (2015). Semantic facilitation in bilingual first language acquisition. \emph{Cognition}, \emph{140}, 122--134. doi:\href{https://doi.org/10.1016/j.cognition.2015.03.013}{10.1016/j.cognition.2015.03.013}
+Bilson, S., Yoshida, H., Tran, C. D., Woods, E. A., \& Hills, T. T. (2015). Semantic facilitation in bilingual first language acquisition. \emph{Cognition}, \emph{140}, 122--134. \url{https://doi.org/10.1016/j.cognition.2015.03.013}
 
 \leavevmode\hypertarget{ref-Bloom_2000}{}%
 Bloom, P. (2000). \emph{How children learn the meanings of words}. Cambridge, MA: The MIT Press.
 
 \leavevmode\hypertarget{ref-Bosch_Sebastian-Galles_2001}{}%
-Bosch, L., \& Sebastián-Gallés, N. (2001). Evidence of early language discrimination abilities in infants from bilingual environments. \emph{Infancy}, \emph{2}, 29--49. doi:\href{https://doi.org/10.1207/S15327078IN0201_3}{10.1207/S15327078IN0201\_3}
+Bosch, L., \& Sebastián-Gallés, N. (2001). Evidence of early language discrimination abilities in infants from bilingual environments. \emph{Infancy}, \emph{2}, 29--49. \url{https://doi.org/10.1207/S15327078IN0201_3}
 
 \leavevmode\hypertarget{ref-Brito_Barr_2014}{}%
-Brito, N., \& Barr, R. (2014). Flexible memory retrieval in bilingual 6-month-old infants. \emph{Developmental Psychobiology}, \emph{56}(5), 1156--1163. doi:\href{https://doi.org/10.1002/dev.21188}{10.1002/dev.21188}
+Brito, N., \& Barr, R. (2014). Flexible memory retrieval in bilingual 6-month-old infants. \emph{Developmental Psychobiology}, \emph{56}(5), 1156--1163. \url{https://doi.org/10.1002/dev.21188}
 
 \leavevmode\hypertarget{ref-Brojde_etal_2012}{}%
-Brojde, C. L., Ahmed, S., \& Colunga, E. (2012). Bilingual and monolingual children attend to different cues when learning new words. \emph{Frontiers in Psychology}, \emph{3}, 155. doi:\href{https://doi.org/10.3389/fpsyg.2012.00155}{10.3389/fpsyg.2012.00155}
+Brojde, C. L., Ahmed, S., \& Colunga, E. (2012). Bilingual and monolingual children attend to different cues when learning new words. \emph{Frontiers in Psychology}, \emph{3}, 155. \url{https://doi.org/10.3389/fpsyg.2012.00155}
 
 \leavevmode\hypertarget{ref-Brooks_Meltzoff_2002}{}%
-Brooks, R., \& Meltzoff, A. N. (2002). The importance of eyes: How infants interpret adult looking behavior. \emph{Developmental Psychology}, \emph{38}(6), 958--966. doi:\href{https://doi.org/10.1037/0012-1649.38.6.958}{10.1037/0012-1649.38.6.958}
+Brooks, R., \& Meltzoff, A. N. (2002). The importance of eyes: How infants interpret adult looking behavior. \emph{Developmental Psychology}, \emph{38}(6), 958--966. \url{https://doi.org/10.1037/0012-1649.38.6.958}
 
 \leavevmode\hypertarget{ref-Brooks_Meltzoff_2005}{}%
-Brooks, R., \& Meltzoff, A. N. (2005). The development of gaze following and its relation to language. \emph{Developmental Science}, \emph{8}(6), 535--543. doi:\href{https://doi.org/10.1111/j.1467-7687.2005.00445.x}{10.1111/j.1467-7687.2005.00445.x}
+Brooks, R., \& Meltzoff, A. N. (2005). The development of gaze following and its relation to language. \emph{Developmental Science}, \emph{8}(6), 535--543. \url{https://doi.org/10.1111/j.1467-7687.2005.00445.x}
 
 \leavevmode\hypertarget{ref-Brooks_Meltzoff_2008}{}%
-Brooks, R., \& Meltzoff, A. N. (2008). Infant gaze following and pointing predict accelerated vocabulary growth through two years of age: A longitudinal, growth curve modeling study. \emph{Journal of Child Language}, \emph{35}(1), 207--220. doi:\href{https://doi.org/10.1017/S030500090700829X}{10.1017/S030500090700829X}
+Brooks, R., \& Meltzoff, A. N. (2008). Infant gaze following and pointing predict accelerated vocabulary growth through two years of age: A longitudinal, growth curve modeling study. \emph{Journal of Child Language}, \emph{35}(1), 207--220. \url{https://doi.org/10.1017/S030500090700829X}
 
 \leavevmode\hypertarget{ref-Brooks_Meltzoff_2014}{}%
-Brooks, R., \& Meltzoff, A. N. (2014). Gaze following: A mechanism for building social connections between infants and adults. In M. Mikulincer \& P. R. Shaver (Eds.), \emph{Mechanisms of social connection: From brain to group} (pp. 167--183). Washington, DC: American Psychological Association. doi:\href{https://doi.org/doi:10.1037/14250-010}{doi:10.1037/14250-010}
+Brooks, R., \& Meltzoff, A. N. (2014). Gaze following: A mechanism for building social connections between infants and adults. In M. Mikulincer \& P. R. Shaver (Eds.), \emph{Mechanisms of social connection: From brain to group} (pp. 167--183). Washington, DC: American Psychological Association. \url{https://doi.org/doi:10.1037/14250-010}
 
 \leavevmode\hypertarget{ref-Brooks_etal_2020}{}%
-Brooks, R., Singleton, J. L., \& Meltzoff, A. N. (2020). Enhanced gaze-following behavior in deaf infants of deaf parents. \emph{Developmental Science}, \emph{23}(2), e12900. doi:\href{https://doi.org/10.1111/desc.12900}{10.1111/desc.12900}
+Brooks, R., Singleton, J. L., \& Meltzoff, A. N. (2020). Enhanced gaze-following behavior in deaf infants of deaf parents. \emph{Developmental Science}, \emph{23}(2), e12900. \url{https://doi.org/10.1111/desc.12900}
 
 \leavevmode\hypertarget{ref-Butterworth_Jarrett_1991}{}%
-Butterworth, G., \& Jarrett, N. (1991). What minds have in common is space: Spatial mechanisms serving joint visual attention in infancy. \emph{British Journal of Developmental Psychology}, \emph{9}(1), 55--72. doi:\href{https://doi.org/10.1111/j.2044-835X.1991.tb00862.x}{10.1111/j.2044-835X.1991.tb00862.x}
+Butterworth, G., \& Jarrett, N. (1991). What minds have in common is space: Spatial mechanisms serving joint visual attention in infancy. \emph{British Journal of Developmental Psychology}, \emph{9}(1), 55--72. \url{https://doi.org/10.1111/j.2044-835X.1991.tb00862.x}
 
 \leavevmode\hypertarget{ref-Byers-Heinlein_2015}{}%
-Byers-Heinlein, K. (2015). Methods for studying infant bilingualism. In J. W. Schwieter (Ed.), \emph{The Cambridge Handbook of Bilingual Processing} (pp. 133--154). Cambridge: Cambridge University Press. doi:\href{https://doi.org/10.1017/CBO9781107447257}{10.1017/CBO9781107447257}
+Byers-Heinlein, K. (2015). Methods for studying infant bilingualism. In J. W. Schwieter (Ed.), \emph{The Cambridge Handbook of Bilingual Processing} (pp. 133--154). Cambridge: Cambridge University Press. \url{https://doi.org/10.1017/CBO9781107447257}
 
 \leavevmode\hypertarget{ref-Byers-Heinlein_2017}{}%
-Byers-Heinlein, K. (2017). Bilingualism affects 9-month-old infants' expectations about how words refer to kinds. \emph{Developmental Science}, \emph{20}(1), e12486. doi:\href{https://doi.org/10.1111/desc.12486}{10.1111/desc.12486}
+Byers-Heinlein, K. (2017). Bilingualism affects 9-month-old infants' expectations about how words refer to kinds. \emph{Developmental Science}, \emph{20}(1), e12486. \url{https://doi.org/10.1111/desc.12486}
 
 \leavevmode\hypertarget{ref-Byers-Heinlein_etal_2020a}{}%
-Byers-Heinlein, K., Bergmann, C., Davies, C., Frank, M. C., Hamlin, J. K., Kline, M., \ldots{} Soderstrom, M. (2020). Building a collaborative psychological science: Lessons learned from manybabies 1. \emph{Canadian Psychology}.
+Byers-Heinlein, K., Bergmann, C., Davies, C., Frank, M. C., Hamlin, J. K., Kline, M., \ldots{} Soderstrom, M. (2020). Building a collaborative psychological science: Lessons learned from manybabies 1. \emph{Canadian Psychology}. In press.
 
 \leavevmode\hypertarget{ref-Byers-Heinlein_Fennell_2014}{}%
-Byers-Heinlein, K., \& Fennell, C. T. (2014). Perceptual narrowing in the context of increased variation: Insights from bilingual infants. \emph{Developmental Psychobiology}, \emph{56}(2), 274--291. doi:\href{https://doi.org/10.1002/dev.21167}{10.1002/dev.21167}
+Byers-Heinlein, K., \& Fennell, C. T. (2014). Perceptual narrowing in the context of increased variation: Insights from bilingual infants. \emph{Developmental Psychobiology}, \emph{56}(2), 274--291. \url{https://doi.org/10.1002/dev.21167}
 
 \leavevmode\hypertarget{ref-Byers-Heinlein_etal_2020b}{}%
-Byers-Heinlein, K., Tsui, A. S. M., Bergmann, C., Black, A., Brown, A., Carbajal, M. J., \ldots{} Wermelinger, S. (2020). Quantifying sources of variability in infancy research using the infant-directed speech preference. \emph{Advances in Methods and Practices in Psychological Science. Pre-Registered Report Accepted for Publication}.
+Byers-Heinlein, K., Tsui, A. S. M., Bergmann, C., Black, A., Brown, A., Carbajal, M. J., \ldots{} Wermelinger, S. (2020). Quantifying sources of variability in infancy research using the infant-directed speech preference. \emph{Advances in Methods and Practices in Psychological Science. Pre-Registered Report Accepted for Publication}. In press.
 
 \leavevmode\hypertarget{ref-Byers-Heinlein_Werker_2009}{}%
-Byers-Heinlein, K., \& Werker, J. F. (2009). Monolingual, bilingual, trilingual: Infants' language experience influences the development of a word-learning heuristic. \emph{Developmental Science}, \emph{12}(5), 815--823. doi:\href{https://doi.org/10.1111/j.1467-7687.2009.00902.x}{10.1111/j.1467-7687.2009.00902.x}
+Byers-Heinlein, K., \& Werker, J. F. (2009). Monolingual, bilingual, trilingual: Infants' language experience influences the development of a word-learning heuristic. \emph{Developmental Science}, \emph{12}(5), 815--823. \url{https://doi.org/10.1111/j.1467-7687.2009.00902.x}
 
 \leavevmode\hypertarget{ref-Byers-Heinlein_Werker_2013}{}%
-Byers-Heinlein, K., \& Werker, J. F. (2013). Lexicon structure and the disambiguation of novel words: Evidence from bilingual infants. \emph{Cognition}, \emph{128}(3), 407--416. doi:\href{https://doi.org/10.1016/j.cognition.2013.05.010}{10.1016/j.cognition.2013.05.010}
+Byers-Heinlein, K., \& Werker, J. F. (2013). Lexicon structure and the disambiguation of novel words: Evidence from bilingual infants. \emph{Cognition}, \emph{128}(3), 407--416. \url{https://doi.org/10.1016/j.cognition.2013.05.010}
 
 \leavevmode\hypertarget{ref-Carpenter_etal_1998}{}%
-Carpenter, M., Nagell, K., \& Tomasello, M. (1998). Social cognition, joint attention, and communicative competence from 9 to 15 months of age. \emph{Monographs of the Society for Research in Child Development}, \emph{63}(4), i--174. doi:\href{https://doi.org/10.2307/1166214}{10.2307/1166214}
+Carpenter, M., Nagell, K., \& Tomasello, M. (1998). Social cognition, joint attention, and communicative competence from 9 to 15 months of age. \emph{Monographs of the Society for Research in Child Development}, \emph{63}(4), i--174. \url{https://doi.org/10.2307/1166214}
 
 \leavevmode\hypertarget{ref-Core_etal_2013}{}%
-Core, C., Hoff, E., Rumiche, R., \& Señor, M. (2013). Total and conceptual vocabulary in spanish-english bilinguals from 22 to 30 months: Implications for assessment. \emph{Journal of Speech, Language, and Hearing Research}, \emph{56}(5), 1637--1649. doi:\href{https://doi.org/10.1044/1092-4388(2013/11-0044)}{10.1044/1092-4388(2013/11-0044)}
+Core, C., Hoff, E., Rumiche, R., \& Señor, M. (2013). Total and conceptual vocabulary in spanish-english bilinguals from 22 to 30 months: Implications for assessment. \emph{Journal of Speech, Language, and Hearing Research}, \emph{56}(5), 1637--1649. \url{https://doi.org/10.1044/1092-4388(2013/11-0044)}
 
 \leavevmode\hypertarget{ref-Corkum_Moore_1995}{}%
 Corkum, V., \& Moore, C. (1995). Development of joint visual attention in infants. In C. Moore \& P. J. Dunham (Eds.), \emph{Joint attention: Its origins and role in development} (pp. 61--8361--83). Hillsdale, NJ: Erlbaum.
 
 \leavevmode\hypertarget{ref-Csibra_etal_2016}{}%
-Csibra, G., Hernik, M., Mascaro, O., Tatone, D., \& Lengyel, M. (2016). Statistical treatment of looking-time data. \emph{Developmental Psychology}, \emph{52}(4), 521--536. doi:\href{https://doi.org/10.1037/dev0000083}{10.1037/dev0000083}
+Csibra, G., Hernik, M., Mascaro, O., Tatone, D., \& Lengyel, M. (2016). Statistical treatment of looking-time data. \emph{Developmental Psychology}, \emph{52}(4), 521--536. \url{https://doi.org/10.1037/dev0000083}
 
 \leavevmode\hypertarget{ref-deBruin_etal_2015}{}%
-de Bruin, A., Treccani, B., \& Della Sala, S. (2015). Cognitive advantage in bilingualism: An example of publication bias? \emph{Psychological Science}, \emph{26}(1), 99--107. doi:\href{https://doi.org/10.1177/0956797614557866}{10.1177/0956797614557866}
+de Bruin, A., Treccani, B., \& Della Sala, S. (2015). Cognitive advantage in bilingualism: An example of publication bias? \emph{Psychological Science}, \emph{26}(1), 99--107. \url{https://doi.org/10.1177/0956797614557866}
 
 \leavevmode\hypertarget{ref-DeHouwer_etal_2006}{}%
-De Houwer, A., Bornstein, M. H., \& De Coster, S. (2006). Early understanding of two words for the same thing: A cdi study of lexical comprehension in infant bilinguals. \emph{International Journal of Bilingualism}, \emph{10}(3), 331--347. doi:\href{https://doi.org/10.1177/13670069060100030401}{10.1177/13670069060100030401}
+De Houwer, A., Bornstein, M. H., \& De Coster, S. (2006). Early understanding of two words for the same thing: A cdi study of lexical comprehension in infant bilinguals. \emph{International Journal of Bilingualism}, \emph{10}(3), 331--347. \url{https://doi.org/10.1177/13670069060100030401}
 
 \leavevmode\hypertarget{ref-Dunabeitia_Carreiras_2015}{}%
-Duñabeitia, J. A., \& Carreiras, M. (2015). The bilingual advantage: Acta est fabula. \emph{Cortex}, \emph{73}, 371--372. doi:\href{https://doi.org/10.1016/j.cortex.2015.06.009}{10.1016/j.cortex.2015.06.009}
+Duñabeitia, J. A., \& Carreiras, M. (2015). The bilingual advantage: Acta est fabula. \emph{Cortex}, \emph{73}, 371--372. \url{https://doi.org/10.1016/j.cortex.2015.06.009}
 
 \leavevmode\hypertarget{ref-Farroni_etal_2004}{}%
-Farroni, T., Massaccesi, S., Pividori, D., \& Johnson, M. H. (2004). Gaze following in newborns. \emph{Infancy}, \emph{5}(1), 39--60. doi:\href{https://doi.org/10.1207/s15327078in0501_2}{10.1207/s15327078in0501\_2}
+Farroni, T., Massaccesi, S., Pividori, D., \& Johnson, M. H. (2004). Gaze following in newborns. \emph{Infancy}, \emph{5}(1), 39--60. \url{https://doi.org/10.1207/s15327078in0501_2}
 
 \leavevmode\hypertarget{ref-Fennell_etal_2007}{}%
-Fennell, C. T., Byers-Heinlein, K., \& Werker, J. F. (2007). Using speech sounds to guide word learning: The case of bilingual infants. \emph{Child Development}, \emph{78}(5), 1510--1525. doi:\href{https://doi.org/10.1111/j.1467-8624.2007.01080.x}{10.1111/j.1467-8624.2007.01080.x}
+Fennell, C. T., Byers-Heinlein, K., \& Werker, J. F. (2007). Using speech sounds to guide word learning: The case of bilingual infants. \emph{Child Development}, \emph{78}(5), 1510--1525. \url{https://doi.org/10.1111/j.1467-8624.2007.01080.x}
 
 \leavevmode\hypertarget{ref-Fenson_etal_2007}{}%
 Fenson, L., Marchman, V. A., Thal, D., Dale, P., Reznick, J., \& Bates, E. (2007). \emph{MacArthur-bates communicative development inventories (2nd ed.)}. Baltimore, MD: Brookes.
 
 \leavevmode\hypertarget{ref-Frank_etal_2017}{}%
-Frank, M. C., Bergelson, E., Bergmann, C., Cristia, A., Floccia, C., Gervain, J., \ldots{} Yurovsky, D. (2017). A collaborative approach to infant research: Promoting reproducibility, best practices, and theory-building. \emph{Infancy}, \emph{22}(4), 421--435. doi:\href{https://doi.org/10.1111/infa.12182}{10.1111/infa.12182}
+Frank, M. C., Bergelson, E., Bergmann, C., Cristia, A., Floccia, C., Gervain, J., \ldots{} Yurovsky, D. (2017). A collaborative approach to infant research: Promoting reproducibility, best practices, and theory-building. \emph{Infancy}, \emph{22}(4), 421--435. \url{https://doi.org/10.1111/infa.12182}
 
 \leavevmode\hypertarget{ref-Frischen_etal_2007}{}%
-Frischen, A., Bayliss, A. P., \& Tipper, S. P. (2007). Gaze cueing of attention: Visual attention, social cognition, and individual differences. \emph{Psychological Bulletin}, \emph{133}(4), 694--724. doi:\href{https://doi.org/10.1037/0033-2909.133.4.694}{10.1037/0033-2909.133.4.694}
+Frischen, A., Bayliss, A. P., \& Tipper, S. P. (2007). Gaze cueing of attention: Visual attention, social cognition, and individual differences. \emph{Psychological Bulletin}, \emph{133}(4), 694--724. \url{https://doi.org/10.1037/0033-2909.133.4.694}
 
 \leavevmode\hypertarget{ref-GrafEstes_Hay_2015}{}%
-Graf Estes, K., \& Hay, J. F. (2015). Flexibility in bilingual infants' word learning. \emph{Child Development}, \emph{86}(5), 1371--1385. doi:\href{https://doi.org/10.1111/cdev.12392}{10.1111/cdev.12392}
+Graf Estes, K., \& Hay, J. F. (2015). Flexibility in bilingual infants' word learning. \emph{Child Development}, \emph{86}(5), 1371--1385. \url{https://doi.org/10.1111/cdev.12392}
 
 \leavevmode\hypertarget{ref-Gredeback_etal_2010}{}%
-Gredebäck, G., Fikke, L., \& Melinder, A. (2010). The development of joint visual attention: A longitudinal study of gaze following during interactions with mothers and strangers. \emph{Developmental Science}, \emph{13}(6), 839--848. doi:\href{https://doi.org/10.1111/j.1467-7687.2009.00945.x}{10.1111/j.1467-7687.2009.00945.x}
+Gredebäck, G., Fikke, L., \& Melinder, A. (2010). The development of joint visual attention: A longitudinal study of gaze following during interactions with mothers and strangers. \emph{Developmental Science}, \emph{13}(6), 839--848. \url{https://doi.org/10.1111/j.1467-7687.2009.00945.x}
 
 \leavevmode\hypertarget{ref-Halberda_2003}{}%
-Halberda, J. (2003). The development of a word-learning strategy. \emph{Cognition}, \emph{87}(1), B23--B34. doi:\href{https://doi.org/10.1016/S0010-0277(02)00186-5}{10.1016/S0010-0277(02)00186-5}
+Halberda, J. (2003). The development of a word-learning strategy. \emph{Cognition}, \emph{87}(1), B23--B34. \url{https://doi.org/10.1016/S0010-0277(02)00186-5}
 
 \leavevmode\hypertarget{ref-Henrich_etal_2010}{}%
-Henrich, J., Heine, S. J., \& Norenzayan, A. (2010). Most people are not weird. \emph{Nature}, \emph{466}(7302), 29--29. doi:\href{https://doi.org/10.1038/466029a}{10.1038/466029a}
+Henrich, J., Heine, S. J., \& Norenzayan, A. (2010). Most people are not weird. \emph{Nature}, \emph{466}(7302), 29--29. \url{https://doi.org/10.1038/466029a}
 
 \leavevmode\hypertarget{ref-Hernik_Broesch_2019}{}%
-Hernik, M., \& Broesch, T. (2019). Infant gaze following depends on communicative signals: An eye-tracking study of 5- to 7-month-olds in vanuatu. \emph{Developmental Science}, \emph{22}(4), e12779. doi:\href{https://doi.org/10.1111/desc.12779}{10.1111/desc.12779}
+Hernik, M., \& Broesch, T. (2019). Infant gaze following depends on communicative signals: An eye-tracking study of 5- to 7-month-olds in vanuatu. \emph{Developmental Science}, \emph{22}(4), e12779. \url{https://doi.org/10.1111/desc.12779}
 
 \leavevmode\hypertarget{ref-Hessels_etal_2015}{}%
-Hessels, R. S., Andersson, R., Hooge, I. T. C., Nyström, M., \& Kemner, C. (2015). Consequences of eye color, positioning, and head movement for eye-tracking data quality in infant research. \emph{Infancy}, \emph{20}(6), 601--633. doi:\href{https://doi.org/10.1111/infa.12093}{10.1111/infa.12093}
+Hessels, R. S., Andersson, R., Hooge, I. T. C., Nyström, M., \& Kemner, C. (2015). Consequences of eye color, positioning, and head movement for eye-tracking data quality in infant research. \emph{Infancy}, \emph{20}(6), 601--633. \url{https://doi.org/10.1111/infa.12093}
 
 \leavevmode\hypertarget{ref-Hollich_etal_2000}{}%
-Hollich, G. J., Hirsh-Pasek, K., Golinkoff, R. M., Brand, R. J., Brown, E., Chung, H. L., \ldots{} Bloom, L. (2000). Breaking the language barrier: An emergentist coalition model for the origins of word learning. \emph{Monographs of the Society for Research in Child Development}, \emph{65}(3), i--35. doi:\href{https://doi.org/10.1111/1540-5834.00090}{10.1111/1540-5834.00090}
+Hollich, G. J., Hirsh-Pasek, K., Golinkoff, R. M., Brand, R. J., Brown, E., Chung, H. L., \ldots{} Bloom, L. (2000). Breaking the language barrier: An emergentist coalition model for the origins of word learning. \emph{Monographs of the Society for Research in Child Development}, \emph{65}(3), i--35. \url{https://doi.org/10.1111/1540-5834.00090}
 
 \leavevmode\hypertarget{ref-Houston-Price_etal_2010}{}%
-Houston-Price, C., Caloghiris, Z., \& Raviglione, E. (2010). Language experience shapes the development of the mutual exclusivity bias. \emph{Infancy}, \emph{15}(2), 125--150. doi:\href{https://doi.org/10.1111/j.1532-7078.2009.00009.x}{10.1111/j.1532-7078.2009.00009.x}
+Houston-Price, C., Caloghiris, Z., \& Raviglione, E. (2010). Language experience shapes the development of the mutual exclusivity bias. \emph{Infancy}, \emph{15}(2), 125--150. \url{https://doi.org/10.1111/j.1532-7078.2009.00009.x}
 
 \leavevmode\hypertarget{ref-Ioannidis_2012}{}%
-Ioannidis, J. P. A. (2012). Why science is not necessarily self-correcting. \emph{Perspectives on Psychological Science}, \emph{7}(6), 645--654. doi:\href{https://doi.org/10.1177/1745691612464056}{10.1177/1745691612464056}
+Ioannidis, J. P. A. (2012). Why science is not necessarily self-correcting. \emph{Perspectives on Psychological Science}, \emph{7}(6), 645--654. \url{https://doi.org/10.1177/1745691612464056}
 
 \leavevmode\hypertarget{ref-Kandhadai_etal_2014}{}%
-Kandhadai, P., Danielson, D. K., \& Werker, J. F. (2014). Culture as a binder for bilingual acquisition. \emph{Trends in Neuroscience and Education}, \emph{3}(1), 24--27. doi:\href{https://doi.org/10.1016/j.tine.2014.02.001}{10.1016/j.tine.2014.02.001}
+Kandhadai, P., Danielson, D. K., \& Werker, J. F. (2014). Culture as a binder for bilingual acquisition. \emph{Trends in Neuroscience and Education}, \emph{3}(1), 24--27. \url{https://doi.org/10.1016/j.tine.2014.02.001}
 
 \leavevmode\hypertarget{ref-Klein_2015}{}%
-Klein, R. M. (2015). Is there a benefit of bilingualism for executive functioning? \emph{Bilingualism: Language and Cognition}, \emph{18}(1), 29--31. doi:\href{https://doi.org/10.1017/S1366728914000613}{10.1017/S1366728914000613}
+Klein, R. M. (2015). Is there a benefit of bilingualism for executive functioning? \emph{Bilingualism: Language and Cognition}, \emph{18}(1), 29--31. \url{https://doi.org/10.1017/S1366728914000613}
 
 \leavevmode\hypertarget{ref-Kovacs_Mehler_2009b}{}%
-Kovács, Á. M., \& Mehler, J. (2009a). Cognitive gains in 7-month-old bilingual infants. \emph{Proceedings of the National Academy of Sciences}, \emph{106}(16), 6556--6560. doi:\href{https://doi.org/10.1073/pnas.0811323106}{10.1073/pnas.0811323106}
+Kovács, Á. M., \& Mehler, J. (2009a). Cognitive gains in 7-month-old bilingual infants. \emph{Proceedings of the National Academy of Sciences}, \emph{106}(16), 6556--6560. \url{https://doi.org/10.1073/pnas.0811323106}
 
 \leavevmode\hypertarget{ref-Kovacs_Mehler_2009a}{}%
-Kovács, Á. M., \& Mehler, J. (2009b). Flexible learning of multiple speech structures in bilingual infants. \emph{Science}, \emph{325}, 611--612. doi:\href{https://doi.org/10.1126/science.1173947}{10.1126/science.1173947}
+Kovács, Á. M., \& Mehler, J. (2009b). Flexible learning of multiple speech structures in bilingual infants. \emph{Science}, \emph{325}, 611--612. \url{https://doi.org/10.1126/science.1173947}
 
 \leavevmode\hypertarget{ref-LeVine_etal_1994}{}%
 LeVine, R. A., Dixon, S., LeVine, S., Richman, A., Leiderman, P. H., Keefer, C. H., \& Brazelton, T. B. (1994). \emph{Child care and culture: Lessons from africa}. Cambridge, UK: Cambridge University Press.
@@ -868,97 +892,97 @@ LeVine, R. A., \& LeVine, S. (2016). \emph{Do parents matter?} New York, NY: Pub
 LeVine, R. A., \& Norman, K. (2001). The infant's acquisition of culture: Early attachment re-examined in anthropological perspective. In C. C. Moore \& H. F. Mathews (Eds.), \emph{The psychology of cultural experience} (pp. 83--104). Cambridge, UK.
 
 \leavevmode\hypertarget{ref-Liberman_etal_2017}{}%
-Liberman, Z., Woodward, A. L., Keysar, B., \& Kinzler, K. D. (2017). Exposure to multiple languages enhances communication skills in infancy. \emph{Developmental Science}, \emph{20}(1), e12420. doi:\href{https://doi.org/10.1111/desc.12420}{10.1111/desc.12420}
+Liberman, Z., Woodward, A. L., Keysar, B., \& Kinzler, K. D. (2017). Exposure to multiple languages enhances communication skills in infancy. \emph{Developmental Science}, \emph{20}(1), e12420. \url{https://doi.org/10.1111/desc.12420}
 
 \leavevmode\hypertarget{ref-Little_etal_2016}{}%
-Little, E. E., Carver, L. J., \& Legare, C. H. (2016). Cultural variation in triadic infant--caregiver object exploration. \emph{Child Development}, \emph{87}(4), 1130--1145. doi:\href{https://doi.org/10.1111/cdev.12513}{10.1111/cdev.12513}
+Little, E. E., Carver, L. J., \& Legare, C. H. (2016). Cultural variation in triadic infant--caregiver object exploration. \emph{Child Development}, \emph{87}(4), 1130--1145. \url{https://doi.org/10.1111/cdev.12513}
 
 \leavevmode\hypertarget{ref-Liu_Kager_2016}{}%
-Liu, L., \& Kager, R. (2016). Perception of a native vowel contrast by dutch monolingual and bilingual infants: A bilingual perceptual lead. \emph{International Journal of Bilingualism}, \emph{20}(3), 335--345. doi:\href{https://doi.org/10.1177/1367006914566082}{10.1177/1367006914566082}
+Liu, L., \& Kager, R. (2016). Perception of a native vowel contrast by dutch monolingual and bilingual infants: A bilingual perceptual lead. \emph{International Journal of Bilingualism}, \emph{20}(3), 335--345. \url{https://doi.org/10.1177/1367006914566082}
 
 \leavevmode\hypertarget{ref-ManyBabiesConsortium_2020}{}%
-ManyBabies Consortium. (2020). \emph{A multi-lab study of bilingual infants: Exploring the preference for infant-directed speech}. Preprint. doi:\href{https://doi.org/10.31234/osf.io/sqh9d}{10.31234/osf.io/sqh9d}
+ManyBabies Consortium. (2020). \emph{A multi-lab study of bilingual infants: Exploring the preference for infant-directed speech}. Preprint. \url{https://doi.org/10.31234/osf.io/sqh9d}
 
 \leavevmode\hypertarget{ref-Markman_1990}{}%
-Markman, E. M. (1990). Constraints children place on word meanings. \emph{Cognitive Science}, \emph{14}(1), 57--77. doi:\href{https://doi.org/10.1207/s15516709cog1401_4}{10.1207/s15516709cog1401\_4}
+Markman, E. M. (1990). Constraints children place on word meanings. \emph{Cognitive Science}, \emph{14}(1), 57--77. \url{https://doi.org/10.1207/s15516709cog1401_4}
 
 \leavevmode\hypertarget{ref-Markman_Wachtel_1988}{}%
-Markman, E. M., \& Wachtel, G. F. (1988). Children's use of mutual exclusivity to constrain the meanings of words. \emph{Cognitive Psychology}, \emph{20}(2), 121--157. doi:\href{https://doi.org/10.1016/0010-0285(88)90017-5}{10.1016/0010-0285(88)90017-5}
+Markman, E. M., \& Wachtel, G. F. (1988). Children's use of mutual exclusivity to constrain the meanings of words. \emph{Cognitive Psychology}, \emph{20}(2), 121--157. \url{https://doi.org/10.1016/0010-0285(88)90017-5}
 
 \leavevmode\hypertarget{ref-Markman_etal_2003}{}%
-Markman, E. M., Wasow, J. L., \& Hansen, M. B. (2003). Use of the mutual exclusivity assumption by young word learners. \emph{Cognitive Psychology}, \emph{47}(3), 241--275. doi:\href{https://doi.org/10.1016/S0010-0285(03)00034-3}{10.1016/S0010-0285(03)00034-3}
+Markman, E. M., Wasow, J. L., \& Hansen, M. B. (2003). Use of the mutual exclusivity assumption by young word learners. \emph{Cognitive Psychology}, \emph{47}(3), 241--275. \url{https://doi.org/10.1016/S0010-0285(03)00034-3}
 
 \leavevmode\hypertarget{ref-Matuschek_etal_2017}{}%
-Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., \& Bates, D. (2017). Balancing type i error and power in linear mixed models. \emph{Journal of Memory and Language}, \emph{94}, 305--315. doi:\href{https://doi.org/10.1016/j.jml.2017.01.001}{10.1016/j.jml.2017.01.001}
+Matuschek, H., Kliegl, R., Vasishth, S., Baayen, H., \& Bates, D. (2017). Balancing type i error and power in linear mixed models. \emph{Journal of Memory and Language}, \emph{94}, 305--315. \url{https://doi.org/10.1016/j.jml.2017.01.001}
 
 \leavevmode\hypertarget{ref-Meltzoff_Brooks_2007}{}%
 Meltzoff, A. N., \& Brooks, R. (2007). Eyes wide shut: The importance of eyes in infant gaze-following and understanding other minds. In R. Flom, K. Lee, \& D. Muir (Eds.), \emph{Gaze-following: Its development and significance} (pp. 217--241). Mahwah, NJ: Erlbaum.
 
 \leavevmode\hypertarget{ref-Moll_Tomasello_2004}{}%
-Moll, H., \& Tomasello, M. (2004). 12- and 18-month-old infants follow gaze to spaces behind barriers. \emph{Developmental Science}, \emph{7}(1), F1--F9. doi:\href{https://doi.org/10.1111/j.1467-7687.2004.00315.x}{10.1111/j.1467-7687.2004.00315.x}
+Moll, H., \& Tomasello, M. (2004). 12- and 18-month-old infants follow gaze to spaces behind barriers. \emph{Developmental Science}, \emph{7}(1), F1--F9. \url{https://doi.org/10.1111/j.1467-7687.2004.00315.x}
 
 \leavevmode\hypertarget{ref-Moore_2008}{}%
-Moore, C. (2008). The development of gaze following. \emph{Child Development Perspectives}, \emph{2}(2), 66--70. doi:\href{https://doi.org/10.1111/j.1750-8606.2008.00052.x}{10.1111/j.1750-8606.2008.00052.x}
+Moore, C. (2008). The development of gaze following. \emph{Child Development Perspectives}, \emph{2}(2), 66--70. \url{https://doi.org/10.1111/j.1750-8606.2008.00052.x}
 
 \leavevmode\hypertarget{ref-Moore_Corkum_1998}{}%
-Moore, C., \& Corkum, V. (1998). Infant gaze following based on eye direction. \emph{British Journal of Developmental Psychology}, \emph{16}(4), 495--503. doi:\href{https://doi.org/10.1111/j.2044-835X.1998.tb00767.x}{10.1111/j.2044-835X.1998.tb00767.x}
+Moore, C., \& Corkum, V. (1998). Infant gaze following based on eye direction. \emph{British Journal of Developmental Psychology}, \emph{16}(4), 495--503. \url{https://doi.org/10.1111/j.2044-835X.1998.tb00767.x}
 
 \leavevmode\hypertarget{ref-Morales_etal_2000}{}%
-Morales, M., Mundy, P., Delgado, C. E. F., Yale, M., Neal, R., \& Schwartz, H. K. (2000). Gaze following, temperament, and language development in 6-month-olds: A replication and extension. \emph{Infant Behavior and Development}, \emph{23}(2), 231--236. doi:\href{https://doi.org/10.1016/S0163-6383(01)00038-8}{10.1016/S0163-6383(01)00038-8}
+Morales, M., Mundy, P., Delgado, C. E. F., Yale, M., Neal, R., \& Schwartz, H. K. (2000). Gaze following, temperament, and language development in 6-month-olds: A replication and extension. \emph{Infant Behavior and Development}, \emph{23}(2), 231--236. \url{https://doi.org/10.1016/S0163-6383(01)00038-8}
 
 \leavevmode\hypertarget{ref-Mundy_etal_2007}{}%
-Mundy, P., Block, J., Delgado, C., Pomares, Y., Van Hecke, A. V., \& Parlade, M. V. (2007). Individual differences and the development of joint attention in infancy. \emph{Child Development}, \emph{78}(3), 938--954. doi:\href{https://doi.org/10.1111/j.1467-8624.2007.01042.x}{10.1111/j.1467-8624.2007.01042.x}
+Mundy, P., Block, J., Delgado, C., Pomares, Y., Van Hecke, A. V., \& Parlade, M. V. (2007). Individual differences and the development of joint attention in infancy. \emph{Child Development}, \emph{78}(3), 938--954. \url{https://doi.org/10.1111/j.1467-8624.2007.01042.x}
 
 \leavevmode\hypertarget{ref-Mundy_etal_2009}{}%
-Mundy, P., Sullivan, L., \& Mastergeorge, A. M. (2009). A parallel and distributed-processing model of joint attention, social cognition and autism. \emph{Autism Research}, \emph{2}(1), 2--21. doi:\href{https://doi.org/10.1002/aur.61}{10.1002/aur.61}
+Mundy, P., Sullivan, L., \& Mastergeorge, A. M. (2009). A parallel and distributed-processing model of joint attention, social cognition and autism. \emph{Autism Research}, \emph{2}(1), 2--21. \url{https://doi.org/10.1002/aur.61}
 
 \leavevmode\hypertarget{ref-Paap_etal_2015}{}%
-Paap, K. R., Johnson, H. A., \& Sawi, O. (2015). Bilingual advantages in executive functioning either do not exist or are restricted to very specific and undetermined circumstances. \emph{Cortex}, \emph{69}, 265--278. doi:\href{https://doi.org/10.1016/j.cortex.2015.04.014}{10.1016/j.cortex.2015.04.014}
+Paap, K. R., Johnson, H. A., \& Sawi, O. (2015). Bilingual advantages in executive functioning either do not exist or are restricted to very specific and undetermined circumstances. \emph{Cortex}, \emph{69}, 265--278. \url{https://doi.org/10.1016/j.cortex.2015.04.014}
 
 \leavevmode\hypertarget{ref-Paulus_Fikkert_2014}{}%
-Paulus, M., \& Fikkert, P. (2014). Conflicting social cues: Fourteen- and 24-month-old infants' reliance on gaze and pointing cues in word learning. \emph{Journal of Cognition and Development}, \emph{15}(1), 43--59. doi:\href{https://doi.org/10.1080/15248372.2012.698435}{10.1080/15248372.2012.698435}
+Paulus, M., \& Fikkert, P. (2014). Conflicting social cues: Fourteen- and 24-month-old infants' reliance on gaze and pointing cues in word learning. \emph{Journal of Cognition and Development}, \emph{15}(1), 43--59. \url{https://doi.org/10.1080/15248372.2012.698435}
 
 \leavevmode\hypertarget{ref-Pearson_etal_1993}{}%
-Pearson, B. Z., Fernández, S. C., \& Oller, D. K. (1993). Lexical development in bilingual infants and toddlers: Comparison to monolingual norms. \emph{Language Learning}, \emph{43}(1), 93--120. doi:\href{https://doi.org/10.1111/j.1467-1770.1993.tb00174.x}{10.1111/j.1467-1770.1993.tb00174.x}
+Pearson, B. Z., Fernández, S. C., \& Oller, D. K. (1993). Lexical development in bilingual infants and toddlers: Comparison to monolingual norms. \emph{Language Learning}, \emph{43}(1), 93--120. \url{https://doi.org/10.1111/j.1467-1770.1993.tb00174.x}
 
 \leavevmode\hypertarget{ref-Petitto_etal_2001}{}%
-Petitto, L. A., Katerelos, M., Levy, B. G., Gauna, K., Tétreault, K., \& Ferraro, V. (2001). Bilingual signed and spoken language acquisition from birth: Implications for the mechanisms underlying early bilingual language acquisition. \emph{Journal of Child Language}, \emph{28}(2), 453--496. doi:\href{https://doi.org/10.1017/S0305000901004718}{10.1017/S0305000901004718}
+Petitto, L. A., Katerelos, M., Levy, B. G., Gauna, K., Tétreault, K., \& Ferraro, V. (2001). Bilingual signed and spoken language acquisition from birth: Implications for the mechanisms underlying early bilingual language acquisition. \emph{Journal of Child Language}, \emph{28}(2), 453--496. \url{https://doi.org/10.1017/S0305000901004718}
 
 \leavevmode\hypertarget{ref-Pons_etal_2015}{}%
-Pons, F., Bosch, L., \& Lewkowicz, D. J. (2015). Bilingualism modulates infants' selective attention to the mouth of a talking face. \emph{Psychological Science}, \emph{26}(4), 490--498. doi:\href{https://doi.org/10.1177/0956797614568320}{10.1177/0956797614568320}
+Pons, F., Bosch, L., \& Lewkowicz, D. J. (2015). Bilingualism modulates infants' selective attention to the mouth of a talking face. \emph{Psychological Science}, \emph{26}(4), 490--498. \url{https://doi.org/10.1177/0956797614568320}
 
 \leavevmode\hypertarget{ref-Reid_etal_2004}{}%
-Reid, V. M., Striano, T., Kaufman, J., \& Johnson, M. H. (2004). Eye gaze cueing facilitates neural processing of objects in 4-month-old infants. \emph{NeuroReport}, \emph{15}(16), 2553--2555. doi:\href{https://doi.org/10.1097/00001756-200411150-00025}{10.1097/00001756-200411150-00025}
+Reid, V. M., Striano, T., Kaufman, J., \& Johnson, M. H. (2004). Eye gaze cueing facilitates neural processing of objects in 4-month-old infants. \emph{NeuroReport}, \emph{15}(16), 2553--2555. \url{https://doi.org/10.1097/00001756-200411150-00025}
 
 \leavevmode\hypertarget{ref-Schonberg_etal_2014}{}%
-Schonberg, C., Sandhofer, C. M., Tsang, T., \& Johnson, S. P. (2014). Does bilingual experience affect early visual perceptual development? \emph{Frontiers in Psychology}, \emph{5}, 1429. doi:\href{https://doi.org/10.3389/fpsyg.2014.01429}{10.3389/fpsyg.2014.01429}
+Schonberg, C., Sandhofer, C. M., Tsang, T., \& Johnson, S. P. (2014). Does bilingual experience affect early visual perceptual development? \emph{Frontiers in Psychology}, \emph{5}, 1429. \url{https://doi.org/10.3389/fpsyg.2014.01429}
 
 \leavevmode\hypertarget{ref-Sebastian-Galles_etal_2012}{}%
-Sebastián-Gallés, N., Albareda-Castellot, B., Weikum, W. M., \& Werker, J. F. (2012). A bilingual advantage in visual language discrimination in infancy. \emph{Psychological Science}, \emph{23}(9), 994--999. doi:\href{https://doi.org/10.1177/0956797612436817}{10.1177/0956797612436817}
+Sebastián-Gallés, N., Albareda-Castellot, B., Weikum, W. M., \& Werker, J. F. (2012). A bilingual advantage in visual language discrimination in infancy. \emph{Psychological Science}, \emph{23}(9), 994--999. \url{https://doi.org/10.1177/0956797612436817}
 
 \leavevmode\hypertarget{ref-Senju_Csibra_2008}{}%
-Senju, A., \& Csibra, G. (2008). Gaze following in human infants depends on communicative signals. \emph{Current Biology}, \emph{18}(9), 668--671. doi:\href{https://doi.org/10.1016/j.cub.2008.03.059}{10.1016/j.cub.2008.03.059}
+Senju, A., \& Csibra, G. (2008). Gaze following in human infants depends on communicative signals. \emph{Current Biology}, \emph{18}(9), 668--671. \url{https://doi.org/10.1016/j.cub.2008.03.059}
 
 \leavevmode\hypertarget{ref-Senju_etal_2013}{}%
-Senju, A., Tucker, L., Pasco, G., Hudry, K., Elsabbagh, M., Charman, T., \& Johnson, M. H. (2013). The importance of the eyes: Communication skills in infants of blind parents. \emph{Proceedings of the Royal Society B: Biological Sciences}, \emph{280}(1760), 1--7. doi:\href{https://doi.org/10.1098/rspb.2013.0436}{10.1098/rspb.2013.0436}
+Senju, A., Tucker, L., Pasco, G., Hudry, K., Elsabbagh, M., Charman, T., \& Johnson, M. H. (2013). The importance of the eyes: Communication skills in infants of blind parents. \emph{Proceedings of the Royal Society B: Biological Sciences}, \emph{280}(1760), 1--7. \url{https://doi.org/10.1098/rspb.2013.0436}
 
 \leavevmode\hypertarget{ref-Senju_etal_2015}{}%
-Senju, A., Vernetti, A., Ganea, N., Hudry, K., Tucker, L., Charman, T., \& Johnson, M. H. (2015). Early social experience affects the development of eye gaze processing. \emph{Current Biology}, \emph{25}(23), 3086--3091. doi:\href{https://doi.org/10.1016/j.cub.2015.10.019}{10.1016/j.cub.2015.10.019}
+Senju, A., Vernetti, A., Ganea, N., Hudry, K., Tucker, L., Charman, T., \& Johnson, M. H. (2015). Early social experience affects the development of eye gaze processing. \emph{Current Biology}, \emph{25}(23), 3086--3091. \url{https://doi.org/10.1016/j.cub.2015.10.019}
 
 \leavevmode\hypertarget{ref-Singh_etal_2015}{}%
-Singh, L., Fu, C. S. L., Rahman, A. A., Hameed, W. B., Sanmugam, S., Agarwal, P., \ldots{} GUSTO Research Team. (2015). Back to basics: A bilingual advantage in infant visual habituation. \emph{Child Development}, \emph{86}(1), 294--302. doi:\href{https://doi.org/10.1111/cdev.12271}{10.1111/cdev.12271}
+Singh, L., Fu, C. S. L., Rahman, A. A., Hameed, W. B., Sanmugam, S., Agarwal, P., \ldots{} GUSTO Research Team. (2015). Back to basics: A bilingual advantage in infant visual habituation. \emph{Child Development}, \emph{86}(1), 294--302. \url{https://doi.org/10.1111/cdev.12271}
 
 \leavevmode\hypertarget{ref-Singh_etal_2018}{}%
-Singh, L., Fu, C. S. L., Tay, Z. W., \& Golinkoff, R. M. (2018). Novel word learning in bilingual and monolingual infants: Evidence for a bilingual advantage. \emph{Child Development}, \emph{89}(3), e183--e198. doi:\href{https://doi.org/10.1111/cdev.12747}{10.1111/cdev.12747}
+Singh, L., Fu, C. S. L., Tay, Z. W., \& Golinkoff, R. M. (2018). Novel word learning in bilingual and monolingual infants: Evidence for a bilingual advantage. \emph{Child Development}, \emph{89}(3), e183--e198. \url{https://doi.org/10.1111/cdev.12747}
 
 \leavevmode\hypertarget{ref-Singh_etal_2019}{}%
-Singh, L., Quinn, P. C., Xiao, N. G., \& Lee, K. (2019). Monolingual but not bilingual infants demonstrate racial bias in social cue use. \emph{Developmental Science}, \emph{22}(6), e12809. doi:\href{https://doi.org/10.1111/desc.12809}{10.1111/desc.12809}
+Singh, L., Quinn, P. C., Xiao, N. G., \& Lee, K. (2019). Monolingual but not bilingual infants demonstrate racial bias in social cue use. \emph{Developmental Science}, \emph{22}(6), e12809. \url{https://doi.org/10.1111/desc.12809}
 
 \leavevmode\hypertarget{ref-Szufnarowska_etal_2014}{}%
-Szufnarowska, J., Rohlfing, K. J., Fawcett, C., \& Gredebäck, G. (2014). Is ostension any more than attention? \emph{Scientific Reports}, \emph{4}(5304), 1--4. doi:\href{https://doi.org/10.1038/srep05304}{10.1038/srep05304}
+Szufnarowska, J., Rohlfing, K. J., Fawcett, C., \& Gredebäck, G. (2014). Is ostension any more than attention? \emph{Scientific Reports}, \emph{4}(5304), 1--4. \url{https://doi.org/10.1038/srep05304}
 
 \leavevmode\hypertarget{ref-Tenenbaum_etal_2015}{}%
-Tenenbaum, E. J., Sobel, D. M., Sheinkopf, S. J., Malle, B. F., \& Morgan, J. L. (2015). Attention to the mouth and gaze following in infancy predict language development. \emph{Journal of Child Language}, \emph{42}(6), 1173--1190. doi:\href{https://doi.org/10.1017/S0305000914000725}{10.1017/S0305000914000725}
+Tenenbaum, E. J., Sobel, D. M., Sheinkopf, S. J., Malle, B. F., \& Morgan, J. L. (2015). Attention to the mouth and gaze following in infancy predict language development. \emph{Journal of Child Language}, \emph{42}(6), 1173--1190. \url{https://doi.org/10.1017/S0305000914000725}
 
 \leavevmode\hypertarget{ref-Tomasello_2003}{}%
 Tomasello, M. (2003). \emph{Constructing a language: A usage-based theory of language acquisition}. Cambridge, MA: Harvard University Press.
@@ -967,28 +991,28 @@ Tomasello, M. (2003). \emph{Constructing a language: A usage-based theory of lan
 Tronick, E. (2007). \emph{The neurobehavioral and social-emotional development of infants and children}. New York, NY: W. W. Norton \& Co.
 
 \leavevmode\hypertarget{ref-vanRenswoude_etal_2018}{}%
-van Renswoude, D. R., Raijmakers, M. E. J., Koornneef, A., Johnson, S. P., Hunnius, S., \& Visser, I. (2018). Gazepath: An eye-tracking analysis tool that accounts for individual differences and data quality. \emph{Behavior Research Methods}, \emph{50}(2), 834--852. doi:\href{https://doi.org/10.3758/s13428-017-0909-3}{10.3758/s13428-017-0909-3}
+van Renswoude, D. R., Raijmakers, M. E. J., Koornneef, A., Johnson, S. P., Hunnius, S., \& Visser, I. (2018). Gazepath: An eye-tracking analysis tool that accounts for individual differences and data quality. \emph{Behavior Research Methods}, \emph{50}(2), 834--852. \url{https://doi.org/10.3758/s13428-017-0909-3}
 
 \leavevmode\hypertarget{ref-Viechtbauer_2010}{}%
-Viechtbauer, W. (2010). Conducting meta-analyses in r with the metafor package. \emph{Journal of Statistical Software}, \emph{36}(3), 1--48. doi:\href{https://doi.org/10.18637/jss.v036.i03}{10.18637/jss.v036.i03}
+Viechtbauer, W. (2010). Conducting meta-analyses in r with the metafor package. \emph{Journal of Statistical Software}, \emph{36}(3), 1--48. \url{https://doi.org/10.18637/jss.v036.i03}
 
 \leavevmode\hypertarget{ref-Wass_etal_2013}{}%
-Wass, S. V., Smith, T. J., \& Johnson, M. H. (2013). Parsing eye-tracking data of variable quality to provide accurate fixation duration estimates in infants and adults. \emph{Behavior Research Methods}, \emph{45}(1), 229--250. doi:\href{https://doi.org/10.3758/s13428-012-0245-6}{10.3758/s13428-012-0245-6}
+Wass, S. V., Smith, T. J., \& Johnson, M. H. (2013). Parsing eye-tracking data of variable quality to provide accurate fixation duration estimates in infants and adults. \emph{Behavior Research Methods}, \emph{45}(1), 229--250. \url{https://doi.org/10.3758/s13428-012-0245-6}
 
 \leavevmode\hypertarget{ref-Weikum_etal_2007}{}%
-Weikum, W. M., Vouloumanos, A., Navarra, J., Soto-Faraco, S., Sebastián-Gallés, N., \& Werker, J. F. (2007). Visual language discrimination in infancy. \emph{Science}, \emph{316}(5828), 1159. doi:\href{https://doi.org/10.1126/science.1137686}{10.1126/science.1137686}
+Weikum, W. M., Vouloumanos, A., Navarra, J., Soto-Faraco, S., Sebastián-Gallés, N., \& Werker, J. F. (2007). Visual language discrimination in infancy. \emph{Science}, \emph{316}(5828), 1159. \url{https://doi.org/10.1126/science.1137686}
 
 \leavevmode\hypertarget{ref-Werker_Byers-Heinlein_2008}{}%
-Werker, J. F., \& Byers-Heinlein, K. (2008). Bilingualism in infancy: First steps in perception and comprehension. \emph{Trends in Cognitive Sciences}, \emph{12}(4), 144--151. doi:\href{https://doi.org/10.1016/j.tics.2008.01.008}{10.1016/j.tics.2008.01.008}
+Werker, J. F., \& Byers-Heinlein, K. (2008). Bilingualism in infancy: First steps in perception and comprehension. \emph{Trends in Cognitive Sciences}, \emph{12}(4), 144--151. \url{https://doi.org/10.1016/j.tics.2008.01.008}
 
 \leavevmode\hypertarget{ref-Woodward_2003}{}%
-Woodward, A. L. (2003). Infants' developing understanding of the link between looker and object. \emph{Developmental Science}, \emph{6}(3), 297--311. doi:\href{https://doi.org/10.1111/1467-7687.00286}{10.1111/1467-7687.00286}
+Woodward, A. L. (2003). Infants' developing understanding of the link between looker and object. \emph{Developmental Science}, \emph{6}(3), 297--311. \url{https://doi.org/10.1111/1467-7687.00286}
 
 \leavevmode\hypertarget{ref-Yow_etal_2017}{}%
-Yow, W. Q., Li, X., Lam, S., Gliga, T., Chong, Y. S., Kwek, K., \& Broekman, B. F. P. (2017). A bilingual advantage in 54-month-olds'use of referential cues in fast mapping. \emph{Developmental Science}, \emph{20}(1), e12482. doi:\href{https://doi.org/10.1111/desc.12482}{10.1111/desc.12482}
+Yow, W. Q., Li, X., Lam, S., Gliga, T., Chong, Y. S., Kwek, K., \& Broekman, B. F. P. (2017). A bilingual advantage in 54-month-olds'use of referential cues in fast mapping. \emph{Developmental Science}, \emph{20}(1), e12482. \url{https://doi.org/10.1111/desc.12482}
 
 \leavevmode\hypertarget{ref-Yow_Markman_2011}{}%
-Yow, W. Q., \& Markman, E. M. (2011). Young bilingual children's heightened sensitivity to referential cues. \emph{Journal of Cognition and Development}, \emph{12}(1), 12--31. doi:\href{https://doi.org/10.1080/15248372.2011.539524}{10.1080/15248372.2011.539524}
+Yow, W. Q., \& Markman, E. M. (2011). Young bilingual children's heightened sensitivity to referential cues. \emph{Journal of Cognition and Development}, \emph{12}(1), 12--31. \url{https://doi.org/10.1080/15248372.2011.539524}
 
 \endgroup
 
