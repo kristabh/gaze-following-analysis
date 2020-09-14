@@ -820,6 +820,7 @@ ggplot(latency_forest_data,
   geom_linerange(position = position_dodge(width = .2)) +
   facet_grid(age_group ~ ., scales = "free", space = "free") +
   geom_hline(yintercept = 0, linetype = "dashed", color = "grey") +
+  ylim(5, 10) +
   coord_flip() +
   scale_size_continuous(guide = FALSE) +
   scale_colour_manual(name = "Language group", values = c("#bdbdbd", "#636363", "#000000"), breaks= c("bilingual", "monolingual")) +
