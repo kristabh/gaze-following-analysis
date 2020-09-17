@@ -21,7 +21,7 @@ d <- exclude_by(d, quo(pilot), quiet = TRUE)
 ```
 
 
-Labs were asked to submit all data collected as part of the study to the analysis team. Data were first screened to determine whether labs contributed useable data and whether infants met our inclusion criteria. Note that some infants had more than one reason for exclusion, and exclusion criteria were applied sequentially.
+Laboratories were asked to submit all data collected as part of the study (i.e., every infant for whom a data file was generated, regardless of how many trials were completed) to the analysis team. Data were first screened to determine whether laboratories contributed useable data and whether infants met our inclusion criteria below. Note that some infants had more than one reason for exclusion, and exclusion criteria were applied sequentially and percentages reflect this sequential application.
 
 ```{r lab }
 # Exclude labs from bll-umanitoba, after discussion with lab that they could not reliably code their data
