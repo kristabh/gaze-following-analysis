@@ -1,40 +1,49 @@
-\PassOptionsToPackage{unicode=true}{hyperref} % options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 %
-\documentclass[english,,man,floatsintext]{apa6}
+\documentclass[
+  english,
+  ,man,floatsintext]{apa6}
 \usepackage{lmodern}
 \usepackage{amssymb,amsmath}
 \usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
 \ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
-  \usepackage{textcomp} % provides euro and other symbols
-\else % if luatex or xelatex
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
   \usepackage{unicode-math}
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
 \fi
-% use upquote if available, for straight quotes in verbatim environments
+% Use upquote if available, for straight quotes in verbatim environments
 \IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage[]{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
 }{}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
-\usepackage{hyperref}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\IfFileExists{bookmark.sty}{\usepackage{bookmark}}{\usepackage{hyperref}}
 \hypersetup{
-            pdftitle={The Development of Gaze Following in Monolingual and Bilingual Infants: A Multi-Lab Study},
-            pdfauthor={Krista Byers-Heinlein1, Rachel Ka-Ying Tsui1, Daan van Renswoude2, Alexis K. Black3, Rachel Barr4, Anna Brown5, Marc Colomer6, Samantha Durrant5, Anja Gampe7, Nayeli Gonzalez-Gomez8, Jessica F. Hay9, Mikołaj Hernik10, Marianna Jartó11, Ágnes Melinda Kovács12, Alexandra Laoun-Rubenstein1, Casey Lew-Williams13, Ulf Liszkowski11, Liquan Liu14, Claire Noble5, Christine E. Potter13, Joscelin Rocha-Hidalgo4, Nuria Sebastian-Galles6, Melanie Soderstrom15, Ingmar Visser2, Connor Waddell14, Stephanie Wermelinger7, \& Leher Singh16},
-            pdfkeywords={gaze following, bilingualism, infancy, replication, reproducibility, age-related changes},
-            pdfborder={0 0 0},
-            breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
+  pdftitle={The Development of Gaze Following in Monolingual and Bilingual Infants: A Multi-Lab Study},
+  pdfauthor={Krista Byers-Heinlein1, Rachel Ka-Ying Tsui1, Daan van Renswoude2, Alexis K. Black3, Rachel Barr4, Anna Brown5, Marc Colomer6, Samantha Durrant5, Anja Gampe7, Nayeli Gonzalez-Gomez8, Jessica F. Hay9, Mikołaj Hernik10, Marianna Jartó11, Ágnes Melinda Kovács12, Alexandra Laoun-Rubenstein1, Casey Lew-Williams13, Ulf Liszkowski11, Liquan Liu14, Claire Noble5, Christine E. Potter13, Joscelin Rocha-Hidalgo4, Nuria Sebastian-Galles6, Melanie Soderstrom15, Ingmar Visser2, Connor Waddell14, Stephanie Wermelinger7, \& Leher Singh16},
+  pdflang={en-EN},
+  pdfkeywords={gaze following, bilingualism, infancy, replication, reproducibility, age-related changes},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+\urlstyle{same} % disable monospaced font for URLs
 \usepackage{graphicx,grffile}
 \makeatletter
 \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
@@ -44,16 +53,23 @@
 % margins by default, and it is still possible to overwrite the defaults
 % using explicit options in \includegraphics[width, height, ...]{}
 \setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{0}
-
-% set default figure placement to htbp
+% Set default figure placement to htbp
 \makeatletter
 \def\fps@figure{htbp}
 \makeatother
-
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
 % Manuscript styling
 \usepackage{upgreek}
 \captionsetup{font=singlespacing,justification=justified}
@@ -110,12 +126,12 @@
 \setcounter{bottomnumber}{9}
 \setcounter{totalnumber}{20}
 \setcounter{dbltopnumber}{9}
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \usepackage[shorthands=off,main=english]{babel}
-\else
-  % load polyglossia as late as possible as it *could* call bidi if RTL lang (e.g. Hebrew or Arabic)
+\ifxetex
+  % Load polyglossia as late as possible: uses bidi with RTL langages (e.g. Hebrew, Arabic)
   \usepackage{polyglossia}
   \setmainlanguage[]{english}
+\else
+  \usepackage[shorthands=off,main=english]{babel}
 \fi
 
 \title{The Development of Gaze Following in Monolingual and Bilingual Infants: A Multi-Lab Study}
@@ -391,7 +407,7 @@ All planned analyses were pre-registered at osf.io/2ey3k/. Following previous la
 \hypertarget{meta-analytic-framework}{%
 \subsubsection{Meta-analytic framework}\label{meta-analytic-framework}}
 
-Under this framework, we first calculated mean scores for each individual infant on the four dependent variables. For first look, frequency of looks, and total duration of looks, we calculated proportion difference scores for each infant, which subtracted the mean value for incongruent trials (i) from the mean for congruent trials (c), and divided by the total number of trials that contributed to that measure {[}(c - i)/(c + i){]}. Trials without values for a particular measure were excluded from the calculation. For latency, we limited the analysis to only those trials with a congruent first look, and for the meta-analytic model, we focused on the mean latency for each infant to look towards the congruent AOI. We then collapsed these for each dataset (i.e., a combination of lab, bilingualism status, and age group) to calculate a grand mean (M) and standard deviation (sd) across participants in each dataset. Finally, using the formula dz = M/sd, the derived M and sd were used to compute a within-subject Cohen's \emph{d} for first look, frequency of looks, and total duration of looks. For latency, we deviated from the pre-registered analysis plan. As the analysis was limited to latency towards the congruent AOI, it was not ideal to generate a Cohen's \emph{d} effect size without a comparison between two means. Instead of computing a within-subject Cohen's \emph{d}, the raw grand mean (M) and standard deviation (sd) in milliseconds across participants were entered into the meta-analytic model for latency. Sampling variance for each mean was calculated based on the formula sd \^{} 2/n.
+Under this framework, we first calculated mean scores for each individual infant on the four dependent variables. For first look, frequency of looks, and total duration of looks, we calculated proportion difference scores for each infant, which subtracted the mean value for incongruent trials (i) from the mean for congruent trials (c), and divided by the total number of trials that contributed to that measure {[}(c - i)/(c + i){]}. Trials without values for a particular measure were excluded from the calculation. For latency, we limited the analysis to only those trials with a congruent first look, and for the meta-analytic model, we focused on the mean latency for each infant to look towards the congruent AOI. We then collapsed these for each dataset (i.e., a combination of lab, bilingualism status, and age group) to calculate a grand mean (M) and standard deviation (sd) across participants in each dataset. Finally, using the formula dz = M/sd, the derived M and sd were used to compute a within-subject Cohen's \emph{d} for first look, frequency of looks, and total duration of looks. For latency, we deviated from the pre-registered analysis plan. As the analysis was limited to latency towards the congruent AOI, it was not ideal to generate a Cohen's \emph{d} effect size without a comparison between two means. Instead of computing a within-subject Cohen's \emph{d}, the raw grand mean (M) and standard deviation (sd) in milliseconds across participants were entered into the meta-analytic model for latency. Sampling variance for each mean was calculated based on the formula sd \^{} 2/n.~
 
 Random-effects meta-analysis models with a restricted maximum-likelihood estimator (REML) were fit with the metafor package (Viechtbauer, 2010). A logistic model was fit for first look, frequency of looks, and total duration of looks as each infant's score was bounded between 0 and 1. A linear model was fit for latency. To account for the dependence between mono- and bilingual datasets stemming from the same lab, we included laboratory as a random factor. Bilingualism (0 = monolingual, 1 = bilingual), and age group (0 = 6--9 months, 1 = 12--15 months) were dummy coded.
 
@@ -407,7 +423,7 @@ We began by examining the relation of the proportion of congruent first looks to
 \begin{figure}
 \centering
 \includegraphics{gaze-following-paper_files/figure-latex/fig2-1.pdf}
-\caption{\label{fig:fig2}Forest plot for the cross-lab meta-analysis on the proportion of first look.}
+\caption{\label{fig:fig2}Forest plot for the cross-lab meta-analysis on the proportion of first look. Error bars show 95\% confidence intervals.}
 \end{figure}
 
 \hypertarget{frequency-of-looks-1}{%
@@ -418,7 +434,7 @@ We then investigated the relation of frequency of looks to bilingualism and age 
 \begin{figure}
 \centering
 \includegraphics{gaze-following-paper_files/figure-latex/fig3-1.pdf}
-\caption{\label{fig:fig3}Forest plot for the cross-lab meta-analysis on frequency of looks.}
+\caption{\label{fig:fig3}Forest plot for the cross-lab meta-analysis on frequency of looks.Error bars show 95\% confidence intervals.}
 \end{figure}
 
 \hypertarget{duration-of-looks-1}{%
@@ -429,7 +445,7 @@ The cross-lab meta-analysis on duration of looks yielded a significant mean effe
 \begin{figure}
 \centering
 \includegraphics{gaze-following-paper_files/figure-latex/fig4-1.pdf}
-\caption{\label{fig:fig4}Forest plot for the cross-lab meta-analysis on duration of looks.}
+\caption{\label{fig:fig4}Forest plot for the cross-lab meta-analysis on duration of looks.Error bars show 95\% confidence intervals.}
 \end{figure}
 
 \hypertarget{latency-1}{%
@@ -440,13 +456,13 @@ The cross-lab meta-analysis on latency towards the congruent object yielded a re
 \begin{figure}
 \centering
 \includegraphics{gaze-following-paper_files/figure-latex/fig5-1.pdf}
-\caption{\label{fig:fig5}Forest plot for the cross-lab meta-analysis on latency.}
+\caption{\label{fig:fig5}Forest plot for the cross-lab meta-analysis on latency. Error bars show 95\% confidence intervals.}
 \end{figure}
 
 \hypertarget{summary-of-meta-analysis}{%
 \subsubsection{Summary of meta-analysis}\label{summary-of-meta-analysis}}
 
-Overall, our meta-analytic models revealed that infants followed the actor's gaze to the congruent object, as measured by their first looks, frequency of looks, and duration of looks. However, neither of our moderating factors (age and bilingualism) significantly impacted infants' gaze following. The first look and frequency of looks models revealed medium effects for age while the duration of looks model revealed a small effect, although age was not statistically significant in any of those models. The direction of these effects would suggest that 12--15 month old infants are better at gaze-following than 6--9 month old infants. This pattern was repeated in our meta-analytic model of latency, which revealed that older infants were significantly faster than younger infants to fixate the congruent object after the actor's gaze shift. Latency of fixation, moreover, was the only measure where we found any suggestion of a difference between bilingual and monolingual infants. Though it did not reach the significance threshold of \emph{p} \textless{} .05, the coefficient direction and magnitude of the latency model showed that younger bilinguals were slower to fixate on the target object than their monolingual peers. This possible effect was not observed for older infants, where by 12--15 months there was no evidence for different latencies between bilinguals and monolinguals. Together, all these results imply that older infants show more reliable gaze following than younger infants.
+Overall, our meta-analytic models revealed that infants followed the actor's gaze to the congruent object, as measured by their first looks, frequency of looks, and duration of looks. Bilingualism was not a significant moderator for any of these three variables. The first look and frequency of looks models revealed medium effects for age while the duration of looks model revealed a small effect, although age was not statistically significant in any of those models. The direction of these effects would suggest that 12--15 month old infants are better at gaze-following than 6--9 month old infants. This pattern was repeated in our meta-analytic model of latency, which revealed that older infants were significantly faster than younger infants to fixate the congruent object after the actor's gaze shift. Latency of fixation, moreover, was the only measure where we found any suggestion of a difference between bilingual and monolingual infants. Though it did not reach the significance threshold of \emph{p} \textless{} .05, the coefficient direction and magnitude of the latency model showed that younger bilinguals were slower to fixate on the target object than their monolingual peers. This possible effect was not observed for older infants, where by 12--15 months there was no evidence for different latencies between bilinguals and monolinguals. Together, all these results imply that older infants show more reliable gaze following than younger infants.
 
 \hypertarget{mixed-effects-regression-framework}{%
 \subsection{Mixed-effects regression framework}\label{mixed-effects-regression-framework}}
@@ -480,16 +496,16 @@ Our predictor variables were:
 We ran separate models for each DV. We fit all models using the \texttt{lme4} package (Bates, Mächler, Bolker, \& Walker, 2015). For first\_shift, we fit a logistic model as this variable is binary at the trial level. The initial model specification was:
 
 first\_shift \textasciitilde{} bilingual * age\_days +
-(1\textbar{}subid) +
-(bilingual * age\_days\textbar{}lab) +
-(bilingual * age\_days\textbar{}item)
+(1\textbar subid) +
+(bilingual * age\_days\textbar lab) +
+(bilingual * age\_days\textbar item)
 
 For latency, freq\_shift, and total\_look, we used a similar model with two modifications. First, we fit a linear model rather than a logistic model as these variables are continuous and unbounded. Second, we included an interaction with aoi in the fixed effects, and estimated corresponding random slopes where appropriate. This was necessary in order to estimate separate parameters for the congruent and incongruent AOIs (i.e., to model whether latency to first fixation varies as a function of whether it is to the congruent or incongruent AOI; whether infants shift more frequently to the congruent than the incongruent AOI; and whether infants fixate more on the congruent than incongruent AOI). For these three DVs, the initial model specification was:
 
 DV \textasciitilde{} bilingual * age\_days * aoi +
-(aoi\textbar{}subid) +
-(bilingual * age\_days * aoi\textbar{}lab) +
-(bilingual * age\_days * aoi \textbar{}item)
+(aoi\textbar subid) +
+(bilingual * age\_days * aoi\textbar lab) +
+(bilingual * age\_days * aoi \textbar item)
 
 \hypertarget{first-shift-towards-the-aoi}{%
 \subsubsection{First shift towards the AOI}\label{first-shift-towards-the-aoi}}
@@ -497,8 +513,8 @@ DV \textasciitilde{} bilingual * age\_days * aoi +
 Our final logistic model specification for first shift was:
 
 first\_shift \textasciitilde{} bilingual * age\_days +
-(1\textbar{}subid) +
-(1\textbar{}lab)
+(1\textbar subid) +
+(1\textbar lab)
 
 \begin{table}[tbp]
 
@@ -537,8 +553,8 @@ bilingual * age\_days & -0.096 & 0.123 & -0.779 & 0.436\\
 The final model specification for frequency of shift was:
 
 freq\_shift \textasciitilde{} bilingual * age\_days * aoi +
-(1\textbar{}subid) +
-(1\textbar{}item)
+(1\textbar subid) +
+(1\textbar item)
 
 \begin{table}[tbp]
 \begin{center}
@@ -576,9 +592,9 @@ bilingual * age\_days * aoi & -0.029 & 0.055 & -0.525 & 0.599\\
 The final model specification for duration of fixations was:
 
 total\_look \textasciitilde{} bilingual * age\_days * aoi +
-(1\textbar{}subid) +
-(1\textbar{}lab) +
-(1\textbar{}item)
+(1\textbar subid) +
+(1\textbar lab) +
+(1\textbar item)
 
 \begin{table}[tbp]
 
@@ -621,9 +637,9 @@ bilingual * age\_days * aoi & 0.106 & 0.211 & 0.501 & 0.616\\
 The final model specification for latency was:
 
 latency \textasciitilde{} bilingual * age\_days * aoi +
-(1\textbar{}subid) +
-(1\textbar{}lab) +
-(1\textbar{}item)
+(1\textbar subid) +
+(1\textbar lab) +
+(1\textbar item)
 
 \begin{table}[tbp]
 
@@ -663,7 +679,7 @@ bilingual * age\_days * aoi & 62.400 & 142.000 & 0.439 & 0.661\\
 \hypertarget{summary-of-mixed-effects-regression}{%
 \subsubsection{Summary of mixed-effects regression}\label{summary-of-mixed-effects-regression}}
 
-Overall, our mixed-effects regression revealed that early gaze-following development is significantly modulated by age-related changes, where older infants showed a more reliable gaze-following ability in every available measure as compared to younger infants. That is, older infants were more accurate and more rapid than younger infants in directing their first gaze towards the congruent objects, and they looked longer and more frequently at the congruent objects than at the incongruent objects. In contrast, bilingualism did not significantly predict infants' gaze-following accuracy, duration, and speed of fixations. However, there was a trend where, as they aged, bilingual infants showed a steeper increase in frequency of fixations compared to monolinguals. Regardless of bilinguals' more frequent fixations, however, these results most robustly support the interpretation that monolingual and bilingual infants follow a similar trajectory of gaze-following development despite their differences in language experience.
+Overall, our mixed-effects regression revealed that early gaze-following development is significantly modulated by age-related changes, where older infants showed a more reliable gaze-following ability in every available measure as compared to younger infants. That is, older infants were more accurate and more rapid than younger infants in directing their first gaze towards the congruent objects, and they looked longer and more frequently at the congruent objects than at the incongruent objects. In contrast, bilingualism did not significantly predict infants' gaze-following accuracy, duration, or speed of fixations. However, there was a trend where, as they aged, bilingual infants showed a steeper increase in frequency of fixations compared to monolinguals. Regardless of bilinguals' more frequent fixations, however, these results most robustly support the interpretation that monolingual and bilingual infants follow a similar trajectory of gaze-following development despite their differences in language experience.
 
 \hypertarget{general-discussion}{%
 \section{General Discussion}\label{general-discussion}}
