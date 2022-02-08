@@ -1,0 +1,15 @@
+The duration of the trials is different for some of the video's
+These video's have a duration of 10.5 seconds, instead of 10 seconds:
+
+"Ord1_T4_RX.xvd" "Ord2_T1_LX.xvd" "Ord2_T2_RX.xvd" "Ord2_T6_LX.xvd" "Ord3_T1_LX.xvd" "Ord4_T2_LX.xvd"
+
+Is this correct? How does this affect the timing of the head turn in the video?
+
+---------------------------------
+
+AOIs
+According to the screen dimension 1024x768 and offset (0,0,0,0) the video were streched
+was this indeed the case? Otherwise the AOI should be adjusted
+
+---------------------------------
+
