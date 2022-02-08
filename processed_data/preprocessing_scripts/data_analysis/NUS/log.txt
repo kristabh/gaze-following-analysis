@@ -1,0 +1,21 @@
+There is an possible issue with double PP id's
+Participants "MBG015" and "MBG030" appear in both order 1 and order 3
+For now these participants are left out of the analysis
+
+------------
+
+The following participants had little or no data and it was not possible
+to extract any information from them:
+
+"YBG036"
+"MBG029"
+"YBG015"
+"YBG035"
+"YBG032"
+"YBG024"
+
+------------
+
+AOIs
+The eye-tracking detail file is missing to check whether the AOIs are 
+specified correctly
