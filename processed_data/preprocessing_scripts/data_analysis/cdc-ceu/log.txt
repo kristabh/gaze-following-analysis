@@ -1,0 +1,35 @@
+There is a 'weird' thing in the data that happens at a lot of trials (maybe all..)
+The VIDEO_NAME changes to the next video for a short period
+while the TIMESTAMP is not distrubed, not really sure what happens 
+here is an example:
+
+RECORDING_SESSION_LABEL order TRIAL_INDEX TIMESTAMP RIGHT_GAZE_X RIGHT_GAZE_Y    VIDEO_NAME VIDEO_FRAME_INDEX
+1045                     mb1     1           1  15890422        934.2        547.9 Ord1_T1_R.mov                11
+1046                     mb1     1           1  15890424        934.1        547.5 Ord1_T1_R.mov                11
+1047                     mb1     1           1  15890426        933.7        547.4 Ord1_T1_R.mov                11
+1048                     mb1     1           1  15890428        933.7        548.0 Ord1_T1_R.mov                11
+1049                     mb1     1           1  15890430        933.8        548.9 Ord1_T1_R.mov                11
+1050                     mb1     1           1  15890432        933.9        549.7 Ord1_T1_R.mov                11
+1051                     mb1     1           1  15890434        934.2        550.1 Ord1_T1_R.mov                11
+1052                     mb1     1           1  15890436        932.7        550.7 Ord1_T2_L.mov                 1
+1053                     mb1     1           1  15890438        931.2        551.2 Ord1_T2_L.mov                 1
+1054                     mb1     1           1  15890440        929.8        551.5 Ord1_T2_L.mov                 1
+1055                     mb1     1           1  15890442        928.2        551.8 Ord1_T2_L.mov                 1
+1056                     mb1     1           1  15890444        927.1        552.2 Ord1_T2_L.mov                 1
+1057                     mb1     1           1  15890446        926.4        552.9 Ord1_T2_L.mov                 1
+1058                     mb1     1           1  15890448        926.1        553.4 Ord1_T2_L.mov                 1
+1059                     mb1     1           1  15890450        927.5        553.9 Ord1_T2_L.mov                 1
+1060                     mb1     1           1  15890452        928.9        553.9 Ord1_T2_L.mov                 1
+1061                     mb1     1           1  15890454        930.3        554.0 Ord1_T1_R.mov                12
+1062                     mb1     1           1  15890456        930.0        554.0 Ord1_T1_R.mov                12
+1063                     mb1     1           1  15890458        929.2        553.7 Ord1_T1_R.mov                12
+1064                     mb1     1           1  15890460        928.4        552.8 Ord1_T1_R.mov                12
+1065                     mb1     1           1  15890462        927.8        550.3 Ord1_T1_R.mov                12
+
+It seems that the last video that is shown each trial provides the correct VIDEO
+To 'fix' this issue, the last VIDEO within each trial is used in the analysis
+is this correct?
+
+---------
+
+
