@@ -1,0 +1,7 @@
+The data of participant MB_22_gf is so noisy no dependent variable could be obtained
+
+---------------
+
+The AOIs as provided in the eye-tracking detail file are shifted 60 pixels down
+to account for the top and bottom offset, I assume this is correct?
+
