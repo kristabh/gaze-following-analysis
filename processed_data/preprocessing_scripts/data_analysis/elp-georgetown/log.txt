@@ -1,0 +1,29 @@
+The xlsx data wouldn't read into R, therefore I saved the xlsx file as txt
+and use that file for the analysis.
+
+----------
+
+The samplerate is set at 120 instead of the 300 mentioned in the eye-tracking
+detail file. I assume this is correct?
+
+----------
+
+There are 3 participants that are duplicates. That is, their id's appear two
+times in the data. These are the id's:
+
+8735 
+8874 
+8938
+
+For now I decided to exclude these participants, but I wonder what happened here
+and how we should handle this?
+
+-----------
+
+AOIs
+The provided left and right offset (226 pixels) in the eyetracking details file 
+can only be correct if the video was streched over the x-axis, since this seems
+unlikely the offset is reset to 285 pixels. Is this correct?
+
+-----------
+
