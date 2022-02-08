@@ -1,0 +1,30 @@
+There is a possible issue with the stimulus presentation for the participants
+in 'Order 2'. That is, there is no videoname named: 'Ord2_T6_L.avi', trial 6
+for these participants is called: 'Ord3_T6_L.avi', is this because they saw this
+video? Or did the naming go wrong?
+
+-----------------------
+
+Participants with little to no data:
+
+"G120"
+"G133"
+"G147"
+"G22"
+"G25"
+"G33"
+"G42"
+"G44"
+"G45"
+"G48"
+"G54"
+
+No dependent variables could be classified for these participants
+
+--------------------------
+
+AOIs
+The provided left and right offset (0 pixels) in the eyetracking details file 
+can only be correct if the video was streched over the x-axis, since this seems
+unlikely (also given the raw data) the offset is reset to 190 pixels. Is this correct?
+
