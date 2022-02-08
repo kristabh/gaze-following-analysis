@@ -1,0 +1,9 @@
+These participants do not have enough data to classify any fixations:
+
+"GF6_S23_48679"
+"GF6_S21_48394"
+
+--------
+
+AOIs
+The eye-tracking detail file is missing, so AOIs can be off
