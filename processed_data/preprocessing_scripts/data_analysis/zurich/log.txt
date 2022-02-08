@@ -1,0 +1,8 @@
+This file seems to contain no data:
+
+"gf_13968"
+
+------------
+
+There is a duplicate file with xlsx extension instead of xls
+this file (gf_13629) is left out of the analysis
