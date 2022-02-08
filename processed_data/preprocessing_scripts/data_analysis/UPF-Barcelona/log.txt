@@ -1,0 +1,10 @@
+Participants that stood out:
+
+subj01 - excluded because of weird values in the gaze-coordinates
+subj21 - seems to have little to no data
+
+AOIs
+The provided left and right offset (226 pixels) in the eyetracking details file 
+can only be correct if the video was streched over the x-axis, since this seems
+unlikely the offset is reset to 285 pixels. Is this correct?
+
